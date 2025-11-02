@@ -232,6 +232,13 @@ export const CALENDAR = {
     { question: "Which QB was NOT selected in the famous 1983 NFL Draft Class?", choices: ["John Elway", "Troy Aikman", "Jim Kelly", "Dan Marino"], answer: 1 },
     { question: "Who is the New England Patriots all all-time leader in Receiving Yards?", choices: ["Rob Gronkowski", "Wes Welker", "Julian Edelman", "Stanley Morgan"], answer: 3 },
   ],
+  "2025-11-02": [ //Monday
+    { question: "What is the most TD Passes thrown in a Single Season?", choices: ["48", "57", "52", "55"], answer: 3 },
+    { question: "Who has the record for most receptions in a single season?", choices: ["Cooper Kupp", "Michael Thomas", "Antonio Brown", "Julio Jones"], answer: 1 },
+    { question: "Who was the last non-QB to win MVP?", choices: ["LaDainian Tomlinson", "Adrian Peterson", "Cooper Kupp", "Shaun Alexander"], answer: 1 },
+    { question: "Who is tied with the Patriots for MOST Super Bowl losses?", choices: ["Broncos", "Bills", "Vikings", "49ers"], answer: 0 },
+    { question: "Which of these losers has NEVER appeared in a Super Bowl", choices: ["Chargers", "Titans", "Lions", "Dolphins"], answer: 2 },
+  ],
 };
 
 
