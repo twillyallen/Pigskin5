@@ -246,6 +246,34 @@ export const CALENDAR = {
     { question: "Who is the new leader in Sacks this season?", choices: ["Brian Burns", "Nik Bonito", "Myles Garrett", "Byron Young"], answer: 0 },
     { question: "Who has the record for most Receiving Yards in a game?", choices: ["Calvin Johnson", "Flipper Anderson", "Stephone Paige", "Julio Jones"], answer: 1 },
   ],
+  "2025-11-05": [ //Wednesday
+    { question: "Who is the current leader in Rushing Touchdowns?", choices: ["Josh Jacobs", "Josh Allen", "Javonte Williams", "Jonathan Taylor"], answer: 1 },
+    { question: "Which Vikings QB has the franchise record for most Passing TDs in a season?", choices: ["Warren Moon", "Sam Darnold", "Kirk Cousins", "Daunte Culpepper"], answer: 3 },
+    { question: "True or False: Patriots are now the #1 seed in the AFC", choices: ["True", "False"], answer: 1 },
+    { question: "Which team has the most Hall of Famers?", choices: ["Packers", "Steelers", "Bears", "Cowboys"], answer: 2 },
+    { question: "Who leads the Chargers in rushing Yards this season?", choices: ["Kimani Vidal", "Justin Herbert", "Najee Harris", "Omarion Hampton"], answer: 3 },
+  ],
+  "2025-11-06": [ //Thursday
+    { question: "Before tonight's matchup, who leads the All-Time Series 73-56-2?", choices: ["Broncos", "Raiders"], answer: 1 },
+    { question: "Who was the QB for the Raiders during the 'Holy Roller' play?", choices: ["Ray Guy", "Dave Casper", "Ken Stabler", "Derek Carr"], answer: 2 },
+    { question: "True or False: The Raiders and Broncos have both won Super Bowls with Head Coaches named John.", choices: ["True", "False"], answer: 1 },
+    { question: "Who leads the Broncos in Receiving Yards All-Time", choices: ["Demaryius Thomas", "Shannon Sharpe", "Ed McCaffrey", "Rod Smith"], answer: 3 },
+    { question: "Which Head Coach has the longer Playoff Win Drought?", choices: ["Pete Carroll", "Sean Payton"], answer: 0 },
+  ],
+  "2025-11-07": [ //Friday
+    { question: "Who leads the league in Receiving Yards?", choices: ["George Pickens", "Jaxon Smith-Njigba", "JaMarr Chase", "Puka Nacua"], answer: 1 },
+    { question: "Who was the Houston Texans first ever Draft Pick?", choices: ["Joey Harrington", "Matt Shaub", "David Carr", "Derek Carr"], answer: 2 },
+    { question: "True or False: The Seattle Seahawks used to play in the AFC.", choices: ["True", "False"], answer: 0 },
+    { question: "Who has the most Field Goals Made this season?", choices: ["Cameron Dicker", "Chase McLaughlin", "Eddy Pineiro", "Ka'imi Fairbairn"], answer: 3 },
+    { question: "Who kicked the game-winning field goal in the Patriots’ first Super Bowl victory?", choices: ["Stephen Gostowski", "Pat O'Neil", "Adam Vintieri", "Morten Anderson"], answer: 2 },
+  ],
+  "2025-11-08": [ //Saturday
+    { question: "Who is currently ranked #24?", choices: ["Cincinnati", "Michigan", "Washington", "USC"], answer: 2 },
+    { question: "Who leads the Big 10 in Rushing TDs?", choices: ["Jonah Coleman", "Justice Haynes", "Mark Gronkowski", "Kaytron Allen"], answer: 0 },
+    { question: "True or False: The Seattle Seahawks used to play in the AFC.", choices: ["True", "False"], answer: 0 },
+    { question: "Who has the most Field Goals Made this season?", choices: ["Cameron Dicker", "Chase McLaughlin", "Eddy Pineiro", "Ka'imi Fairbairn"], answer: 3 },
+    { question: "Who kicked the game-winning field goal in the Patriots’ first Super Bowl victory?", choices: ["Stephen Gostowski", "Pat O'Neil", "Adam Vintieri", "Morten Anderson"], answer: 2 },
+  ],
 };
 
 
