@@ -239,6 +239,13 @@ export const CALENDAR = {
     { question: "Who is tied with the Patriots for MOST Super Bowl losses?", choices: ["Broncos", "Bills", "Vikings", "49ers"], answer: 0 },
     { question: "Which of these losers has NEVER appeared in a Super Bowl", choices: ["Chargers", "Titans", "Lions", "Dolphins"], answer: 2 },
   ],
+  "2025-11-04": [ //Tuesday
+    { question: "Who is the current leader in Passing Touchdowns?", choices: ["Justin Herbert", "Matthew Stafford", "Aaron Rodgers", "Patrick Mahomes"], answer: 1 },
+    { question: "What is the most amount of TDs Christian McCaffrey has scored in a single Regular Season", choices: ["21", "24", "19", "23"], answer: 0 },
+    { question: "Who is the current #1 seed in the NFC?", choices: ["Buccaneers", "Rams", "Seahawks", "Eagles"], answer: 3 },
+    { question: "Who is the new leader in Sacks this season?", choices: ["Brian Burns", "Nik Bonito", "Myles Garrett", "Byron Young"], answer: 0 },
+    { question: "Who has the record for most Receiving Yards in a game?", choices: ["Calvin Johnson", "Flipper Anderson", "Stephone Paige", "Julio Jones"], answer: 1 },
+  ],
 };
 
 
