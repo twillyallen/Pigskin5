@@ -247,7 +247,7 @@ export const CALENDAR = {
     { question: "Who has the record for most Receiving Yards in a game?", choices: ["Calvin Johnson", "Flipper Anderson", "Stephone Paige", "Julio Jones"], answer: 1 },
   ],
   "2025-11-05": [ //Wednesday
-    { question: "Who is the current leader in Rushing Touchdowns?", choices: ["Josh Jacobs", "Josh Allen", "Javonte Williams", "Jonathan Taylor"], answer: 1 },
+    { question: "Who is the current leader in Rushing Touchdowns?", choices: ["Josh Jacobs", "Josh Allen", "Javonte Williams", "Jonathan Taylor"], answer: 3 },
     { question: "Which Vikings QB has the franchise record for most Passing TDs in a season?", choices: ["Warren Moon", "Sam Darnold", "Kirk Cousins", "Daunte Culpepper"], answer: 3 },
     { question: "True or False: Patriots are now the #1 seed in the AFC", choices: ["True", "False"], answer: 1 },
     { question: "Which team has the most Hall of Famers?", choices: ["Packers", "Steelers", "Bears", "Cowboys"], answer: 2 },
