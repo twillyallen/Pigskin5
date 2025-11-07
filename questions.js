@@ -274,6 +274,13 @@ export const CALENDAR = {
     { question: "Who has the most Field Goals Made this season?", choices: ["Cameron Dicker", "Chase McLaughlin", "Eddy Pineiro", "Ka'imi Fairbairn"], answer: 3 },
     { question: "Who kicked the game-winning field goal in the Patriots’ first Super Bowl victory?", choices: ["Stephen Gostowski", "Pat O'Neil", "Adam Vintieri", "Morten Anderson"], answer: 2 },
   ],
+  "2025-11-09": [ //Sunday
+    { question: "TESTING", choices: ["Cincinnati", "Michigan", "Washington", "USC"], answer: 2 },
+    { question: "Who leads the Big 10 in Rushing TDs?", choices: ["Jonah Coleman", "Justice Haynes", "Mark Gronkowski", "Kaytron Allen"], answer: 0 },
+    { question: "True or False: The Seattle Seahawks used to play in the AFC.", choices: ["True", "False"], answer: 0 },
+    { question: "Who has the most Field Goals Made this season?", choices: ["Cameron Dicker", "Chase McLaughlin", "Eddy Pineiro", "Ka'imi Fairbairn"], answer: 3 },
+    { question: "Who kicked the game-winning field goal in the Patriots’ first Super Bowl victory?", choices: ["Stephen Gostowski", "Pat O'Neil", "Adam Vintieri", "Morten Anderson"], answer: 2 },
+  ],
 };
 
 
