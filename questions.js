@@ -270,9 +270,9 @@ export const CALENDAR = {
   "2025-11-08": [ //Saturday
     { question: "Who is currently ranked #24?", choices: ["Cincinnati", "Michigan", "Washington", "USC"], answer: 2 },
     { question: "Who leads the Big 10 in Rushing TDs?", choices: ["Jonah Coleman", "Justice Haynes", "Mark Gronkowski", "Kaytron Allen"], answer: 0 },
-    { question: "True or False: The Seattle Seahawks used to play in the AFC.", choices: ["True", "False"], answer: 0 },
-    { question: "Who has the most Field Goals Made this season?", choices: ["Cameron Dicker", "Chase McLaughlin", "Eddy Pineiro", "Ka'imi Fairbairn"], answer: 3 },
-    { question: "Who kicked the game-winning field goal in the Patriots’ first Super Bowl victory?", choices: ["Stephen Gostowski", "Pat O'Neil", "Adam Vintieri", "Morten Anderson"], answer: 2 },
+    { question: "Which QB has the most Pass TDs?", choices: ["Joey Aguilar", "Julian Sayin", "Fernando Mendoza", "Sawyer Robertson"], answer: 3 },
+    { question: "Who was the last Non-QB to win the Heisman?", choices: ["Derrick Henry", "Ashton Jeanty", "Devonta Smith", "Travis Hunter"], answer: 3 },
+    { question: "Which team has the most Sacks this season?", choices: ["THE Ohio State", "Texas", "UConn", "Oklahoma"], answer: 1 },
   ],
   "2025-11-09": [ //Sunday
     { question: "Who leads the NFL in recpetions?", choices: ["JaMarr Chase", "Christian McCaffrey", "Jaxon Smith-Njigba", "Puka Nacua"], answer: 0 },
