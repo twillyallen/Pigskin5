@@ -269,7 +269,7 @@ export const CALENDAR = {
   ],
   "2025-11-08": [ //Saturday
     { question: "Who is currently ranked #23?", choices: ["Cincinnati", "Michigan", "Washington", "USC"], answer: 2 },
-    { question: "Who leads the Big 10 in Rushing TDs?", choices: ["Jonah Coleman", "Justice Haynes", "Mark Gronkowski", "Kaytron Allen"], answer: 0 },
+    { question: "Who leads the Big 10 in Rushing TDs?", choices: ["Jonah Coleman", "Justice Haynes", "Mark Gronowski", "Kaytron Allen"], answer: 0 },
     { question: "Which QB has the most Pass TDs?", choices: ["Joey Aguilar", "Julian Sayin", "Fernando Mendoza", "Sawyer Robertson"], answer: 3 },
     { question: "Who was the last Non-QB to win the Heisman?", choices: ["Derrick Henry", "Ashton Jeanty", "Devonta Smith", "Travis Hunter"], answer: 3 },
     { question: "Which team has the most Sacks this season?", choices: ["THE Ohio State", "Texas", "UConn", "Oklahoma"], answer: 1 },
