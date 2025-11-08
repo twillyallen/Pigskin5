@@ -275,11 +275,18 @@ export const CALENDAR = {
     { question: "Who kicked the game-winning field goal in the Patriots’ first Super Bowl victory?", choices: ["Stephen Gostowski", "Pat O'Neil", "Adam Vintieri", "Morten Anderson"], answer: 2 },
   ],
   "2025-11-09": [ //Sunday
-    { question: "TESTING ONCE AGAIN. EASY", choices: ["Cincinnati", "Michigan", "Washington", "USC"], answer: 2 },
-    { question: "Who leads the Big 10 in Rushing TDs?", choices: ["Jonah Coleman", "Justice Haynes", "Mark Gronkowski", "Kaytron Allen"], answer: 0 },
-    { question: "True or False: The Seattle Seahawks used to play in the AFC.", choices: ["True", "False"], answer: 0 },
-    { question: "Who has the most Field Goals Made this season?", choices: ["Cameron Dicker", "Chase McLaughlin", "Eddy Pineiro", "Ka'imi Fairbairn"], answer: 3 },
-    { question: "Who kicked the game-winning field goal in the Patriots’ first Super Bowl victory?", choices: ["Stephen Gostowski", "Pat O'Neil", "Adam Vintieri", "Morten Anderson"], answer: 2 },
+    { question: "Who leads the NFL in recpetions?", choices: ["JaMarr Chase", "Christian McCaffrey", "Jaxon Smith-Njigba", "Puka Nacua"], answer: 0 },
+    { question: "Who was the 2016 Season MVP?", choices: ["Tom Brady", "Aaron Rodgers", "Cam Newton", "Matt Ryan"], answer: 3 },
+    { question: "What was the most amount of TD Passes Eli Manning had in a season?", choices: ["42", "35", "39", "31"], answer: 1 },
+    { question: "Who leads the NFL in Passing Yards?", choices: ["Daniel Jones", "Patrick Mahomes", "Dak Prescott", "Justin Herbert"], answer: 0 },
+    { question: "Every team has appeared in the Super Bowl at least once", choices: ["True", "False"], answer: 1 }
+  ],
+  "2025-11-10": [ //Monday
+    { question: "Who leads the All-Time series between the two?", choices: ["Eagles", "Packers"], answer: 1 },
+    { question: "Jalen Hurts has OVER or UNDER 1,850 Pass Yards this season.", choices: ["OVER", "UNDER"], answer: 1 },
+    { question: "True or False: AJ Brown and Devonta Smith are BOTH top 45 in Receiving Yards.", choices: ["True", "False"], answer: 1 },
+    { question: "Who has more Rushing TDs this season?", choices: ["Josh Jacobs", "Jalen Hurts & Saquon Barkley COMBINED"], answer: 0 },
+    { question: "Which team has more Sacks this season?", choices: ["Packers", "Eagles"], answer: 0 }
   ],
 };
 
