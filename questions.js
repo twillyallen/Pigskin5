@@ -292,7 +292,7 @@ export const CALENDAR = {
     { question: "Who is the all-time leader in receptions for the Chargers?", choices: ["Antonio Gates", "Kellen Winslow", "Keenan Allen", "Lance Alworth"], answer: 2 },
     { question: "Who were the Packers first ever road opponents in 1919", choices: ["Decatur Staleys", "New York Giants", "Beloit Fairies", "Ishpeming Hematites"], answer: 3 },
     { question: "Who leads the NFL in Forced Fumbles", choices: ["Joey Bosa", "Eric Wilson", "Josh Sweat", "Jared Verse"], answer: 0 },
-    { question: "Which QB lost to the Ravens in Week 10", choices: ["Max Brosmer", "Justin Jefferson", "Aaron Jones", "NINE"], answer: 3 },
+    { question: "Which QB lost to the Ravens in Week 10", choices: ["Max Brosmer", "Justin Jefferson", "Aaron Jones", "NINE 😈😈"], answer: 3 },
     { question: "Who got absolutely BITCHED by Daron Payne", choices: ["Jared Goff", "Amon-Ra St Brown", "Jalen Hurts", "NINE"], answer: 1 }
   ],
 };
