@@ -302,6 +302,13 @@ export const CALENDAR = {
     { question: "How many active QBs are top 10 All-Time in Passing TDs?", choices: ["3", "1", "4", "2"], answer: 3 },
     { question: "Which team is currently the #1 Seed in the NFC?", choices: ["Eagles", "Rams", "Seahawks", "Lions"], answer: 0 }
   ],
+  "2025-11-15": [ //Saturday
+    { question: "Who led the whole NCAA last week in Passing Yards?", choices: ["Ben Finley", "Joe Labas", "Ty Sampson", "Juliam Sayin"], answer: 0 },
+    { question: "Which School is tied with Notre Dame for producing the most NFL Hall of Famers?", choices: ["Ohio State", "Michigan", "USC", "Alabama"], answer: 2 },
+    { question: "How many ranked teams has Wisconsin beaten since 2023", choices: ["7", "4", "0", "1"], answer: 3 },
+    { question: "Who leads the SEC in Receptions?", choices: ["Kevin Coleman Jr", "Anthony Evans", "Zachariah Branch", "Germie Bernard"], answer: 1 },
+    { question: "Who won the first 2010's National Champtionship matchup between Clemson and Alabama?", choices: ["Clemson", "Alabama"], answer: 1 }
+  ],
 };
 
 
