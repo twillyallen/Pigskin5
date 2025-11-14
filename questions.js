@@ -295,6 +295,13 @@ export const CALENDAR = {
     { question: "Which QB lost to the Ravens in Week 10", choices: ["Max Brosmer", "Justin Jefferson", "Aaron Jones", "NINE 😈😈"], answer: 3 },
     { question: "Who got absolutely BITCHED by Daron Payne", choices: ["Jared Goff", "Amon-Ra St Brown", "Jalen Hurts", "NINE"], answer: 1 }
   ],
+  "2025-11-14": [ //Friday
+    { question: "Who was the first player to win 3 straight MVP awards?", choices: ["Jim Brown", "Brett Favre", "Johnny Unitas", "Joe Montana"], answer: 1 },
+    { question: "Which player has the most total fumbles this season (not just fumbles lost)?", choices: ["Josh Allen", "Derrick Henry", "Tua Tagovailoa", "Tony Pollard"], answer: 0 },
+    { question: "True or False: A Kicker leads the NFL in Scoring in 2025", choices: ["True", "False"], answer: 1 },
+    { question: "How many active QBs are top 10 All-Time in Passing TDs?", choices: ["3", "1", "4", "2"], answer: 3 },
+    { question: "Which team is currently the #1 Seed in the NFC?", choices: ["Eagles", "Rams", "Seahawks", "Lions"], answer: 0 }
+  ],
 };
 
 
