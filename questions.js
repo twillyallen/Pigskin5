@@ -309,6 +309,20 @@ export const CALENDAR = {
     { question: "Who leads the SEC in Receptions?", choices: ["Kevin Coleman Jr", "Anthony Evans", "Zachariah Branch", "Germie Bernard"], answer: 1 },
     { question: "Who won the first 2010's National Champtionship matchup between Clemson and Alabama?", choices: ["Clemson", "Alabama"], answer: 1 }
   ],
+  "2025-11-16": [ //Sunday
+    { question: "Who is the All-Time Rushing leader for the Miami Dolphins?", choices: ["Karim Abdul-Jabbar", "Larry Csonka", "Ricky Williams", "Ronnie Brown"], answer: 1 },
+    { question: "Who was the first player ejected in 2025?", choices: ["Jordan Davis", "DaRon Payne", "Jalen Carter", "Trayvon Walker"], answer: 3 },
+    { question: "Before today's games, who has the longest reception this season?", choices: ["Tutu Atwell", "DeVonta Smith", "Emeka Egbuka", "Rashid Shaheed"], answer: 0 },
+    { question: "Who leads the league in TFL's?", choices: ["Brian Burns", "Maxx Crosby", "Nik Bonita", "Myles Garrett"], answer: 3 },
+    { question: "What is the most amount of receiving TD's Jerry Rice had in a single season?", choices: ["18", "23", "19", "22"], answer: 3 }
+  ],
+  "2025-11-17": [ //Monday
+    { question: "How many teams has Peyton Manning played for?", choices: ["1", "3", "2", "1"], answer: 2 },
+    { question: "Who is 2nd All-Time in Receiving Yards after turning the age of 40?", choices: ["Jerry Rice", "Tom Brady", "Aaron Rodgers", "Steve Smith Sr."], answer: 1 },
+    { question: "Who had the most rushing yards yesterday?", choices: ["CORRECT ANSWER", "", "", ""], answer: 0 },
+    { question: "Which is the oldest NFL Franchise", choices: ["Bears/Staleys", "Packers", "Cardinals", "Lions"], answer: 2 },
+    { question: "Who leads the league in Passing Yards?", choices: ["CORRECT ANSWER", "", "", ""], answer: 0 }
+  ],
 };
 
 
