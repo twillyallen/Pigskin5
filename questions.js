@@ -311,7 +311,7 @@ export const CALENDAR = {
   ],
   "2025-11-16": [ //Sunday
     { question: "Who is the All-Time Rushing leader for the Miami Dolphins?", choices: ["Karim Abdul-Jabbar", "Larry Csonka", "Ricky Williams", "Ronnie Brown"], answer: 1 },
-    { question: "Who was the first player ejected in 2025?", choices: ["Jordan Davis", "DaRon Payne", "Jalen Carter", "Trayvon Walker"], answer: 3 },
+    { question: "Who was the first player ejected in 2025?", choices: ["Jordan Davis", "DaRon Payne", "Jalen Carter", "Trayvon Walker"], answer: 2 },
     { question: "Before today's games, who has the longest reception this season?", choices: ["Tutu Atwell", "DeVonta Smith", "Emeka Egbuka", "Rashid Shaheed"], answer: 0 },
     { question: "Who leads the league in TFL's?", choices: ["Brian Burns", "Maxx Crosby", "Nik Bonita", "Myles Garrett"], answer: 3 },
     { question: "What is the most amount of receiving TD's Jerry Rice had in a single season?", choices: ["18", "23", "19", "22"], answer: 3 }
