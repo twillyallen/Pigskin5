@@ -319,9 +319,9 @@ export const CALENDAR = {
   "2025-11-17": [ //Monday
     { question: "How many teams has Peyton Manning played for?", choices: ["1", "3", "2", "1"], answer: 2 },
     { question: "Who is 2nd All-Time in Receiving Yards after turning the age of 40?", choices: ["Jerry Rice", "Tom Brady", "Aaron Rodgers", "Steve Smith Sr."], answer: 1 },
-    { question: "Who had the most rushing yards yesterday?", choices: ["CORRECT ANSWER", "", "", ""], answer: 0 },
+    { question: "Who had the most rushing yards yesterday?", choices: ["DeVon Achane", "Bijan Robinson", "Sean Tucker", "Derrick Henry"], answer: 0 },
     { question: "Which is the oldest NFL Franchise", choices: ["Bears/Staleys", "Packers", "Cardinals", "Lions"], answer: 2 },
-    { question: "Who leads the league in Passing Yards?", choices: ["CORRECT ANSWER", "", "", ""], answer: 0 }
+    { question: "Who leads the league in Passing Yards?", choices: ["Drake Maye", "Patrick Mahomes", "Matthew Stafford", "Daniel Jones"], answer: 0 }
   ],
 };
 
