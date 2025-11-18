@@ -302,7 +302,7 @@ function renderLeaderboard(dateStr) {
     .then(entries => {
       leaderboardBody.innerHTML = "";
 
-      if (!Array.isArray(entries) || entries.length === 0) {
+      if (!Array.isArray(entries)) {
         const tr = document.createElement("tr");
         const td = document.createElement("td");
         td.colSpan = 4;
@@ -312,7 +312,21 @@ function renderLeaderboard(dateStr) {
         return;
       }
 
-      entries.forEach((e, idx) => {
+      // 🔹 Filter by today's date first
+      const todaysEntries = entries.filter(e => e.date === dateStr);
+      const rowsToShow = todaysEntries.length ? todaysEntries : [];
+
+      if (!rowsToShow.length) {
+        const tr = document.createElement("tr");
+        const td = document.createElement("td");
+        td.colSpan = 4;
+        td.textContent = "No scores yet. Be the first!";
+        tr.appendChild(td);
+        leaderboardBody.appendChild(tr);
+        return;
+      }
+
+      rowsToShow.forEach((e, idx) => {
         const tr = document.createElement("tr");
 
         const rankTd = document.createElement("td");
@@ -341,6 +355,7 @@ function renderLeaderboard(dateStr) {
         "<tr><td colspan='4'>Error loading leaderboard.</td></tr>";
     });
 }
+
 
 async function handleLeaderboardSubmit(evt) {
   evt.preventDefault();
