@@ -11,7 +11,7 @@ const KEY_LB_SUBMIT_PREFIX = "ps5_leaderboard_submit_";
 const PROD_HOSTS = ["twillyallen.github.io", "pigskin5.com"];
 const LEADERBOARD_API_URL = "https://script.google.com/macros/s/AKfycbxXp59rZDH5mp5elAFIt6T3DVI_4LM-mGVnTk7fg4LxlEu3HL1UQTMmo_VNgaS4CTQkvA/exec";
 
-// Add restricted words here (case-insensitive)
+// Add restricted words here (case-insensitive) BAD WORDS ALERT
 const BANNED_WORDS = [
    "Nigger",
    "Cunt",
