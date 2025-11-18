@@ -257,7 +257,7 @@ async function addLeaderboardEntry(dateStr, entry) {
 }
 
 // JSONP reader for leaderboard
-function fetchLeaderboardJSONP(dateStr) {
+function fetchLeaderboardJSONP() {
   return new Promise((resolve, reject) => {
     const callbackName = "ps5LbCallback_" + Date.now() + "_" + Math.floor(Math.random() * 100000);
 
@@ -280,8 +280,7 @@ function fetchLeaderboardJSONP(dateStr) {
     const script = document.createElement("script");
     script.src =
       LEADERBOARD_API_URL +
-      "?date=" + encodeURIComponent(dateStr) +
-      "&callback=" + encodeURIComponent(callbackName);
+      "?callback=" + encodeURIComponent(callbackName); // 🔹 no date param here
 
     script.onerror = (err) => {
       delete window[callbackName];
@@ -293,12 +292,13 @@ function fetchLeaderboardJSONP(dateStr) {
   });
 }
 
+
 function renderLeaderboard(dateStr) {
   if (!leaderboardBody) return;
 
   leaderboardBody.innerHTML = "<tr><td colspan='4'>Loading...</td></tr>";
 
-  fetchLeaderboardJSONP(dateStr)
+  fetchLeaderboardJSONP()
     .then(entries => {
       leaderboardBody.innerHTML = "";
 
@@ -312,7 +312,7 @@ function renderLeaderboard(dateStr) {
         return;
       }
 
-      // 🔹 Filter by today's date first
+      // 🔹 Filter to today's records
       const todaysEntries = entries.filter(e => e.date === dateStr);
       const rowsToShow = todaysEntries.length ? todaysEntries : [];
 
