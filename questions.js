@@ -323,6 +323,48 @@ export const CALENDAR = {
     { question: "Which is the oldest NFL Franchise", choices: ["Bears/Staleys", "Packers", "Cardinals", "Lions"], answer: 2 },
     { question: "Who leads the league in Passing Yards?", choices: ["Drake Maye", "Patrick Mahomes", "Matthew Stafford", "Daniel Jones"], answer: 0 }
   ],
+  "2025-11-18": [ //Tuesday
+    { question: "Who was the Week 11 Passing Yard Leader?", choices: ["Josh Allen", "Bryce Young", "Jacoby Brissett", "Dak Prescott"], answer: 2 },
+    { question: "Which team leads the league in Takeaways?", choices: ["Texans", "Bears", "Browns", "Rams"], answer: 1 },
+    { question: "Which team traded for Sam Darnold?", choices: ["Seahawks", "49ers", "Vikings", "Panthers"], answer: 3 },
+    { question: "Which RB led the NFL in Rushing yards for the entirety of the 1970's Decade?", choices: ["OJ Simpson", "Larry Csonka", "Franco Harris", "Walter Payton"], answer: 0 },
+    { question: "Which team drafted Ryan Fitzpatrick?", choices: ["Rams", "Bills", "Bengals", "Jets"], answer: 0 }
+  ],
+  "2025-11-19": [ //Wednesday
+    { question: "Which TE has the most Receiving Yards in 2025?", choices: ["Travis Kelce", "Brock Bowers", "Tyler Warren", "Trey McBride"], answer: 3 },
+    { question: "Who was the MVP of Super Bowl X? (Cowboys vs Steelers)", choices: ["Franco Harris", "Roger Staubach", "Lynn Swann", "Terry Bradshaw"], answer: 2 },
+    { question: "True or False: Walter Payton was the first RB to win MVP in the Super Bowl era?", choices: ["True", "False"], answer: 1 },
+    { question: "Which team has allowed the most sacks this season?", choices: ["Chargers", "Patriots", "Titans", "Cardinals"], answer: 2 },
+    { question: "What is the most amount of TD Passes Drew Brees had in a season?", choices: ["48", "46", "43", "39"], answer: 1 }
+  ],
+  "2025-11-20": [ //Thursday
+    { question: "Who has more respective Division Championships since 2002?", choices: ["Texans", "Bills"], answer: 0 },
+    { question: "True or False: Both CJ Stroud and Josh Allen were drafted #2 Overall", choices: ["True", "False"], answer: 1 },
+    { question: "Which player in tonight's matchup has the most Receiving Yards heading into tonight?", choices: ["Dalton Schultz", "Khalil Shakir", "Nico Collins", "Dalton Kincaid"], answer: 2 },
+    { question: "Who was the first Head Coach of the Houston Texans", choices: ["Gary Kubiak", "John Fox", "Dom Capers", "Bill Callahan"], answer: 2 },
+    { question: "True or False: The Bills are the only team with 4 Super Bowl losses", choices: ["True", "False"], answer: 1 }
+  ],
+  "2025-11-21": [ //Friday
+    { question: "Who was the first team in win the Super Bowl in their home stadium?", choices: ["Buccaneers", "Rams", "Giants", "Colts"], answer: 0 },
+    { question: "Which Head Coach has the best Winning Percentage in the Super Bowl Era?", choices: ["Vince Lombardi", "Nick Sirrianni", "John Madden", "Don Shula"], answer: 2 },
+    { question: "Who leads the league in Passing TDs?", choices: ["Drake Maye", "Jared Goff", "Justin Herbert", "Matthew Stafford"], answer: 3 },
+    { question: "Who leads the league in Sacks?", choices: ["Nik Bonito", "Myles Garrett", "Micah Parsons", "Brian Burns"], answer: 1 },
+    { question: "Which Kicker has the most Field Goals this season?", choices: ["Chase McLaughlin", "Brandon Aubrey", "Chris Boswell", "Cameron Dicker"], answer: 3 }
+  ],
+  "2025-11-22": [ //Saturday
+    { question: "What school did Cam Newton lead to an undefeated season and national title?", choices: ["Auburn", "Florida", "Clemson", "Florida State"], answer: 0 },
+    { question: "Who leads the Big Ten in Net Yards per Attempt (min. 15 punts)?", choices: ["Trevor Allen", "Ryan Eckley", "Sean West", "Luke Akers"], answer: 2 },
+    { question: "True or False: A Player has got back-to-back Heisman Trophies", choices: ["True", "False"], answer: 0 },
+    { question: "Which Head Coach has the most National Championships?", choices: ["Bear Bryant", "John McKay", "Woody Hayes", "Nick Saban"], answer: 3 },
+    { question: "Which QB on a ranked team has the most Passing Yards?", choices: ["Drew Mestemaker", "Julian Sayin", "Joey Aguilar", "Ty Simpson"], answer: 0 }
+  ],
+  "2025-11-23": [ //Sunday
+    { question: "Prior to today, Who is the current NFC North Leader?", choices: ["Packers", "Lions", "Bears", "Vikings"], answer: 2 },
+    { question: "What is the most amount of Receiving Yards Antonio Brown ever had in a season?", choices: ["1,698", "1,943", "1,834", "1,572"], answer: 2 },
+    { question: "True or False: Tom Brady was the last pick of the draft", choices: ["True", "False"], answer: 1 },
+    { question: "Prior to today, who is tied with DJ Turner II for the most Passes Defended?", choices: ["Quinyon Mitchell", "Derek Stingley Jr", "Keisean Nixon", "Mike Jackson"], answer: 2 },
+    { question: "Which player has scored the most this season?", choices: ["Davante Adams", "Josh Jacobs", "Christian McCaffrey", "Jonathan Taylor"], answer: 3 }
+  ],
 };
 
 
