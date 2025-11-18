@@ -65,6 +65,47 @@ body::before{
   font-variant-numeric: tabular-nums;
   font-feature-settings:"tnum" 1, "lnum" 1;
 }
+.timer-danger {
+  background: rgba(255, 55, 55, 0.3);
+  color: #ffe5e5;
+  animation: timerPulse 0.45s ease-in-out infinite alternate;
+}
+
+@keyframes timerPulse {
+  from { transform: scale(1);   }
+  to   { transform: scale(1.08); }
+}
+
+
+/* Progress bar fixed near bottom of screen */
+.progress-bar {
+  position: fixed;
+  left: 12px;
+  right: 12px;
+  bottom: 18px;                /* <-- little padding from bottom */
+  height: 30px;
+  background: rgba(255,255,255,0.18);
+  border-radius: 999px;
+  overflow: hidden;
+  z-index: 40;
+  display: none;               /* only visible during quiz */
+}
+
+/* Show bar only while quiz is active */
+body.quiz-active .progress-bar {
+  display: block;
+}
+
+.progress-fill {
+  height: 100%;
+  width: 100%;
+  transform-origin: left;
+  transform: scaleX(0);
+  background: rgb(255, 255, 255);
+  transition: transform .25s ease-out;
+}
+
+
 
 /* ---------------- Start Screen ---------------- */
 .start-screen{
@@ -367,4 +408,67 @@ footer a {
 .site-footer a:visited,
 footer a:visited {
   color: #fa63ff !important;      /* purple after being clicked */
+}
+
+
+.metrics-text {
+  margin-top: 4px;
+  font-size: 0.95rem;
+  opacity: 0.9;
+}
+
+.leaderboard {
+  margin-top: 18px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(255,255,255,0.18);
+}
+
+.leaderboard-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.leaderboard-form label {
+  font-size: 0.9rem;
+}
+
+.leaderboard-form input {
+  flex: 1;
+  min-width: 130px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.3);
+  background: rgba(0,0,0,0.25);
+  color: #fff;
+}
+
+.leaderboard-form .btn.small {
+  padding: 6px 14px;
+  font-size: 0.85rem;
+}
+
+.leaderboard-warning {
+  color: #ffb3b3;
+  font-size: 0.85rem;
+  min-height: 1em;
+  margin-bottom: 6px;
+}
+
+.leaderboard-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.leaderboard-table th,
+.leaderboard-table td {
+  padding: 4px 6px;
+  text-align: left;
+}
+
+.leaderboard-table tbody tr:nth-child(odd) {
+  background: rgba(255,255,255,0.04);
 }

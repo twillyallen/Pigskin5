@@ -81,13 +81,43 @@
       <div id="choices" class="choices"></div>
     </section>
 
-    <!-- RESULTS SECTION -->
-    <section id="result" class="result hidden">
-      <h2>Your Score</h2>
-      <p id="scoreText"></p>
-      <div id="review" class="review"></div>
-      <button id="restartBtn" class="btn">Restart</button>
-    </section>
+    <!--RESULTS-->
+<section id="result" class="result hidden">
+  <h2>Your Score</h2>
+  <p id="scoreText"></p>
+  <!-- metrics text will be injected right under this via JS -->
+  <div id="review" class="review"></div>
+
+  <!-- Daily Leaderboard -->
+  <section id="leaderboard" class="leaderboard">
+    <h3>Daily Leaderboard</h3>
+    <form id="leaderboardForm" class="leaderboard-form">
+      <label for="playerName">Name:</label>
+      <input
+        id="playerName"
+        maxlength="20"
+        autocomplete="name"
+        placeholder="Your name or initials"
+      />
+      <button type="submit" class="btn small">Submit Score</button>
+    </form>
+    <div id="leaderboardWarning" class="leaderboard-warning"></div>
+    <table class="leaderboard-table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Name</th>
+          <th>Points</th>
+          <th>Avg Time</th>
+        </tr>
+      </thead>
+      <tbody id="leaderboardBody"></tbody>
+    </table>
+  </section>
+
+  <button id="restartBtn" class="btn">Restart</button>
+</section>
+
   </main>
 
   <footer class="site-footer">

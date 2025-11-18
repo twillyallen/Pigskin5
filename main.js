@@ -5,8 +5,17 @@ import { CALENDAR } from "./questions.js?v=20250914c";
 // ==============================
 const TIME_LIMIT = 15; // seconds per question
 const KEY_ATTEMPT_PREFIX = "ft5_attempt_";
-const KEY_RESULT_PREFIX  = "ft5_result_"; // stores {score, picks}
-const PROD_HOSTS = ["twillyallen.github.io", "pigskin5.com"]; 
+const KEY_RESULT_PREFIX  = "ft5_result_"; // stores {score, picks, totalTime, avgTime, totalPoints}
+const KEY_LEADERBOARD    = "ps5_leaderboard_v1";
+const KEY_LB_SUBMIT_PREFIX = "ps5_leaderboard_submit_";
+const PROD_HOSTS = ["twillyallen.github.io", "pigskin5.com"];
+
+// Add restricted words here (case-insensitive)
+const BANNED_WORDS = [
+   "Nigger",
+   "Cunt",
+   "Hitler"
+];
 
 function isProd() {
   return PROD_HOSTS.includes(location.hostname);
@@ -38,9 +47,17 @@ let picks = [];
 let timerId = null;
 let timeLeft = TIME_LIMIT;
 
+// timing & scoring
+let questionStartTime = 0; // when current question started
+let questionTimes = [];    // seconds taken per question
+let totalPoints = 0;       // leaderboard points for the run
+let latestAvgTime = 0;     // store avg time from last run
+
 // --- DOM refs
 let startScreen, startBtn, cardSec, resultSec, questionEl, choicesEl;
 let progressEl, timerEl, scoreText, reviewEl, restartBtn, headerEl;
+let progressFillEl;
+let leaderboardForm, playerNameInput, leaderboardWarningEl, leaderboardBody;
 
 // ---------- Utilities ----------
 function getRunDateISO() {
@@ -63,15 +80,26 @@ function getRunDateISO() {
 function stopTimer() {
   if (timerId) clearInterval(timerId);
   timerId = null;
+  if (timerEl) timerEl.classList.remove("timer-danger");
 }
 
 function startTimer(seconds) {
   stopTimer();
   timeLeft = seconds;
   timerEl.textContent = `${timeLeft}s`;
+  timerEl.classList.remove("timer-danger");
+
+  // mark question start for metrics
+  questionStartTime = performance.now();
+
   timerId = setInterval(() => {
     timeLeft--;
     timerEl.textContent = `${timeLeft}s`;
+
+    if (timeLeft <= 5 && timeLeft > 0) {
+      timerEl.classList.add("timer-danger");
+    }
+
     if (timeLeft <= 0) {
       stopTimer();
       pickAnswer(null, QUESTIONS[current].answer);
@@ -150,6 +178,161 @@ function updateTouchdownStreak(dateStr, didPerfect) {
   return streak;
 }
 
+// ---------- Leaderboard helpers ----------
+function sanitizeName(raw) {
+  if (!raw) return null;
+  let name = String(raw).trim();
+  if (!name) return null;
+
+  if (name.length > 20) name = name.slice(0, 20);
+
+  const lower = name.toLowerCase();
+  for (const bad of BANNED_WORDS) {
+    if (!bad) continue;
+    if (lower.includes(String(bad).toLowerCase())) {
+      return null; // blocked by restricted words
+    }
+  }
+  return name;
+}
+
+function loadLeaderboardStore() {
+  try {
+    const raw = localStorage.getItem(KEY_LEADERBOARD);
+    if (!raw) return {};
+    const data = JSON.parse(raw);
+    return (data && typeof data === "object") ? data : {};
+  } catch {
+    return {};
+  }
+}
+
+function saveLeaderboardStore(store) {
+  try {
+    localStorage.setItem(KEY_LEADERBOARD, JSON.stringify(store));
+  } catch {}
+}
+
+function getLeaderboardForDate(dateStr) {
+  const store = loadLeaderboardStore();
+  return Array.isArray(store[dateStr]) ? store[dateStr] : [];
+}
+
+function addLeaderboardEntry(dateStr, entry) {
+  const store = loadLeaderboardStore();
+  if (!Array.isArray(store[dateStr])) store[dateStr] = [];
+
+  store[dateStr].push(entry);
+
+  // Sort: points desc, then avgTime asc, then earliest created
+  store[dateStr].sort((a, b) => {
+    if (b.points !== a.points) return b.points - a.points;
+    const aAvg = a.avgTime ?? Infinity;
+    const bAvg = b.avgTime ?? Infinity;
+    if (aAvg !== bAvg) return aAvg - bAvg;
+    return (a.createdAt ?? 0) - (b.createdAt ?? 0);
+  });
+
+  // keep top 20 per day
+  store[dateStr] = store[dateStr].slice(0, 20);
+
+  saveLeaderboardStore(store);
+}
+
+function renderLeaderboard(dateStr) {
+  if (!leaderboardBody) return;
+  const entries = getLeaderboardForDate(dateStr);
+  leaderboardBody.innerHTML = "";
+
+  entries.forEach((e, idx) => {
+    const tr = document.createElement("tr");
+
+    const rankTd = document.createElement("td");
+    rankTd.textContent = String(idx + 1);
+
+    const nameTd = document.createElement("td");
+    nameTd.textContent = e.name || "Anonymous";
+
+    const pointsTd = document.createElement("td");
+    pointsTd.textContent = (e.points ?? 0).toLocaleString();
+
+    const avgTd = document.createElement("td");
+    avgTd.textContent = (typeof e.avgTime === "number")
+      ? `${e.avgTime.toFixed(1)}s`
+      : "-";
+
+    tr.append(rankTd, nameTd, pointsTd, avgTd);
+    leaderboardBody.appendChild(tr);
+  });
+}
+
+function handleLeaderboardSubmit(evt) {
+  evt.preventDefault();
+  if (!RUN_DATE) return;
+
+  // 🔒 hard guard: only allow ONE submission per day per browser
+  if (hasSubmittedLeaderboard(RUN_DATE) ||
+      (leaderboardForm && leaderboardForm.classList.contains("submitted"))) {
+    if (leaderboardWarningEl) {
+      leaderboardWarningEl.textContent = "You've already submitted your score for today.";
+    }
+    return;
+  }
+
+  if (leaderboardWarningEl) leaderboardWarningEl.textContent = "";
+
+  const rawName = playerNameInput?.value || "";
+  const name = sanitizeName(rawName);
+
+  if (!name) {
+    if (leaderboardWarningEl) {
+      leaderboardWarningEl.textContent =
+        "Please enter a different name (no banned words).";
+    }
+    return;
+  }
+
+  const entry = {
+    name,
+    points: totalPoints,
+    avgTime: latestAvgTime,
+    createdAt: Date.now()
+  };
+
+  addLeaderboardEntry(RUN_DATE, entry);
+  renderLeaderboard(RUN_DATE);
+
+  // mark as submitted in memory + localStorage
+  setSubmittedLeaderboard(RUN_DATE);
+  if (leaderboardForm) {
+    leaderboardForm.classList.add("submitted");
+    const submitBtn = leaderboardForm.querySelector('button[type="submit"]');
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.textContent = "Score Submitted";
+    }
+  }
+  if (playerNameInput) {
+    playerNameInput.disabled = true;
+  }
+}
+
+
+function hasSubmittedLeaderboard(dateStr) {
+  try {
+    return localStorage.getItem(KEY_LB_SUBMIT_PREFIX + dateStr) === "1";
+  } catch {
+    return false;
+  }
+}
+
+function setSubmittedLeaderboard(dateStr) {
+  try {
+    localStorage.setItem(KEY_LB_SUBMIT_PREFIX + dateStr, "1");
+  } catch {}
+}
+
+
 // ---------- Locked Result ----------
 function renderPersistedResult(dateStr, persisted) {
   RUN_DATE = dateStr;
@@ -159,6 +342,7 @@ function renderPersistedResult(dateStr, persisted) {
 
   document.body.classList.remove("no-scroll");
   document.body.classList.remove("start-page");
+  document.body.classList.remove("quiz-active");
   startScreen.classList.add("hidden");
   cardSec.classList.add("hidden");
   resultSec.classList.remove("hidden");
@@ -167,10 +351,14 @@ function renderPersistedResult(dateStr, persisted) {
 
   scoreText.textContent = `You got ${score} / ${QUESTIONS.length || 5} correct.`;
 
-  // Safe review rendering
+  // Safe review rendering with colors
   reviewEl.innerHTML = "";
   picks.forEach(({ idx, pick, correct }) => {
-    const q = (QUESTIONS && QUESTIONS[idx]) || { question: `Question ${idx + 1}`, choices: ["A","B","C","D"], explanation: "" };
+    const q = (QUESTIONS && QUESTIONS[idx]) || {
+      question: `Question ${idx + 1}`,
+      choices: ["A","B","C","D"],
+      explanation: ""
+    };
 
     const div = document.createElement("div");
     div.className = "rev";
@@ -179,7 +367,11 @@ function renderPersistedResult(dateStr, persisted) {
     qEl.className = "q";
     qEl.textContent = q.question ?? `Question ${idx + 1}`;
 
-    const yourAnswerText = (pick === null || pick === undefined) ? "No answer" : (q.choices?.[pick] ?? `Choice ${Number(pick) + 1}`);
+    const yourAnswerText =
+      (pick === null || pick === undefined)
+        ? "No answer"
+        : (q.choices?.[pick] ?? `Choice ${Number(pick) + 1}`);
+
     const you = document.createElement("div");
     you.innerHTML = `Your answer: <strong>${yourAnswerText}</strong>`;
 
@@ -205,6 +397,24 @@ function renderPersistedResult(dateStr, persisted) {
     reviewEl.appendChild(div);
   });
 
+  // restore metrics if we have them
+  if (typeof persisted?.avgTime === "number" && typeof persisted?.totalPoints === "number") {
+    latestAvgTime = persisted.avgTime;
+    totalPoints = persisted.totalPoints;
+
+    let metricsEl = document.getElementById("metricsText");
+    if (!metricsEl) {
+      metricsEl = document.createElement("p");
+      metricsEl.id = "metricsText";
+      metricsEl.className = "metrics-text";
+      scoreText.insertAdjacentElement("afterend", metricsEl);
+    }
+    metricsEl.textContent =
+      `Avg answer time: ${persisted.avgTime.toFixed(1)}s per question · Total points: ${persisted.totalPoints.toLocaleString()}`;
+  }
+
+  renderLeaderboard(RUN_DATE);
+
   if (restartBtn) {
     restartBtn.style.display = "inline-block";
     restartBtn.textContent = "COME BACK TOMORROW!";
@@ -226,6 +436,7 @@ function showLockedGate(dateStr) {
 
   document.body.classList.remove("no-scroll");
   document.body.classList.remove("start-page");
+  document.body.classList.remove("quiz-active");
   startScreen.classList.add("hidden");
   cardSec.classList.add("hidden");
   resultSec.classList.remove("hidden");
@@ -233,6 +444,7 @@ function showLockedGate(dateStr) {
   timerEl.style.display = "none";
   scoreText.textContent = `You already played ${dateStr}. Come back tomorrow!`;
   reviewEl.innerHTML = "";
+  renderLeaderboard(dateStr);
   if (restartBtn) {
     restartBtn.style.display = "inline-block";
     restartBtn.textContent = "COME BACK TOMORROW";
@@ -247,6 +459,7 @@ function showStartScreen() {
   // Start page state
   document.body.classList.remove("no-scroll");
   document.body.classList.remove("hide-footer");
+  document.body.classList.remove("quiz-active");
   document.body.classList.add("start-page");
 
   const runDate = getRunDateISO();
@@ -298,6 +511,7 @@ function startGame() {
   document.body.classList.remove("start-page");
   document.body.classList.remove("no-scroll");
   document.body.classList.add("hide-footer");
+  document.body.classList.add("quiz-active");
 
   RUN_DATE = getRunDateISO();
   if (hasAttempt(RUN_DATE)) {
@@ -311,6 +525,11 @@ function startGame() {
   score = 0;
   answered = false;
   picks = [];
+
+  // reset metrics
+  questionTimes = [];
+  totalPoints = 0;
+  latestAvgTime = 0;
 
   if (!Array.isArray(QUESTIONS) || QUESTIONS.length !== 5) {
     startScreen.classList.add("hidden");
@@ -338,6 +557,7 @@ function showResult() {
   document.body.classList.remove("start-page");
   document.body.classList.remove("no-scroll");
   document.body.classList.remove("hide-footer");
+  document.body.classList.remove("quiz-active");
 
   cardSec.classList.add("hidden");
   resultSec.classList.remove("hidden");
@@ -361,10 +581,14 @@ function showResult() {
     updateTouchdownStreak(RUN_DATE, false);
   }
 
-  // Safe review rendering
+  // Safe review rendering WITH colors (fixes your bug)
   reviewEl.innerHTML = "";
   picks.forEach(({ idx, pick, correct }) => {
-    const q = (QUESTIONS && QUESTIONS[idx]) || { question: `Question ${idx + 1}`, choices: ["A","B","C","D"], explanation: "" };
+    const q = (QUESTIONS && QUESTIONS[idx]) || {
+      question: `Question ${idx + 1}`,
+      choices: ["A","B","C","D"],
+      explanation: ""
+    };
 
     const div = document.createElement("div");
     div.className = "rev";
@@ -373,7 +597,11 @@ function showResult() {
     qEl.className = "q";
     qEl.textContent = q.question ?? `Question ${idx + 1}`;
 
-    const yourAnswerText = (pick === null || pick === undefined) ? "No answer" : (q.choices?.[pick] ?? `Choice ${Number(pick) + 1}`);
+    const yourAnswerText =
+      (pick === null || pick === undefined)
+        ? "No answer"
+        : (q.choices?.[pick] ?? `Choice ${Number(pick) + 1}`);
+
     const you = document.createElement("div");
     you.innerHTML = `Your answer: <strong>${yourAnswerText}</strong>`;
 
@@ -383,7 +611,7 @@ function showResult() {
 
     const ex = document.createElement("div");
     ex.className = "ex";
-    ex.textContent = q.explanation ?? "";
+    ex.textContent = q.explanation || "";
 
     if (pick === correct) {
       you.style.color = "#28a745";
@@ -399,7 +627,26 @@ function showResult() {
     reviewEl.appendChild(div);
   });
 
-  saveResult(RUN_DATE, { score, picks });
+  // ---- Performance metrics ----
+  const totalTime = questionTimes.reduce((sum, t) => sum + (t || 0), 0);
+  const avgTime = questionTimes.length ? totalTime / questionTimes.length : 0;
+  latestAvgTime = avgTime;
+
+  let metricsEl = document.getElementById("metricsText");
+  if (!metricsEl) {
+    metricsEl = document.createElement("p");
+    metricsEl.id = "metricsText";
+    metricsEl.className = "metrics-text";
+    scoreText.insertAdjacentElement("afterend", metricsEl);
+  }
+  metricsEl.textContent =
+    `Avg answer time: ${avgTime.toFixed(1)}s per question · Total points: ${totalPoints.toLocaleString()}`;
+
+  // Save everything, including metrics, for potential future use
+  saveResult(RUN_DATE, { score, picks, totalTime, avgTime, totalPoints });
+
+  renderLeaderboard(RUN_DATE);
+  injectShareSummary();
 
   if (restartBtn) {
     restartBtn.style.display = "inline-block";
@@ -408,8 +655,6 @@ function showResult() {
     restartBtn.style.cursor = "default";
     restartBtn.style.opacity = "0.7";
   }
-
-  injectShareSummary();
 }
 
 // ---------- Quiz ----------
@@ -418,6 +663,14 @@ function renderQuestion() {
   const q = QUESTIONS[current];
   questionEl.textContent = q.question;
   progressEl.textContent = `Question ${current + 1} / ${QUESTIONS.length}`;
+
+  // update progress bar – how many questions are COMPLETED
+  if (progressFillEl && QUESTIONS.length > 0) {
+    const completed = current; // 0 on Q1, 1 on Q2, etc.
+    const ratio = completed / QUESTIONS.length;
+    progressFillEl.style.transform = `scaleX(${ratio})`;
+  }
+
   choicesEl.innerHTML = "";
   q.choices.forEach((choice, i) => {
     const btn = document.createElement("button");
@@ -431,13 +684,42 @@ function renderQuestion() {
 function pickAnswer(i, correct) {
   if (answered) return;
   answered = true;
+
+  // --- timing: how long this question took ---
+  const now = performance.now();
+  const MAX_TIME = TIME_LIMIT || 15;
+  let elapsed = (now - questionStartTime) / 1000;
+  if (!Number.isFinite(elapsed) || elapsed < 0) elapsed = MAX_TIME;
+  if (elapsed > MAX_TIME) elapsed = MAX_TIME;
+  questionTimes.push(elapsed);
+  // ------------------------------------------
+
   stopTimer();
+
   const buttons = Array.from(choicesEl.querySelectorAll("button"));
   buttons.forEach(b => { b.disabled = true; });
-  if (typeof correct === "number" && buttons[correct]) buttons[correct].classList.add("correct");
-  if (i !== null && i !== correct && typeof i === "number" && buttons[i]) buttons[i].classList.add("wrong");
-  if (i === correct) score++;
-  picks.push({ idx: current, pick: i, correct });
+
+  if (typeof correct === "number" && buttons[correct]) {
+    buttons[correct].classList.add("correct");
+  }
+  if (i !== null && i !== correct && typeof i === "number" && buttons[i]) {
+    buttons[i].classList.add("wrong");
+  }
+
+  // scoring:
+  // - score = # of correct answers
+  // - totalPoints = leaderboard points (100 * seconds remaining on correct)
+  let questionPoints = 0;
+  if (i === correct) {
+    score++;
+    const safeTimeLeft = Math.max(0, Number(timeLeft) || 0);
+    questionPoints = 100 * safeTimeLeft;   // e.g. 7s left => 700 pts
+    totalPoints += questionPoints;
+  }
+
+  // store per-question info
+  picks.push({ idx: current, pick: i, correct, elapsed, points: questionPoints });
+
   setTimeout(() => {
     current++;
     if (current < QUESTIONS.length) {
@@ -566,8 +848,30 @@ function init() {
   restartBtn   = document.getElementById("restartBtn");
   headerEl     = document.querySelector(".header");
 
+  leaderboardForm      = document.getElementById("leaderboardForm");
+  playerNameInput      = document.getElementById("playerName");
+  leaderboardWarningEl = document.getElementById("leaderboardWarning");
+  leaderboardBody      = document.getElementById("leaderboardBody");
+
+  // Build bottom progress bar once
+  let bar = document.querySelector(".progress-bar");
+  if (!bar) {
+    bar = document.createElement("div");
+    bar.className = "progress-bar";
+
+    progressFillEl = document.createElement("div");
+    progressFillEl.className = "progress-fill";
+    bar.appendChild(progressFillEl);
+
+    document.body.appendChild(bar);
+  } else {
+    progressFillEl = bar.querySelector(".progress-fill");
+  }
+
   startBtn?.addEventListener("click", startGame);
   restartBtn?.addEventListener("click", showStartScreen);
+  leaderboardForm?.addEventListener("submit", handleLeaderboardSubmit);
+
   showStartScreen();
 
   const menuBtn = document.getElementById("menu-toggle");
