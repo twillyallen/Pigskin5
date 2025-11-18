@@ -200,7 +200,15 @@ function sanitizeName(raw) {
   let name = String(raw).trim();
   if (!name) return null;
 
-  if (name.length > 20) name = name.slice(0, 20);
+  // Check for spaces
+  if (name.includes(" ")) {
+    return null; // reject names with spaces
+  }
+
+  // Limit to 27 characters
+  if (name.length > 27) {
+    name = name.slice(0, 27);
+  }
 
   const lower = name.toLowerCase();
   for (const bad of BANNED_WORDS) {
@@ -396,7 +404,7 @@ async function handleLeaderboardSubmit(evt) {
   if (!name) {
     if (leaderboardWarningEl) {
       leaderboardWarningEl.textContent =
-        "Please enter a different name (no banned words).";
+        "Invalid name. Must be 27 characters or less, no spaces, and no banned words.";
     }
     return;
   }
