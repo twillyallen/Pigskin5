@@ -353,7 +353,7 @@ export const CALENDAR = {
   ],
   "2025-11-22": [ //Saturday
     { question: "What school did Cam Newton lead to an undefeated season and national title?", choices: ["Auburn", "Florida", "Clemson", "Florida State"], answer: 0 },
-    { question: "Who leads the Big Ten in Net Yards per Attempt (min. 15 punts)?", choices: ["Trevor Allen", "Ryan Eckley", "Sean West", "Luke Akers"], answer: 2 },
+    { question: "Who leads the Big Ten in Net Yards per Punt Attempt (min. 15 punts)?", choices: ["Trevor Allen", "Ryan Eckley", "Sean West", "Luke Akers"], answer: 2 },
     { question: "True or False: A Player has got back-to-back Heisman Trophies", choices: ["True", "False"], answer: 0 },
     { question: "Which Head Coach has the most National Championships?", choices: ["Bear Bryant", "John McKay", "Woody Hayes", "Nick Saban"], answer: 3 },
     { question: "Which QB on a ranked team has the most Passing Yards?", choices: ["Drew Mestemaker", "Julian Sayin", "Joey Aguilar", "Ty Simpson"], answer: 0 }
