@@ -229,18 +229,18 @@ async function addLeaderboardEntry(dateStr, entry) {
     body.append("points", String(entry.points ?? 0));
     body.append("avgTime", String(entry.avgTime ?? 0));
 
-    // no-cors + form-encoded body = no preflight, no CORS crash
     await fetch(LEADERBOARD_API_URL, {
       method: "POST",
       mode: "no-cors",
       body
     });
 
-    // We can't read the response (opaque), but the row will be written.
+    // no-cors: we don't read the response, but Apps Script writes the row
   } catch (err) {
     console.error("Failed to submit leaderboard entry:", err);
   }
 }
+
 
 
 function fetchLeaderboardJSONP(dateStr) {
@@ -279,6 +279,44 @@ function fetchLeaderboardJSONP(dateStr) {
     document.body.appendChild(script);
   });
 }
+
+
+function fetchLeaderboardJSONP(dateStr) {
+  return new Promise((resolve, reject) => {
+    const callbackName = "ps5LbCallback_" + Date.now() + "_" + Math.floor(Math.random() * 100000);
+
+    window[callbackName] = (data) => {
+      try {
+        delete window[callbackName];
+        script.remove();
+
+        if (data && data.ok === false) {
+          console.error("Leaderboard error:", data.error);
+          reject(new Error(data.error || "Leaderboard error"));
+        } else {
+          resolve(data || []);
+        }
+      } catch (err) {
+        reject(err);
+      }
+    };
+
+    const script = document.createElement("script");
+    script.src =
+      LEADERBOARD_API_URL +
+      "?date=" + encodeURIComponent(dateStr) +
+      "&callback=" + encodeURIComponent(callbackName);
+
+    script.onerror = (err) => {
+      delete window[callbackName];
+      script.remove();
+      reject(err);
+    };
+
+    document.body.appendChild(script);
+  });
+}
+
 
 
 function renderLeaderboard(dateStr) {
@@ -332,11 +370,12 @@ function renderLeaderboard(dateStr) {
 
 
 
+
 async function handleLeaderboardSubmit(evt) {
   evt.preventDefault();
   if (!RUN_DATE) return;
 
-  // 🔒 hard guard: only allow ONE submission per day per browser
+  // only allow ONE submission per day per browser
   if (hasSubmittedLeaderboard(RUN_DATE) ||
       (leaderboardForm && leaderboardForm.classList.contains("submitted"))) {
     if (leaderboardWarningEl) {
@@ -365,13 +404,13 @@ async function handleLeaderboardSubmit(evt) {
     createdAt: Date.now()
   };
 
-  // Send to Google Sheets
+  // write to Google Sheets
   await addLeaderboardEntry(RUN_DATE, entry);
 
-  // Refresh UI from cloud
+  // refresh from Google Sheets
   renderLeaderboard(RUN_DATE);
 
-  // mark as submitted in memory + localStorage
+  // lock this browser out from resubmitting
   setSubmittedLeaderboard(RUN_DATE);
   if (leaderboardForm) {
     leaderboardForm.classList.add("submitted");
@@ -385,6 +424,7 @@ async function handleLeaderboardSubmit(evt) {
     playerNameInput.disabled = true;
   }
 }
+
 
 
 
