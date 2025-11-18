@@ -11,33 +11,41 @@ const KEY_LB_SUBMIT_PREFIX = "ps5_leaderboard_submit_";
 const PROD_HOSTS = ["twillyallen.github.io", "pigskin5.com"];
 const LEADERBOARD_API_URL = "https://script.google.com/macros/s/AKfycbxXp59rZDH5mp5elAFIt6T3DVI_4LM-mGVnTk7fg4LxlEu3HL1UQTMmo_VNgaS4CTQkvA/exec";
 
-// Add restricted words here (case-insensitive) BAD WORDS ALERT
+// Add restricted words here (case-insensitive)
 const BANNED_WORDS = [
-   "Nigger",
-   "Cunt",
-   "Hitler",
-   "Faggot",
-   "Fag"
+  "Nigger",
+  "Cunt",
+  "Hitler",
+  "Faggot",
+  "Fag"
 ];
 
 function isProd() {
   return PROD_HOSTS.includes(location.hostname);
 }
+
 function hasAttempt(dateStr) {
   return localStorage.getItem(KEY_ATTEMPT_PREFIX + dateStr) === "1";
 }
+
 function setAttempt(dateStr) {
   localStorage.setItem(KEY_ATTEMPT_PREFIX + dateStr, "1");
 }
+
 function saveResult(dateStr, payload) {
-  try { localStorage.setItem(KEY_RESULT_PREFIX + dateStr, JSON.stringify(payload)); } catch {}
+  try {
+    localStorage.setItem(KEY_RESULT_PREFIX + dateStr, JSON.stringify(payload));
+  } catch {}
 }
+
 function loadResult(dateStr) {
   try {
     const raw = localStorage.getItem(KEY_RESULT_PREFIX + dateStr);
     if (!raw) return null;
     return JSON.parse(raw);
-  } catch { return null; }
+  } catch {
+    return null;
+  }
 }
 
 // --- State
@@ -64,7 +72,6 @@ let leaderboardForm, playerNameInput, leaderboardWarningEl, leaderboardBody;
 
 // ---------- Utilities ----------
 function getRunDateISO() {
-
   // === DEV OVERRIDE ===
   // return "2025-11-23";   // Change this date to test
   // ====================
@@ -89,18 +96,22 @@ function stopTimer() {
 function startTimer(seconds) {
   stopTimer();
   timeLeft = seconds;
-  timerEl.textContent = `${timeLeft}s`;
-  timerEl.classList.remove("timer-danger");
+  if (timerEl) {
+    timerEl.textContent = `${timeLeft}s`;
+    timerEl.classList.remove("timer-danger");
+  }
 
   // mark question start for metrics
   questionStartTime = performance.now();
 
   timerId = setInterval(() => {
     timeLeft--;
-    timerEl.textContent = `${timeLeft}s`;
+    if (timerEl) {
+      timerEl.textContent = `${timeLeft}s`;
 
-    if (timeLeft <= 5 && timeLeft > 0) {
-      timerEl.classList.add("timer-danger");
+      if (timeLeft <= 5 && timeLeft > 0) {
+        timerEl.classList.add("timer-danger");
+      }
     }
 
     if (timeLeft <= 0) {
@@ -112,15 +123,17 @@ function startTimer(seconds) {
 
 // ---------- Date helpers ----------
 function parseYMD(s) {
-  const [y,m,d] = s.split("-").map(Number);
+  const [y, m, d] = s.split("-").map(Number);
   return new Date(y, m - 1, d);
 }
+
 function formatYMD(d) {
   const y = d.getFullYear();
   const m = String(d.getMonth() + 1).padStart(2, "0");
   const day = String(d.getDate()).padStart(2, "0");
   return `${y}-${m}-${day}`;
 }
+
 function yesterdayOf(dateStr) {
   const d = parseYMD(dateStr);
   d.setDate(d.getDate() - 1);
@@ -199,6 +212,7 @@ function sanitizeName(raw) {
   return name;
 }
 
+// local cache (currently not used for display, but kept in case needed later)
 function loadLeaderboardStore() {
   try {
     const raw = localStorage.getItem(KEY_LEADERBOARD);
@@ -221,6 +235,7 @@ function getLeaderboardForDate(dateStr) {
   return Array.isArray(store[dateStr]) ? store[dateStr] : [];
 }
 
+// Write score to Google Sheets
 async function addLeaderboardEntry(dateStr, entry) {
   try {
     const body = new URLSearchParams();
@@ -241,46 +256,7 @@ async function addLeaderboardEntry(dateStr, entry) {
   }
 }
 
-
-
-function fetchLeaderboardJSONP(dateStr) {
-  return new Promise((resolve, reject) => {
-    const callbackName = "ps5LbCallback_" + Date.now() + "_" + Math.floor(Math.random() * 100000);
-
-    window[callbackName] = (data) => {
-      try {
-        // clean up
-        delete window[callbackName];
-        script.remove();
-        // Some error handlers send {ok:false,...}
-        if (data && data.ok === false) {
-          console.error("Leaderboard error:", data.error);
-          reject(new Error(data.error || "Leaderboard error"));
-        } else {
-          resolve(data || []);
-        }
-      } catch (err) {
-        reject(err);
-      }
-    };
-
-    const script = document.createElement("script");
-    script.src =
-      LEADERBOARD_API_URL +
-      "?date=" + encodeURIComponent(dateStr) +
-      "&callback=" + encodeURIComponent(callbackName);
-
-    script.onerror = (err) => {
-      delete window[callbackName];
-      script.remove();
-      reject(err);
-    };
-
-    document.body.appendChild(script);
-  });
-}
-
-
+// JSONP reader for leaderboard
 function fetchLeaderboardJSONP(dateStr) {
   return new Promise((resolve, reject) => {
     const callbackName = "ps5LbCallback_" + Date.now() + "_" + Math.floor(Math.random() * 100000);
@@ -316,8 +292,6 @@ function fetchLeaderboardJSONP(dateStr) {
     document.body.appendChild(script);
   });
 }
-
-
 
 function renderLeaderboard(dateStr) {
   if (!leaderboardBody) return;
@@ -367,9 +341,6 @@ function renderLeaderboard(dateStr) {
         "<tr><td colspan='4'>Error loading leaderboard.</td></tr>";
     });
 }
-
-
-
 
 async function handleLeaderboardSubmit(evt) {
   evt.preventDefault();
@@ -425,9 +396,6 @@ async function handleLeaderboardSubmit(evt) {
   }
 }
 
-
-
-
 function hasSubmittedLeaderboard(dateStr) {
   try {
     return localStorage.getItem(KEY_LB_SUBMIT_PREFIX + dateStr) === "1";
@@ -442,13 +410,14 @@ function setSubmittedLeaderboard(dateStr) {
   } catch {}
 }
 
-
 // ---------- Locked Result ----------
 function renderPersistedResult(dateStr, persisted) {
   RUN_DATE = dateStr;
   QUESTIONS = CALENDAR[RUN_DATE] || [];
   picks = Array.isArray(persisted?.picks) ? persisted.picks : [];
-  score = Number.isFinite(persisted?.score) ? persisted.score : picks.filter(p => p && p.pick === p.correct).length;
+  score = Number.isFinite(persisted?.score)
+    ? persisted.score
+    : picks.filter(p => p && p.pick === p.correct).length;
 
   document.body.classList.remove("no-scroll");
   document.body.classList.remove("start-page");
@@ -457,7 +426,7 @@ function renderPersistedResult(dateStr, persisted) {
   cardSec.classList.add("hidden");
   resultSec.classList.remove("hidden");
   headerEl?.classList.add("hidden");
-  timerEl.style.display = "none";
+  if (timerEl) timerEl.style.display = "none";
 
   scoreText.textContent = `You got ${score} / ${QUESTIONS.length || 5} correct.`;
 
@@ -551,7 +520,7 @@ function showLockedGate(dateStr) {
   cardSec.classList.add("hidden");
   resultSec.classList.remove("hidden");
   headerEl?.classList.add("hidden");
-  timerEl.style.display = "none";
+  if (timerEl) timerEl.style.display = "none";
   scoreText.textContent = `You already played ${dateStr}. Come back tomorrow!`;
   reviewEl.innerHTML = "";
   renderLeaderboard(dateStr);
@@ -609,11 +578,13 @@ function showStartScreen() {
   cardSec.classList.add("hidden");
   resultSec.classList.add("hidden");
   if (headerEl) headerEl.classList.add("hidden");
-  timerEl.style.display = "none";
+  if (timerEl) timerEl.style.display = "none";
   stopTimer();
 
-  startBtn.disabled = false;
-  startBtn.textContent = "START";
+  if (startBtn) {
+    startBtn.disabled = false;
+    startBtn.textContent = "START";
+  }
 }
 
 function startGame() {
@@ -646,7 +617,7 @@ function startGame() {
     cardSec.classList.add("hidden");
     resultSec.classList.remove("hidden");
     headerEl?.classList.add("hidden");
-    timerEl.style.display = "none";
+    if (timerEl) timerEl.style.display = "none";
     scoreText.textContent = `No quiz scheduled for ${RUN_DATE}.`;
     reviewEl.innerHTML = `<div class="rev"><div class="q">Add a set for ${RUN_DATE} in questions.js</div></div>`;
     return;
@@ -656,7 +627,7 @@ function startGame() {
   resultSec.classList.add("hidden");
   cardSec.classList.remove("hidden");
   headerEl?.classList.remove("hidden");
-  timerEl.style.display = "block";
+  if (timerEl) timerEl.style.display = "block";
 
   setAttempt(RUN_DATE);
   renderQuestion();
@@ -672,7 +643,7 @@ function showResult() {
   cardSec.classList.add("hidden");
   resultSec.classList.remove("hidden");
   headerEl?.classList.add("hidden");
-  timerEl.style.display = "none";
+  if (timerEl) timerEl.style.display = "none";
 
   // Force layout flush, then scroll to top so nothing hides behind footer
   void resultSec.offsetHeight;
@@ -691,7 +662,7 @@ function showResult() {
     updateTouchdownStreak(RUN_DATE, false);
   }
 
-  // Safe review rendering WITH colors (fixes your bug)
+  // Safe review rendering WITH colors
   reviewEl.innerHTML = "";
   picks.forEach(({ idx, pick, correct }) => {
     const q = (QUESTIONS && QUESTIONS[idx]) || {
