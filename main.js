@@ -46,7 +46,7 @@ let progressEl, timerEl, scoreText, reviewEl, restartBtn, headerEl;
 function getRunDateISO() {
 
   // === DEV OVERRIDE ===
-  // return "2025-10-02";   // Change this date to test
+  // return "2025-11-23";   // Change this date to test
   // ====================
 
   const p = new URLSearchParams(window.location.search);
