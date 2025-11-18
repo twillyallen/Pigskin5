@@ -9,6 +9,7 @@ const KEY_RESULT_PREFIX  = "ft5_result_"; // stores {score, picks, totalTime, av
 const KEY_LEADERBOARD    = "ps5_leaderboard_v1";
 const KEY_LB_SUBMIT_PREFIX = "ps5_leaderboard_submit_";
 const PROD_HOSTS = ["twillyallen.github.io", "pigskin5.com"];
+const LEADERBOARD_API_URL = "https://script.google.com/macros/s/AKfycbxXp59rZDH5mp5elAFIt6T3DVI_4LM-mGVnTk7fg4LxlEu3HL1UQTMmo_VNgaS4CTQkvA/exec";
 
 // Add restricted words here (case-insensitive)
 const BANNED_WORDS = [
@@ -218,55 +219,78 @@ function getLeaderboardForDate(dateStr) {
   return Array.isArray(store[dateStr]) ? store[dateStr] : [];
 }
 
-function addLeaderboardEntry(dateStr, entry) {
-  const store = loadLeaderboardStore();
-  if (!Array.isArray(store[dateStr])) store[dateStr] = [];
-
-  store[dateStr].push(entry);
-
-  // Sort: points desc, then avgTime asc, then earliest created
-  store[dateStr].sort((a, b) => {
-    if (b.points !== a.points) return b.points - a.points;
-    const aAvg = a.avgTime ?? Infinity;
-    const bAvg = b.avgTime ?? Infinity;
-    if (aAvg !== bAvg) return aAvg - bAvg;
-    return (a.createdAt ?? 0) - (b.createdAt ?? 0);
-  });
-
-  // keep top 20 per day
-  store[dateStr] = store[dateStr].slice(0, 20);
-
-  saveLeaderboardStore(store);
+async function addLeaderboardEntry(dateStr, entry) {
+  try {
+    await fetch(LEADERBOARD_API_URL, {
+      method: "POST",
+      headers: {
+        // using JSON but this might trigger a preflight; if CORS complains we can
+        // swap this to text/plain, but leave as-is for now for clarity.
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        date: dateStr,
+        name: entry.name,
+        points: entry.points,
+        avgTime: entry.avgTime
+      })
+    });
+  } catch (err) {
+    console.error("Failed to submit leaderboard entry:", err);
+  }
 }
+
 
 function renderLeaderboard(dateStr) {
   if (!leaderboardBody) return;
-  const entries = getLeaderboardForDate(dateStr);
-  leaderboardBody.innerHTML = "";
 
-  entries.forEach((e, idx) => {
-    const tr = document.createElement("tr");
+  // show loading state while we fetch
+  leaderboardBody.innerHTML = "<tr><td colspan='4'>Loading...</td></tr>";
 
-    const rankTd = document.createElement("td");
-    rankTd.textContent = String(idx + 1);
+  fetch(LEADERBOARD_API_URL + "?date=" + encodeURIComponent(dateStr))
+    .then(res => res.json())
+    .then(entries => {
+      leaderboardBody.innerHTML = "";
 
-    const nameTd = document.createElement("td");
-    nameTd.textContent = e.name || "Anonymous";
+      if (!Array.isArray(entries) || entries.length === 0) {
+        const tr = document.createElement("tr");
+        const td = document.createElement("td");
+        td.colSpan = 4;
+        td.textContent = "No scores yet. Be the first!";
+        tr.appendChild(td);
+        leaderboardBody.appendChild(tr);
+        return;
+      }
 
-    const pointsTd = document.createElement("td");
-    pointsTd.textContent = (e.points ?? 0).toLocaleString();
+      entries.forEach((e, idx) => {
+        const tr = document.createElement("tr");
 
-    const avgTd = document.createElement("td");
-    avgTd.textContent = (typeof e.avgTime === "number")
-      ? `${e.avgTime.toFixed(1)}s`
-      : "-";
+        const rankTd = document.createElement("td");
+        rankTd.textContent = String(idx + 1);
 
-    tr.append(rankTd, nameTd, pointsTd, avgTd);
-    leaderboardBody.appendChild(tr);
-  });
+        const nameTd = document.createElement("td");
+        nameTd.textContent = e.name || "Anonymous";
+
+        const pointsTd = document.createElement("td");
+        pointsTd.textContent = (e.points ?? 0).toLocaleString();
+
+        const avgTd = document.createElement("td");
+        avgTd.textContent =
+          typeof e.avgTime === "number" ? `${e.avgTime.toFixed(1)}s` : "-";
+
+        tr.append(rankTd, nameTd, pointsTd, avgTd);
+        leaderboardBody.appendChild(tr);
+      });
+    })
+    .catch(err => {
+      console.error("Failed to load leaderboard:", err);
+      leaderboardBody.innerHTML =
+        "<tr><td colspan='4'>Error loading leaderboard.</td></tr>";
+    });
 }
 
-function handleLeaderboardSubmit(evt) {
+
+async function handleLeaderboardSubmit(evt) {
   evt.preventDefault();
   if (!RUN_DATE) return;
 
@@ -299,7 +323,10 @@ function handleLeaderboardSubmit(evt) {
     createdAt: Date.now()
   };
 
-  addLeaderboardEntry(RUN_DATE, entry);
+  // Send to Google Sheets
+  await addLeaderboardEntry(RUN_DATE, entry);
+
+  // Refresh UI from cloud
   renderLeaderboard(RUN_DATE);
 
   // mark as submitted in memory + localStorage
@@ -316,6 +343,7 @@ function handleLeaderboardSubmit(evt) {
     playerNameInput.disabled = true;
   }
 }
+
 
 
 function hasSubmittedLeaderboard(dateStr) {
