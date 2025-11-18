@@ -298,7 +298,7 @@ function renderLeaderboard(dateStr) {
 
   leaderboardBody.innerHTML = "<tr><td colspan='4'>Loading...</td></tr>";
 
-  fetchLeaderboardJSONP()
+  fetchLeaderboardJSONP(dateStr)
     .then(entries => {
       leaderboardBody.innerHTML = "";
 
@@ -312,8 +312,17 @@ function renderLeaderboard(dateStr) {
         return;
       }
 
-      // 🔹 Filter to today's records
-      const todaysEntries = entries.filter(e => e.date === dateStr);
+      // 🔹 FIX: Parse messy date strings from Apps Script
+      const todaysEntries = entries.filter(e => {
+        try {
+          const entryDate = new Date(e.date);
+          const targetDate = new Date(dateStr);
+          return entryDate.toDateString() === targetDate.toDateString();
+        } catch {
+          return e.date === dateStr; // fallback to exact match
+        }
+      });
+
       const rowsToShow = todaysEntries.length ? todaysEntries : [];
 
       if (!rowsToShow.length) {
