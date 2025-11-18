@@ -314,14 +314,16 @@ function renderLeaderboard(dateStr) {
 
       // 🔹 FIX: Parse messy date strings from Apps Script
       const todaysEntries = entries.filter(e => {
-        try {
-          const entryDate = new Date(e.date);
-          const targetDate = new Date(dateStr);
-          return entryDate.toDateString() === targetDate.toDateString();
-        } catch {
-          return e.date === dateStr; // fallback to exact match
-        }
-      });
+  try {
+    const entryDate = new Date(e.date);
+    // Parse dateStr as local date, not UTC
+    const [year, month, day] = dateStr.split('-').map(Number);
+    const targetDate = new Date(year, month - 1, day);
+    return entryDate.toDateString() === targetDate.toDateString();
+  } catch {
+    return e.date === dateStr;
+  }
+});
 
       const rowsToShow = todaysEntries.length ? todaysEntries : [];
 
