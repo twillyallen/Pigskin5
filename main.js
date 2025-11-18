@@ -221,34 +221,70 @@ function getLeaderboardForDate(dateStr) {
 
 async function addLeaderboardEntry(dateStr, entry) {
   try {
+    const body = new URLSearchParams();
+    body.append("date", dateStr);
+    body.append("name", entry.name);
+    body.append("points", String(entry.points ?? 0));
+    body.append("avgTime", String(entry.avgTime ?? 0));
+
+    // no-cors + form-encoded body = no preflight, no CORS crash
     await fetch(LEADERBOARD_API_URL, {
       method: "POST",
-      headers: {
-        // using JSON but this might trigger a preflight; if CORS complains we can
-        // swap this to text/plain, but leave as-is for now for clarity.
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        date: dateStr,
-        name: entry.name,
-        points: entry.points,
-        avgTime: entry.avgTime
-      })
+      mode: "no-cors",
+      body
     });
+
+    // We can't read the response (opaque), but the row will be written.
   } catch (err) {
     console.error("Failed to submit leaderboard entry:", err);
   }
 }
 
 
+function fetchLeaderboardJSONP(dateStr) {
+  return new Promise((resolve, reject) => {
+    const callbackName = "ps5LbCallback_" + Date.now() + "_" + Math.floor(Math.random() * 100000);
+
+    window[callbackName] = (data) => {
+      try {
+        // clean up
+        delete window[callbackName];
+        script.remove();
+        // Some error handlers send {ok:false,...}
+        if (data && data.ok === false) {
+          console.error("Leaderboard error:", data.error);
+          reject(new Error(data.error || "Leaderboard error"));
+        } else {
+          resolve(data || []);
+        }
+      } catch (err) {
+        reject(err);
+      }
+    };
+
+    const script = document.createElement("script");
+    script.src =
+      LEADERBOARD_API_URL +
+      "?date=" + encodeURIComponent(dateStr) +
+      "&callback=" + encodeURIComponent(callbackName);
+
+    script.onerror = (err) => {
+      delete window[callbackName];
+      script.remove();
+      reject(err);
+    };
+
+    document.body.appendChild(script);
+  });
+}
+
+
 function renderLeaderboard(dateStr) {
   if (!leaderboardBody) return;
 
-  // show loading state while we fetch
   leaderboardBody.innerHTML = "<tr><td colspan='4'>Loading...</td></tr>";
 
-  fetch(LEADERBOARD_API_URL + "?date=" + encodeURIComponent(dateStr))
-    .then(res => res.json())
+  fetchLeaderboardJSONP(dateStr)
     .then(entries => {
       leaderboardBody.innerHTML = "";
 
@@ -275,8 +311,11 @@ function renderLeaderboard(dateStr) {
         pointsTd.textContent = (e.points ?? 0).toLocaleString();
 
         const avgTd = document.createElement("td");
-        avgTd.textContent =
-          typeof e.avgTime === "number" ? `${e.avgTime.toFixed(1)}s` : "-";
+        if (typeof e.avgTime === "number" && !Number.isNaN(e.avgTime)) {
+          avgTd.textContent = `${e.avgTime.toFixed(1)}s`;
+        } else {
+          avgTd.textContent = "-";
+        }
 
         tr.append(rankTd, nameTd, pointsTd, avgTd);
         leaderboardBody.appendChild(tr);
@@ -288,6 +327,7 @@ function renderLeaderboard(dateStr) {
         "<tr><td colspan='4'>Error loading leaderboard.</td></tr>";
     });
 }
+
 
 
 async function handleLeaderboardSubmit(evt) {
