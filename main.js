@@ -15,7 +15,9 @@ const LEADERBOARD_API_URL = "https://script.google.com/macros/s/AKfycbxXp59rZDH5
 const BANNED_WORDS = [
    "Nigger",
    "Cunt",
-   "Hitler"
+   "Hitler",
+   "Faggot",
+   "Fag"
 ];
 
 function isProd() {
