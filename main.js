@@ -372,6 +372,13 @@ async function handleLeaderboardSubmit(evt) {
   evt.preventDefault();
   if (!RUN_DATE) return;
 
+  // Disable submit button immediately to prevent spam
+  const submitBtn = leaderboardForm?.querySelector('button[type="submit"]');
+  if (submitBtn) {
+    submitBtn.disabled = true;
+    submitBtn.textContent = "Submitting...";
+  }
+
   // only allow ONE submission per day per browser
   if (hasSubmittedLeaderboard(RUN_DATE) ||
       (leaderboardForm && leaderboardForm.classList.contains("submitted"))) {
