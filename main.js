@@ -401,13 +401,19 @@ async function handleLeaderboardSubmit(evt) {
   const rawName = playerNameInput?.value || "";
   const name = sanitizeName(rawName);
 
-  if (!name) {
-    if (leaderboardWarningEl) {
-      leaderboardWarningEl.textContent =
-        "Invalid name. Must be 27 characters or less, no spaces, and no banned words.";
-    }
-    return;
+if (!name) {
+  if (leaderboardWarningEl) {
+    leaderboardWarningEl.textContent =
+      "Invalid name. Must be 27 characters or less, no spaces, and no banned words.";
   }
+  // Re-enable the button so they can try again
+  const submitBtn = leaderboardForm?.querySelector('button[type="submit"]');
+  if (submitBtn) {
+    submitBtn.disabled = false;
+    submitBtn.textContent = "Submit Score";
+  }
+  return;
+}
 
   const entry = {
     name,
