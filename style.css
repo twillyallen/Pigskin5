@@ -165,9 +165,10 @@ body.quiz-active .progress-bar {
 
 .college-badge {
   position: absolute;
-  top: -50px;
-  left: -35px;
-  transform: rotate(-12deg);
+  top: -38px;
+  left: 15%;
+  transform: translate(-50%, 0) rotate(-12deg);
+  transform-origin: center;
   width: clamp(140px, 35vw, 220px);
   height: auto;
   z-index: 2;
@@ -182,13 +183,11 @@ body.quiz-active .progress-bar {
 
 @media (max-width: 420px){
   .college-badge {
-    top: -20px;
-    left: -8px;
-    transform: rotate(-10deg);
-    width: 180px;
+    top: -30px;
+    width: 160px;
+    transform: translate(-50%, 0) rotate(-10deg);
   }
 }
-
 
 
 
@@ -448,6 +447,27 @@ footer a:visited {
 .leaderboard-form .btn.small {
   padding: 6px 14px;
   font-size: 0.85rem;
+  background: var(--btn-cyan);
+  color: var(--ink);
+  border: 0;
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color .12s ease, transform .12s ease;
+}
+
+.leaderboard-form .btn.small:hover {
+  background: var(--btn-cyan-hover);
+  transform: translateY(-1px);
+}
+
+.leaderboard-form .btn.small:active {
+  transform: translateY(1px);
+}
+
+.leaderboard-form .btn.small:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 
 .leaderboard-warning {

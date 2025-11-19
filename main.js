@@ -73,7 +73,7 @@ let leaderboardForm, playerNameInput, leaderboardWarningEl, leaderboardBody;
 // ---------- Utilities ----------
 function getRunDateISO() {
   // === DEV OVERRIDE ===
-  // return "2025-11-23";   // Change this date to test
+   //return "2025-11-22";   // Change this date to test
   // ====================
 
   const p = new URLSearchParams(window.location.search);
@@ -582,6 +582,9 @@ function showLockedGate(dateStr) {
 
 // ---------- Screen Switchers ----------
 function showStartScreen() {
+  //Force scroll to top
+  window.scrollTo(0,0);
+
   // Start page state
   document.body.classList.remove("no-scroll");
   document.body.classList.remove("hide-footer");
@@ -963,7 +966,7 @@ function injectShareSummary() {
 
 // ---------- Init ----------
 function init() {
-  startScreen = document.getElementById("startScreen");
+  startScreen  = document.getElementById("startScreen");
   startBtn     = document.getElementById("startBtn");
   cardSec      = document.getElementById("card");
   resultSec    = document.getElementById("result");
@@ -1001,6 +1004,9 @@ function init() {
   leaderboardForm?.addEventListener("submit", handleLeaderboardSubmit);
 
   showStartScreen();
+
+  // Ensure page loads at top
+  window.scrollTo(0, 0);
 
   const menuBtn = document.getElementById("menu-toggle");
   const menu = document.getElementById("menu");
