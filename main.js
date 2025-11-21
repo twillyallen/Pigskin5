@@ -717,6 +717,24 @@ function showLockedGate(dateStr) {
 
 // ---------- Screen Switchers ----------
 
+// Function to swap logo on Saturdays for college edition
+function setLogoForDay() {
+  const titleLogo = document.querySelector('.title-logo');
+  if (!titleLogo) return;
+  
+  const today = new Date().getDay(); // 0 = Sunday, 6 = Saturday
+  
+  if (today === 6) {
+    // It's Saturday - use college edition logo
+    titleLogo.src = 'pigskin5collegelogo.png';
+    titleLogo.alt = 'Pigskin5 College Edition Logo';
+  } else {
+    // Any other day - use regular logo
+    titleLogo.src = 'pigskin5logo.png';
+    titleLogo.alt = 'Pigskin5 Logo';
+  }
+}
+
 // Display the start/home screen
 function showStartScreen() {
   // Force scroll to top of page

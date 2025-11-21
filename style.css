@@ -108,13 +108,38 @@ body.quiz-active .progress-bar {
 
 
 /* ---------------- Start Screen ---------------- */
+.title-logo {
+  width: 87%;           
+  max-width: 350px;
+  display: block;
+  margin: 0 auto 20px;
+}
+
+/* Medium screens (tablets) */
+@media (min-width: 600px) {
+  .title-logo {
+    width: 55%;
+    max-width: 450px;
+  }
+}
+
+/* Large screens (PC / laptop / monitor) */
+@media (min-width: 1024px) {
+  .title-logo {
+    width: 80%;
+    max-width: 900px;   
+  }
+}
+
+
 .start-screen{
   width:100%;
   min-height: 100vh;
   display:flex;
   flex-direction:column;
   align-items:center;
-  justify-content:center;
+  justify-content:flex-start;
+  padding-top: 80px;
   text-align:center;
   gap:12px;
 }
