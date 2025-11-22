@@ -351,20 +351,26 @@ export const CALENDAR = {
     { question: "Who leads the league in Sacks?", choices: ["Nik Bonito", "Myles Garrett", "Micah Parsons", "Brian Burns"], answer: 1 },
     { question: "Which Kicker has the most Field Goals this season?", choices: ["Chase McLaughlin", "Brandon Aubrey", "Chris Boswell", "Cameron Dicker"], answer: 3 }
   ],
-  "2025-11-22": [ //Saturday
+  "2025-11-22": { //Saturday
+    event: "college",
+    questions: [
     { question: "What school did Cam Newton lead to an undefeated season and national title?", choices: ["Auburn", "Florida", "Clemson", "Florida State"], answer: 0 },
     { question: "Who leads the Big Ten in Net Yards per Punt Attempt (min. 15 punts)?", choices: ["Trevor Allen", "Ryan Eckley", "Sean West", "Luke Akers"], answer: 2 },
     { question: "True or False: A Player has got back-to-back Heisman Trophies", choices: ["True", "False"], answer: 0 },
     { question: "Which Head Coach has the most National Championships?", choices: ["Bear Bryant", "John McKay", "Woody Hayes", "Nick Saban"], answer: 3 },
     { question: "Which QB on a ranked team has the most Passing Yards?", choices: ["Drew Mestemaker", "Julian Sayin", "Joey Aguilar", "Ty Simpson"], answer: 0 }
-  ],
-  "2025-11-23": [ //Sunday
+    ]
+  },
+  "2025-11-23": { //Sunday
+    event: "",
+    questions: [
     { question: "Prior to today, Who is the current NFC North Leader?", choices: ["Packers", "Lions", "Bears", "Vikings"], answer: 2 },
     { question: "What is the most amount of Receiving Yards Antonio Brown ever had in a season?", choices: ["1,698", "1,943", "1,834", "1,572"], answer: 2 },
     { question: "True or False: Tom Brady was the last pick of the draft", choices: ["True", "False"], answer: 1 },
     { question: "Prior to today, who is tied with DJ Turner II for the most Passes Defended?", choices: ["Quinyon Mitchell", "Derek Stingley Jr", "Keisean Nixon", "Mike Jackson"], answer: 2 },
     { question: "Which player has scored the most this season?", choices: ["Davante Adams", "Josh Jacobs", "Christian McCaffrey", "Jonathan Taylor"], answer: 3 }
-  ],
+    ],
+  },
 };
 
 

@@ -18,6 +18,14 @@ const PROD_HOSTS = ["twillyallen.github.io", "pigskin5.com"];
 const LEADERBOARD_API_URL = "https://script.google.com/macros/s/AKfycbxbFUaP1CUMxtkigaxLUELzoquJqsyV2_3GzHhwvEc91Mj5WEtA2K1X8z7vem6MyXnlcA/exec";
 
 
+//SPECIAL EVENT DAYS --------------------------------------
+const EVENT_LOGOS = {
+  "college": "logos/pigskin5collegelogo.png",
+  
+  // Add more events here as you create logos
+};
+
+
 
 
 function isProd() {
@@ -565,7 +573,7 @@ function setSubmittedLeaderboard(dateStr) {
 // Display a previously completed quiz's results
 function renderPersistedResult(dateStr, persisted) {
   RUN_DATE = dateStr;
-  QUESTIONS = CALENDAR[RUN_DATE] || [];
+  QUESTIONS = getQuestionsForDate(RUN_DATE);
   
   // Restore the user's previous picks and score
   picks = Array.isArray(persisted?.picks) ? persisted.picks : [];
@@ -723,18 +731,27 @@ function setLogoForDay() {
   console.log('setLogoForDay called!', titleLogo);
   if (!titleLogo) return;
   
-  const today = new Date().getDay();
-  console.log('Today is day:', today, '(6 = Saturday)');
+  const runDate = getRunDateISO();
+  //const today = new Date().getDay(); // 0 = Sunday, 6 = Saturday
   
-  if (today === 6) {
-    console.log('Setting college logo');
-    titleLogo.src = 'pigskin5collegelogo.png';
-    titleLogo.alt = 'Pigskin5 College Edition Logo';
-  } else {
-    console.log('Setting regular logo');
-    titleLogo.src = 'pigskin5logo.png';
-    titleLogo.alt = 'Pigskin5 Logo';
+  // Check if there's a special event for today
+  const dayData = CALENDAR[runDate];
+  if (dayData && typeof dayData === 'object' && dayData.event) {
+    const eventName = dayData.event;
+    const logoFile = EVENT_LOGOS[eventName];
+    
+    if (logoFile) {
+      console.log(`Special event active: ${eventName}`);
+      titleLogo.src = logoFile;
+      titleLogo.alt = `Pigskin5 ${eventName} Logo`;
+      return; // Exit early - special event overrides everything
+    }
   }
+  
+  // No special event - check if it's Saturday (college edition)
+console.log('Setting regular logo');
+    titleLogo.src = 'logos/pigskin5logo.png';
+    titleLogo.alt = 'Pigskin5 Logo';
 }
 
 // Display the start/home screen
@@ -756,29 +773,8 @@ function showStartScreen() {
   }
 
   // --- Add College Edition badge on Saturdays ---
-  const now = new Date();
-  const isSaturday = now.getDay() === 6; // JavaScript: Sunday=0, Monday=1, ... Saturday=6
-  const titleEl = document.querySelector(".game-title");
-
-  // Clean up any previous badge (in case we're returning from results)
-  document.querySelector(".college-badge")?.remove();
-
-  if (isSaturday && titleEl) {
-    let wrap = titleEl.closest(".title-wrap");
-    if (!wrap) {
-      wrap = document.createElement("div");
-      wrap.className = "title-wrap";
-      titleEl.parentNode.insertBefore(wrap, titleEl);
-      wrap.appendChild(titleEl);
-    }
-
-    // Create and attach badge image
-    const badge = document.createElement("img");
-    badge.className = "college-badge";
-    badge.src = "./college.png";
-    badge.alt = "College Edition";
-    wrap.appendChild(badge);
-  }
+document.querySelector(".college-badge")?.remove();
+document.querySelector(".title-wrap")?.classList.remove("title-wrap");
 
   // --- Show Start Screen ---
   startScreen.classList.remove("hidden");
@@ -794,6 +790,20 @@ function showStartScreen() {
     startBtn.disabled = false;
     startBtn.textContent = "START";
   }
+}
+
+
+// Helper to get questions from CALENDAR (handles both array and object formats)
+function getQuestionsForDate(dateStr) {
+  const dayData = CALENDAR[dateStr];
+  
+  // If it's an object with questions property, return those
+  if (dayData && typeof dayData === 'object' && Array.isArray(dayData.questions)) {
+    return dayData.questions;
+  }
+  
+  // Otherwise it's just an array of questions
+  return Array.isArray(dayData) ? dayData : [];
 }
 
 
@@ -815,7 +825,7 @@ function startGame() {
   }
 
   // Load today's questions from the CALENDAR object
-  QUESTIONS = CALENDAR[RUN_DATE];
+  QUESTIONS = getQuestionsForDate(RUN_DATE);
 
   // Reset all game state variables
   current = 0;          // Start at question 0
