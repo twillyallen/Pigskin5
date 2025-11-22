@@ -1291,6 +1291,8 @@ function init() {
   reviewEl     = document.getElementById("review");
   restartBtn   = document.getElementById("restartBtn");
   headerEl     = document.querySelector(".header");
+  
+  setTimeout(() => setLogoForDay(), 100);
 
   leaderboardForm      = document.getElementById("leaderboardForm");
   playerNameInput      = document.getElementById("playerName");
