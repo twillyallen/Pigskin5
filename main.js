@@ -21,8 +21,8 @@ const LEADERBOARD_API_URL = "https://script.google.com/macros/s/AKfycbxbFUaP1CUM
 //SPECIAL EVENT DAYS --------------------------------------
 const EVENT_LOGOS = {
   "college": "logos/pigskin5collegelogo.png",
-  
-  // Add more events here as you create logos
+  "packers": "logos/pigskin5packerlogo.png",
+  // add more events here 
 };
 
 
@@ -35,7 +35,7 @@ function isProd() {
 
 // Check if the user has already attempted the quiz for a specific date
 function hasAttempt(dateStr) {
-  return localStorage.getItem(KEY_ATTEMPT_PREFIX + dateStr) === "1";   // Returns "1" if they've played
+  return localStorage.getItem(KEY_ATTEMPT_PREFIX + dateStr) === "1";   // Returns "1" if played
 }
 
 // Mark that the user has attempted the quiz for this date
