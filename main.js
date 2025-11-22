@@ -1166,13 +1166,43 @@ function injectShareSummary() {
     // Regenerate squares in case they changed
     const squaresNow = picks.map(p => (p.pick === p.correct ? "🟩" : "⬜")).join("");
     
-    // Create share text - different message for perfect score
-    let shareText;
-    if (score === QUESTIONS.length) {
-      shareText = `I Scored a Touchdown! ${squaresNow}\n\nhttps://pigskin5.com\n\n@TwillysTakes on X!`;
-    } else {
-      shareText = `I scored ${squaresNow} in Pigskin 5!\n\nhttps://pigskin5.com\n\n@TwillysTakes on X!`;
-    }
+    // Get current streaks
+  const dailyStreak = computeAndSaveStreak(RUN_DATE);
+  const tdStreak = localStorage.getItem("tdStreak") || 0;
+  
+  let shareText;
+  
+  if (score === QUESTIONS.length) {
+    // Perfect score - TOUCHDOWN!
+    shareText = `TOUCHDOWN! ${squaresNow}
+    ${latestAvgTime.toFixed(1)}s avg · ${totalPoints.toLocaleString()} pts
+    Daily Streak: 🔥 ${dailyStreak}
+    Touchdown Streak: 🏈 ${tdStreak}
+
+pigskin5.com
+
+@twillystakes`;
+  } else if (score === 0) {
+    // Zero correct - humorous message
+    shareText = `Pigskin 5 ${RUN_DATE}
+${squaresNow}
+I do NOT know ball 🤐
+
+Can you beat my score?
+pigskin5.com
+
+@twillystakes`;
+  } else {
+    // Regular score
+    shareText = `Pigskin 5 ${RUN_DATE}
+${squaresNow}
+${latestAvgTime.toFixed(1)}s avg · ${totalPoints.toLocaleString()} pts
+Daily Streak: 🔥 ${dailyStreak}
+
+pigskin5.com
+
+@twillystakes`;
+  }
     
     try {
       // Try modern clipboard API first (more secure, requires HTTPS)
@@ -1202,6 +1232,7 @@ function injectShareSummary() {
       showToast("Could not copy. Try manual paste.");
     }
   });
+
 
   // Add grid and button to left side
   leftRow.append(grid, shareBtn);
