@@ -720,16 +720,18 @@ function showLockedGate(dateStr) {
 // Function to swap logo on Saturdays for college edition
 function setLogoForDay() {
   const titleLogo = document.querySelector('.title-logo');
+  console.log('setLogoForDay called!', titleLogo);
   if (!titleLogo) return;
   
-  const today = new Date().getDay(); // 0 = Sunday, 6 = Saturday
+  const today = new Date().getDay();
+  console.log('Today is day:', today, '(6 = Saturday)');
   
   if (today === 6) {
-    // It's Saturday - use college edition logo
+    console.log('Setting college logo');
     titleLogo.src = 'pigskin5collegelogo.png';
     titleLogo.alt = 'Pigskin5 College Edition Logo';
   } else {
-    // Any other day - use regular logo
+    console.log('Setting regular logo');
     titleLogo.src = 'pigskin5logo.png';
     titleLogo.alt = 'Pigskin5 Logo';
   }
@@ -1292,7 +1294,9 @@ function init() {
   restartBtn   = document.getElementById("restartBtn");
   headerEl     = document.querySelector(".header");
   
+  setLogoForDay();
   setTimeout(() => setLogoForDay(), 100);
+  showStartScreen();
 
   leaderboardForm      = document.getElementById("leaderboardForm");
   playerNameInput      = document.getElementById("playerName");
