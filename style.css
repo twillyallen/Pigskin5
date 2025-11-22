@@ -517,3 +517,16 @@ footer a:visited {
 .leaderboard-table tbody tr:nth-child(odd) {
   background: rgba(255,255,255,0.04);
 }
+
+
+.start-description {
+  text-align: center;
+  margin: 1000px 0 0; /* top, right/left, bottom */
+  font-size: 1rem;
+  line-height: 1.4;
+  color: #eee;
+}
+
+.start-description strong {
+  font-size: 1.1rem;
+}
