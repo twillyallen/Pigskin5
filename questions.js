@@ -1,356 +1,6 @@
 
 // Exactly 5 questions per date. Each: { question, choices[4], answer(0..3), explanation? }
 export const CALENDAR = {
-  "2025-10-01": [ //Wednesday
-    { question: "Who leads the league in Passing Yards?", choices: ["Justin Herbert", "Daniel Jones", "Dak Prescott", "Josh Allen"], answer: 2 },
-    { question: "Who was 'The Incredible Bust' taken one pick before Barry Sanders in the 1989 draft?", choices: ["Heath Schuler", "Ryan Leaf", "Jeff George", "Tony Mandarich"], answer: 3 },
-    { question: "Who is the only player to win Super Bowl MVP on a losing team?", choices: ["Chuck Howley", "Terrell Owens", "Larry Fitzgerald", "Patrick Mahomes"], answer: 0 },
-    { question: "Which QB was drafted by the Yankees in baseball?", choices: ["Kyler Murray", "Russell Wilson", "Tom Brady", "Patrick Mahomes"], answer: 1 },
-    { question: "Which team was once called the Portsmouth Spartans?", choices: ["Lions", "Steelers", "Browns", "Colts"], answer: 0 }
-  ],
-  "2025-10-02": [ //Thursday
-    { question: "Which QB led the biggest comeback in NFL history (33 points)?", choices: ["Matt Ryan", "Kirk Cousins", "Tom Brady", "Josh Allen"], answer: 1 },
-    { question: "Leading up to tonight's Thursday Night game, who has more wins vs one another?", choices: ["Sean McVay", "Kyle Shanahan"], answer: 1 },
-    { question: "Which player had the first 'Lambeau Leap'?", choices: ["Robert Brooks", "Donald Driver", "LeRoy Butler", "Sterling Sharpe"], answer: 2 },
-    { question: "Which WR had the 'helmet catch'?", choices: ["Plaxico Burress", "Victor Cruz", "David Tyree", "Mario Manningham"], answer: 2 },
-    { question: "Who leads the league in sacks?", choices: ["Rashan Gary", "Nik Bonito", "Myles Garrett", "Byron Young"], answer: 3 }
-  ],
-  "2025-10-03": [ //Friday
-    { question: "Who has the most Yards from Scrimmage in a single season?", choices: ["Chris Johnson", "Barry Sanders", "Marshall Faulk", "Derrick Henry"], answer: 0 },
-    { question: "Which team drafted Deion Sanders?", choices: ["Falcons", "Cowboys", "49ers", "Ravens"], answer: 0 },
-    { question: "Who has the most receiving yards in a single season?", choices: ["Jerry Rice", "Cooper Kupp", "Calvin Johnson", "Justin Jefferson"], answer: 2 },
-    { question: "Which team did Vince Lombardi coach before the Packers?", choices: ["Browns", "Giants", "Commanders", "Eagles"], answer: 1 },
-    { question: "Which QB holds the record for most Passing TDs as a rookie?", choices: ["Bo Nix", "Peyton Manning", "Justin Herbert", "Baker Mayfield"], answer: 2 }
-  ],
-  "2025-10-04": [ //Saturday
-    { question: "Who is the current head coach of Alabama in the 2025 season?", choices: ["Nick Saban", "Lane Kiffin", "Kalen DeBoer", "Kirby Smart"], answer: 2 },
-    { question: "Which rivalry game is known as the 'Red River Showdown'?", choices: ["Texas vs. Texas A&M", "Texas vs. Oklahoma", "Oklahoma vs. Oklahoma State", "Texas vs. Baylor"], answer: 1 },
-    { question: "Which school has produced the most Heisman Trophy winners all-time?", choices: ["Alabama", "Notre Dame", "Ohio State", "USC"], answer: 3 },
-    { question: "Which college football stadium is nicknamed 'The Big House'?", choices: ["Michigan Stadium", "Beaver Stadium", "Ohio Stadium", "Tiger Stadium"], answer: 0 },
-    { question: "Which Pac-12 school’s band is famous for its tree mascot?", choices: ["Cal", "Stanford", "Oregon State", "Washington"], answer: 1 }
-  ],
-  "2025-10-05": [ //Sunday
-    { question: "Which WR had the 'helmet catch'?", choices: ["Plaxico Burress", "Victor Cruz", "David Tyree", "Mario Manningham"], answer: 2 },
-    { question: "Which NFL team has the most championships all-time?", choices: ["Packers", "Steelers", "Patriots", "Cowboys"], answer: 0 },
-    { question: "Which kicker has the most career game-winning field goals?", choices: ["Adam Vinatieri", "Justin Tucker", "Morten Andersen", "Gary Anderson"], answer: 0 },
-    { question: "Which NFL player appeared in the movie 'Ace Ventura: Pet Detective'?", choices: ["Joe Montana", "Dan Marino", "Jim Kelly", "Steve Young"], answer: 1 },
-    { question: "Which team had a player retire at halftime of a game?", choices: ["Bills", "Raiders", "Colts", "Dolphins"], answer: 0 }
-  ],
-  "2025-10-06": [ //Monday
-    { question: "Which pass catcher has the most career playoff TD receptions?", choices: ["Jerry Rice", "Rob Gronkowski", "Randy Moss", "Travis Kelce"], answer: 0 },
-    { question: "Which player was on the cover of Madden 2004?", choices: ["Peyton Manning", "Ray Lewis", "Marshall Faulk", "Michael Vick"], answer: 3 },
-    { question: "Which team was once known as the Decatur Staleys?", choices: ["Packers", "Bears", "Giants", "Lions"], answer: 1 },
-    { question: "Which QB threw a TD pass to himself?", choices: ["Marcus Mariota", "Aaron Rodgers", "Nick Foles", "Tom Brady"], answer: 0 },
-    { question: "Which Bears QB holds the franchise record for passing yards?", choices: ["Jay Cutler", "Mitchell Trubisky", "Jim McMahon", "Erik Kramer"], answer: 0 }
-  ],
-  "2025-10-07": [ //Tuesday
-    { question: "Jerry Rice has more career receiving yards than any player has rushing yards.", choices: ["True", "False"], answer: 0 },
-    { question: "Who was the Head Coach during the Bills 4 Consecutive Super Bowl Appearances", choices: ["Wade Phillips", "George Seifert", "Mark Levy", "Jim Kelly"], answer: 2 },
-    { question: "Current League Leader in Receptions?", choices: ["Amon-Ra St. Brown", "Christian McCaffrey", "Davante Adams", "Puka Nacua"], answer: 3 },
-    { question: "Who was the first player with 4 Super Bowl rings?", choices: ["Terry Bradshaw", "Marv Fleming", "Tom Brady", "Adam Vinatieri"], answer: 1 },
-    { question: "Which Super Bowl Era Head Coach has the highest Career Win Percentage?", choices: ["Matt LaFleur", "Nick Sirianni", "Vince Lombardi", "John Madden"], answer: 3 }
-  ],
-  "2025-10-08": [ //Wednesday
-    { question: "Which defensive back intercepted Russell Wilson at the goal line to clinch Super Bowl XLIX?", choices: ["Darrelle Revis", "Stephon Gilmore", "Malcom Butler", "Devin McCourty"], answer: 2 },
-    { question: "Every team has appeared in the Super Bowl at least once", choices: ["True", "False"], answer: 1 },
-    { question: "Which RB from the 2017 Draft Class has the most career Rushing Yards?", choices: ["Aaron Jones", "Christian McCaffrey", "Joe Mixon", "Alvin Kamara"], answer: 2 },
-    { question: "Current 2025 interception leader?", choices: ["Devin Lloyd", "Kevin Byard III", "Tremaine Edmunds", "Kerby Joseph"], answer: 0 },
-    { question: "Which 49er caught “The Catch” in the NFC Championship Game against the Cowboys?", choices: ["Jimmy Robinson", "Dwight Clark", "Jerry Rice", "John Taylor"], answer: 1 }
-  ],
-  "2025-10-09": [ //Thursday
-    { question: "The Eagles and Giants first met in 1933. Who won that game?", choices: ["Eagles", "Giants"], answer: 1 },
-    { question: "Which QB led the Eagles to their first Super Bowl win?", choices: ["Donovan McNabb", "Jalen Hurts", "Nick Foles", "Carson Wentz"], answer: 2 },
-    { question: "Who was the first Giant with 10,000 Career Rush Yards?", choices: ["Rodney Hampton", "Saquon Barkley", "Ahmad Bradshaw", "Tiki Barber"], answer: 3 },
-    { question: "Who scored the game winning TD in the 2010 'Miracle at the NEW Meadowlands' Week 15 game?", choices: ["Desean Jackson", "Michael Vick", "Brent Celek", "Jeremy Maclin"], answer: 0 },
-    { question: "Before tonight's matchup, which team has more total yards gained in 2025?", choices: ["Giants", "Eagles"], answer: 0 }
-  ],
-  "2025-10-10": [ //Friday
-    { question: "Who led the league in TD Receptions in 2016?", choices: ["Odell Beckham Jr.", "Antonio Brown", "Davante Adams", "Jordy Nelson"], answer: 3 },
-    { question: "Current 2025 leader in rushing yards?", choices: ["Jonathan Taylor", "Saquon Barkley", "Javonte Williams", "James Cook"], answer: 0 },
-    { question: "Where were the Cardinals first located?", choices: ["Phoenix", "Chicago", "St. Louis", "Scottsdale"], answer: 1 },
-    { question: "Most all time Receiving Yards in Seahawks History?", choices: ["DK Metcalf", "Doug Baldwin", "Steve Largent", "Tyler Lockett"], answer: 2 },
-    { question: "What Bengal was famous for his post-TD dance, 'The Ickey Shuffle'?", choices: ["James Brooks", "Elbert Woods", "Cris Colinsworth", "Boomer Esiason"], answer: 1 }
-  ],
-  "2025-10-11": [ //Saturday
-    { question: "Who holds the NCAA record for most career rushing yards?", choices: ["Jonathan Taylor", "Ricky Williams", "Tony Dorsett", "Donnel Pumphrey"], answer: 3 },
-    { question: "Who is currently ranked #4 in the AP Top 25?", choices: ["Oklahoma", "Oregon", "Ole Miss", "Texas A&M"], answer: 2 },
-    { question: "Who won the 2022 Heisman Trophy?", choices: ["Caleb Williams", "CJ Stroud", "Stetson Bennett", "Max Duggan"], answer: 0 },
-    { question: "Current leader in Passing TDs?", choices: ["Sawyer Robertson", "Jalon Daniels", "Dante Moore", "Carson Beck"], answer: 0 },
-    { question: "Who is the all-time winningest coach in college football history (Career wins)?", choices: ["Nick Saban", "Joe Paterno", "Bear Bryant", "Eddie Robinson"], answer: 1 }
-  ],
-  "2025-10-12": [ //Sunday
-    { question: "Who is the 49ers All-Time leading rusher?", choices: ["Joe Perry", "Steve Young", "Frank Gore", "Christian McCaffrey"], answer: 2 },
-    { question: "Who is the current #1 seed in the AFC?", choices: ["Bills", "Colts", "Steelers", "Eagles"], answer: 1 },
-    { question: "True or False: No kicker has ever been selected in the first round of the NFL Draft", choices: ["True", "False"], answer: 1 },
-    { question: "Who was the last Giants player to win MVP?", choices: ["Y.A. Tittle", "Eli Manning", "Michael Strahan", "Lawrence Taylor"], answer: 3 },
-    { question: "Before today's games, who leads the league in Receiving TDs?", choices: ["Amon-Ra St Brown", "Dallas Goedert", "George Pickens", "Emeka Edgbuka"], answer: 0 }
-  ],
-  "2025-10-13": [ //Monday
-    { question: "What year did the Colts relocate from Baltimore to Indianapolis?", choices: ["2002", "1964", "1981", "1984"], answer: 3 },
-    { question: "Who is the current #1 seed in the AFC?", choices: ["Bills", "Colts", "Steelers", "Eagles"], answer: 1 },
-    { question: "True or False: No kicker has ever been selected in the first round of the NFL Draft", choices: ["True", "False"], answer: 1 },
-    { question: "Who was the last Giants player to win MVP?", choices: ["Y.A. Tittle", "Eli Manning", "Michael Strahan", "Lawrence Taylor"], answer: 3 },
-    { question: "Before today's games, who leads the league in Receiving TDs?", choices: ["Amon-Ra St Brown", "Dallas Goedert", "George Pickens", "Emeka Edgbuka"], answer: 0 }
-  ],
-  "2025-10-14": [ //Tuesday
-    { question: "Who led the league in TD Passes in 2019?", choices: ["Aaron Rodgers", "Jameis Winston", "Lamar Jackson", "Russell Wilson"], answer: 2 },
-    { question: "Who is second (to Jerry Rice) in all-time Career Receptions?", choices: ["Jason Witten", "Cris Carter", "Marvin Harrison", "Larry Fitzgerald"], answer: 3 },
-    { question: "Which Kicker has attempted the most Field Goals this season?", choices: ["Chase McLaughlin", "Blake Grupe", "Jason Myers", "Cameron Dicker"], answer: 1 },
-    { question: "Who is the Head Coach of the 0-6 Jets?", choices: ["Brian Daboll", "Robert Salah", "Mike Vrabel", "Aaron Glenn"], answer: 3 },
-    { question: "Which team has won a Super Bowl more recently?", choices: ["Cowboys", "Commanders/Redskins", "49ers", "Panthers"], answer: 0 }
-  ],
-  "2025-10-15": [ //Wednesday
-    { question: "Who won League MVP in 2018?", choices: ["Tom Brady", "Lamar Jackson", "Drew Brees", "Patrick Mahomes"], answer: 3 },
-    { question: "Current league leader in Tackles?", choices: ["Jordyn Brooks", "Nick Bonito", "Bobby Wagner", "Jamien Sherwood"], answer: 0 },
-    { question: "Who has more Career Passing TDs?", choices: ["Dan Marino", "Philip Rivers", "Ben Roethlisberger"], answer: 1 },
-    { question: "Current league leader in Rushing TDs?", choices: ["Jalen Hurts", "James Cook", "Jonathan Taylor", "Josh Jacobs"], answer: 2 },
-    { question: "2022 First Overall Pick?", choices: ["Zack Wilson", "Travon Walker", "Trevor Lawrence", "Bryce Young"], answer: 1 }
-  ],
-  "2025-10-16": [ //Thursday
-    { question: "Who has won more playoff games since 2015?", choices: ["Bengals", "Steelers"], answer: 0 },
-    { question: "Before tonight's TNF Matchup, who has more Passing Yards this season?", choices: ["Aaron Rodgers", "Joe Flacco"], answer: 1 },
-    { question: "Which QB from the 2004 Draft has the most Passing Yards?", choices: ["Matt Schaub", "Philip Rivers", "Ben Roethlisberger", "Eli Manning"], answer: 2 },
-    { question: "The Steelers and Bengals first played each other in 1970. Who won?", choices: ["Steelers", "Bengals"], answer: 0 },
-    { question: "Which QB from the 2020 Draft has the most Career Pass TDs?", choices: ["Joe Burrow", "Jalen Hurts", "Tua Tagovailoa", "Justin Herbert"], answer: 3 }
-  ],
-  "2025-10-17": [ //Friday
-    { question: "Who was the first quarterback in NFL history to throw for 40 touchdowns in three different seasons?", choices: ["Dan Marino", "Tom Brady", "Patrick Mahomes", "Aaron Rodgers"], answer: 3 },
-    { question: "Which quarterback led the Buccaneers to their first Super Bowl win in 2003?", choices: ["Brad Johnson", "Trent Dilfer", "Rich Gannon", "John Gruden"], answer: 0 },
-    { question: "True or False: Adam Vinatieri is the NFL’s all-time leader in points scored.", choices: ["True", "False"], answer: 0 },
-    { question: "Current League Leader in Rush Yards per Game?", choices: ["Bijan Robinson", "Javonte Williams", "Jonathan Taylor", "James Cook"], answer: 2 },
-    { question: "Which player NEVER won League MVP AND the Super Bowl in the same season?", choices: ["Patrick Mahomes", "Tom Brady", "Emmitt Smith", "Joe Montana"], answer: 1 }
-  ],
-  "2025-10-18": [ //Saturday
-    { question: "What college team plays its home games in “The Big House”?", choices: ["THE Ohio State", "Alabama", "Michigan", "Colorado State"], answer: 2 },
-    { question: "Which player leads the College Football in Rushing TDs?", choices: ["Cam Cook", "Jonah Coleman", "Ahmad Hardy", "Justice Haynes"], answer: 1 },
-    { question: "Which rivalry game is known as the 'Red River Showdown'?", choices: ["Texas vs. Texas A&M", "Texas vs. Oklahoma", "Oklahoma vs. Oklahoma State", "Texas vs. Baylor"], answer: 1 },
-    { question: "Who was the last STRICTLY defensive player to win the Heisman Trophy?", choices: ["Charles Woodson", "JJ Watt", "Reggie White", "Hugh Green"], answer: 0 },
-    { question: "Actor Burt Reynolds played sparingly for what college football program?", choices: ["UCLA", "USC", "Florida State", "Ole Miss"], answer: 2 }
-  ],
-  "2025-10-19": [ //Sunday
-    { question: "Which is the oldest active NFL Franchise", choices: ["Bears", "Packers", "Cardinals", "Lions"], answer: 2 },
-    { question: "Most Super Bowl losses?", choices: ["Broncos", "Vikings", "Bills", "Chiefs"], answer: 0 },
-    { question: "Brett Favre played for how many NFL teams?", choices: ["2", "5", "3", "4"], answer: 3 },
-    { question: "How many career TD Passes does Ryan Fitzpatrick have?", choices: ["189", "342", "223", "96"], answer: 2 },
-    { question: "How many different starting QBs have the Browns had since 1999", choices: ["32", "17", "41", "11"], answer: 2 }
-  ],
-  "2025-10-20": [ //Monday
-    { question: "Which franchise was *formerly* a part of the AFC West?", choices: ["Seahawks", "Chiefs", "Rams", "Raiders"], answer: 0 },
-    { question: "Which team has had the most 1st Overall Draft Picks?", choices: ["Colts", "Browns", "Buccaneers", "Bengals"], answer: 0 },
-    { question: "Who is the only player to win Super Bowl MVP on a losing team?", choices: ["Chuck Howley", "Terrell Owens", "Larry Fitzgerald", "Patrick Mahomes"], answer: 0 },
-    { question: "What year did the Lions last win an NFL Championship before the Super Bowl era?", choices: ["1965", "1957", "1935", "1962"], answer: 1 },
-    { question: "True or False: The “Butt Fumble” happened on Christmas Day.", choices: ["True", "False"], answer: 1 }
-  ],
-  "2025-10-21": [ //Tuesday
-    { question: "Who was the Steelers Head Coach before Mike Tomlin?", choices: ["Bill Belichik", "Mike Shanahan", "Tony Dungy", "Bill Cowher"], answer: 3 },
-    { question: "Which city is hosting Super Bowl LX", choices: ["Los Angeles", "Santa Clara", "Glendale", "Las Vegas"], answer: 1 },
-    { question: "Who ran the fastest 40yd Dash in Combine History?", choices: ["Xavier Worthy", "John Ross III", "Tyreek Hill", "Chris Johnson"], answer: 0 },
-    { question: "Who won Super Bowl XXXI MVP?", choices: ["Brett Favre", "Terrell Davis", "Desmond Howard", "Steve Young"], answer: 2 },
-    { question: "All-time NFL Sack Leader?", choices: ["Bruce Smith", "Reggie White", "JJ Watt", "Terrell Suggs"], answer: 0 }
-  ],
-  "2025-10-22": [ //Wednesday
-    { question: "Who leads the league in passing yards?", choices: ["Justin Herbert", "Daniel Jones", "Matthew Stafford", "Patrick Mahomes"], answer: 0 },
-    { question: "Who is the Steeler's all-time leader in sacks?", choices: ["James Harrison", "Joey Porter", "TJ Watt", "Cam Heyward"], answer: 2 },
-    { question: "Who caught Brett Favres first ever pass completion?", choices: ["Sterling Sharpe", "The Buccaneers' Defense", "Brett Favre", "Vince Workman"], answer: 2 },
-    { question: "Which team has the most yards of offense per game in 2025?", choices: ["Colts", "Cowboys", "Chargers", "Chiefs"], answer: 1 },
-    { question: "Which defense has the most Takeaways this season?", choices: ["Steelers", "Lions", "Texans", "Bears"], answer: 3 }
-  ],
-  "2025-10-23": [ //Thursday
-    { question: "The Chargers and the Vikings have played each other 15 times in their history. Who has more wins?", choices: ["Chargers", "Vikings"], answer: 1 },
-    { question: "Which Chargers running back once broke the single-season touchdown record?", choices: ["Austin Ekeler", "Darren Sproles", "Paul Lowe", "LaDainian Tomlinson"], answer: 3 },
-    { question: "What was the nickname of the Vikings’ legendary defensive line from the 1970s?", choices: ["Norse Myth", "Purple People Eaters", "Purple Rain", "Thor's Lightning"], answer: 1 },
-    { question: "Which coach has coached both JJ McCarthy AND Justin Herbert at any point in their football life?", choices: ["Anthony Lynn", "Jim Harbaugh", "Wink Martindale", "Brandon Staley"], answer: 1 },
-    { question: "Who is the betting favorite to win tonight?", choices: ["Chargers", "Vikings"], answer: 0 }
-  ],
-  "2025-10-24": [ //Friday
-    { question: "Which WR leads the league in total Yards After Catch?", choices: ["DK Metcalf", "Justin Jefferson", "Ja'Marr Chase", "Puka Nacua"], answer: 2 },
-    { question: "Which dirty ass Lion's player once stomped on Aaron Rodgers", choices: ["Cliff Avril", "Ezekiel Ansah", "DeAndre Levy", "Ndamukong Suh"], answer: 3 },
-    { question: "Who was the first player in the Super Bowl Era to have 300 Receiving Yards in a single game?", choices: ["Julio Jones", "Stephone Paige", "Calvin Johnson", "Flipper Anderson"], answer: 1 },
-    { question: "Which franchise was founded in 1898 as the 'Morgan Athletic Club'?", choices: ["Cardinals", "Giants", "Bears", "Lions"], answer: 0 },
-    { question: "Which wide receiver caught the “Mile-High Miracle” in the 2012 playoffs?", choices: ["Torrey Smith", "Demaryius Thomas", "Anquan Boldin", "Jacoby Jones"], answer: 3 }
-  ],
-  "2025-10-25": [ //Saturday
-    { question: "Which university has won the most national championships in college football history?", choices: ["Alabama", "Notre Dame", "Yale", "USC"], answer: 2 },
-    { question: "Which university’s fans perform the “Jump Around” tradition between the 3rd and 4th quarters?", choices: ["Michigan", "Wisconsin", "Iowa St.", "Texas Tech"], answer: 1 },
-    { question: "Who leads the Big 10 in Receiving Yards", choices: ["Makai Lemon", "Carnell Tate", "Jeremiah Smith", "Denzel Boston"], answer: 0 },
-    { question: "Who was the only player to win the Heisman twice?", choices: ["Tim Tebow", "OJ Simpson", "Reggie Bush", "Archie Griffin"], answer: 3 },
-    { question: "Which Confernce has more Football National Championship since 2010?", choices: ["ACC", "Big Ten", "SEC", "Big 12"], answer: 2 }
-  ],
-  "2025-10-26": [ //Sunday
-    { question: "Ahead of tonight's matchup, who has more Pass TDs this season?", choices: ["Aaron Rodgers", "Jordan Love"], answer: 0 },
-    { question: "Who leads the AFC in defensive interceptions?", choices: ["Jalen Pitre", "Tony Jefferson", "Jordan Battle", "Devin Lloyd"], answer: 3 },
-    { question: "Who leads the Panthers in Receiving Yards?", choices: ["Tommy Tremble", "Xavier Legette", "Tetairoa McMillan", "Hunter Renfrow"], answer: 2 },
-    { question: "Which team has the least amount of giveaways in 2025?", choices: ["Packers", "Chiefs", "Colts", "Eagles"], answer: 3 },
-    { question: "Who has the least Points Per Game scored in 2025?", choices: ["Jets", "Raiders", "Browns", "Titans"], answer: 3 }
-  ],
-  "2025-10-27": [ //Monday
-    { question: "Which running back was the NFL’s all-time rushing leader before Walter Payton broke his record?", choices: ["Jim Brown", "Gale Sayers", "OJ Simpson", "Franco Harris"], answer: 0 },
-    { question: "Who is the Chiefs’ all-time leader in sacks?", choices: ["Justin Houston", "Derrick Thomas", "Chris Jones", "Tamba Hali"], answer: 1 },
-    { question: "Which quarterback led the Raiders to their first Super Bowl win?", choices: ["Jim Plunkett", "Marc Wilson", "John Madden", "Ken Stabler"], answer: 3 },
-    { question: "True or False: Brett Favre threw an interception on his first-ever NFL pass attempt (as a Falcon).", choices: ["True", "False"], answer: 0 },
-    { question: "Who leads the league in Passer Rating?", choices: ["Matthew Stafford", "Drake Maye", "Lamar Jackson", "Jared Goff"], answer: 2 }
-  ],
-  "2025-10-28": [ //Tuesday
-    { question: "Which Running Back leads the league in Receiving Yards?", choices: ["DeVon Achane", "Jonathan Taylor", "Christian McCaffrey", "Alvin Kamara"], answer: 2 },
-    { question: "Which kicker has the most career game-winning field goals?", choices: ["Adam Vinatieri", "Justin Tucker", "Morten Andersen", "Gary Anderson"], answer: 0 },
-    { question: "Which WR performed a DISGUSTING act and pretended to moon the crowd in Green Bay?", choices: ["Randy Moss", "Terrell Owens", "Antonio Brown", "Chad Johnson"], answer: 0 },
-    { question: "True or False: Daniel Jones leads the NFL in QBR", choices: ["True", "False"], answer: 1 },
-    { question: "What Hall of Fame quarterback was known as “The Dutchman”?", choices: ["Bart Starr", "Norm Van Brocklin", "Fran Tarkenton", "Joe Montana"], answer: 1 }
-  ],
-  "2025-10-29": [ //Wednesday
-    { question: "Which player recorded a 100-yard pick-six in Super Bowl XLIII?", choices: ["James Harrison", "Karlos Dansby", "Troy Polamalu", "Dominique Rodgers-Cromartie"], answer: 0 },
-    { question: "Which QB Leads the league in Rushing Yards?", choices: ["Josh Allen", "Patrick Mahomes", "Justin Herbert", "Justin Fields"], answer: 3 },
-    { question: "Who leads the league in Net Average Punt yards?", choices: ["Daniel Whelan", "Tress Way", "Jake Bailey", "Jordan Stout"], answer: 2 },
-    { question: "Which team is LAST in Team Sacks Per Game in 2025?", choices: ["Ravens", "Jets", "Bengals", "49ers"], answer: 3 },
-    { question: "Which player had the first 'Lambeau Leap'?", choices: ["Robert Brooks", "Donald Driver", "LeRoy Butler", "Sterling Sharpe"], answer: 2 },
-  ],
-  "2025-10-30": [ //Thursday
-    { question: "Which Dolphins quarterback led the team to a perfect 17-0 season in 1972?", choices: ["Craig Morton", "Greg Landry", "Dan Marino", "Bob Griese"], answer: 3 },
-    { question: "The leader Ravens and Dolphins all-time series has 9-8 advantage. Who leads the series?", choices: ["Dolphins", "Ravens"], answer: 1 },
-    { question: "Which team is the only one in NFL history to complete a perfect season, winning every game including the Super Bowl?", choices: ["Ravens", "Patriots", "Dolphins", "Packers"], answer: 2 },
-    { question: "When Baltimore and Miami first met in 1997, which QB started for Miami?", choices: ["Dan Marino", "Jay Fielder", "Chad Pennington", "Scott Mitchell"], answer: 0 },
-    { question: "Which team has the longest playoff win drought in the NFL?", choices: ["Raiders", "Jets", "Dolphins", "Vikings"], answer: 2 },
-  ],
-  "2025-10-31": [ //Friday
-    { question: "True or False: Patrick Mahomes was a Top 5 Draft pick", choices: ["True", "False"], answer: 1 },
-    { question: "Who leads the league in Passing Yards?", choices: ["Patrick Mahomes", "Daniel Jones", "Dak Prescott", "Justin Herbert"], answer: 3 },
-    { question: "Who was 'The Incredible Bust' taken one pick before Barry Sanders in the 1989 draft?", choices: ["Tony Mandarich", "Ryan Leaf", "Jeff George", "Heath Schuler"], answer: 0 },
-    { question: "Which RB has the longest run so far of 2025?", choices: ["Jonathan Taylor", "David Montgomery", "Jahmyr Gibbs", "Bijan Robinson"], answer: 3 },
-    { question: "Who has the most Kicking Points this season?", choices: ["Cameron Dicker", "Chase McLaughlin", "Jason Myers", "Brandon Aubrey"], answer: 3 },
-  ],
-  "2025-11-01": [ //Saturday
-    { question: "True or False: Iowa is ranked in the Top 25", choices: ["True", "False"], answer: 1 },
-    { question: "Who leads the SEC in Passing TDs?", choices: ["Arch Manning", "Taylen Green", "Ty Simpson", "Joey Aguilar"], answer: 2 },
-    { question: "Which team won the 2019 National Championship", choices: ["Clemson", "LSU", "Alabama", "Ohio State"], answer: 1 },
-    { question: "Who leads the Big Ten in Rushing TDs?", choices: ["Jonah Coleman", "Justice Haynes", "Jordan Davison", "CJ Donaldson"], answer: 0 },
-    { question: "Which bowl game is known as the 'Granddaddy of Them All?", choices: ["Cotton Bowl", "Rose Bowl", "Sugar Bowl", "Orange Bowl"], answer: 1 },
-  ],
-  "2025-11-02": [ //Sunday
-    { question: "What is the most touchdown passes Aaron Rodgers has thrown in a single season?", choices: ["42", "45", "48", "50"], answer: 2 },
-    { question: "Which player holds the record for most sacks in a single NFL game?", choices: ["Michael Strahan", "Derrick Thomas", "Lawrence Taylor", "Khalil Mack"], answer: 1 },
-    { question: "Who is the only NFL player to have won three consecutive MVPs?", choices: ["Aaron Rodgers", "Peyton Manning", "Joe Montana", "Brett Favre"], answer: 3 },
-    { question: "Which QB was NOT selected in the famous 1983 NFL Draft Class?", choices: ["John Elway", "Troy Aikman", "Jim Kelly", "Dan Marino"], answer: 1 },
-    { question: "Who is the New England Patriots all all-time leader in Receiving Yards?", choices: ["Rob Gronkowski", "Wes Welker", "Julian Edelman", "Stanley Morgan"], answer: 3 },
-  ],
-  "2025-11-03": [ //Monday
-    { question: "What is the most TD Passes thrown in a Single Season?", choices: ["48", "57", "52", "55"], answer: 3 },
-    { question: "Who has the record for most receptions in a single season?", choices: ["Cooper Kupp", "Michael Thomas", "Antonio Brown", "Julio Jones"], answer: 1 },
-    { question: "Who was the last non-QB to win MVP?", choices: ["LaDainian Tomlinson", "Adrian Peterson", "Cooper Kupp", "Shaun Alexander"], answer: 1 },
-    { question: "Who is tied with the Patriots for MOST Super Bowl losses?", choices: ["Broncos", "Bills", "Vikings", "49ers"], answer: 0 },
-    { question: "Which of these losers has NEVER appeared in a Super Bowl", choices: ["Chargers", "Titans", "Lions", "Dolphins"], answer: 2 },
-  ],
-  "2025-11-04": [ //Tuesday
-    { question: "Who is the current leader in Passing Touchdowns?", choices: ["Justin Herbert", "Matthew Stafford", "Aaron Rodgers", "Patrick Mahomes"], answer: 1 },
-    { question: "What is the most amount of TDs Christian McCaffrey has scored in a single Regular Season", choices: ["21", "24", "19", "23"], answer: 0 },
-    { question: "Who is the current #1 seed in the NFC?", choices: ["Buccaneers", "Rams", "Seahawks", "Eagles"], answer: 3 },
-    { question: "Who is the new leader in Sacks this season?", choices: ["Brian Burns", "Nik Bonito", "Myles Garrett", "Byron Young"], answer: 0 },
-    { question: "Who has the record for most Receiving Yards in a game?", choices: ["Calvin Johnson", "Flipper Anderson", "Stephone Paige", "Julio Jones"], answer: 1 },
-  ],
-  "2025-11-05": [ //Wednesday
-    { question: "Who is the current leader in Rushing Touchdowns?", choices: ["Josh Jacobs", "Josh Allen", "Javonte Williams", "Jonathan Taylor"], answer: 3 },
-    { question: "Which Vikings QB has the franchise record for most Passing TDs in a season?", choices: ["Warren Moon", "Sam Darnold", "Kirk Cousins", "Daunte Culpepper"], answer: 3 },
-    { question: "True or False: Patriots are now the #1 seed in the AFC", choices: ["True", "False"], answer: 1 },
-    { question: "Which team has the most Hall of Famers?", choices: ["Packers", "Steelers", "Bears", "Cowboys"], answer: 2 },
-    { question: "Who leads the Chargers in rushing Yards this season?", choices: ["Kimani Vidal", "Justin Herbert", "Najee Harris", "Omarion Hampton"], answer: 3 },
-  ],
-  "2025-11-06": [ //Thursday
-    { question: "Before tonight's matchup, who leads the All-Time Series 73-56-2?", choices: ["Broncos", "Raiders"], answer: 1 },
-    { question: "Who was the QB for the Raiders during the 'Holy Roller' play?", choices: ["Ray Guy", "Dave Casper", "Ken Stabler", "Derek Carr"], answer: 2 },
-    { question: "True or False: The Raiders and Broncos have both won Super Bowls with Head Coaches named John.", choices: ["True", "False"], answer: 1 },
-    { question: "Who leads the Broncos in Receiving Yards All-Time", choices: ["Demaryius Thomas", "Shannon Sharpe", "Ed McCaffrey", "Rod Smith"], answer: 3 },
-    { question: "Which Head Coach has the longer Playoff Win Drought?", choices: ["Pete Carroll", "Sean Payton"], answer: 0 },
-  ],
-  "2025-11-07": [ //Friday
-    { question: "Who leads the league in Receiving Yards?", choices: ["George Pickens", "Jaxon Smith-Njigba", "JaMarr Chase", "Puka Nacua"], answer: 1 },
-    { question: "Who was the Houston Texans first ever Draft Pick?", choices: ["Joey Harrington", "Matt Shaub", "David Carr", "Derek Carr"], answer: 2 },
-    { question: "True or False: The Seattle Seahawks used to play in the AFC.", choices: ["True", "False"], answer: 0 },
-    { question: "Who has the most Field Goals Made this season?", choices: ["Cameron Dicker", "Chase McLaughlin", "Eddy Pineiro", "Ka'imi Fairbairn"], answer: 3 },
-    { question: "Who kicked the game-winning field goal in the Patriots’ first Super Bowl victory?", choices: ["Stephen Gostowski", "Pat O'Neil", "Adam Vintieri", "Morten Anderson"], answer: 2 },
-  ],
-  "2025-11-08": [ //Saturday
-    { question: "Who is currently ranked #23?", choices: ["Cincinnati", "Michigan", "Washington", "USC"], answer: 2 },
-    { question: "Who leads the Big 10 in Rushing TDs?", choices: ["Jonah Coleman", "Justice Haynes", "Mark Gronowski", "Kaytron Allen"], answer: 0 },
-    { question: "Which QB has the most Pass TDs?", choices: ["Joey Aguilar", "Julian Sayin", "Fernando Mendoza", "Sawyer Robertson"], answer: 3 },
-    { question: "Who was the last Non-QB to win the Heisman?", choices: ["Derrick Henry", "Ashton Jeanty", "Devonta Smith", "Travis Hunter"], answer: 3 },
-    { question: "Which team has the most Sacks this season?", choices: ["THE Ohio State", "Texas", "UConn", "Oklahoma"], answer: 1 },
-  ],
-  "2025-11-09": [ //Sunday
-    { question: "Who leads the NFL in recpetions?", choices: ["JaMarr Chase", "Christian McCaffrey", "Jaxon Smith-Njigba", "Puka Nacua"], answer: 0 },
-    { question: "Who was the 2016 Season MVP?", choices: ["Tom Brady", "Aaron Rodgers", "Cam Newton", "Matt Ryan"], answer: 3 },
-    { question: "What was the most amount of TD Passes Eli Manning had in a season?", choices: ["42", "35", "39", "31"], answer: 1 },
-    { question: "Who leads the NFL in Passing Yards?", choices: ["Daniel Jones", "Patrick Mahomes", "Dak Prescott", "Justin Herbert"], answer: 0 },
-    { question: "Every team has appeared in the Super Bowl at least once", choices: ["True", "False"], answer: 1 }
-  ],
-  "2025-11-10": [ //Monday
-    { question: "Who leads the All-Time series between the two?", choices: ["Eagles", "Packers"], answer: 1 },
-    { question: "Jalen Hurts has OVER or UNDER 1,850 Pass Yards this season.", choices: ["OVER", "UNDER"], answer: 1 },
-    { question: "True or False: AJ Brown and Devonta Smith are BOTH top 45 in Receiving Yards.", choices: ["True", "False"], answer: 1 },
-    { question: "Who has more Rushing TDs this season?", choices: ["Josh Jacobs", "Jalen Hurts & Saquon Barkley COMBINED"], answer: 0 },
-    { question: "Which team has more Sacks this season?", choices: ["Packers", "Eagles"], answer: 0 }
-  ],
-  "2025-11-11": [ //Tuesday
-    { question: "Who is the all-time leader in receptions for the Chargers?", choices: ["Antonio Gates", "Kellen Winslow", "Keenan Allen", "Lance Alworth"], answer: 2 },
-    { question: "Who were the Packers first ever road opponents in 1919", choices: ["Decatur Staleys", "New York Giants", "Beloit Fairies", "Ishpeming Hematites"], answer: 3 },
-    { question: "Who leads the NFL in Forced Fumbles", choices: ["Joey Bosa", "Eric Wilson", "Josh Sweat", "Jared Verse"], answer: 0 },
-    { question: "Which QB lost to the Ravens in Week 10", choices: ["Max Brosmer", "Justin Jefferson", "Aaron Jones", "NINE 😈😈"], answer: 3 },
-    { question: "Who got absolutely BITCHED by Daron Payne", choices: ["Jared Goff", "Amon-Ra St Brown", "Jalen Hurts", "NINE"], answer: 1 }
-  ],
-  "2025-11-14": [ //Friday
-    { question: "Who was the first player to win 3 straight MVP awards?", choices: ["Jim Brown", "Brett Favre", "Johnny Unitas", "Joe Montana"], answer: 1 },
-    { question: "Which player has the most total fumbles this season (not just fumbles lost)?", choices: ["Josh Allen", "Derrick Henry", "Tua Tagovailoa", "Tony Pollard"], answer: 0 },
-    { question: "True or False: A Kicker leads the NFL in Scoring in 2025", choices: ["True", "False"], answer: 1 },
-    { question: "How many active QBs are top 10 All-Time in Passing TDs?", choices: ["3", "1", "4", "2"], answer: 3 },
-    { question: "Which team is currently the #1 Seed in the NFC?", choices: ["Eagles", "Rams", "Seahawks", "Lions"], answer: 0 }
-  ],
-  "2025-11-15": [ //Saturday
-    { question: "Who led the whole NCAA last week in Passing Yards?", choices: ["Ben Finley", "Joe Labas", "Ty Sampson", "Juliam Sayin"], answer: 0 },
-    { question: "Which School is tied with Notre Dame for producing the most NFL Hall of Famers?", choices: ["Ohio State", "Michigan", "USC", "Alabama"], answer: 2 },
-    { question: "How many ranked teams has Wisconsin beaten since 2023", choices: ["7", "4", "0", "1"], answer: 3 },
-    { question: "Who leads the SEC in Receptions?", choices: ["Kevin Coleman Jr", "Anthony Evans", "Zachariah Branch", "Germie Bernard"], answer: 1 },
-    { question: "Who won the first 2010's National Champtionship matchup between Clemson and Alabama?", choices: ["Clemson", "Alabama"], answer: 1 }
-  ],
-  "2025-11-16": [ //Sunday
-    { question: "Who is the All-Time Rushing leader for the Miami Dolphins?", choices: ["Karim Abdul-Jabbar", "Larry Csonka", "Ricky Williams", "Ronnie Brown"], answer: 1 },
-    { question: "Who was the first player ejected in 2025?", choices: ["Jordan Davis", "DaRon Payne", "Jalen Carter", "Trayvon Walker"], answer: 2 },
-    { question: "Before today's games, who has the longest reception this season?", choices: ["Tutu Atwell", "DeVonta Smith", "Emeka Egbuka", "Rashid Shaheed"], answer: 0 },
-    { question: "Who leads the league in TFL's?", choices: ["Brian Burns", "Maxx Crosby", "Nik Bonita", "Myles Garrett"], answer: 3 },
-    { question: "What is the most amount of receiving TD's Jerry Rice had in a single season?", choices: ["18", "23", "19", "22"], answer: 3 }
-  ],
-  "2025-11-17": [ //Monday
-    { question: "How many teams has Peyton Manning played for?", choices: ["1", "3", "2", "1"], answer: 2 },
-    { question: "Who is 2nd All-Time in Receiving Yards after turning the age of 40?", choices: ["Jerry Rice", "Tom Brady", "Aaron Rodgers", "Steve Smith Sr."], answer: 1 },
-    { question: "Who had the most rushing yards yesterday?", choices: ["DeVon Achane", "Bijan Robinson", "Sean Tucker", "Derrick Henry"], answer: 0 },
-    { question: "Which is the oldest NFL Franchise", choices: ["Bears/Staleys", "Packers", "Cardinals", "Lions"], answer: 2 },
-    { question: "Who leads the league in Passing Yards?", choices: ["Drake Maye", "Patrick Mahomes", "Matthew Stafford", "Daniel Jones"], answer: 0 }
-  ],
-  "2025-11-18": [ //Tuesday
-    { question: "Who was the Week 11 Passing Yard Leader?", choices: ["Josh Allen", "Bryce Young", "Jacoby Brissett", "Dak Prescott"], answer: 2 },
-    { question: "Which team leads the league in Takeaways?", choices: ["Texans", "Bears", "Browns", "Rams"], answer: 1 },
-    { question: "Which team traded for Sam Darnold?", choices: ["Seahawks", "49ers", "Vikings", "Panthers"], answer: 3 },
-    { question: "Which RB led the NFL in Rushing yards for the entirety of the 1970's Decade?", choices: ["OJ Simpson", "Larry Csonka", "Franco Harris", "Walter Payton"], answer: 0 },
-    { question: "Which team drafted Ryan Fitzpatrick?", choices: ["Rams", "Bills", "Bengals", "Jets"], answer: 0 }
-  ],
-  "2025-11-19": [ //Wednesday
-    { question: "Which TE has the most Receiving Yards in 2025?", choices: ["Travis Kelce", "Brock Bowers", "Tyler Warren", "Trey McBride"], answer: 3 },
-    { question: "Who was the MVP of Super Bowl X? (Cowboys vs Steelers)", choices: ["Franco Harris", "Roger Staubach", "Lynn Swann", "Terry Bradshaw"], answer: 2 },
-    { question: "True or False: Walter Payton was the first RB to win MVP in the Super Bowl era?", choices: ["True", "False"], answer: 1 },
-    { question: "Which team has allowed the most sacks this season?", choices: ["Chargers", "Patriots", "Titans", "Cardinals"], answer: 2 },
-    { question: "What is the most amount of TD Passes Drew Brees had in a season?", choices: ["48", "46", "43", "39"], answer: 1 }
-  ],
-  "2025-11-20": [ //Thursday
-    { question: "Who has more respective Division Championships since 2002?", choices: ["Texans", "Bills"], answer: 0 },
-    { question: "True or False: Both CJ Stroud and Josh Allen were drafted #2 Overall", choices: ["True", "False"], answer: 1 },
-    { question: "Which player in tonight's matchup has the most Receiving Yards heading into tonight?", choices: ["Dalton Schultz", "Khalil Shakir", "Nico Collins", "Dalton Kincaid"], answer: 2 },
-    { question: "Who was the first Head Coach of the Houston Texans", choices: ["Gary Kubiak", "John Fox", "Dom Capers", "Bill Callahan"], answer: 2 },
-    { question: "True or False: The Bills are the only team with 4 Super Bowl losses", choices: ["True", "False"], answer: 1 }
-  ],
-  "2025-11-21": [ //Friday
-    { question: "Who was the first team in win the Super Bowl in their home stadium?", choices: ["Buccaneers", "Rams", "Giants", "Colts"], answer: 0 },
-    { question: "Which Head Coach has the best Winning Percentage in the Super Bowl Era?", choices: ["Vince Lombardi", "Nick Sirrianni", "John Madden", "Don Shula"], answer: 2 },
-    { question: "Who leads the league in Passing TDs?", choices: ["Drake Maye", "Jared Goff", "Justin Herbert", "Matthew Stafford"], answer: 3 },
-    { question: "Who leads the league in Sacks?", choices: ["Nik Bonito", "Myles Garrett", "Micah Parsons", "Brian Burns"], answer: 1 },
-    { question: "Which Kicker has the most Field Goals this season?", choices: ["Chase McLaughlin", "Brandon Aubrey", "Chris Boswell", "Cameron Dicker"], answer: 3 }
-  ],
   "2025-11-22": { //Saturday
     event: "college",
     questions: [
@@ -369,6 +19,46 @@ export const CALENDAR = {
     { question: "True or False: Tom Brady was the last pick of the draft", choices: ["True", "False"], answer: 1 },
     { question: "Prior to today, who is tied with DJ Turner II for the most Passes Defended?", choices: ["Quinyon Mitchell", "Derek Stingley Jr", "Keisean Nixon", "Mike Jackson"], answer: 2 },
     { question: "Which player has scored the most this season?", choices: ["Davante Adams", "Josh Jacobs", "Christian McCaffrey", "Jonathan Taylor"], answer: 3 }
+    ],
+  },
+  "2025-11-24": { //Monday
+    event: "",
+    questions: [
+    { question: "How many Passing Yards did NINE have yesterday?", choices: ["418", "369", "297", "87"], answer: 3 },
+    { question: "Who led the league in Passing Yards in Week 12?", choices: ["Dak Prescott", "Jacoby Brissett", "Jameis Winston", "Patrick Mahomes"], answer: 2 },
+    { question: "Which RB was the first to ever reach 1,000 Receiving and 1,000 Rushing Yards in a season?", choices: ["Christian McCaffrey", "Alvin Kamara", "Roger Craig", "Marshall Faulk"], answer: 2 },
+    { question: "What is tonight's Monday Night Football Matchup", choices: ["Panthers at 49ers", "49ers at Chargers", "Broncos at Chargers", "Dolphins at 49ers"], answer: 0 },
+    { question: "Who was the first player to rush for 2,000 yards in a season?", choices: ["Barry Sanders", "Eric Dickerson", "O.J. Simpson", "Adrian Peterson"], answer: 2 },
+    ],
+  },
+  "2025-11-25": { //Tuesday
+    event: "",
+    questions: [
+    { question: "Which team has the most Hall of Famers?", choices: ["Packers", "Bears", "Steelers", "Cowboys"], answer: 1 },
+    { question: "Who is the league leader in Tackles?", choices: ["Myles Garrett", "Bobby Wagner", "Jordyn Brooks", "Jack Campbell"], answer: 2 },
+    { question: "Who is the Seahawks All-Time Single Season Leader in Receiving Yards?", choices: ["DK Metcalf", "Tyler Lockett", "Steve Largent", "Jaxon Smith-Njigba"], answer: 3 },
+    { question: "Who leads the league in Passer Rating?", choices: ["Matthew Stafford", "Lamar Jackson", "Drake Maye", "Jared Goff"], answer: 0 },
+    { question: "Which team currently holds the #1 Overall Draft Pick?", choices: ["Giants", "Titans", "Saints", "Raiders"], answer: 1 }
+    ],
+  },
+  "2025-11-26": { //Wednesday
+    event: "",
+    questions: [
+    { question: "True or False: The “Tuck Rule Game” was played between the Patriots and the Colts.", choices: ["True", "False"], answer: 1 },
+    { question: "Which team leads the league in Turnover Differential?", choices: ["Steelers", "Bears", "Rams", "Texans"], answer: 1 },
+    { question: "Who leads the league in Receiving Touchdowns?", choices: ["George Pickens", "Jonathan Taylor", "Davante Adams", "Amon-Ra St. Brown"], answer: 2 },
+    { question: "Who leads the league in Points Scored?", choices: ["Jason Myers", "Jonathan Taylor", "Jahmyr Gibbs", "Cameron Dicker"], answer: 0 },
+    { question: "Who was the MVP of Super Bowl XVIII (Redskins vs Raiders", choices: ["Joe Theisman", "Clint Didier", "Marcus Allen", "Jim Plunkett"], answer: 2 }
+    ],
+  },
+  "2025-11-27": { //Thursday
+    event: "Thanksgiving",
+    questions: [
+    { question: "True or False: The “Butt Fumble” happened on Thanksgiving Day.", choices: ["True", "False"], answer: 0 },
+    { question: "Which team has NEVER played on Thanksgiving?", choices: ["Chargers", "Jaguars", "Bills", "Cardinals"], answer: 1 },
+    { question: "Which two teams have played each other THE MOST on Thanksgiving?", choices: ["Cowboys & Eagles", "Lions & Bears", "Lions & Packers", "Cowboys & Commanders"], answer: 2 },
+    { question: "Who was the first player to ever receive John Madden's Turkey Leg Award?", choices: ["Emmitt Smith", "Reggie White", "Troy Aikman", "Brett Favre"], answer: 1 },
+    { question: "What was the first Thanksgiving Matchup back in 1934?", choices: ["Lions & Triangles", "Lions & Cowboys", "Lions & Giants", "Lions & Bears"], answer: 3 }
     ],
   },
 };
