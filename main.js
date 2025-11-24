@@ -21,7 +21,7 @@ const LEADERBOARD_API_URL = "https://script.google.com/macros/s/AKfycbxbFUaP1CUM
 //SPECIAL EVENT DAYS --------------------------------------
 const EVENT_LOGOS = {
   "college": "logos/pigskin5collegelogo.png",
-  "packers": "logos/pigskin5packerlogo.png",
+  //"packers": "logos/pigskin5packerlogo.png",
   // add more events here 
 };
 
