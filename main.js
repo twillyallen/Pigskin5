@@ -21,6 +21,7 @@ const LEADERBOARD_API_URL = "https://script.google.com/macros/s/AKfycbxbFUaP1CUM
 //SPECIAL EVENT DAYS --------------------------------------
 const EVENT_LOGOS = {
   "college": "logos/pigskin5collegelogo.png",
+  "Thanksgiving": "logos/pigskin5thanksgiving.png",
   //"packers": "logos/pigskin5packerlogo.png",
   // add more events here 
 };
@@ -93,7 +94,7 @@ function getRunDateISO() {
 
 
   // === DEV OVERRIDE - Uncomment to test specific dates ===
-  // return "2025-11-22";   // Change this date to test
+  // return "2025-11-27";   // Change this date to test
   // ====================
 
 
