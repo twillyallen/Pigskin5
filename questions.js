@@ -61,6 +61,16 @@ export const CALENDAR = {
     { question: "What was the first Thanksgiving Matchup back in 1934?", choices: ["Lions & Triangles", "Lions & Cowboys", "Lions & Giants", "Lions & Bears"], answer: 3 }
     ],
   },
+  "2025-11-29": { //Saturday
+    event: "college",
+    questions: [
+    { question: "What year did THE Ohio State and Michigan first play each other?", choices: ["1919", "1905", "1897", "1914"], answer: 2 },
+    { question: "Which team is NOT ranked in the AP Top 12?", choices: ["Michigan", "Notre Dame", "BYU", "Vanderbilt"], answer: 0 },
+    { question: "Who leads the SEC in TD Passes?", choices: ["Arch Manning", "Ty Simpson", "Joey Aguilar", "Diego Pavia"], answer: 3 },
+    { question: "Which team across All Conferences allows the LEAST Points Per Game?", choices: ["San Diego St.", "Indiana", "Ohio State", "Oregon"], answer: 2 },
+    { question: "Which team has the highest Net Punt Avg.?", choices: ["Washington", "Baylor", "Vanderbilt", "Troy"], answer: 1 }
+    ],
+  },
 };
 
 
