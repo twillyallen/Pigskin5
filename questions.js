@@ -71,6 +71,16 @@ export const CALENDAR = {
     { question: "Which team has the highest Net Punt Avg.?", choices: ["Washington", "Baylor", "Vanderbilt", "Troy"], answer: 1 }
     ],
   },
+  "2025-11-30": { //Sunday
+    event: "",
+    questions: [
+    { question: "How many Head Coaches have the Steelers had since 1969?", choices: ["16", "8", "12", "3"], answer: 3 },
+    { question: "Who was the team to beat the Columbus Panhandles in the NFL's first-ever game in 1920?", choices: ["Green Bay Packers", "Decatur Staleys", "Dayton Triangles", "Akron Pros"], answer: 2 },
+    { question: "Who has the longest Playoff Win drought?", choices: ["Dolphins", "Jets", "Raiders", "Bears"], answer: 0 },
+    { question: "Which team is the current leader in sacks?", choices: ["Browns", "Falcons", "Seahawks", "Broncos"], answer: 3 },
+    { question: "Which team has the highest Net Punt Avg.?", choices: ["Packers", "Ravens", "Colts", "Commanders"], answer: 1 }
+    ],
+  },
 };
 
 
