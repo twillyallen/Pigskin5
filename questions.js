@@ -81,6 +81,16 @@ export const CALENDAR = {
     { question: "Which team has the highest Net Punt Avg.?", choices: ["Packers", "Ravens", "Colts", "Commanders"], answer: 1 }
     ],
   },
+  "2025-12-01": { //Monday
+    event: "",
+    questions: [
+    { question: "Which QB has the longest Completed Pass of the season?", choices: ["Spencer Rattler", "Aaron Rodgers", "Baker Mayfield", "Matthew Stafford"], answer: 3 },
+    { question: "Which team is renting the 1 seed in the NFC this week?", choices: ["Eagles", "Rams", "Bears", "Seahawks"], answer: 2 },
+    { question: "Who set the NFL Record for 5,477 Passing Yards?", choices: ["Patrick Mahomes", "Drew Brees", "Tom Brady", "Peyton Manning"], answer: 3 },
+    { question: "Which QB has the most career pick-sixes thrown?", choices: ["Matthew Stafford", "Brett Favre", "Peyton Manning", "Jameis Winston"], answer: 1 },
+    { question: "Which defense currently ranks #1 in points allowed per game?", choices: ["Packers", "Rams", "Texans", "Broncos"], answer: 2 }
+    ],
+  },
 };
 
 
