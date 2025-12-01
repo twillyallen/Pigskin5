@@ -1188,9 +1188,9 @@ function injectShareSummary() {
   if (score === QUESTIONS.length) {
     // Perfect score - TOUCHDOWN!
     shareText = `TOUCHDOWN! ${squaresNow}
-    ${latestAvgTime.toFixed(1)}s avg · ${totalPoints.toLocaleString()} pts
-    Daily Streak: 🔥 ${dailyStreak}
-    Touchdown Streak: 🏈 ${tdStreak}
+${latestAvgTime.toFixed(1)}s avg · ${totalPoints.toLocaleString()} pts
+Daily Streak: 🔥 ${dailyStreak}
+Touchdown Streak: 🏈 ${tdStreak}
 
 pigskin5.com
 

@@ -91,6 +91,36 @@ export const CALENDAR = {
     { question: "Which defense currently ranks #1 in points allowed per game?", choices: ["Packers", "Rams", "Texans", "Broncos"], answer: 2 }
     ],
   },
+  "2025-12-02": { //Tuesday
+    event: "",
+    questions: [
+    { question: "Who was the first unanimous MVP?", choices: ["Lamar Jackson (2019)", "Tom Brady (2007)", "LaDainian Tomlinson (2006)", "Tom Brady (2010)"], answer: 3 },
+    { question: "Who leads the league in Receiving Yards?", choices: ["George Pickens", "Jaxon Smith-Njigba", "JaMarr Chase", "Trey McBride"], answer: 1 },
+    { question: "Which team has the most Pre-Super Bowl Championships?", choices: ["Chicago Bears", "Cleveland Browns", "Green Bay Packers", "Dayton Triangles"], answer: 2 },
+    { question: "Who is the only player to win Super Bowl MVP on a losing team?", choices: ["Chuck Howley", "Terrell Owens", "Larry Fitzgerald", "Patrick Mahomes"], answer: 0 },
+    { question: "Who has the most Yards from Scrimmage in a single season?", choices: ["Chris Johnson", "Tiki Barber", "Marshall Faulk", "Christian McCaffrey"], answer: 0 },
+    ],
+  },
+  "2025-12-03": { //Wednesday
+    event: "",
+    questions: [
+    { question: "True or False: Patrick Mahomes has never lost an AFC Championship Game at home.", choices: ["True", "False"], answer: 1 },
+    { question: "Who leads the league in Receiving Yards?", choices: ["George Pickens", "Jaxon Smith-Njigba", "JaMarr Chase", "Trey McBride"], answer: 1 },
+    { question: "Which WR had the 'helmet catch'?", choices: ["Plaxico Burress", "Victor Cruz", "David Tyree", "Mario Manningham"], answer: 2 },
+    { question: "Which QB holds the record for most Passing TDs as a rookie?", choices: ["Bo Nix", "Peyton Manning", "Justin Herbert", "Baker Mayfield"], answer: 2 },
+    { question: "Who has the SECOND MOST Sacks this season?", choices: ["Brian Burns", "Nik Bonito", "Micah Parsons", "Danielle Hunter"], answer: 0 },
+    ],
+  },
+  "2025-12-04": { //Thursday
+    event: "",
+    questions: [
+    { question: "True or False: Patrick Mahomes has never lost an AFC Championship Game at home.", choices: ["True", "False"], answer: 1 },
+    { question: "Who leads the league in Receiving Yards?", choices: ["George Pickens", "Jaxon Smith-Njigba", "JaMarr Chase", "Trey McBride"], answer: 1 },
+    { question: "Which WR had the 'helmet catch'?", choices: ["Plaxico Burress", "Victor Cruz", "David Tyree", "Mario Manningham"], answer: 2 },
+    { question: "Which QB holds the record for most Passing TDs as a rookie?", choices: ["Bo Nix", "Peyton Manning", "Justin Herbert", "Baker Mayfield"], answer: 2 },
+    { question: "Who has the SECOND MOST Sacks this season?", choices: ["Brian Burns", "Nik Bonito", "Micah Parsons", "Danielle Hunter"], answer: 0 },
+    ],
+  },
 };
 
 
