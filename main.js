@@ -1185,9 +1185,10 @@ function injectShareSummary() {
   
   let shareText;
   
-  if (score === QUESTIONS.length) {
+if (score === QUESTIONS.length) {
     // Perfect score - TOUCHDOWN!
-    shareText = `TOUCHDOWN! ${squaresNow}
+    shareText = `TOUCHDOWN! ${RUN_DATE}
+${squaresNow}
 ${latestAvgTime.toFixed(1)}s avg · ${totalPoints.toLocaleString()} pts
 Daily Streak: 🔥 ${dailyStreak}
 Touchdown Streak: 🏈 ${tdStreak}
