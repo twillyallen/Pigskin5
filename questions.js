@@ -114,11 +114,11 @@ export const CALENDAR = {
   "2025-12-04": { //Thursday
     event: "",
     questions: [
-    { question: "True or False: Patrick Mahomes has never lost an AFC Championship Game at home.", choices: ["True", "False"], answer: 1 },
-    { question: "Who leads the league in Receiving Yards?", choices: ["George Pickens", "Jaxon Smith-Njigba", "JaMarr Chase", "Trey McBride"], answer: 1 },
-    { question: "Which WR had the 'helmet catch'?", choices: ["Plaxico Burress", "Victor Cruz", "David Tyree", "Mario Manningham"], answer: 2 },
-    { question: "Which QB holds the record for most Passing TDs as a rookie?", choices: ["Bo Nix", "Peyton Manning", "Justin Herbert", "Baker Mayfield"], answer: 2 },
-    { question: "Who has the SECOND MOST Sacks this season?", choices: ["Brian Burns", "Nik Bonito", "Micah Parsons", "Danielle Hunter"], answer: 0 },
+    { question: "In the 2023 Cowboys vs Lions matchup, which O-Lineman was flagged for illegal touching on a 2pt Conversion.", choices: ["Tyron Smith", "Taylor Decker", "Frank Ragnow", "Penei Sewell"], answer: 1 },
+    { question: "What year did the Cowboys earn the nickname 'America's Team'?", choices: ["1966", "1995", "1978", "1993"], answer: 2 },
+    { question: "Before 2023, what was the last SEASON the Detroit Lions won a Playoff Game?", choices: ["2012", "1991", "1975", "1999"], answer: 1 },
+    { question: "Which RB holds the NFL Record for most Career Rushing Yards?", choices: ["Walter Payton", "Barry Sanders", "LaDainian Tomlinson", "Emmitt Smith"], answer: 3 },
+    { question: "Which team averages more Yards Per Game in 2025?", choices: ["Lions", "Cowboys"], answer: 1 },
     ],
   },
 };
