@@ -121,6 +121,26 @@ export const CALENDAR = {
     { question: "Which team averages more Yards Per Game in 2025?", choices: ["Lions", "Cowboys"], answer: 1 },
     ],
   },
+  "2025-12-05": { //Friday
+    event: "",
+    questions: [
+    { question: "Kurt Warner won MVP *AND* The Super Bowl during the 1999 Season. Who was the next QB to do that?", choices: ["Peyton Manning", "Patrick Mahomes", "Tom Brady", "Aaron Rodgers"], answer: 1 },
+    { question: "True or False: Wide Receivers have more MVP Awards than Defensive Players.", choices: ["True", "False"], answer: 1 },
+    { question: "Who leads the NFL in Tackles For Loss?", choices: ["Maxx Crosby", "Nik Bonito", "Danielle Hunter", "Myles Garrett"], answer: 3 },
+    { question: "Since the 2002 realignment, who has the most Regular Season Wins?", choices: ["Steelers", "Patriots", "Colts", "Packers"], answer: 1 },
+    { question: "Who has the most 20+ Yard Receiving Plays in 2025?", choices: ["Emeka Egbuka", "Puka Nacua", "Jaxon Smith-Njigba", "George Pickens"], answer: 2 },
+    ],
+  },
+  "2025-12-06": { //Saturday
+    event: "",
+    questions: [
+    { question: "Kurt Warner won MVP *AND* The Super Bowl during the 1999 Season. Who was the next QB to do that?", choices: ["Peyton Manning", "Patrick Mahomes", "Tom Brady", "Aaron Rodgers"], answer: 1 },
+    { question: "True or False: Wide Receivers have more MVP Awards than Defensive Players.", choices: ["True", "False"], answer: 1 },
+    { question: "Who leads the NFL in Tackles For Loss?", choices: ["Maxx Crosby", "Nik Bonito", "Danielle Hunter", "Myles Garrett"], answer: 3 },
+    { question: "Since the 2002 realignment, who has the most Regular Season Wins?", choices: ["Steelers", "Patriots", "Colts", "Packers"], answer: 1 },
+    { question: "Who has the most 20+ Yard Receiving Plays in 2025?", choices: ["Emeka Egbuka", "Puka Nacua", "Jaxon Smith-Njigba", "George Pickens"], answer: 2 },
+    ],
+  },
 };
 
 
