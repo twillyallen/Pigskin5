@@ -141,6 +141,16 @@ export const CALENDAR = {
     { question: "Who has the most 20+ Yard Receiving Plays in 2025?", choices: ["Emeka Egbuka", "Puka Nacua", "Jaxon Smith-Njigba", "George Pickens"], answer: 2 },
     ],
   },
+  "2025-12-07": { //Sunday
+    event: "",
+    questions: [
+    { question: "Which WR had the most Receiving Yards ever in a season?", choices: ["Julio Jones", "Antonio Brown", "Calvin Johnson", "Cooper Kupp"], answer: 2 },
+    { question: "What Bears kicker became infamous for the “Double Doink” playoff miss?", choices: ["Robbie Gould", "Eddy Pineiro", "Connor Barth", "Cody Parkey"], answer: 3 },
+    { question: "Which Head Coach is responsible for the largest blown lead in NFL History?", choices: ["Jack Pardee", "Dan Quinn", "Jeff Saturday", "Brandon Staley"], answer: 2 },
+    { question: "Which team allows the LEAST Rushing Yards per Game in 2025?", choices: ["Texans", "Patriots", "Jaguars", "Seahawks"], answer: 2 },
+    { question: "Who led Week 13 in sacks?", choices: ["Micah Parsons", "Maxx Crosby", "Myles Garrett", "Tuli Tuipulotu"], answer: 0 },
+    ],
+  },
 };
 
 
