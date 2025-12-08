@@ -50,17 +50,18 @@ body::before{
   width:min(900px,94vw);
   display:flex;
   justify-content:space-between;
-  align-items:center;
+  align-items:flex-start;
   gap:12px;
+  margin-bottom: 20px;
 }
 .header.hidden{ display:none !important; }
-.progress{ opacity:.92; font-weight:800; }
+.progress{ opacity:.92; font-weight:800; min-width: 120px; }
 .timer{
   padding:6px 10px;
   border-radius:8px;
   background:rgba(255,255,255,.08);
   display:inline-block;
-  min-width:3.5ch;
+  min-width:50px;
   text-align:center;
   font-variant-numeric: tabular-nums;
   font-feature-settings:"tnum" 1, "lnum" 1;
@@ -223,7 +224,12 @@ body.quiz-active .progress-bar {
   padding:0;
   margin:0;
 }
-.question{ font-size:clamp(20px, 2.6vw, 28px); font-weight:900; margin:4px 0 10px; }
+.question{ 
+  font-size:clamp(20px, 2.6vw, 28px); 
+  font-weight:900; 
+  margin:0 0 16px 0; /* Fixed margin - won't shift */
+  min-height: 60px; /* Prevents jumping if question text wraps differently */
+}
 .choices{ display:grid; gap:10px; }
 .choices button{
   width:100%;
@@ -521,7 +527,7 @@ footer a:visited {
 
 .start-description {
   text-align: center;
-  margin: 1000px 0 0; /* top, right/left, bottom */
+  margin: 20px 0 0; /* top, right/left, bottom */
   font-size: 1rem;
   line-height: 1.4;
   color: #eee;

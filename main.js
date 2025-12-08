@@ -1020,6 +1020,7 @@ function renderQuestion() {
   
   // Display question text
   questionEl.textContent = q.question;
+  questionEl.style.whiteSpace = 'pre-line';
   
   // Display progress (e.g., "Question 2 / 5")
   progressEl.textContent = `Question ${current + 1} / ${QUESTIONS.length}`;

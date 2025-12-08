@@ -151,6 +151,16 @@ export const CALENDAR = {
     { question: "Who led Week 13 in sacks?", choices: ["Micah Parsons", "Maxx Crosby", "Myles Garrett", "Tuli Tuipulotu"], answer: 0 },
     ],
   },
+  "2025-12-08": { //Monday
+    event: "",
+    questions: [
+    { question: "Which WR was NOT from the 2014 Draft Class?", choices: ["Davante Adams", "Mike Evans", "Odell Beckham Jr", "DeAndre Hopkins"], answer: 3 },
+    { question: "Who is the current Week 14 Rushing Yards Leader?", choices: ["DeVon Achane", "Tony Pollard", "Blake Corum", "Josh Jacobs"], answer: 1 },
+    { question: "Name the Career:\n- 24,792 Pass Yards\n- 156 Pass TDs\n- 113 INTs\n- Record: 36-53?", choices: ["Justin Herbert", "Jameis Winston", "Baker Mayfield", "Carson Wentz"], answer: 1 },
+    { question: "Who is the Titans All-Time Passing Yard Leader?", choices: ["Steve McNair", "Ryan Tannehill", "Warren Moon", "George Blanda"], answer: 2 },
+    { question: "How many more sacks does Myles Garrett need to break the Single Season Sack Record?", choices: ["3", "4", "1", "5"], answer: 0 },
+    ],
+  },
 };
 
 
