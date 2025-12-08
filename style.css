@@ -320,7 +320,7 @@ body{ display:flex; flex-direction:column; min-height:100vh; }
   text-align:center;
   padding:20px 8px 24px;
   color:#fff;
-  background: rgba(0,0,0,0.35);
+  background: rgba(0, 0, 0, 0.623);
   backdrop-filter: blur(3px);
   z-index:5;
 }
