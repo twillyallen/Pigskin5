@@ -94,7 +94,7 @@ function getRunDateISO() {
 
 
   // === DEV OVERRIDE - Uncomment to test specific dates ===
-  // return "2025-12-13";   // Change this date to test
+  // return "2025-12-09";   // Change this date to test
   // ====================
 
 
@@ -387,6 +387,136 @@ function fetchLeaderboardJSONP() {
   });
 }
 
+// Render top 5 leaderboard on start screen
+function renderStartLeaderboard(dateStr) {
+  const startBody = document.getElementById("startLeaderboardBody");
+  if (!startBody) return;
+
+  startBody.innerHTML = "<tr><td colspan='4'>Loading...</td></tr>";
+
+  fetchLeaderboardJSONP(dateStr)
+    .then(entries => {
+      startBody.innerHTML = "";
+
+      if (!Array.isArray(entries)) {
+        const tr = document.createElement("tr");
+        const td = document.createElement("td");
+        td.colSpan = 4;
+        td.textContent = "No scores yet. Be the first!";
+        tr.appendChild(td);
+        startBody.appendChild(tr);
+        return;
+      }
+
+      // Filter to today's entries
+      const todaysEntries = entries.filter(e => {
+        try {
+          const entryDate = new Date(e.date);
+          const [year, month, day] = dateStr.split('-').map(Number);
+          const targetDate = new Date(year, month - 1, day);
+          return entryDate.toDateString() === targetDate.toDateString();
+        } catch {
+          return e.date === dateStr;
+        }
+      });
+
+      // Only show top 5
+      const top5 = todaysEntries.slice(0, 5);
+
+      if (!top5.length) {
+        const tr = document.createElement("tr");
+        const td = document.createElement("td");
+        td.colSpan = 4;
+        td.textContent = "No scores yet. Be the first!";
+        tr.appendChild(td);
+        startBody.appendChild(tr);
+        return;
+      }
+
+      // Render top 5 entries
+      top5.forEach((e, idx) => {
+        const tr = document.createElement("tr");
+
+        const rankTd = document.createElement("td");
+        rankTd.textContent = String(idx + 1);
+
+        const nameTd = document.createElement("td");
+        nameTd.textContent = e.name || "Anonymous";
+
+        const pointsTd = document.createElement("td");
+        pointsTd.textContent = (e.points ?? 0).toLocaleString();
+
+        const avgTd = document.createElement("td");
+        if (typeof e.avgTime === "number" && !Number.isNaN(e.avgTime)) {
+          avgTd.textContent = `${e.avgTime.toFixed(1)}s`;
+        } else {
+          avgTd.textContent = "-";
+        }
+
+        tr.append(rankTd, nameTd, pointsTd, avgTd);
+        startBody.appendChild(tr);
+      });
+    })
+    .catch(err => {
+      console.error("Failed to load start leaderboard:", err);
+      startBody.innerHTML = "<tr><td colspan='4'>Error loading leaderboard.</td></tr>";
+    });
+}
+
+
+// Render personal scorecard on start screen
+function renderStartScorecard() {
+  const scorecardEl = document.getElementById("startScorecard");
+  const emojiEl = document.getElementById("scorecardEmoji");
+  const dailyStreakEl = document.getElementById("scorecardDailyStreak");
+  const tdStreakEl = document.getElementById("scorecardTDStreak");
+  const yesterdayEl = document.getElementById("scorecardYesterday");
+  
+  if (!scorecardEl) return;
+
+  // Get current streaks
+  const dailyStreak = localStorage.getItem("dailyStreak") || "0";
+  const tdStreak = localStorage.getItem("tdStreak") || "0";
+  
+  // Get yesterday's date
+  const today = getRunDateISO();
+  const yesterday = yesterdayOf(today);
+  
+  // Load yesterday's result
+  const yesterdayResult = loadResult(yesterday);
+  
+  // If no data to show, hide the scorecard
+  if (!yesterdayResult && dailyStreak === "0" && tdStreak === "0") {
+    scorecardEl.classList.add("hidden");
+    return;
+  }
+  
+  // Show scorecard
+  scorecardEl.classList.remove("hidden");
+  
+  // Update streaks
+  if (dailyStreakEl) dailyStreakEl.textContent = dailyStreak;
+  if (tdStreakEl) tdStreakEl.textContent = tdStreak;
+  
+  // Update yesterday's data
+  if (yesterdayResult && yesterdayResult.picks) {
+    // Create emoji grid
+    const squares = yesterdayResult.picks.map(p => 
+      (p.pick === p.correct ? "🟩" : "⬜")
+    ).join("");
+    
+    if (emojiEl) emojiEl.textContent = squares;
+    
+    // Show score
+    const points = yesterdayResult.totalPoints || 0;
+    if (yesterdayEl) yesterdayEl.textContent = `${score}/${total}`;
+  } else {
+    // No data for yesterday
+    if (emojiEl) emojiEl.textContent = "⬜⬜⬜⬜⬜";
+    if (yesterdayEl) yesterdayEl.textContent = "-";
+  }
+}
+
 // Display the leaderboard for a specific date
 function renderLeaderboard(dateStr) {
   if (!leaderboardBody) return; // Exit if element doesn't exist
@@ -667,8 +797,10 @@ function renderPersistedResult(dateStr, persisted) {
       // Insert after the score text
       scoreText.insertAdjacentElement("afterend", metricsEl);
     }
-    metricsEl.textContent =
-      `Avg. Answer Time: ${persisted.avgTime.toFixed(1)}s per question · Total points: ${persisted.totalPoints.toLocaleString()}`;
+    metricsEl.innerHTML = `
+    Avg. Answer Time: ${persisted.avgTime.toFixed(1)}s per question<br>
+    Total points: ${persisted.totalPoints.toLocaleString()}
+  `;
   }
 
   // Show the leaderboard
@@ -791,6 +923,10 @@ document.querySelector(".title-wrap")?.classList.remove("title-wrap");
     startBtn.disabled = false;
     startBtn.textContent = "START";
   }
+
+  // Load today's top 5 leaderboard
+  renderStartScorecard();
+  renderStartLeaderboard(runDate);
 }
 
 
@@ -989,8 +1125,11 @@ function showResult() {
   // Display metrics with formatting
   // toFixed(1) shows 1 decimal place
   // toLocaleString() adds comma separators to large numbers
-  metricsEl.textContent =
-    `Avg answer time: ${avgTime.toFixed(1)}s per question · Total points: ${totalPoints.toLocaleString()}`;
+  // NEW CODE:
+  metricsEl.innerHTML = `
+  Avg answer time: ${avgTime.toFixed(1)}s per question<br>
+  Total points: ${totalPoints.toLocaleString()}
+  `;
 
   // Save all results to localStorage for future reference
   saveResult(RUN_DATE, { score, picks, totalTime, avgTime, totalPoints });
@@ -1201,7 +1340,7 @@ pigskin5.com
     // Zero correct - humorous message
     shareText = `Pigskin 5 ${RUN_DATE}
 ${squaresNow}
-I do NOT know ball 🤐
+I do NOT know ball 🤦
 
 Can you beat my score?
 pigskin5.com
@@ -1424,4 +1563,4 @@ window.addEventListener("pageshow", () => {
     // Not on start screen - make sure body can scroll
     document.body.classList.remove("no-scroll");
   }
-})
+});

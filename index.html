@@ -62,33 +62,78 @@
   <main class="app">
     <h1 class="visually-hidden">Pigskin5 – Free Daily NFL Trivia Game</h1>
 
-    <!-- START SCREEN (now includes the ONLY ad) -->
-    <section id="startScreen" class="start-screen">
-      <div class="overlay">
-        <img src="pigskin5logo.png" alt="Pigskin5 Logo" class="title-logo"/>
+    <!-- START SCREEN -->
+<section id="startScreen" class="start-screen">
+  <div class="overlay">
+    <img src="pigskin5logo.png" alt="Pigskin5 Logo" class="title-logo"/>
 
-        <button id="startBtn" class="btn">START</button>
-        <div class="byline">BY TWILLYALLEN</div>
+    <button id="startBtn" class="btn">START</button>
+    <div class="byline">BY TWILLYALLEN</div>
 
-        <div style="height:50px;"></div>  <!-- spacer -->
+    <div style="height:30px;"></div>
 
-        <p class="start-description">
-          <strong>Daily NFL Trivia</strong><br>
-          Five questions. Fifteen seconds each.<br>
-          New challenge daily!<br>
-          Test your football knowledge and climb the leaderboard!
-        </p>
+    <p class="start-description">
+      <strong>Daily NFL Trivia</strong><br>
+      Five questions. Fifteen seconds each.<br>
+      New challenge daily!<br>
+      Test your football knowledge and climb the leaderboard!
+    </p>
 
-      </div>
+    <!-- Start Screen Personal Stats Scorecard -->
+<div id="startScorecard" class="start-scorecard">
+  <div class="scorecard-stats">
+    <div class="scorecard-stat">
+      <span class="stat-label">Daily Streak:</span>
+      <span class="stat-value" id="scorecardDailyStreak">0</span>
+    </div>
+    <div class="scorecard-stat">
+      <span class="stat-label">Touchdown Streak:</span>
+      <span class="stat-value" id="scorecardTDStreak">0</span>
+    </div>
+  </div>
+  
+  <div class="scorecard-header">Yesterday's Results</div>
+  
+  <div class="scorecard-emoji" id="scorecardEmoji">⬜⬜⬜⬜⬜</div>
+  
+  <div class="scorecard-stats">
+    <div class="scorecard-stat">
+      <span class="stat-label"><br>Yesterday's Score:</span>
+      <span class="stat-value" id="scorecardYesterday">-</span>
+    </div>
+  </div>
+</div>
+
+    <!-- Leaderboard -->
+    <section class="start-leaderboard">
+      <h3>Today's Leaderboard</h3>
+      <table class="leaderboard-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Points</th>
+            <th>Avg Time</th>
+          </tr>
+        </thead>
+        <tbody id="startLeaderboardBody">
+          <tr><td colspan='4'>Loading...</td></tr>
+        </tbody>
+      </table>
     </section>
+
+  </div>
+</section>
 
     <!-- QUIZ SECTION -->
     <section id="card" class="card hidden">
       <header class="header">
-        <h2 id="question" class="question">Loading…</h2>
-        <div id="progress" class="progress">Question 1 / 5</div>
-        <div id="timer" class="timer" aria-live="polite">15s</div>
-      </header>
+      <div class="header-top">
+      <div id="progress" class="progress">Question 1 / 5</div>
+      <div id="timer" class="timer" aria-live="polite">15s</div>
+    </div>
+    <h2 id="question" class="question">Loading…</h2>
+  </header>
       <div id="choices" class="choices"></div>
     </section>
 

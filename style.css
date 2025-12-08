@@ -49,22 +49,45 @@ body::before{
 .header{
   width:min(900px,94vw);
   display:flex;
-  justify-content:space-between;
-  align-items:flex-start;
+  flex-direction: column;
   gap:12px;
   margin-bottom: 20px;
 }
+
 .header.hidden{ display:none !important; }
-.progress{ opacity:.92; font-weight:800; min-width: 120px; }
+
+.header-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.progress{ 
+  opacity:.92; 
+  font-weight:800;
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.85);
+}
+
 .timer{
-  padding:6px 10px;
+  padding:8px 14px;
   border-radius:8px;
   background:rgba(255,255,255,.08);
   display:inline-block;
-  min-width:50px;
+  min-width:60px;
   text-align:center;
   font-variant-numeric: tabular-nums;
   font-feature-settings:"tnum" 1, "lnum" 1;
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.question{ 
+  font-size:clamp(22px, 2.8vw, 30px); 
+  font-weight:900; 
+  margin:0;
+  line-height: 1.3;
 }
 .timer-danger {
   background: rgba(255, 55, 55, 0.3);
@@ -547,4 +570,180 @@ footer a:visited {
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
   border: 0;
+}
+
+
+/* ---------------- Start Screen Leaderboard (Matches Results Style) ---------------- */
+.start-leaderboard {
+  width: min(600px, 92vw);
+  margin: 24px auto 40px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255,255,255,0.18);
+}
+
+.start-leaderboard h3 {
+  margin: 0 0 12px 0;
+  font-size: 1.3rem;
+  font-weight: 800;
+  text-align: left;
+  color: #fff;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+/* Reuse the same table styles from results leaderboard */
+.start-leaderboard .leaderboard-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.start-leaderboard .leaderboard-table th,
+.start-leaderboard .leaderboard-table td {
+  padding: 6px 8px;
+  text-align: left;
+}
+
+.start-leaderboard .leaderboard-table th {
+  color: rgba(255, 255, 255, 0.85);
+  font-weight: 700;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  font-size: 0.85rem;
+  padding-bottom: 8px;
+}
+
+.start-leaderboard .leaderboard-table tbody tr:nth-child(odd) {
+  background: rgba(255,255,255,0.04);
+}
+
+.start-leaderboard .leaderboard-table tbody tr {
+  transition: background 0.15s ease;
+}
+
+.start-lb-footer {
+  text-align: center;
+  font-size: 0.75rem;
+  opacity: 0.7;
+  margin-top: 8px;
+  font-style: italic;
+}
+
+
+/* ---------------- Share Header Improvements ---------------- */
+.share-header {
+  line-height: 1.5;
+  margin-bottom: 16px;
+}
+
+.share-left-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.share-grid {
+  font-size: 1.2rem;
+  letter-spacing: 2px;
+}
+
+.share-btn {
+  padding: 8px 16px;
+  background: var(--btn-cyan);
+  color: var(--ink);
+  border: 0;
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color .12s ease;
+}
+
+.share-btn:hover {
+  background: var(--btn-cyan-hover);
+}
+
+.share-right {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.pill {
+  font-size: 0.9rem;
+  font-weight: 600;
+  padding: 4px 0;
+}
+
+/* New: Better spacing for metrics */
+.metrics-text {
+  margin-top: 8px;
+  margin-bottom: 4px;
+  font-size: 0.95rem;
+  opacity: 0.9;
+  line-height: 1.6;
+}
+
+.points-line {
+  font-size: 0.95rem;
+  opacity: 0.9;
+  margin-top: 4px;
+  font-weight: 600;
+}
+
+/* ---------------- Start Screen Scorecard ---------------- */
+.start-scorecard {
+  width: min(500px, 90vw);
+  margin: 24px auto 20px;
+  padding: 16px 20px;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 12px;
+  backdrop-filter: blur(2px);
+}
+
+.scorecard-emoji {
+  font-size: 1.4rem;
+  letter-spacing: 4px;
+  text-align: center;
+  margin-bottom: 8px;  /* 👈 Reduced from 14px - smaller gap to Yesterday's Score */
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+.scorecard-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;  /* 👈 Reduced from 8px - smaller gap between Daily/Touchdown Streak */
+}
+
+.scorecard-stat {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.95rem;
+  padding: 4px 0;
+}
+
+.stat-label {
+  color: rgba(255, 255, 255, 0.85);
+  font-weight: 600;
+}
+
+.stat-value {
+  color: #fff;
+  font-weight: 800;
+  font-size: 1rem;
+}
+
+.scorecard-header {
+  font-size: 1.1rem;
+  font-weight: 800;
+  text-align: center;
+  margin: 16px 0 10px 0;  /* 👈 Increased top margin from 12px - bigger gap from Touchdown Streak */
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+.start-scorecard.hidden {
+  display: none;
 }
