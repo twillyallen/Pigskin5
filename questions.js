@@ -161,6 +161,58 @@ export const CALENDAR = {
     { question: "How many more sacks does Myles Garrett need to break the Single Season Sack Record?", choices: ["3", "4", "1", "5"], answer: 0 },
     ],
   },
+  "2025-12-09": { //Tuesday
+    event: "",
+    questions: [
+    { question: "True or False: Kirk Cousins has more Pass TDs than John Elway?", choices: ["True", "False"], answer: 1 },
+    { question: "Which 2025 RB is this:\n817 Yds\n12 TDs\n206 Att.", choices: ["Josh Jacobs", "James Cook III", "Jahmyr Gibbs", "Derrick Henry"], answer: 0 },
+    { question: "Who was the first Wild Card team to win the Super Bowl?", choices: ["2010 Packers", "1988 Redskins", "1980 Raiders", "2007 Patriots"], answer: 2 },
+    { question: "Which QB never won League MVP?", choices: ["Steve Young", "Terry Bradshaw", "Drew Brees", "Rich Gannon"], answer: 2 },
+    { question: "Who leads the league in Passing Yards?", choices: ["Matthew Stafford", "Patrick Mahomes", "Drake Maye", "Dak Prescott"], answer: 3 },
+    ],
+  },
+  "2025-12-10": { //Wednesday
+    event: "",
+    questions: [
+    { question: "Who is the Saints’ all-time leader in career sacks?", choices: ["Rickey Jackson", "Pat Swilling", "Cam Jordan", "Julius Peppers"], answer: 2 },
+    { question: "Who leads the NFL in INTs?", choices: ["Jaycee Horn", "Kevin Byard", "Tremain Edmunds", "Devin Lloyd"], answer: 1 },
+    { question: "Which Rookie WR has the most Yards?", choices: ["Tet McMillan", "Matthew Golden", "Emeka Egbuka", "Luther Burden"], answer: 0 },
+    { question: "What is the oldest continuously running franchise in NFL history?", choices: ["Packers", "Cardinals", "Bears/Staleys", "Giants"], answer: 1 },
+    { question: "Which offense has the WORST Points Per Game this season?", choices: ["Titans", "Browns", "Vikings", "Raiders"], answer: 3 },
+    ],
+  },
+  "2025-12-11": { //Thursday
+    event: "",
+    questions: [
+    { question: "Which team has more playoff wins since 2004?", choices: ["Falcons", "Buccaneers", "Tied"], answer: 1 },
+    { question: "The Falcons vs. Buccaneers rivalry has been played 64 times. Who leads the series?", choices: ["Falcons", "Buccaneers", "Tied"], answer: 2 },
+    { question: "Who has the 2nd most 1,000 Yard Seasons?", choices: ["Mike Evans", "Jerry Rice", "Julio Jones", "Terrell Owens"], answer: 0 },
+    { question: "Who was the first team in win the Super Bowl in their home stadium?", choices: ["Buccaneers", "Rams", "Giants", "Colts"], answer: 0 },
+    { question: "Which RB had the most rushing yards in a single Falcons–Bucs game:", choices: ["Michael Turner", "Devonta Freeman", "Mike Alstott", "Doug Martin"], answer: 3 },
+    ],
+  },
+  "2025-12-12": { //Friday
+    event: "",
+    questions: [
+    { question: "Which QB holds the NFL record for most career 4th-quarter comebacks?", choices: ["Peyton Manning", "Matthew Stafford", "Tom Brady", "Drew Brees"], answer: 2 },
+    { question: "Which WR leads the NFL in receptions this season?", choices: ["Puka Nacua", "Amon-Ra St. Brown", "JaMarr Chase", "Jaxon Smith Njigba"], answer: 0 },
+    { question: "What team holds the record for most consecutive playoff appearances?", choices: ["Patriots", "Packers", "Chiefs", "Steelers"], answer: 0 },
+    { question: "Which RB has the most career receiving yards?", choices: ["Marcus Allen", "Christian McCaffrey", "LaDainian Tomlinson", "Marshall Faulk"], answer: 3 },
+    { question: "Which defense allows the FEWEST passing yards per game this season?", choices: ["Chargers", "Browns", "Bills", "Texans"], answer: 1 }
+    ],
+  },
+  "2025-12-13": { //Saturday 
+    event: "college",
+    questions: [
+    { question: "Which school has the most College Football Playoff appearances?", choices: ["Alabama", "Ohio State", "Clemson", "Georgia"], answer: 0 },
+    { question: "True or False: The CFP expanded to 12 teams starting in 2023.", choices: ["True", "False"], answer: 1 },
+    { question: "Who won the 2024 Season's National Championship?", choices: ["Georgia", "Michigan", "Washington", "Ohio State"], answer: 3 },
+    { question: "Which conference has produced the most CFP champions?", choices: ["SEC", "Big Ten", "ACC", "Big 12"], answer: 0 },
+    { question: "Which QB leads the SEC in Passing Yards?", choices: ["Ty Simpson", "Joey Aguilar", "Arch Manning", "Gunner Stockton"], answer: 1 }
+    ],
+  },
+
+
 };
 
 
