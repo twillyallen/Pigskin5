@@ -474,7 +474,7 @@ function renderStartScorecard() {
   
   if (!scorecardEl) return;
 
-  // Get current streaks
+  // Get current streaks from localStorage (not computed yet for today)
   const dailyStreak = localStorage.getItem("dailyStreak") || "0";
   const tdStreak = localStorage.getItem("tdStreak") || "0";
   
@@ -494,7 +494,7 @@ function renderStartScorecard() {
   // Show scorecard
   scorecardEl.classList.remove("hidden");
   
-  // Update streaks
+  // Update streaks - show actual streak values
   if (dailyStreakEl) dailyStreakEl.textContent = dailyStreak;
   if (tdStreakEl) tdStreakEl.textContent = tdStreak;
   
@@ -507,9 +507,9 @@ function renderStartScorecard() {
     
     if (emojiEl) emojiEl.textContent = squares;
     
-    // Show score
+    // Show leaderboard points instead of correct answers
     const points = yesterdayResult.totalPoints || 0;
-    if (yesterdayEl) yesterdayEl.textContent = `${score}/${total}`;
+    if (yesterdayEl) yesterdayEl.textContent = points.toLocaleString();
   } else {
     // No data for yesterday
     if (emojiEl) emojiEl.textContent = "⬜⬜⬜⬜⬜";
