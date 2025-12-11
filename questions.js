@@ -187,7 +187,7 @@ export const CALENDAR = {
     { question: "Which team has more playoff wins since 2004?", choices: ["Falcons", "Buccaneers", "Tied"], answer: 1 },
     { question: "The Falcons vs. Buccaneers rivalry has been played 64 times. Who leads the series?", choices: ["Falcons", "Buccaneers", "Tied"], answer: 2 },
     { question: "Who has the 2nd most 1,000 Yard Seasons?", choices: ["Mike Evans", "Jerry Rice", "Julio Jones", "Terrell Owens"], answer: 0 },
-    { question: "Who was the first team in win the Super Bowl in their home stadium?", choices: ["Buccaneers", "Rams", "Giants", "Colts"], answer: 0 },
+    { question: "Who was the first team to win the Super Bowl in their home stadium?", choices: ["Buccaneers", "Rams", "Giants", "Colts"], answer: 0 },
     { question: "Which RB had the most rushing yards in a single Falcons–Bucs game:", choices: ["Michael Turner", "Devonta Freeman", "Mike Alstott", "Doug Martin"], answer: 3 },
     ],
   },
