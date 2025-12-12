@@ -556,7 +556,7 @@ function renderLeaderboard(dateStr) {
         }
       });
 
-      const rowsToShow = todaysEntries.length ? todaysEntries : [];
+      const rowsToShow = todaysEntries.slice(0, 20);
 
       // If no entries for today, show placeholder message
       if (!rowsToShow.length) {
