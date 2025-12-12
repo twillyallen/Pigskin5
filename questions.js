@@ -211,7 +211,16 @@ export const CALENDAR = {
     { question: "Which QB leads the SEC in Passing Yards?", choices: ["Ty Simpson", "Joey Aguilar", "Arch Manning", "Gunner Stockton"], answer: 1 }
     ],
   },
-
+  "2025-12-14": { //Sunday
+    event: "",
+    questions: [
+    { question: "Which team leads the AFC in Turnover Differential?", choices: ["Steelers", "Texans", "Jaguars", "Colts"], answer: 1 },
+    { question: "True or False: Jerry Rice scored more TDs than Walter Payton", choices: ["True", "False"], answer: 0 },
+    { question: "Name the Career:\n- 63,440 Pass Yards\n- 421 Pass TDs\n- 209 INTs\n- 0 Super Bowl Rings", choices: ["Dan Marino", "Tony Romo", "Philip Rivers", "Matt Ryan"], answer: 2 },
+    { question: "Who leads the league in Forced Fumbles?", choices: ["Joey Bosa", "Will Anderson", "Jared Verse", "Aidan Hutchinson"], answer: 0 },
+    { question: "Who holds the record for most consecutive games with a TD pass?", choices: ["Randall Cunningham", "Tom Brady", "Brett Favre", "Drew Brees"], answer: 3 }
+    ],
+  },
 
 };
 
