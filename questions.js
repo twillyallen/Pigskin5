@@ -221,6 +221,16 @@ export const CALENDAR = {
     { question: "Who holds the record for most consecutive games with a TD pass?", choices: ["Randall Cunningham", "Tom Brady", "Brett Favre", "Drew Brees"], answer: 3 }
     ],
   },
+  "2025-12-15": { //Monday
+    event: "",
+    questions: [
+    { question: "True or False: No Super Bowl has ever gone into overtime?", choices: ["True", "False"], answer: 1 },
+    { question: "Who led yesterday in TD Passes?", choices: ["Bo Nix", "Jared Goff", "Josh Allen", "Trevor Lawrence"], answer: 3 },
+    { question: "Longest Field Goal in Regular Season History?", choices: ["64 Yards", "70 Yards", "66 Yards", "68 Yards"], answer: 3 },
+    { question: "Who leads the league in Rushing TDs?", choices: ["Jonathan Taylor", "Josh Jacobs", "Jahmyr Gibbs", "Josh Allen"], answer: 0 },
+    { question: "Who legally changed their name to match their football number?", choices: ["Tom Brady", "Antonio Brown", "Chad Johnson", "Curly Lambeau"], answer: 2 },
+    ],
+  },
 
 };
 
