@@ -231,7 +231,66 @@ export const CALENDAR = {
     { question: "Who legally changed their name to match their football number?", choices: ["Tom Brady", "Antonio Brown", "Chad Johnson", "Curly Lambeau"], answer: 2 },
     ],
   },
-
+  "2025-12-17": { //Wednesday
+    event: "",
+    questions: [
+    { question: "A quarterback has never rushed for 1,000 yards in a single season.", choices: ["True", "False"], answer: 1 },
+    { question: "Who leads the NFL in Receptions?", choices: ["Jaxon Smith Njigba", "Trey McBride", "Puka Nacua", "Christian McCaffrey"], answer: 1 },
+    { question: "What RB led the league in receiving yards in 2006?", choices: ["Brian Westbrook", "Reggie Bush", "Steven Jackson", "LaDainian Tomlinson"], answer: 2 },
+    { question: "Who was the first QB to throw for 4,000 Yards on the Chicago Bears?", choices: ["Jim McMahon", "Jay Cutler", "Jim Harbaugh", "N/A"], answer: 3 },
+    { question: "Name the Career:\n- 731 Receptions\n- 11619 Yards\n- 83 TDs\n- 3x 1st Team All Pro", choices: ["Calvin Johnson", "Brandin Cooks", "Cooper Kupp", "Alvin Kamara"], answer: 0 },
+    ],
+  },
+  "2025-12-18": { //Thursday
+    event: "",
+    questions: [
+    { question: "The Rams and Seahawks have met 56 times. Who leads the series", choices: ["Rams", "Seahawks", "Tied"], answer: 2 },
+    { question: "Who was the Rams’ MVP quarterback during “The Greatest Show on Turf” era?", choices: ["Tony Banks", "Jared Goff", "Aaron Brooks", "Kurt Warner"], answer: 3 },
+    { question: "Which team has more Super Bowl Appearances since 1999?", choices: ["Rams", "Seahawks", "Tied"], answer: 0 },
+    { question: "Which Seahawks QB has the record for most Single Season Pass TDs?", choices: ["Dave Krieg (1984)", "Geno Smith (2022)", "Russell Wilson (2020)", "Warren Moon (1997)"], answer: 2 },
+    { question: "Who has the most TD Receptions this season?", choices: ["Jaxon Smith-Njigba", "Davante Adams", "Cooper Kupp", "Colby Parkinson"], answer: 1 },
+    ],
+  },
+  "2025-12-19": { //Friday
+    event: "",
+    questions: [
+    { question: "Who was the first defensive player to win Super Bowl MVP?", choices: ["Chuck Howley", "Von Miller", "Malcolm Smith", "Ray Lewis"], answer: 0 },
+    { question: "Which team commits the fewest turnovers?", choices: ["Packers", "Bears", "Lions", "Buccaneers"], answer: 2 },
+    { question: "Who leads the NFL in Yards After Catch (YAC)?", choices: ["JaMarr Chase", "Bijan Robinson", "Christian McCaffrey", "Puka Nacua"], answer: 1 },
+    { question: "True or False: Jerry Rice holds the record for most career fumbles by a non-QB. ", choices: ["True", "False"], answer: 1 },
+    { question: "Who has the longest run of the season?", choices: ["Jahmyr Gibbs", "Bijan Robinson", "David Montgomery", "Jonathan Taylor"], answer: 3 },
+    ],
+  },
+  "2025-12-20": { //Saturday
+    event: "",
+    questions: [
+    { question: "Who was the first two-time Heisman Trophy winner?", choices: ["Tim Tebow", "Clinton Frank", "Archie Griffin", "Felix Doc Blanchard"], answer: 2 },
+    { question: "Who is the all-time leading rusher in FBS college football history (Bowl Games Included)?", choices: ["Donnel Pumphrey", "Ron Dayne", "Ricky Williams", "Jonathan Taylor"], answer: 0 },
+    { question: "Who was the first true freshman QB to win the national championship?", choices: ["Tua Tagovailoa", "Jamelle Holieway", "Trevor Lawrence", "Deshaun Watson"], answer: 1 },
+    { question: "Which Alabama receiver caught the walk-off touchdown in overtime to win the 2018 National Championship?", choices: ["Jerry Jeudy", "Amari Cooper", "Jaylen Waddle", "DeVonta Smith"], answer: 3 },
+    { question: "Which team holds the record for the longest winning streak in college football history at 47 consecutive games?", choices: ["Notre Dame", "Oklahoma", "Washington", "Yale"], answer: 1 },
+    ],
+  },
+  "2025-12-21": { //Sunday
+    event: "",
+    questions: [
+    { question: "True or False: The Cardinals franchise is older than the state of Arizona.", choices: ["True", "False"], answer: 0 },
+    { question: "What was the final score of the highest-scoring Super Bowl ever?", choices: ["49-26 (1994)", "41-26 (1992)", "41-33 (2017)", "40-22 (2024)"], answer: 0 },
+    { question: "Which offense leads the league in Total EPA (Expected Points Added)?", choices: ["Packers", "Lions", "Rams", "Bills"], answer: 3 },
+    { question: "Which QB has thrown the most INTs this season?", choices: ["Geno Smith", "Patrick Mahomes", "Tua Tagovailoa", "Justin Herbert"], answer: 2 },
+    { question: "Who holds the Patriots’ franchise record for most receiving yards?", choices: ["Julian Edelman", "Stanley Morgan", "Rob Gronkowski", "Troy Brown"], answer: 1 },
+    ],
+  },
+  "2025-12-22": { //Monday
+    event: "",
+    questions: [
+    { question: "True or False: The Cardinals franchise is older than the state of Arizona.", choices: ["True", "False"], answer: 0 },
+    { question: "What was the final score of the highest-scoring Super Bowl ever?", choices: ["49-26 (1994)", "41-26 (1992)", "41-33 (2017)", "40-22 (2024)"], answer: 0 },
+    { question: "Which offense leads the league in Total EPA (Expected Points Added)?", choices: ["Packers", "Lions", "Rams", "Bills"], answer: 3 },
+    { question: "Which QB has thrown the most INTs this season?", choices: ["Geno Smith", "Patrick Mahomes", "Tua Tagovailoa", "Justin Herbert"], answer: 2 },
+    { question: "Who holds the Patriots’ franchise record for most receiving yards?", choices: ["Julian Edelman", "Stanley Morgan", "Rob Gronkowski", "Troy Brown"], answer: 1 },
+    ],
+  },
 };
 
 
