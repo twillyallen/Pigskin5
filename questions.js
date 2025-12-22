@@ -284,11 +284,11 @@ export const CALENDAR = {
   "2025-12-22": { //Monday
     event: "",
     questions: [
-    { question: "True or False: The Cardinals franchise is older than the state of Arizona.", choices: ["True", "False"], answer: 0 },
-    { question: "What was the final score of the highest-scoring Super Bowl ever?", choices: ["49-26 (1994)", "41-26 (1992)", "41-33 (2017)", "40-22 (2024)"], answer: 0 },
-    { question: "Which offense leads the league in Total EPA (Expected Points Added)?", choices: ["Packers", "Lions", "Rams", "Bills"], answer: 3 },
-    { question: "Which QB has thrown the most INTs this season?", choices: ["Geno Smith", "Patrick Mahomes", "Tua Tagovailoa", "Justin Herbert"], answer: 2 },
-    { question: "Who holds the Patriots’ franchise record for most receiving yards?", choices: ["Julian Edelman", "Stanley Morgan", "Rob Gronkowski", "Troy Brown"], answer: 1 },
+    { question: "Who holds the NFL record for most career sacks?", choices: ["Reggie White", "Bruce Smith", "Michael Strahan", "Cam Jordan"], answer: 1 },
+    { question: "Which defense has forced the most turnovers this season?", choices: ["Texans", "Rams", "Bears", "Lions"], answer: 2 },
+    { question: "True or False: Tom Brady has more playoff wins than any NFL franchise in the Super Bowl Era", choices: ["True", "False"], answer: 1 },
+    { question: "Who was the first player to rush for 2,000 yards in a season?", choices: ["Eric Dickerson", "Terrell Davis", "Barry Sanders", "O.J. Simpson"], answer: 3 },
+    { question: "Who leads the league in Passing Yards?", choices: ["Drake Maye", "Dak Prescott", "Matthew Stafford", "Jared Goff"], answer: 2 },
     ],
   },
 };
