@@ -95,7 +95,7 @@ function getRunDateISO() {
 
 
   // === DEV OVERRIDE - Uncomment to test specific dates ===
-  // return "2025-12-25";   // Change this date to test
+   return "2025-12-25";   // Change this date to test
   // ====================
 
 
