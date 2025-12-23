@@ -291,6 +291,56 @@ export const CALENDAR = {
     { question: "Who leads the league in Passing Yards?", choices: ["Drake Maye", "Dak Prescott", "Matthew Stafford", "Jared Goff"], answer: 2 },
     ],
   },
+  "2025-12-23": { //Tuesday
+    event: "",
+    questions: [
+    { question: "Name the Running Back Career:\n- 13,684 Rushing Yards\n- 162 Total TDs\n- 3x 1st Team All-Pro\n- 1x MVP", choices: ["LaDainian Tomlinson", "Jerome Bettis", "Adrian Peterson", "Marshall Faulk"], answer: 0 },
+    { question: "What team did 'The Catch' happen against?", choices: ["Oakland Raiders", "St. Louis Cardinals", "Dallas Cowboys", "Baltimore Colts"], answer: 2 },
+    { question: "Who leads the league in Points Scored?", choices: ["Cameron Dicker", "Jahmyr Gibbs", "Jonathan Taylor", "Jason Myers"], answer: 3 },
+    { question: "Who leads the league in Passer Rating?", choices: ["Matthew Stafford", "Drake Maye", "Josh Allen", "Jordan Love"], answer: 0 },
+    { question: "Which QB has the most All-Time Rushing TDs?", choices: ["Cam Newton", "Jalen Hurts", "Josh Allen", "Jack Kemp"], answer: 2 },
+    ],
+  },
+  "2025-12-24": { //Wednesday
+    event: "",
+    questions: [
+    { question: "Which NFL team has never played in a conference championship game?", choices: ["Cleveland Browns", "Houston Texans", "Jacksonville Jaguars", "Miami Dolphins"], answer: 1 },
+    { question: "Who is the youngest player to ever score an NFL touchdown in the Super Bowl Era?", choices: ["JuJu Smith-Schuster", "Rashan Salaam", "Braelon Allen", "Sam Darnold"], answer: 2 },
+    { question: "Which Running Back has rushed for the most 1st Downs this season?", choices: ["Jonathan Taylor", "Bijan Robinson", "Jahmyr Gibbs", "Derrick Henry"], answer: 0 },
+    { question: "Which punter has the best Net Punt Average?", choices: ["Ryan Wright", "Jordan Stout", "Tress Way", "Rigoberto Sanchez"], answer: 1 },
+    { question: "True or False: The Cowboys have the longest Conference Championship Appearance Drought in the NFC", choices: ["True", "False"], answer: 0 },
+    ],
+  },
+  "2025-12-25": { //Thursday
+    event: "Christmas",
+    questions: [
+    { question: "Which player had 6 TDs on Christmas Day 2020?", choices: ["Irv Smith Jr.", "Dalvin Cook", "Davante Adams", "Alvin Kamara"], answer: 3 },
+    { question: "Which player famously celebrated a TD by sitting in a Salvation Army red kettle?", choices: ["Dak Prescott", "Odell Beckham Jr.", "Ezekiel Elliott", "Antonio Brown"], answer: 2 },
+    { question: "True or False: There has never been a Christmas Day playoff game.", choices: ["True", "False"], answer: 1 },
+    { question: "True or False: The Longest Game in NFL History was played on Christmas Day", choices: ["True", "False"], answer: 0 },
+    { question: "Who won the first ever Christmas Game (Also the Longest Game in NFL History) in 1971?", choices: ["Chiefs", "Vikings", "Dolphins", "Cowboys"], answer: 2 },
+    ],
+  },
+  "2025-12-26": { //Friday
+    event: "",
+    questions: [
+    { question: "Which coach has the most career wins without a Super Bowl victory?", choices: ["Bud Grant", "Marty Schottenheimer", "Paul Brown", "George Allen"], answer: 1 },
+    { question: "Which stadium has hosted the most Super Bowls?", choices: ["Caesars Superdome", "Rose Bowl", "Hard Rock Stadium", "AT&T Stadium"], answer: 0 },
+    { question: "Who was the last non-QB to be drafted #1 overall?", choices: ["Myles Garrett", "Aidan Hutchinson", "Derek Stingley Jr", "Travon Walker"], answer: 3 },
+    { question: "Which team has the most Rushing Yards this season?", choices: ["Colts", "Bears", "Bills", "Ravens"], answer: 2 },
+    { question: "Which team has committed the most penalties per game this season?", choices: ["Broncos", "Titans", "Cowboys", "Bears"], answer: 1 },
+    ],
+  },
+  "2025-12-27": { //Saturday
+    event: "college",
+    questions: [
+    { question: "Which school has produced the most Heisman Trophy winners?", choices: ["USC", "Ohio St", "Oklahoma", "Notre Dame"], answer: 0 },
+    { question: "Who holds the single-season record for most passing yards in college football?", choices: ["Case Keenum", "Joe Burrow", "Tim Tebow", "Bailey Zappe"], answer: 3 },
+    { question: "What is the oldest rivalry in college football?", choices: ["South Dakota - South Dakota St.", "Yale - Princeton", "North Dakota St - Alabama", "Princeton - Harvard"], answer: 1 },
+    { question: "Which team has the most Rushing Yards this season?", choices: ["Colts", "Bears", "Bills", "Ravens"], answer: 2 },
+    { question: "Who has the most career receiving yards in FBS history?", choices: ["James Washington", "Zay Jones", "Trevor Insley", "Corey Davis"], answer: 3 },
+    ],
+  },
 };
 
 

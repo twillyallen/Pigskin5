@@ -1,0 +1,32 @@
+/* Snow Effect for Christmas Event */
+
+.snowflake {
+  position: fixed;
+  top: -20px;
+  color: white;
+  text-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
+  pointer-events: none;
+  z-index: 9999;
+  user-select: none;
+  animation: snowfall linear infinite;
+  opacity: 0.9;
+}
+
+@keyframes snowfall {
+  0% {
+    transform: translateY(-20px) translateX(0);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.9;
+  }
+  90% {
+    opacity: 0.9;
+  }
+  100% {
+    transform: translateY(100vh) translateX(var(--drift, 0));
+    opacity: 0;
+  }
+}
+
+/* Add some variety with different snowflake sizes that are set inline via JavaScript */

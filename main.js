@@ -23,6 +23,7 @@ const EVENT_LOGOS = {
   "college": "logos/pigskin5collegelogo.png",
   "Thanksgiving": "logos/pigskin5thanksgiving.png",
   //"packers": "logos/pigskin5packerlogo.png",
+  "Christmas": "logos/pigskin5christmaslogo.png"
   // add more events here 
 };
 
@@ -94,7 +95,7 @@ function getRunDateISO() {
 
 
   // === DEV OVERRIDE - Uncomment to test specific dates ===
-  // return "2025-12-14";   // Change this date to test
+  // return "2025-12-25";   // Change this date to test
   // ====================
 
 
@@ -887,6 +888,71 @@ console.log('Setting regular logo');
     titleLogo.alt = 'Pigskin5 Logo';
 }
 
+// ---------- Snow Effect ----------
+
+let snowInterval = null; // Store the interval ID so we can stop it
+
+// Create a single snowflake
+function createSnowflake() {
+  const container = document.getElementById("startScreen");
+  if (!container) return;
+  
+  const snowflake = document.createElement("div");
+  snowflake.className = "snowflake";
+  snowflake.textContent = "❄";
+  
+  // Random starting position across the width
+  snowflake.style.left = Math.random() * 100 + "%";
+  
+  // Random animation duration (slower = more realistic)
+  const duration = 5 + Math.random() * 10; // 5-15 seconds
+  snowflake.style.animationDuration = duration + "s";
+  
+  // Random size
+  const size = 10 + Math.random() * 20; // 10-30px
+  snowflake.style.fontSize = size + "px";
+  
+  // Random horizontal drift
+  const drift = -20 + Math.random() * 40; // -20px to +20px
+  snowflake.style.setProperty('--drift', drift + 'px');
+  
+  container.appendChild(snowflake);
+  
+  // Remove snowflake after animation completes
+  setTimeout(() => {
+    snowflake.remove();
+  }, (duration + 1) * 1000);
+}
+
+// Create falling snow animation (for Christmas event)
+function startSnow() {
+  // Stop any existing snow first
+  stopSnow();
+  
+  // Create initial batch of snowflakes
+  for (let i = 0; i < 30; i++) {
+    setTimeout(() => createSnowflake(), i * 100);
+  }
+  
+  // Continue creating snowflakes every 300ms to keep it snowing
+  snowInterval = setInterval(() => {
+    createSnowflake();
+  }, 300);
+}
+
+// Stop and clear all snow
+function stopSnow() {
+  // Stop creating new snowflakes
+  if (snowInterval) {
+    clearInterval(snowInterval);
+    snowInterval = null;
+  }
+  
+  // Remove all existing snowflakes
+  const snowflakes = document.querySelectorAll(".snowflake");
+  snowflakes.forEach(flake => flake.remove());
+}
+
 // Display the start/home screen
 function showStartScreen() {
   // Force scroll to top of page
@@ -927,6 +993,18 @@ document.querySelector(".title-wrap")?.classList.remove("title-wrap");
   // Load today's top 5 leaderboard
   renderStartScorecard();
   renderStartLeaderboard(runDate);
+  
+  // --- Start snow effect for Christmas event ---
+  const dayData = CALENDAR[runDate];
+  const eventName = (dayData && typeof dayData === 'object') ? dayData.event : null;
+  
+  // Clear any existing snow first
+  stopSnow();
+  
+  // Start snow if it's Christmas event
+  if (eventName === "Christmas") {
+    startSnow();
+  }
 }
 
 
@@ -947,6 +1025,9 @@ function getQuestionsForDate(dateStr) {
 
 // Start the quiz game
 function startGame() {
+  // Stop any snow effect when game starts
+  stopSnow();
+  
   // Update body classes for quiz state
   document.body.classList.remove("start-page");
   document.body.classList.remove("no-scroll");
