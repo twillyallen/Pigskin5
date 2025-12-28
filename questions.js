@@ -358,7 +358,7 @@ export const CALENDAR = {
     { question: "Who leads the San Francisco 49ers in career rushing yards?", choices: ["Steve Young", "Roger Craig", "Frank Gore", "Christian McCaffrey"], answer: 2 },
     { question: "True or False: A touchdown is worth 7 points.", choices: ["True", "False"], answer: 1 },
     { question: "What team has the highest scoring offense this season (PPG)?", choices: ["Bills", "Seahawks", "Cowboys", "Rams"], answer: 3 },
-    { question: "", choices: ["Broncos", "Patriots", "Bears", "Jaguars"], answer: 2 },
+    { question: "we will see", choices: ["Broncos", "Patriots", "Bears", "Jaguars"], answer: 2 },
     ],
   },
 };
