@@ -192,11 +192,15 @@
   <footer class="site-footer">
     <nav class="footer-nav">
       <a href="about.html">About</a>
-      <a> - </a>
+      <span> - </span>
       <a href="privacy.html">Privacy Policy</a>
-      <a> - </a>
+      <span> - </span>
+      <a href="cookies.html">Cookie Policy</a>
+      <span> - </span>
+      <a href="terms.html">Terms of Service</a>
+      <span> - </span>
       <a href="contact.html">Contact</a>
-      <a> - </a>
+      <span> - </span>
       <a href="blog/blog-index.html">NFL Blog</a>
     </nav>
 
@@ -204,5 +208,98 @@
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+
+
+
+<div id="cookie-consent-banner" style="display: none; position: fixed; bottom: 0; left: 0; right: 0; background-color: #2c3e50; color: white; padding: 20px; box-shadow: 0 -2px 10px rgba(0,0,0,0.3); z-index: 9999; font-family: Arial, sans-serif;">
+  <div style="max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 15px;">
+    <div style="flex: 1; min-width: 300px;">
+      <p style="margin: 0; font-size: 14px; line-height: 1.5;">
+        We use cookies to enhance your experience, serve personalized ads, and analyze our traffic. 
+        By clicking "Accept All", you consent to our use of cookies. 
+        <a href="cookies.html" style="color: #3498db; text-decoration: underline;">Cookie Policy</a> | 
+        <a href="privacy.html" style="color: #3498db; text-decoration: underline;">Privacy Policy</a>
+      </p>
+    </div>
+    <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+      <button onclick="acceptCookies()" style="background-color: #27ae60; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-size: 14px; font-weight: bold;">
+        Accept All
+      </button>
+      <button onclick="rejectCookies()" style="background-color: #95a5a6; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-size: 14px;">
+        Reject Non-Essential
+      </button>
+      <button onclick="manageCookies()" style="background-color: transparent; color: white; border: 1px solid white; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-size: 14px;">
+        Manage Preferences
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+// Cookie Consent Banner JavaScript
+(function() {
+  // Check if user has already made a choice
+  function getCookieConsent() {
+    return localStorage.getItem('cookieConsent');
+  }
+
+  // Show banner if no consent recorded
+  function showCookieBanner() {
+    const consent = getCookieConsent();
+    if (!consent) {
+      document.getElementById('cookie-consent-banner').style.display = 'block';
+    }
+  }
+
+  // Hide the banner
+  function hideBanner() {
+    document.getElementById('cookie-consent-banner').style.display = 'none';
+  }
+
+  // Accept all cookies
+  window.acceptCookies = function() {
+    localStorage.setItem('cookieConsent', 'all');
+    hideBanner();
+    // Enable Google AdSense and other tracking here
+    enableAnalytics();
+  };
+
+  // Reject non-essential cookies
+  window.rejectCookies = function() {
+    localStorage.setItem('cookieConsent', 'essential');
+    hideBanner();
+    // Disable non-essential cookies
+    disableAnalytics();
+  };
+
+  // Manage cookie preferences (redirect to cookies page)
+  window.manageCookies = function() {
+    window.location.href = 'cookies.html';
+  };
+
+  // Enable analytics and ads
+  function enableAnalytics() {
+    // Add your Google AdSense code here
+    // Example: Load Google AdSense script
+    console.log('Analytics and ads enabled');
+  }
+
+  // Disable analytics and ads
+  function disableAnalytics() {
+    // Disable tracking
+    console.log('Only essential cookies enabled');
+  }
+
+  // Show banner on page load
+  showCookieBanner();
+})();
+</script>
+
+<!-- END COOKIE CONSENT BANNER -->
+
+
+
+
+
 </body>
 </html>

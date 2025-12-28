@@ -358,7 +358,37 @@ export const CALENDAR = {
     { question: "Who leads the San Francisco 49ers in career rushing yards?", choices: ["Steve Young", "Roger Craig", "Frank Gore", "Christian McCaffrey"], answer: 2 },
     { question: "True or False: A touchdown is worth 7 points.", choices: ["True", "False"], answer: 1 },
     { question: "What team has the highest scoring offense this season (PPG)?", choices: ["Bills", "Seahawks", "Cowboys", "Rams"], answer: 3 },
-    { question: "we will see", choices: ["Broncos", "Patriots", "Bears", "Jaguars"], answer: 2 },
+    { question: "Which player has fumbled the most this season (Not only lost fumbles)", choices: ["Derrick Henry", "Josh Allen", "Caleb Williams", "Tua Tagovailoa"], answer: 2 },
+    ],
+  },
+  "2025-12-30": { //Tuesday
+    event: "",
+    questions: [
+    { question: "Which was ACTUALLY St. Louis' first NFL team?", choices: ["Rams", "Cardinals", "Staleys", "All-Stars"], answer: 3 },
+    { question: "Who is the Washington Commanders' all-time leading rusher?", choices: ["Clinton Portis", "John Riggins", "Alfred Morris", "Brian Robinson Jr"], answer: 1 },
+    { question: "Which kicker has made the most field goals this season?", choices: ["Ka'imi Fairbairn", "Cameron Dicker", "Will Reichard", "Jason Myers"], answer: 0 },
+    { question: "Which player has the most Career Fumble Recoveries?", choices: ["Russell Wilson", "Tom Brady", "Boomer Esiason", "Warren Moon"], answer: 3 },
+    { question: "Which active player has the most Career Rushing TDs", choices: ["Derrick Henry", "Josh Allen", "Jalen Hurts", "Josh Jacobs"], answer: 0 },
+    ],
+  },
+  "2025-12-31": { //Wednesday
+    event: "",
+    questions: [
+    { question: "Who was the first quarterback to win MVP unanimously?", choices: ["Lamar Jackson", "Emmitt Smith", "Tom Brady", "Cam Newton"], answer: 2 },
+    { question: "Which quarterback has the highest career passer rating (minimum 1,500 attempts)?", choices: ["Patrick Mahomes", "Aaron Rodgers", "Lamar Jackson", "Russell Wilson"], answer: 1 },
+    { question: "Who leads the Patriots in receiving yards this season?", choices: ["Stefon Diggs", "Kayshon Boutte", "Hunter Henry", "Mack Hollins"], answer: 0 },
+    { question: "Which AFC North team has the longest Playoff Win drought?", choices: ["Ravens", "Browns", "Steelers", "Bengals"], answer: 2 },
+    { question: "Who is the Baltimore Ravens' all-time leading rusher?", choices: ["Ray Rice", "Lamar Jackson", "Priest Homles", "Jamal Lewis"], answer: 3 },
+    ],
+  },
+  "2026-01-01": { //Thursday
+    event: "",
+    questions: [
+    { question: "Who was the first quarterback to win MVP unanimously?", choices: ["Lamar Jackson", "Emmitt Smith", "Tom Brady", "Cam Newton"], answer: 2 },
+    { question: "Which quarterback has the highest career passer rating (minimum 1,500 attempts)?", choices: ["Patrick Mahomes", "Aaron Rodgers", "Lamar Jackson", "Russell Wilson"], answer: 1 },
+    { question: "Who leads the Patriots in receiving yards this season?", choices: ["Stefon Diggs", "Kayshon Boutte", "Hunter Henry", "Mack Hollins"], answer: 0 },
+    { question: "Which AFC North team has the longest Playoff Win drought?", choices: ["Ravens", "Browns", "Steelers", "Bengals"], answer: 2 },
+    { question: "Who is the Baltimore Ravens' all-time leading rusher?", choices: ["Ray Rice", "Lamar Jackson", "Priest Homles", "Jamal Lewis"], answer: 3 },
     ],
   },
 };
