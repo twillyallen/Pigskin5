@@ -341,6 +341,26 @@ export const CALENDAR = {
     { question: "Who has the most career receiving yards in FBS history?", choices: ["James Washington", "Zay Jones", "Trevor Insley", "Corey Davis"], answer: 3 },
     ],
   },
+  "2025-12-28": { //Sunday
+    event: "",
+    questions: [
+    { question: "True or False: The Packers were eliminated from the Playoffs following their loss to Baltimore", choices: ["True", "False (but it felt like it)"], answer: 1 },
+    { question: "Which AFC division has it's winner CLINCHED (before Sundays Games)", choices: ["AFC West", "AFC East", "AFC South", "AFC North"], answer: 0 },
+    { question: "Myles Garrett has a chance to break *this* record in Week 17", choices: ["Career Interceptions for a DE", "Career Sacks", "Single Season Sacks", "Browns All-Time Sack Leader"], answer: 2 },
+    { question: "True or False: All the NFC Playoff Teams are SET heading into Week 17", choices: ["True", "False"], answer: 1 },
+    { question: "Which team hasn't won their Division since 2018, but has now won in 2025?", choices: ["Broncos", "Patriots", "Bears", "Jaguars"], answer: 2 },
+    ],
+  },
+  "2025-12-29": { //Monday
+    event: "",
+    questions: [
+    { question: "Who holds the record for most career games played?", choices: ["Morten Andersen", "Tom Brady", "Jerry Rice", "Jeff Feagles"], answer: 0 },
+    { question: "Who leads the San Francisco 49ers in career rushing yards?", choices: ["Steve Young", "Roger Craig", "Frank Gore", "Christian McCaffrey"], answer: 2 },
+    { question: "True or False: A touchdown is worth 7 points.", choices: ["True", "False"], answer: 1 },
+    { question: "What team has the highest scoring offense this season (PPG)?", choices: ["Bills", "Seahawks", "Cowboys", "Rams"], answer: 3 },
+    { question: "", choices: ["Broncos", "Patriots", "Bears", "Jaguars"], answer: 2 },
+    ],
+  },
 };
 
 
