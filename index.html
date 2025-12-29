@@ -53,13 +53,23 @@
 </head>
 <body>
   <header class="topbar" id="topbar">
+    <button id="menuBtn" class="icon-btn" aria-expanded="false" aria-controls="menuDropdown" title="Menu">
+      <img src="./hamburger-logo.png" alt="Menu" width="24" height="24" />
+    </button>
     <button id="helpBtn" class="icon-btn" aria-expanded="false" aria-controls="howTo" title="How to play">
       <img src="./question-logo.png" alt="Help" width="24" height="24" />
     </button>
-    <a id="aboutBtn" class="icon-btn" href="about.html" title="About">
-      <img src="./info-logo.png" alt="About" width="24" height="24" />
-    </a>
   </header>
+
+  <!-- Hamburger Menu Dropdown -->
+  <nav id="menuDropdown" class="menu-dropdown" hidden>
+    <a href="about.html">About</a>
+    <a href="privacy.html">Privacy Policy</a>
+    <a href="cookies.html">Cookie Policy</a>
+    <a href="terms.html">Terms of Service</a>
+    <a href="contact.html">Contact</a>
+    <a href="blog/blog-index.html">NFL Blog</a>
+  </nav>
 
   <aside id="howTo" class="howto" hidden>
     <h3>How to Play</h3>
@@ -191,11 +201,7 @@
 
   <footer class="site-footer">
     <nav class="footer-nav">
-      <a href="about.html">About</a>
-      <span> - </span>
       <a href="privacy.html">Privacy Policy</a>
-      <span> - </span>
-      <a href="cookies.html">Cookie Policy</a>
       <span> - </span>
       <a href="terms.html">Terms of Service</a>
       <span> - </span>

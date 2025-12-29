@@ -1590,7 +1590,9 @@ if (document.readyState === "loading") {
 (function(){
   // Get references to header elements
   const helpBtn = document.getElementById('helpBtn');
+  const menuBtn = document.getElementById('menuBtn');
   const howTo = document.getElementById('howTo');
+  const menuDropdown = document.getElementById('menuDropdown');
   const result = document.getElementById('result');
   const topbar = document.getElementById('topbar');
   const restartBtn = document.getElementById('restartBtn');
@@ -1599,10 +1601,16 @@ if (document.readyState === "loading") {
   function showTopbar(show){
     if(!topbar) return;
     topbar.style.display = show ? 'flex' : 'none';
-    // When hiding topbar, also hide the how-to panel
-    if(!show && howTo) { 
-      howTo.hidden = true; 
-      helpBtn?.setAttribute('aria-expanded','false'); 
+    // When hiding topbar, also hide the how-to panel and menu
+    if(!show) {
+      if(howTo) { 
+        howTo.hidden = true; 
+        helpBtn?.setAttribute('aria-expanded','false'); 
+      }
+      if(menuDropdown) {
+        menuDropdown.hidden = true;
+        menuBtn?.setAttribute('aria-expanded','false');
+      }
     }
   }
 
@@ -1612,6 +1620,46 @@ if (document.readyState === "loading") {
     const isHidden = howTo.hidden;
     howTo.hidden = !isHidden;  // Toggle visibility
     helpBtn.setAttribute('aria-expanded', String(isHidden));
+    // Close menu if open
+    if(menuDropdown && !menuDropdown.hidden) {
+      menuDropdown.hidden = true;
+      menuBtn?.setAttribute('aria-expanded', 'false');
+    }
+  });
+
+  // Toggle the hamburger menu when menu button clicked
+  menuBtn?.addEventListener('click', () => {
+    if(!menuDropdown) return;
+    const isHidden = menuDropdown.hidden;
+    menuDropdown.hidden = !isHidden;  // Toggle visibility
+    menuBtn.setAttribute('aria-expanded', String(isHidden));
+    // Close how-to if open
+    if(howTo && !howTo.hidden) {
+      howTo.hidden = true;
+      helpBtn?.setAttribute('aria-expanded', 'false');
+    }
+  });
+
+  // Close menu/how-to when clicking outside
+  document.addEventListener('click', (e) => {
+    if(!menuDropdown && !howTo) return;
+    
+    // Check if click is outside both menus and their buttons
+    const clickedMenuBtn = menuBtn && menuBtn.contains(e.target);
+    const clickedHelpBtn = helpBtn && helpBtn.contains(e.target);
+    const clickedMenu = menuDropdown && menuDropdown.contains(e.target);
+    const clickedHowTo = howTo && howTo.contains(e.target);
+    
+    if(!clickedMenuBtn && !clickedMenu && !clickedHelpBtn && !clickedHowTo) {
+      if(menuDropdown) {
+        menuDropdown.hidden = true;
+        menuBtn?.setAttribute('aria-expanded', 'false');
+      }
+      if(howTo) {
+        howTo.hidden = true;
+        helpBtn?.setAttribute('aria-expanded', 'false');
+      }
+    }
   });
 
   // Hide header when game starts

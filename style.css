@@ -372,6 +372,46 @@ body{ display:flex; flex-direction:column; min-height:100vh; }
 .howto h3{ margin:6px 0; }
 .howto ol{ margin:6px 18px; }
 
+/* ---------------- Hamburger Menu Dropdown ---------------- */
+.menu-dropdown {
+  position: fixed;
+  top: 58px;
+  left: 8px;
+  z-index: 40;
+  background: rgba(0,0,0,0.85);
+  border: 1px solid rgba(255,255,255,0.3);
+  border-radius: 12px;
+  color: #fff;
+  padding: 8px 0;
+  backdrop-filter: blur(6px);
+  min-width: 200px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+}
+
+.menu-dropdown a {
+  display: block;
+  padding: 12px 16px;
+  color: #fff !important;
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 600;
+  transition: background-color 0.15s ease;
+  border-left: 3px solid transparent;
+}
+
+.menu-dropdown a:hover {
+  background: rgba(255,255,255,0.1);
+  border-left-color: var(--btn-cyan);
+}
+
+.menu-dropdown a:visited {
+  color: #fff !important;
+}
+
+.menu-dropdown a:active {
+  background: rgba(255,255,255,0.15);
+}
+
 /* ---------------- Modal (pop-up ad) ---------------- */
 .modal{
   position: fixed;
