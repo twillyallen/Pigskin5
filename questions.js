@@ -382,7 +382,7 @@ export const CALENDAR = {
     ],
   },
   "2026-01-01": { //Thursday
-    event: "",
+    event: "NYE",
     questions: [
     { question: "Who was the first quarterback to win MVP unanimously?", choices: ["Lamar Jackson", "Emmitt Smith", "Tom Brady", "Cam Newton"], answer: 2 },
     { question: "Which quarterback has the highest career passer rating (minimum 1,500 attempts)?", choices: ["Patrick Mahomes", "Aaron Rodgers", "Lamar Jackson", "Russell Wilson"], answer: 1 },

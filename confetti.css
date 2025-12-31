@@ -1,0 +1,30 @@
+/* Confetti Effect for New Year's Event */
+
+.confetti {
+  position: fixed;
+  top: -20px;
+  pointer-events: none;
+  z-index: 9999;
+  user-select: none;
+  animation: confettifall linear infinite;
+  opacity: 0.95;
+}
+
+@keyframes confettifall {
+  0% {
+    transform: translateY(-20px) translateX(0) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.95;
+  }
+  90% {
+    opacity: 0.95;
+  }
+  100% {
+    transform: translateY(100vh) translateX(var(--drift, 0)) rotate(var(--rotation, 360deg));
+    opacity: 0;
+  }
+}
+
+/* Confetti will have varying sizes set inline via JavaScript */

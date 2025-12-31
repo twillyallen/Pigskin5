@@ -23,7 +23,8 @@ const EVENT_LOGOS = {
   "college": "logos/pigskin5collegelogo.png",
   "Thanksgiving": "logos/pigskin5thanksgiving.png",
   //"packers": "logos/pigskin5packerlogo.png",
-  "Christmas": "logos/pigskin5christmaslogo.png"
+  "Christmas": "logos/pigskin5christmaslogo.png",
+  "NYE": "logos/pigskin5NYElogo.png",
   // add more events here 
 };
 
@@ -94,8 +95,8 @@ let leaderboardForm, playerNameInput, leaderboardWarningEl, leaderboardBody;
 function getRunDateISO() {
 
 
-  // === DEV OVERRIDE - Uncomment to test specific dates ===
- //  return "2025-12-25";   // Change this date to test
+  // === DEV DATE OVERRIDE - Uncomment to test specific dates ===
+  // return "2026-01-01";   // Change this date to test
   // ====================
 
 
@@ -953,6 +954,61 @@ function stopSnow() {
   snowflakes.forEach(flake => flake.remove());
 }
 
+// ---------- Confetti Effect (Canvas-Confetti Library) ----------
+
+let confettiInterval = null; // Store the interval ID so we can stop it
+
+// Create continuous confetti bursts (for New Year's event)
+function startConfetti() {
+  // Stop any existing confetti first
+  stopConfetti();
+  
+  // Check if canvas-confetti library is loaded
+  if (typeof confetti !== "function") {
+    console.warn("canvas-confetti library not loaded");
+    return;
+  }
+  
+  // Function to create a confetti burst
+  function burst() {
+    // Left side burst
+    confetti({
+      particleCount: 7,
+      angle: 60,
+      spread: 55,
+      origin: { x: 0, y: 0.6 },
+      colors: ['#FFD700', '#FF6B6B', '#4ECDC4', '#45B7D1', '#FFA07A']
+    });
+    
+    // Right side burst
+    confetti({
+      particleCount: 7,
+      angle: 120,
+      spread: 55,
+      origin: { x: 1, y: 0.6 },
+      colors: ['#98D8C8', '#F7DC6F', '#BB8FCE', '#FFD700', '#FF6B6B']
+    });
+  }
+  
+  // Create initial burst
+  burst();
+  
+  // Continue creating confetti bursts every 400ms
+  confettiInterval = setInterval(() => {
+    burst();
+  }, 400);
+}
+
+// Stop confetti animation
+function stopConfetti() {
+  // Stop creating new confetti bursts
+  if (confettiInterval) {
+    clearInterval(confettiInterval);
+    confettiInterval = null;
+  }
+}
+
+
 // Display the start/home screen
 function showStartScreen() {
   // Force scroll to top of page
@@ -994,16 +1050,20 @@ document.querySelector(".title-wrap")?.classList.remove("title-wrap");
   renderStartScorecard();
   renderStartLeaderboard(runDate);
   
-  // --- Start snow effect for Christmas event ---
+  // --- Start special effects for event days ---
   const dayData = CALENDAR[runDate];
   const eventName = (dayData && typeof dayData === 'object') ? dayData.event : null;
   
-  // Clear any existing snow first
+  // Clear any existing effects first
   stopSnow();
+  stopConfetti();
   
-  // Start snow if it's Christmas event
+  // Start appropriate effect based on event
   if (eventName === "Christmas") {
     startSnow();
+  }
+  else if (eventName === "NYE") {
+    startConfetti();
   }
 }
 
@@ -1027,6 +1087,7 @@ function getQuestionsForDate(dateStr) {
 function startGame() {
   // Stop any snow effect when game starts
   stopSnow();
+  stopConfetti();
   
   // Update body classes for quiz state
   document.body.classList.remove("start-page");
