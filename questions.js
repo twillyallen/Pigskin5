@@ -391,6 +391,16 @@ export const CALENDAR = {
     { question: "Who leads all tight ends in receiving yards this season?", choices: ["Brock Bowers", "Trey McBride", "Travis Kelce", "Tyler Warren"], answer: 1 },
     ],
   },
+  "2026-01-02": { //Friday
+    event: "",
+    questions: [
+    { question: "Who is the Green Bay Packers' all-time leading rusher?", choices: ["Aaron Jones", "Jim Taylor", "Ryan Grant", "Ahman Green"], answer: 3 },
+    { question: "True or False: The Buffalo Bills won four consecutive Super Bowls.", choices: ["True", "False"], answer: 1 },
+    { question: "Which Super Bowl was the first to go into overtime?", choices: ["Steelers - Cowboys (1976)", "Patriots - Falcons (2016)", "Chiefs - 49ers (2023)", "Ravens - 49ers (2013)"], answer: 1 },
+    { question: "What was the Jets' original name in the AFL?", choices: ["Titans", "Football Yankees", "Crashers", "Crimson-Giants"], answer: 0 },
+    { question: "Which team has the highest-scoring offense this season?", choices: ["Cowboys", "Bills", "Rams", "Seahawks"], answer: 2 },
+    ],
+  },
 };
 
 
