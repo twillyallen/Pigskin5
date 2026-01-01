@@ -384,11 +384,11 @@ export const CALENDAR = {
   "2026-01-01": { //Thursday
     event: "NYE",
     questions: [
-    { question: "Who was the first quarterback to win MVP unanimously?", choices: ["Lamar Jackson", "Emmitt Smith", "Tom Brady", "Cam Newton"], answer: 2 },
-    { question: "Which quarterback has the highest career passer rating (minimum 1,500 attempts)?", choices: ["Patrick Mahomes", "Aaron Rodgers", "Lamar Jackson", "Russell Wilson"], answer: 1 },
-    { question: "Who leads the Patriots in receiving yards this season?", choices: ["Stefon Diggs", "Kayshon Boutte", "Hunter Henry", "Mack Hollins"], answer: 0 },
-    { question: "Which AFC North team has the longest Playoff Win drought?", choices: ["Ravens", "Browns", "Steelers", "Bengals"], answer: 2 },
-    { question: "Who is the Baltimore Ravens' all-time leading rusher?", choices: ["Ray Rice", "Lamar Jackson", "Priest Homles", "Jamal Lewis"], answer: 3 },
+    { question: "Who is the Cleveland Browns' all-time leading passer?", choices: ["Brian Sipe", "Baker Mayfield", "Otto Graham", "Tim Couch"], answer: 0 },
+    { question: "True or False: The Rams were in St. Louis before returning to Los Angeles.", choices: ["True", "False"], answer: 0 },
+    { question: "Guess the Career:\n18,355 Rush Yards\n164 TDs\n22 Fumbles Lost", choices: ["LaDainian Tomlinson", "Derrick Henry", "Emmitt Smith", "Adrian Peterson"], answer: 2 },
+    { question: "Who led the Steelers in receiving yards last season?", choices: ["Pat Freiermith", "Juju Smith-Schuester", "Calvin Austin III", "George Pickens"], answer: 3 },
+    { question: "Who leads all tight ends in receiving yards this season?", choices: ["Brock Bowers", "Trey McBride", "Travis Kelce", "Tyler Warren"], answer: 1 },
     ],
   },
 };
