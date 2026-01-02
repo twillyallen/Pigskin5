@@ -188,8 +188,7 @@ function showTierTooltip(emoji, tierName, streak, playerName) {
   container.addEventListener('click', removePopup);
   container.addEventListener('touchend', removePopup);
   
-  // Auto-remove after 3 seconds
-  setTimeout(removePopup, 3000);
+
 }
 
 
