@@ -479,6 +479,11 @@ function renderStartLeaderboard(dateStr) {
         tierBadge.textContent = tier.emoji;
         tierBadge.title = `${tier.name} (${streak}-day streak)`;
         tierBadge.style.color = tier.color;
+        tierBadge.style.cursor = "pointer";
+        // Add click handler for mobile (title does not work on touch devices)
+        tierBadge.addEventListener("click", () => {
+          alert(`${tier.emoji} ${tier.name}\n${streak}-day streak`);
+        });
         
         const nameSpan = document.createElement("span");
         nameSpan.textContent = e.name || "Anonymous";
@@ -636,6 +641,11 @@ function renderLeaderboard(dateStr) {
         tierBadge.textContent = tier.emoji;
         tierBadge.title = `${tier.name} (${streak}-day streak)`;
         tierBadge.style.color = tier.color;
+        tierBadge.style.cursor = "pointer";
+        // Add click handler for mobile (title does not work on touch devices)
+        tierBadge.addEventListener("click", () => {
+          alert(`${tier.emoji} ${tier.name}\n${streak}-day streak`);
+        });
         
         const nameSpan = document.createElement("span");
         nameSpan.textContent = e.name || "Anonymous";
