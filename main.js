@@ -52,44 +52,146 @@ function getTierForStreak(streakDays) {
   // Default to Rookie if no streak
   return STREAK_TIERS[0];
 
-// Custom tooltip to replace alert() for tier badges
-function showTierTooltip(emoji, tierName, streak) {
-  // Remove any existing tooltip
-  const existing = document.querySelector('.tier-tooltip-backdrop');
-  if (existing) existing.remove();
-  
-  // Create backdrop
-  const backdrop = document.createElement('div');
-  backdrop.className = 'tier-tooltip-backdrop';
-  
-  // Create tooltip
-  const tooltip = document.createElement('div');
-  tooltip.className = 'tier-tooltip';
-  
-  tooltip.innerHTML = `
-    <div class="tier-tooltip-emoji">${emoji}</div>
-    <div class="tier-tooltip-name">${tierName}</div>
-    <div class="tier-tooltip-streak">${streak}-day streak</div>
-  `;
-  
-  // Add to page
-  document.body.appendChild(backdrop);
-  document.body.appendChild(tooltip);
-  
-  // Remove on click anywhere
-  const remove = () => {
-    backdrop.remove();
-    tooltip.remove();
-  };
-  
-  backdrop.addEventListener('click', remove);
-  tooltip.addEventListener('click', remove);
-  
-  // Auto-remove after 3 seconds
-  setTimeout(remove, 3000);
 }
 
+// Custom popup to show tier badge info (replaces alert)
+function showTierTooltip(emoji, tierName, streak, playerName) {
+  console.log('showTierTooltip called!', emoji, tierName, streak);
+  
+  // Remove any existing tooltip
+  let existing = document.getElementById('tier-popup-container');
+  if (existing) {
+    existing.remove();
+  }
+  
+  // Create container
+  const container = document.createElement('div');
+  container.id = 'tier-popup-container';
+  container.style.cssText = `
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 999999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.6);
+  `;
+  
+  // Create popup box
+  const popup = document.createElement('div');
+  popup.style.cssText = `
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    padding: 30px 40px;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    max-width: 90vw;
+    animation: popupSlideIn 0.3s ease-out;
+  `;
+  
+  // Emoji
+  const emojiEl = document.createElement('div');
+  emojiEl.textContent = emoji;
+  emojiEl.style.cssText = `
+    font-size: 60px;
+    margin-bottom: 15px;
+    line-height: 1;
+  `;
+  
+  // Tier name
+  const nameEl = document.createElement('div');
+  nameEl.textContent = tierName;
+  nameEl.style.cssText = `
+    font-size: 28px;
+    font-weight: 900;
+    color: white;
+    margin-bottom: 8px;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  `;
+  
+  // Streak text
+  const streakEl = document.createElement('div');
+  streakEl.textContent = `${streak}-day streak`;
+  streakEl.style.cssText = `
+    font-size: 18px;
+    color: rgba(255, 255, 255, 0.9);
+    font-weight: 600;
+  `;
+  
+  // Tap to close hint
+  const hintEl = document.createElement('div');
+  hintEl.textContent = 'Tap anywhere to close';
+  hintEl.style.cssText = `
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.6);
+    margin-top: 15px;
+    font-style: italic;
+  `;
+  
+  // Assemble popup
+  popup.appendChild(emojiEl);
+  
+  // Player name (if provided)
+  if (playerName) {
+    const playerEl = document.createElement('div');
+    playerEl.textContent = playerName;
+    playerEl.style.cssText = `
+      font-size: 22px;
+      font-weight: 700;
+      color: rgba(255, 255, 255, 0.95);
+      margin-bottom: 12px;
+      letter-spacing: 0.5px;
+    `;
+    popup.appendChild(playerEl);
+  }
+  
+  popup.appendChild(nameEl);
+  popup.appendChild(streakEl);
+  popup.appendChild(hintEl);
+  container.appendChild(popup);
+  
+  // Add animation
+  const style = document.createElement('style');
+  style.textContent = `
+    @keyframes popupSlideIn {
+      from {
+        opacity: 0;
+        transform: scale(0.8) translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+      }
+    }
+  `;
+  document.head.appendChild(style);
+  
+  // Add to page
+  document.body.appendChild(container);
+  
+  // Remove on click
+  const removePopup = () => {
+    container.style.opacity = '0';
+    container.style.transition = 'opacity 0.2s';
+    setTimeout(() => {
+      container.remove();
+      style.remove();
+    }, 200);
+  };
+  
+  container.addEventListener('click', removePopup);
+  container.addEventListener('touchend', removePopup);
+  
+
 }
+
+
 
 function isProd() {
 
@@ -518,14 +620,13 @@ function renderStartLeaderboard(dateStr) {
         tierBadge.title = `${tier.name} (${streak}-day streak)`;
         tierBadge.style.color = tier.color;
         tierBadge.style.cursor = "pointer";
-        // Add click handler for mobile (title does not work on touch devices)
-        const showTierInfo = (e) => {
-          e.preventDefault();
-          e.stopPropagation();
-          showTierTooltip(tier.emoji, tier.name, streak);
+        // Add click handler
+        const showTierInfo = () => {
+          showTierTooltip(tier.emoji, tier.name, streak, e.name || "Anonymous");
+          console.log("Badge clicked!", tier.emoji, tier.name, streak);
         };
         tierBadge.addEventListener("click", showTierInfo);
-        tierBadge.addEventListener("touchend", showTierInfo); // iOS Chrome fix
+        tierBadge.addEventListener("touchend", (e) => { e.preventDefault(); showTierInfo(); });
         
         const nameSpan = document.createElement("span");
         nameSpan.textContent = e.name || "Anonymous";
@@ -684,14 +785,13 @@ function renderLeaderboard(dateStr) {
         tierBadge.title = `${tier.name} (${streak}-day streak)`;
         tierBadge.style.color = tier.color;
         tierBadge.style.cursor = "pointer";
-        // Add click handler for mobile (title does not work on touch devices)
-        const showTierInfo = (e) => {
-          e.preventDefault();
-          e.stopPropagation();
-          showTierTooltip(tier.emoji, tier.name, streak);
+        // Add click handler
+        const showTierInfo = () => {
+          showTierTooltip(tier.emoji, tier.name, streak, e.name || "Anonymous");
+          console.log("Badge clicked!", tier.emoji, tier.name, streak);
         };
         tierBadge.addEventListener("click", showTierInfo);
-        tierBadge.addEventListener("touchend", showTierInfo); // iOS Chrome fix
+        tierBadge.addEventListener("touchend", (e) => { e.preventDefault(); showTierInfo(); });
         const nameSpan = document.createElement("span");
         nameSpan.textContent = e.name || "Anonymous";
         
