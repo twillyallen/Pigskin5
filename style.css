@@ -787,3 +787,33 @@ footer a:visited {
 .start-scorecard.hidden {
   display: none;
 }
+/* ---------------- Tier Badge Styling ---------------- */
+.name-with-tier {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.tier-badge {
+  font-size: 1.1rem;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease;
+}
+
+.tier-badge:hover {
+  transform: scale(1.15);
+}
+
+/* Mobile adjustments for tier badges */
+@media (max-width: 480px) {
+  .tier-badge {
+    font-size: 1rem;
+  }
+  
+  .name-with-tier {
+    gap: 4px;
+  }
+}

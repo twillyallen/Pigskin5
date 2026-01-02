@@ -15,7 +15,7 @@ const KEY_LB_SUBMIT_PREFIX = "ps5_leaderboard_submit_"; // Tracks if user submit
 const PROD_HOSTS = ["twillyallen.github.io", "pigskin5.com"];
 
 // Google Apps Script
-const LEADERBOARD_API_URL = "https://script.google.com/macros/s/AKfycbxbFUaP1CUMxtkigaxLUELzoquJqsyV2_3GzHhwvEc91Mj5WEtA2K1X8z7vem6MyXnlcA/exec";
+const LEADERBOARD_API_URL = "https://script.google.com/macros/s/AKfycbzLIkEvrtXNYc0zgtvpMYqma8YngyvMfmhfr2k2-xC6_po-rC5unN2KxLbqnJo4JraLwA/exec";
 
 
 //SPECIAL EVENT DAYS --------------------------------------
@@ -29,7 +29,29 @@ const EVENT_LOGOS = {
 };
 
 
+// ==============================
+// STREAK TIER SYSTEM
+// ==============================
+const STREAK_TIERS = [
+  { name: "Rookie", minDays: 0, emoji: "🎯", color: "#95a5a6" },
+  { name: "Starter", minDays: 7, emoji: "⚡", color: "#3498db" },
+  { name: "Pro", minDays: 14, emoji: "🔥", color: "#9b59b6" },
+  { name: "All-Pro", minDays: 30, emoji: "⭐", color: "#f39c12" },
+  { name: "Hall of Fame", minDays: 60, emoji: "🏆", color: "#e67e22" },
+  { name: "Legend", minDays: 100, emoji: "👑", color: "#e74c3c" }
+];
 
+// Get tier information based on streak length
+function getTierForStreak(streakDays) {
+  // Start from the end and find the highest tier they qualify for
+  for (let i = STREAK_TIERS.length - 1; i >= 0; i--) {
+    if (streakDays >= STREAK_TIERS[i].minDays) {
+      return STREAK_TIERS[i];
+    }
+  }
+  // Default to Rookie if no streak
+  return STREAK_TIERS[0];
+}
 
 function isProd() {
 
@@ -334,6 +356,7 @@ async function addLeaderboardEntry(dateStr, entry) {
     body.append("points", String(entry.points ?? 0)); // ?? is nullish coalescing (default to 0)
     body.append("avgTime", String(entry.avgTime ?? 0));
 
+    body.append("dailyStreak", String(entry.dailyStreak ?? 0)); // NEW: Include streak
     // Send POST request to Google Apps Script
     await fetch(LEADERBOARD_API_URL, {
       method: "POST",
@@ -443,7 +466,26 @@ function renderStartLeaderboard(dateStr) {
         rankTd.textContent = String(idx + 1);
 
         const nameTd = document.createElement("td");
-        nameTd.textContent = e.name || "Anonymous";
+        
+        // Add tier badge to name
+        const streak = e.dailyStreak ?? 0;
+        const tier = getTierForStreak(streak);
+        
+        const nameContainer = document.createElement("div");
+        nameContainer.className = "name-with-tier";
+        
+        const tierBadge = document.createElement("span");
+        tierBadge.className = "tier-badge";
+        tierBadge.textContent = tier.emoji;
+        tierBadge.title = `${tier.name} (${streak}-day streak)`;
+        tierBadge.style.color = tier.color;
+        
+        const nameSpan = document.createElement("span");
+        nameSpan.textContent = e.name || "Anonymous";
+        
+        nameContainer.appendChild(tierBadge);
+        nameContainer.appendChild(nameSpan);
+        nameTd.appendChild(nameContainer);
 
         const pointsTd = document.createElement("td");
         pointsTd.textContent = (e.points ?? 0).toLocaleString();
@@ -580,8 +622,27 @@ function renderLeaderboard(dateStr) {
         rankTd.textContent = String(idx + 1);
 
         // Name column
+        // Name column with tier badge
         const nameTd = document.createElement("td");
-        nameTd.textContent = e.name || "Anonymous";
+        
+        const streak = e.dailyStreak ?? 0;
+        const tier = getTierForStreak(streak);
+        
+        const nameContainer = document.createElement("div");
+        nameContainer.className = "name-with-tier";
+        
+        const tierBadge = document.createElement("span");
+        tierBadge.className = "tier-badge";
+        tierBadge.textContent = tier.emoji;
+        tierBadge.title = `${tier.name} (${streak}-day streak)`;
+        tierBadge.style.color = tier.color;
+        
+        const nameSpan = document.createElement("span");
+        nameSpan.textContent = e.name || "Anonymous";
+        
+        nameContainer.appendChild(tierBadge);
+        nameContainer.appendChild(nameSpan);
+        nameTd.appendChild(nameContainer);
 
         // Points column (format with thousands separator)
         const pointsTd = document.createElement("td");
@@ -650,14 +711,17 @@ async function handleLeaderboardSubmit(evt) {
     return;
   }
 
+  
+  // Get current daily streak to include in submission
+  const dailyStreak = parseInt(localStorage.getItem("dailyStreak") || "0", 10);
   // Create the entry object to submit
   const entry = {
     name,
     points: totalPoints,
     avgTime: latestAvgTime,
+    dailyStreak: dailyStreak,
     createdAt: Date.now() // Timestamp of submission
   };
-
   // Submit to Google Sheets
   await addLeaderboardEntry(RUN_DATE, entry);
 
@@ -677,8 +741,10 @@ async function handleLeaderboardSubmit(evt) {
     }
   }
   
-  // Disable name input field
+  
+  // Disable name input field but keep the name visible
   if (playerNameInput) {
+    playerNameInput.value = name; // Keep the sanitized name in the box
     playerNameInput.disabled = true;
   }
 }
@@ -1139,6 +1205,9 @@ function startGame() {
 
   // Mark that user has attempted today's quiz (one attempt per day)
   setAttempt(RUN_DATE);
+  
+  // Compute and save streak for today
+  computeAndSaveStreak(RUN_DATE);
   
   // Display the first question
   renderQuestion();
