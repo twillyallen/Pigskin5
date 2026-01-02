@@ -481,9 +481,13 @@ function renderStartLeaderboard(dateStr) {
         tierBadge.style.color = tier.color;
         tierBadge.style.cursor = "pointer";
         // Add click handler for mobile (title does not work on touch devices)
-        tierBadge.addEventListener("click", () => {
+        const showTierInfo = (e) => {
+          e.preventDefault();
+          e.stopPropagation();
           alert(`${tier.emoji} ${tier.name}\n${streak}-day streak`);
-        });
+        };
+        tierBadge.addEventListener("click", showTierInfo);
+        tierBadge.addEventListener("touchend", showTierInfo); // iOS Chrome fix
         
         const nameSpan = document.createElement("span");
         nameSpan.textContent = e.name || "Anonymous";
@@ -643,10 +647,13 @@ function renderLeaderboard(dateStr) {
         tierBadge.style.color = tier.color;
         tierBadge.style.cursor = "pointer";
         // Add click handler for mobile (title does not work on touch devices)
-        tierBadge.addEventListener("click", () => {
+        const showTierInfo = (e) => {
+          e.preventDefault();
+          e.stopPropagation();
           alert(`${tier.emoji} ${tier.name}\n${streak}-day streak`);
-        });
-        
+        };
+        tierBadge.addEventListener("click", showTierInfo);
+        tierBadge.addEventListener("touchend", showTierInfo); // iOS Chrome fix
         const nameSpan = document.createElement("span");
         nameSpan.textContent = e.name || "Anonymous";
         
