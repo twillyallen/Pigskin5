@@ -188,7 +188,8 @@ function showTierTooltip(emoji, tierName, streak, playerName) {
   container.addEventListener('click', removePopup);
   container.addEventListener('touchend', removePopup);
   
-
+  // Auto-remove after 3 seconds
+  setTimeout(removePopup, 3000);
 }
 
 
@@ -687,7 +688,10 @@ function renderStartScorecard() {
   scorecardEl.classList.remove("hidden");
   
   // Update streaks - show actual streak values
-  if (dailyStreakEl) dailyStreakEl.textContent = dailyStreak;
+  if (dailyStreakEl) {
+    const tier = getTierForStreak(parseInt(dailyStreak, 10));
+    dailyStreakEl.textContent = `${tier.emoji} ${dailyStreak}`;
+  }
   if (tdStreakEl) tdStreakEl.textContent = tdStreak;
   
   // Update yesterday's data
@@ -1688,6 +1692,7 @@ function injectShareSummary() {
     // Get current streaks
   const dailyStreak = computeAndSaveStreak(RUN_DATE);
   const tdStreak = localStorage.getItem("tdStreak") || 0;
+  const shareTier = getTierForStreak(dailyStreak);
   
   let shareText;
   
@@ -1695,8 +1700,8 @@ if (score === QUESTIONS.length) {
     // Perfect score - TOUCHDOWN!
     shareText = `TOUCHDOWN! ${RUN_DATE}
 ${squaresNow}
-${latestAvgTime.toFixed(1)}s avg · ${totalPoints.toLocaleString()} pts
-Daily Streak: 🔥 ${dailyStreak}
+${totalPoints.toLocaleString()} pts · ${latestAvgTime.toFixed(1)}s avg
+Daily Streak: ${shareTier.emoji} ${dailyStreak}
 Touchdown Streak: 🏈 ${tdStreak}
 
 pigskin5.com
@@ -1706,6 +1711,9 @@ pigskin5.com
     // Zero correct - humorous message
     shareText = `Pigskin 5 ${RUN_DATE}
 ${squaresNow}
+${totalPoints.toLocaleString()} pts · ${latestAvgTime.toFixed(1)}s avg
+Daily Streak: ${shareTier.emoji} ${dailyStreak}
+
 I do NOT know ball 🤦
 
 Can you beat my score?
@@ -1716,8 +1724,8 @@ pigskin5.com
     // Regular score
     shareText = `Pigskin 5 ${RUN_DATE}
 ${squaresNow}
-${latestAvgTime.toFixed(1)}s avg · ${totalPoints.toLocaleString()} pts
-Daily Streak: 🔥 ${dailyStreak}
+${totalPoints.toLocaleString()} pts · ${latestAvgTime.toFixed(1)}s avg
+Daily Streak: ${shareTier.emoji} ${dailyStreak}
 
 pigskin5.com
 
@@ -1764,7 +1772,9 @@ pigskin5.com
   // Daily streak pill (days played in a row)
   const daily = document.createElement("div");
   daily.className = "pill";
-  daily.textContent = `Daily Streak: ${computeAndSaveStreak(RUN_DATE)}`;
+  const currentStreak = computeAndSaveStreak(RUN_DATE);
+  const tier = getTierForStreak(currentStreak);
+  daily.textContent = `Daily Streak: ${tier.emoji} ${currentStreak}`;
 
   // Touchdown streak pill (perfect scores in a row)
   const td = document.createElement("div");
