@@ -246,6 +246,12 @@ body.quiz-active .progress-bar {
   background:transparent;
   padding:0;
   margin:0;
+  /* Mobile rendering fixes */
+  position: relative;
+  z-index: 1;
+  isolation: isolate;
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
 }
 .question{ 
   font-size:clamp(20px, 2.6vw, 28px); 
@@ -271,8 +277,25 @@ body.quiz-active .progress-bar {
 .correct{ background:#c7f5d8 !important; outline:2px solid #36c46a; }
 .wrong  { background:#ffd2d9 !important; outline:2px solid #ff4b6b; }
 
-.review{ display:grid; gap:10px; margin-top:10px; }
-.rev{ background: rgba(0,0,0,.22); border-radius:10px; padding:10px; }
+.review{ 
+  display:grid; 
+  gap:10px; 
+  margin-top:10px;
+  /* Mobile rendering fixes */
+  position: relative;
+  z-index: 1;
+  clear: both;
+  overflow: hidden;
+}
+.rev{ 
+  background: rgba(0,0,0,.22); 
+  border-radius:10px; 
+  padding:10px;
+  /* Force GPU acceleration for smoother rendering */
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  will-change: transform;
+}
 .rev .q{ font-weight:900; margin-bottom:4px; }
 .rev .ex{ opacity:.85; margin-top:4px; }
 
@@ -514,6 +537,12 @@ footer a:visited {
   margin-top: 18px;
   padding-top: 12px;
   border-top: 1px solid rgba(255,255,255,0.18);
+  /* Mobile rendering fixes */
+  position: relative;
+  z-index: 2;
+  clear: both;
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
 }
 
 .leaderboard-form {
@@ -822,4 +851,93 @@ footer a:visited {
   .name-with-tier {
     gap: 4px;
   }
+}
+
+/* ---------------- Mobile Screen Tearing Fixes ---------------- */
+@media (max-width: 768px) {
+  /* Force proper layer separation on mobile */
+  .result {
+    min-height: 100vh;
+    padding-bottom: 60px;
+  }
+  
+  .review {
+    margin-bottom: 30px;
+  }
+  
+  .leaderboard {
+    margin-top: 30px;
+    padding-top: 20px;
+    background: rgba(0, 0, 0, 0.3);
+    padding: 20px 10px;
+    border-radius: 10px;
+  }
+  
+  /* Force hardware acceleration on iOS */
+  .card, .result, .review, .leaderboard {
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -webkit-perspective: 1000;
+    perspective: 1000;
+  }
+}
+
+/* ---------------- Custom Tier Tooltip (replaces alert) ---------------- */
+.tier-tooltip {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(0, 0, 0, 0.95);
+  color: white;
+  padding: 20px 30px;
+  border-radius: 12px;
+  font-size: 1.2rem;
+  text-align: center;
+  z-index: 10000;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  animation: tooltipFadeIn 0.2s ease-out;
+  min-width: 200px;
+}
+
+.tier-tooltip-emoji {
+  font-size: 2.5rem;
+  display: block;
+  margin-bottom: 10px;
+}
+
+.tier-tooltip-name {
+  font-weight: 800;
+  font-size: 1.3rem;
+  margin-bottom: 5px;
+}
+
+.tier-tooltip-streak {
+  opacity: 0.9;
+  font-size: 1rem;
+}
+
+.tier-tooltip-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: 9999;
+  animation: backdropFadeIn 0.2s ease-out;
+}
+
+@keyframes tooltipFadeIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+@keyframes backdropFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }

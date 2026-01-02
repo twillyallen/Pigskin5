@@ -51,6 +51,44 @@ function getTierForStreak(streakDays) {
   }
   // Default to Rookie if no streak
   return STREAK_TIERS[0];
+
+// Custom tooltip to replace alert() for tier badges
+function showTierTooltip(emoji, tierName, streak) {
+  // Remove any existing tooltip
+  const existing = document.querySelector('.tier-tooltip-backdrop');
+  if (existing) existing.remove();
+  
+  // Create backdrop
+  const backdrop = document.createElement('div');
+  backdrop.className = 'tier-tooltip-backdrop';
+  
+  // Create tooltip
+  const tooltip = document.createElement('div');
+  tooltip.className = 'tier-tooltip';
+  
+  tooltip.innerHTML = `
+    <div class="tier-tooltip-emoji">${emoji}</div>
+    <div class="tier-tooltip-name">${tierName}</div>
+    <div class="tier-tooltip-streak">${streak}-day streak</div>
+  `;
+  
+  // Add to page
+  document.body.appendChild(backdrop);
+  document.body.appendChild(tooltip);
+  
+  // Remove on click anywhere
+  const remove = () => {
+    backdrop.remove();
+    tooltip.remove();
+  };
+  
+  backdrop.addEventListener('click', remove);
+  tooltip.addEventListener('click', remove);
+  
+  // Auto-remove after 3 seconds
+  setTimeout(remove, 3000);
+}
+
 }
 
 function isProd() {
@@ -484,7 +522,7 @@ function renderStartLeaderboard(dateStr) {
         const showTierInfo = (e) => {
           e.preventDefault();
           e.stopPropagation();
-          alert(`${tier.emoji} ${tier.name}\n${streak}-day streak`);
+          showTierTooltip(tier.emoji, tier.name, streak);
         };
         tierBadge.addEventListener("click", showTierInfo);
         tierBadge.addEventListener("touchend", showTierInfo); // iOS Chrome fix
@@ -650,7 +688,7 @@ function renderLeaderboard(dateStr) {
         const showTierInfo = (e) => {
           e.preventDefault();
           e.stopPropagation();
-          alert(`${tier.emoji} ${tier.name}\n${streak}-day streak`);
+          showTierTooltip(tier.emoji, tier.name, streak);
         };
         tierBadge.addEventListener("click", showTierInfo);
         tierBadge.addEventListener("touchend", showTierInfo); // iOS Chrome fix
