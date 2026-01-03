@@ -401,7 +401,27 @@ export const CALENDAR = {
     { question: "Which team has the highest-scoring offense this season?", choices: ["Cowboys", "Bills", "Rams", "Seahawks"], answer: 2 },
     ],
   },
-  "2026-01-03": { //Friday
+  "2026-01-03": { //Saturday
+    event: "college",
+    questions: [
+    { question: "Which of the 4 remaining CFP Teams have won a National Championship most recently?", choices: ["Indiana", "Ole Miss", "Oregon", "Miami"], answer: 3 },
+    { question: "Who won the 2025 Heisman Trophy, becoming his school's first-ever winner?", choices: ["Dante Moore", "Fernando Mendoza", "Carson Beck", "Trinidad Chambliss"], answer: 1 },
+    { question: "How long was Indiana's losing streak to Ohio St.?", choices: ["29 Games", "12 Games", "26 Games", "22 Games"], answer: 0 },
+    { question: "What did Indiana coach Curt Cignetti famously say at his introductory press conference?", choices: ["'Hoosiers to the Natty, Bruh!'", "'Hoo-Hoo-Hoo-HOOSIERS'", "'I win. Google Me.'", "'Indiana is BACK!'"], answer: 2 },
+    { question: "Oregon last played in a National Championship in the 2014-15 Season.\nWho did the face?", choices: ["Clemson", "Ohio St.", "Alabama", "LSU"], answer: 1 },
+    ],
+  },
+  "2026-01-04": { //Sunday
+    event: "",
+    questions: [
+    { question: "STEELERS vs RAVENS!\n4 of the last 6 MVPs were won by Aaron Rodgers and Lamar Jackson.\nWhich QB has more playoff wins in that stretch?", choices: ["Aaron Rodgers", "Lamar Jackson"], answer: 1 },
+    { question: "Which NFC South Team has the longest Playoff Appearance Drought?", choices: ["Falcons", "Panthers", "Saints", "Buccaneers"], answer: 1 },
+    { question: "True or False: Neither of Last Year's #1 Seeds are in the playoffs", choices: ["True", "False"], answer: 0 },
+    { question: "Which team is NOT in play for the AFC's #1 Seed?", choices: ["Jaguars", "Patriots", "Broncos", "Bills"], answer: 3 },
+    { question: "Who won Coach of the Year last season?", choices: ["Dan Campbell", "Kevin O'Connell", "Dan Quinn", "Sean Payton"], answer: 1 },
+    ],
+  },
+  "2026-01-05": { //Monday
     event: "",
     questions: [
     { question: "Who is the Green Bay Packers' all-time leading rusher?", choices: ["Aaron Jones", "Jim Taylor", "Ryan Grant", "Ahman Green"], answer: 3 },
@@ -411,26 +431,7 @@ export const CALENDAR = {
     { question: "Which team has the highest-scoring offense this season?", choices: ["Cowboys", "Bills", "Rams", "Seahawks"], answer: 2 },
     ],
   },
-  "2026-01-04": { //Friday
-    event: "",
-    questions: [
-    { question: "Who is the Green Bay Packers' all-time leading rusher?", choices: ["Aaron Jones", "Jim Taylor", "Ryan Grant", "Ahman Green"], answer: 3 },
-    { question: "True or False: The Buffalo Bills won four consecutive Super Bowls.", choices: ["True", "False"], answer: 1 },
-    { question: "Which Super Bowl was the first to go into overtime?", choices: ["Steelers - Cowboys (1976)", "Patriots - Falcons (2016)", "Chiefs - 49ers (2023)", "Ravens - 49ers (2013)"], answer: 1 },
-    { question: "What was the Jets' original name in the AFL?", choices: ["Titans", "Football Yankees", "Crashers", "Crimson-Giants"], answer: 0 },
-    { question: "Which team has the highest-scoring offense this season?", choices: ["Cowboys", "Bills", "Rams", "Seahawks"], answer: 2 },
-    ],
-  },
-  "2026-01-05": { //Friday
-    event: "",
-    questions: [
-    { question: "Who is the Green Bay Packers' all-time leading rusher?", choices: ["Aaron Jones", "Jim Taylor", "Ryan Grant", "Ahman Green"], answer: 3 },
-    { question: "True or False: The Buffalo Bills won four consecutive Super Bowls.", choices: ["True", "False"], answer: 1 },
-    { question: "Which Super Bowl was the first to go into overtime?", choices: ["Steelers - Cowboys (1976)", "Patriots - Falcons (2016)", "Chiefs - 49ers (2023)", "Ravens - 49ers (2013)"], answer: 1 },
-    { question: "What was the Jets' original name in the AFL?", choices: ["Titans", "Football Yankees", "Crashers", "Crimson-Giants"], answer: 0 },
-    { question: "Which team has the highest-scoring offense this season?", choices: ["Cowboys", "Bills", "Rams", "Seahawks"], answer: 2 },
-    ],
-  },
+  
 };
 
 
