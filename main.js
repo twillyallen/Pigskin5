@@ -1,8 +1,23 @@
-// Import the CALENDAR object from questions.js which contains all quiz questions organized by date
+// ============================================================================
+// PIGSKIN5 - MAIN.JS (REORGANIZED WITH CLEAR SECTIONS)
+// ============================================================================
+//
+// NAVIGATION
+//
+//   "=== CONFIG" → Game settings, timer, API URLs, event logos
+//   "=== STREAK" → Streak tiers, badges, calculations
+//   "=== LEADERBOARD" → Display, submission, scorecards
+//   "=== QUIZ" → Game flow, questions, timer, scoring
+//   "=== RESULTS" → Results screen, review, sharing
+//   "=== VISUAL" → Confetti, toast messages, animations
+//   "=== INIT" → Initialization and setup
+//
+// ============================================================================
+
 import { CALENDAR } from "./questions.js?v=20250914c";
 
 // ==============================
-// Config - Global constants that control the game behavior
+// Config
 // ==============================
 const TIME_LIMIT = 15; // Number of seconds the user has to answer each question
 
@@ -188,10 +203,7 @@ function showTierTooltip(emoji, tierName, streak, playerName) {
   container.addEventListener('click', removePopup);
   container.addEventListener('touchend', removePopup);
   
-
 }
-
-
 
 function isProd() {
 
@@ -239,13 +251,13 @@ let picks = [];             // Array storing user's choices for each question
 let timerId = null;         // Reference to the setInterval timer (so we can stop it)
 let timeLeft = TIME_LIMIT;  // Seconds remaining on current question
 
-// Timing & scoring variables
+// Timing & scoring
 let questionStartTime = 0;  // Timestamp when current question started (using performance.now())
 let questionTimes = [];     // Array storing how many seconds each question took
 let totalPoints = 0;        // Total leaderboard points earned (based on speed)
 let latestAvgTime = 0;      // Average time per question from most recent attempt
 
-// --- DOM References - Store references to HTML elements ---
+// --- DOM References ---
 let startScreen, startBtn, cardSec, resultSec, questionEl, choicesEl;
 let progressEl, timerEl, scoreText, reviewEl, restartBtn, headerEl;
 let progressFillEl; // The inner element of the progress bar that animates
@@ -257,7 +269,7 @@ let leaderboardForm, playerNameInput, leaderboardWarningEl, leaderboardBody;
 function getRunDateISO() {
 
 
-  // === DEV DATE OVERRIDE - Uncomment to test specific dates ===
+  // === DEV DATE OVERRIDE ===
   // return "2026-01-04";   // Change this date to test
   // ====================
 
@@ -268,7 +280,7 @@ function getRunDateISO() {
   const allowOverride = !isProd(); // Only allow overrides when not on production
   if (allowOverride && p.has("date")) return p.get("date");
 
-  // Get today's actual date
+  // Today's actual date
   const d = new Date();
   const y = d.getFullYear();
   const m = String(d.getMonth() + 1).padStart(2, "0");
@@ -414,6 +426,10 @@ function updateTouchdownStreak(dateStr, didPerfect) {
   return streak;
 }
 
+
+// ============================================================================
+// === LEADERBOARD === LEADERBOARD SYSTEM
+// ============================================================================
 // ---------- Leaderboard helpers ----------
 
 // Validate and clean up a player name before submitting to leaderboard
@@ -441,7 +457,7 @@ const BANNED_WORDS = [
   "Fag",
   "Shit",
   "Fuck",
-  "Bitch"
+  "Bitch",
 ];
   // Check against banned words list (case-insensitive)
   const lower = name.toLowerCase();
@@ -506,7 +522,7 @@ async function addLeaderboardEntry(dateStr, entry) {
 
     // With no-cors mode, we can't check if it succeeded, but Apps Script will write the row
   } catch (err) {
-    console.error("Failed to submit leaderboard entry:", err);
+    console.error("Failed to submit:", err);
   }
 }
 
@@ -1234,6 +1250,11 @@ function stopConfetti() {
 
 
 // Display the start/home screen
+
+// ============================================================================
+// === QUIZ === QUIZ GAME LOGIC
+// ============================================================================
+
 function showStartScreen() {
   // Force scroll to top of page
   window.scrollTo(0,0);
@@ -1802,6 +1823,11 @@ pigskin5.com
     }
   }
 }
+
+
+// ============================================================================
+// === INIT === INITIALIZATION
+// ============================================================================
 
 // ---------- Initialization ----------
 
