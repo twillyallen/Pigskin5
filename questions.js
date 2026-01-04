@@ -408,7 +408,7 @@ export const CALENDAR = {
     { question: "Who won the 2025 Heisman Trophy, becoming his school's first-ever winner?", choices: ["Dante Moore", "Fernando Mendoza", "Carson Beck", "Trinidad Chambliss"], answer: 1 },
     { question: "How long was Indiana's losing streak to Ohio St.?", choices: ["29 Games", "12 Games", "26 Games", "22 Games"], answer: 0 },
     { question: "What did Indiana coach Curt Cignetti famously say at his introductory press conference?", choices: ["'Hoosiers to the Natty, Bruh!'", "'Hoo-Hoo-Hoo-HOOSIERS'", "'I win. Google Me.'", "'Indiana is BACK!'"], answer: 2 },
-    { question: "Oregon last played in a National Championship in the 2014-15 Season.\nWho did the face?", choices: ["Clemson", "Ohio St.", "Alabama", "LSU"], answer: 1 },
+    { question: "Oregon last played in a National Championship in the 2014-15 Season.\nWho did they face?", choices: ["Clemson", "Ohio St.", "Alabama", "LSU"], answer: 1 },
     ],
   },
   "2026-01-04": { //Sunday
