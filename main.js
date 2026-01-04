@@ -33,7 +33,7 @@ const EVENT_LOGOS = {
 // STREAK TIER SYSTEM
 // ==============================
 const STREAK_TIERS = [
-  { name: "Rookie", minDays: 0, emoji: "🎯", color: "#95a5a6" },
+  { name: "Rookie", minDays: 0, emoji: "🫡", color: "#95a5a6" },
   { name: "Starter", minDays: 7, emoji: "⚡", color: "#3498db" },
   { name: "Pro", minDays: 14, emoji: "🔥", color: "#9b59b6" },
   { name: "All-Pro", minDays: 30, emoji: "⭐", color: "#f39c12" },
