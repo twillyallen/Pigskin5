@@ -424,11 +424,71 @@ export const CALENDAR = {
   "2026-01-05": { //Monday
     event: "",
     questions: [
-    { question: "Who is the Green Bay Packers' all-time leading rusher?", choices: ["Aaron Jones", "Jim Taylor", "Ryan Grant", "Ahman Green"], answer: 3 },
-    { question: "True or False: The Buffalo Bills won four consecutive Super Bowls.", choices: ["True", "False"], answer: 1 },
-    { question: "Which Super Bowl was the first to go into overtime?", choices: ["Steelers - Cowboys (1976)", "Patriots - Falcons (2016)", "Chiefs - 49ers (2023)", "Ravens - 49ers (2013)"], answer: 1 },
-    { question: "What was the Jets' original name in the AFL?", choices: ["Titans", "Football Yankees", "Crashers", "Crimson-Giants"], answer: 0 },
-    { question: "Which team has the highest-scoring offense this season?", choices: ["Cowboys", "Bills", "Rams", "Seahawks"], answer: 2 },
+    { question: "Who led the league in Completion % (min. 100 Att.)", choices: ["Brock Purdy", "Jared Goff", "Sam Darnold", "Drake Maye"], answer: 3 },
+    { question: "Which defense forced the most Turnovers in 2025?", choices: ["Jaguars", "Bears", "Steelers", "Texans"], answer: 1 },
+    { question: "Which player had the most tackles?", choices: ["Jordyn Brooks", "Bobby Wagner", "Devin White", "Nick Bolton"], answer: 0 },
+    { question: "True or False: Josh Allen had the most Fantasy Points in 2025 (PPR)", choices: ["True", "False"], answer: 1 },
+    { question: "Which RB was this in 2025?\n- 1,478 Rush Yards\n- 11 Total TDs\n- 5.3 Y/A\n- 93yd Longest Rush", choices: ["Derrick Henry", "Jonathan Taylor", "Bijan Robinson", "Christian McCaffrey"], answer: 2 },
+    ],
+  },
+  "2026-01-07": { //Wednesday
+    event: "RamsPanthers",
+    questions: [
+    { question: "True or False:\nThis is the first Playoff meeting between the Panthers and Rams.", choices: ["True", "False"], answer: 0 },
+    { question: "What year did the Carolina Panthers enter the NFL as an expansion franchise?", choices: ["1992", "2001", "1999", "1995"], answer: 3 },
+    { question: "Who is the All-Time leading Passer in Panthers history?", choices: ["Chris Weinke", "Jake Delhomme", "Cam Newton", "Steve Beurelein"], answer: 2 },
+    { question: "Which team leads the All-Time series?", choices: ["Panthers", "Rams"], answer: 0 },
+    { question: "The only previous Playoff meeting was a 2x Overtime Thriller\n\nWhat season did the Panthers beat the Rams on a Steve Smith walk-off TD?", choices: ["2010", "2007", "2005", "2003"], answer: 3 },
+    ],
+  },
+    "2026-01-08": { //Thursday
+    event: "BillsJaguars",
+    questions: [
+    { question: "The Bills and Jaguars have met twice in the playoffs. Which team leads the other 2-0?", choices: ["Bills", "Jaguars"], answer: 1 },
+    { question: "The Bills haven't won a road playoff game since what season?", choices: ["2022", "2023", "2001", "1992"], answer: 3 },
+    { question: "Josh Allen vs Trevor Lawrence: Who has won more of their head-to-head matchups?", choices: ["3-0 (Allen undefeated)", "2-1 (Lawrence leads)", "2-1 (Allen leads)", "0-3 (Allen winless)"], answer: 1 },
+    { question: "Jacksonville entered the 2026 playoffs riding a massive winning streak. How many consecutive games did the Jaguars win to end the regular season?", choices: ["8", "6", "10", "7"], answer: 0 },
+    { question: "James Cook led the league in rushing in 2025 with 1,621 yards. Who was the last Bills RB to lead the league in rushing?", choices: ["Thurman Thomas", "Cookie Gilchrist", "O.J. Simpson", "Fred Jackson"], answer: 2 },
+    ],
+  },
+    "2026-01-09": { //Friday
+    event: "49ersEagles",
+    questions: [
+    { question: "The Bills and Jaguars have met twice in the playoffs. Which team leads the other 2-0?", choices: ["Bills", "Jaguars"], answer: 1 },
+    { question: "The Bills haven't won a road playoff game since what season?", choices: ["2022", "2023", "2001", "1992"], answer: 3 },
+    { question: "Josh Allen vs Trevor Lawrence: Who has won more of their head-to-head matchups?", choices: ["3-0 (Allen undefeated)", "2-1 (Lawrence leads)", "2-1 (Allen leads)", "0-3 (Allen winless)"], answer: 1 },
+    { question: "Jacksonville entered the 2026 playoffs riding a massive winning streak. How many consecutive games did the Jaguars win to end the regular season?", choices: ["8", "6", "10", "7"], answer: 0 },
+    { question: "James Cook led the league in rushing in 2025 with 1,621 yards. Who was the last Bills RB to lead the league in rushing?", choices: ["Thurman Thomas", "Cookie Gilchrist", "O.J. Simpson", "Fred Jackson"], answer: 2 },
+    ],
+  },
+    "2026-01-10": { //Saturday
+    event: "PackersBears",
+    questions: [
+    { question: "The Packers and Bears have faced each other twice in the playoffs.\nWhat year did the Bears last win a playoff game against Green Bay?", choices: ["1994", "1985", "1941", "1923"], answer: 2 },
+    { question: "True or False: The Bears FINALLY have a 4,000 Yard single season passer!", choices: ["True", "False"], answer: 1 },
+    { question: "Between both teams, which player finished the 2025 regular season with the most receiving yards?", choices: ["Christian Watson", "DJ Moore", "Rome Odunze", "Romeo Doubs"], answer: 3 },
+    { question: "Which team has more playoff wins during the Super Bowl Era?", choices: ["Bears", "Packers"], answer: 1 },
+    { question: "Which Bears QB has the most Single Season Passing Yards in Franchise History?", choices: ["Caleb Williams", "Jay Cutler", "Sid Luckman", "Erik Kramer"], answer: 3 },
+    ],
+  },
+    "2026-01-011": { //Sunday
+    event: "ChargersPatriots",
+    questions: [
+    { question: "The Bills and Jaguars have met twice in the playoffs. Which team leads the other 2-0?", choices: ["Bills", "Jaguars"], answer: 1 },
+    { question: "The Bills haven't won a road playoff game since what season?", choices: ["2022", "2023", "2001", "1992"], answer: 3 },
+    { question: "Josh Allen vs Trevor Lawrence: Who has won more of their head-to-head matchups?", choices: ["3-0 (Allen undefeated)", "2-1 (Lawrence leads)", "2-1 (Allen leads)", "0-3 (Allen winless)"], answer: 1 },
+    { question: "Jacksonville entered the 2026 playoffs riding a massive winning streak. How many consecutive games did the Jaguars win to end the regular season?", choices: ["8", "6", "10", "7"], answer: 0 },
+    { question: "James Cook led the league in rushing in 2025 with 1,621 yards. Who was the last Bills RB to lead the league in rushing?", choices: ["Thurman Thomas", "Cookie Gilchrist", "O.J. Simpson", "Fred Jackson"], answer: 2 },
+    ],
+  },
+    "2026-01-012": { //Monday
+    event: "SteelersTexans",
+    questions: [
+    { question: "The Bills and Jaguars have met twice in the playoffs. Which team leads the other 2-0?", choices: ["Bills", "Jaguars"], answer: 1 },
+    { question: "The Bills haven't won a road playoff game since what season?", choices: ["2022", "2023", "2001", "1992"], answer: 3 },
+    { question: "Josh Allen vs Trevor Lawrence: Who has won more of their head-to-head matchups?", choices: ["3-0 (Allen undefeated)", "2-1 (Lawrence leads)", "2-1 (Allen leads)", "0-3 (Allen winless)"], answer: 1 },
+    { question: "Jacksonville entered the 2026 playoffs riding a massive winning streak. How many consecutive games did the Jaguars win to end the regular season?", choices: ["8", "6", "10", "7"], answer: 0 },
+    { question: "James Cook led the league in rushing in 2025 with 1,621 yards. Who was the last Bills RB to lead the league in rushing?", choices: ["Thurman Thomas", "Cookie Gilchrist", "O.J. Simpson", "Fred Jackson"], answer: 2 },
     ],
   },
   
