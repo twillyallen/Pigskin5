@@ -422,6 +422,16 @@ export const CALENDAR = {
     ],
   },
   "2026-01-05": { //Monday
+    event: "2025Wrapped",
+    questions: [
+    { question: "Who led the league in Completion % (min. 100 Att.)", choices: ["Brock Purdy", "Jared Goff", "Sam Darnold", "Drake Maye"], answer: 3 },
+    { question: "Which defense forced the most Turnovers in 2025?", choices: ["Jaguars", "Bears", "Steelers", "Texans"], answer: 1 },
+    { question: "Which player had the most tackles?", choices: ["Jordyn Brooks", "Bobby Wagner", "Devin White", "Nick Bolton"], answer: 0 },
+    { question: "True or False: Josh Allen had the most Fantasy Points in 2025 (PPR)", choices: ["True", "False"], answer: 1 },
+    { question: "Which RB was this in 2025?\n- 1,478 Rush Yards\n- 11 Total TDs\n- 5.3 Y/A\n- 93yd Longest Rush", choices: ["Derrick Henry", "Jonathan Taylor", "Bijan Robinson", "Christian McCaffrey"], answer: 2 },
+    ],
+  },
+  "2026-01-06": { //Tuesday
     event: "",
     questions: [
     { question: "Who led the league in Completion % (min. 100 Att.)", choices: ["Brock Purdy", "Jared Goff", "Sam Darnold", "Drake Maye"], answer: 3 },
@@ -471,7 +481,7 @@ export const CALENDAR = {
     { question: "Which Bears QB has the most Single Season Passing Yards in Franchise History?", choices: ["Caleb Williams", "Jay Cutler", "Sid Luckman", "Erik Kramer"], answer: 3 },
     ],
   },
-    "2026-01-011": { //Sunday
+    "2026-01-11": { //Sunday
     event: "ChargersPatriots",
     questions: [
     { question: "The Bills and Jaguars have met twice in the playoffs. Which team leads the other 2-0?", choices: ["Bills", "Jaguars"], answer: 1 },
@@ -481,7 +491,7 @@ export const CALENDAR = {
     { question: "James Cook led the league in rushing in 2025 with 1,621 yards. Who was the last Bills RB to lead the league in rushing?", choices: ["Thurman Thomas", "Cookie Gilchrist", "O.J. Simpson", "Fred Jackson"], answer: 2 },
     ],
   },
-    "2026-01-012": { //Monday
+    "2026-01-12": { //Monday
     event: "SteelersTexans",
     questions: [
     { question: "The Bills and Jaguars have met twice in the playoffs. Which team leads the other 2-0?", choices: ["Bills", "Jaguars"], answer: 1 },
