@@ -432,13 +432,13 @@ export const CALENDAR = {
     ],
   },
   "2026-01-06": { //Tuesday
-    event: "",
+    event: "2025Wrapped",
     questions: [
-    { question: "Who led the league in Completion % (min. 100 Att.)", choices: ["Brock Purdy", "Jared Goff", "Sam Darnold", "Drake Maye"], answer: 3 },
-    { question: "Which defense forced the most Turnovers in 2025?", choices: ["Jaguars", "Bears", "Steelers", "Texans"], answer: 1 },
-    { question: "Which player had the most tackles?", choices: ["Jordyn Brooks", "Bobby Wagner", "Devin White", "Nick Bolton"], answer: 0 },
-    { question: "True or False: Josh Allen had the most Fantasy Points in 2025 (PPR)", choices: ["True", "False"], answer: 1 },
-    { question: "Which RB was this in 2025?\n- 1,478 Rush Yards\n- 11 Total TDs\n- 5.3 Y/A\n- 93yd Longest Rush", choices: ["Derrick Henry", "Jonathan Taylor", "Bijan Robinson", "Christian McCaffrey"], answer: 2 },
+    { question: "Which Standout Rookie was this?\n- 817 Rec Yards\n- 76 Receptions\n- 4 Rec TDs\n- 1 Rush TD", choices: ["Tyler Warren", "Emeka Egbuka", "Harold Fannin", "Woody Marks"], answer: 0 },
+    { question: "How many Interceptions did the NY Jets get this season?", choices: ["0", "2", "7", "11"], answer: 0 },
+    { question: "Which stat did Davante Adams lead the league in?", choices: ["Yards After Catch", "Receiving TDs", "Receiving Yards", "Receptions"], answer: 1 },
+    { question: "Who set the record for Longest FG in NFL History?", choices: ["Brandon Aubrey", "Chase McLaughlin", "Cam Little", "Will Reichard"], answer: 2 },
+    { question: "Who was the only team to go Undefeated at Home in 2025?", choices: ["Patriots", "49ers", "Broncos", "Seahawks"], answer: 0 },
     ],
   },
   "2026-01-07": { //Wednesday
