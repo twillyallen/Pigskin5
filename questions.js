@@ -444,7 +444,7 @@ export const CALENDAR = {
   "2026-01-07": { //Wednesday
     event: "RamsPanthers",
     questions: [
-    { question: "True or False:\nThis is the first Playoff meeting between the Panthers and Rams.", choices: ["True", "False"], answer: 0 },
+    { question: "True or False:\nThis is the first Playoff meeting between the Panthers and Rams.", choices: ["True", "False"], answer: 1 },
     { question: "What year did the Carolina Panthers enter the NFL as an expansion franchise?", choices: ["1992", "2001", "1999", "1995"], answer: 3 },
     { question: "Who is the All-Time leading Passer in Panthers history?", choices: ["Chris Weinke", "Jake Delhomme", "Cam Newton", "Steve Beurelein"], answer: 2 },
     { question: "Which team leads the All-Time series?", choices: ["Panthers", "Rams"], answer: 0 },
