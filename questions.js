@@ -438,13 +438,13 @@ export const CALENDAR = {
     { question: "How many Interceptions did the NY Jets get this season?", choices: ["0", "2", "7", "11"], answer: 0 },
     { question: "Which stat did Davante Adams lead the league in?", choices: ["Yards After Catch", "Receiving TDs", "Receiving Yards", "Receptions"], answer: 1 },
     { question: "Who set the record for Longest FG in NFL History?", choices: ["Brandon Aubrey", "Chase McLaughlin", "Cam Little", "Will Reichard"], answer: 2 },
-    { question: "Who was the only team to go Undefeated at Home in 2025?", choices: ["Patriots", "49ers", "Broncos", "Seahawks"], answer: 0 },
+    { question: "Who was the only team to go undefeated on the road in 2025?", choices: ["Patriots", "49ers", "Broncos", "Seahawks"], answer: 0 },
     ],
   },
   "2026-01-07": { //Wednesday
     event: "RamsPanthers",
     questions: [
-    { question: "True or False:\nThis is the first Playoff meeting between the Panthers and Rams.", choices: ["True", "False"], answer: 0 },
+    { question: "True or False:\nThis is the first Playoff meeting between the Panthers and Rams.", choices: ["True", "False"], answer: 1 },
     { question: "What year did the Carolina Panthers enter the NFL as an expansion franchise?", choices: ["1992", "2001", "1999", "1995"], answer: 3 },
     { question: "Who is the All-Time leading Passer in Panthers history?", choices: ["Chris Weinke", "Jake Delhomme", "Cam Newton", "Steve Beurelein"], answer: 2 },
     { question: "Which team leads the All-Time series?", choices: ["Panthers", "Rams"], answer: 0 },
