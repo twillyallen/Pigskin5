@@ -464,11 +464,11 @@ export const CALENDAR = {
     "2026-01-09": { //Friday
     event: "49ersEagles",
     questions: [
-    { question: "The Bills and Jaguars have met twice in the playoffs. Which team leads the other 2-0?", choices: ["Bills", "Jaguars"], answer: 1 },
-    { question: "The Bills haven't won a road playoff game since what season?", choices: ["2022", "2023", "2001", "1992"], answer: 3 },
-    { question: "Josh Allen vs Trevor Lawrence: Who has won more of their head-to-head matchups?", choices: ["3-0 (Allen undefeated)", "2-1 (Lawrence leads)", "2-1 (Allen leads)", "0-3 (Allen winless)"], answer: 1 },
-    { question: "Jacksonville entered the 2026 playoffs riding a massive winning streak. How many consecutive games did the Jaguars win to end the regular season?", choices: ["8", "6", "10", "7"], answer: 0 },
-    { question: "James Cook led the league in rushing in 2025 with 1,621 yards. Who was the last Bills RB to lead the league in rushing?", choices: ["Thurman Thomas", "Cookie Gilchrist", "O.J. Simpson", "Fred Jackson"], answer: 2 },
+    { question: "These NFC Staples have a long history... Who leads the all-time series INCLUDING Playoffs?", choices: ["49ers", "Eagles"], answer: 0 },
+    { question: "In the 2022/23 NFC Championship, who played most of the QB Snaps for the 49ers following Purdy's injury?", choices: ["Deebo Samuel", "Jimmy Garoppolo", "Christian McCaffrey", "Josh Johnson"], answer: 3 },
+    { question: "Who has more Super Bowl Appearances since the turn of the century (2000)", choices: ["49ers", "Eagles"], answer: 0 },
+    { question: "How many Super Bowl championships has each franchise won all-time?", choices: ["49ers 5, Eagles 2", "49ers 6, Eagles 1", "49ers 4, Eagles 2", "Both have 3"], answer: 0 },
+    { question: "Between both teams, who had the most receiving yards this season?", choices: ["Jauan Jennings", "DeVonta Smith", "Christian McCaffrey", "AJ Brown"], answer: 1 },
     ],
   },
     "2026-01-10": { //Saturday
