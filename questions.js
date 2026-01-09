@@ -466,7 +466,7 @@ export const CALENDAR = {
     questions: [
     { question: "These NFC Staples have a long history... Who leads the all-time series INCLUDING Playoffs?", choices: ["49ers", "Eagles"], answer: 0 },
     { question: "In the 2022/23 NFC Championship, who played most of the QB Snaps for the 49ers following Purdy's injury?", choices: ["Deebo Samuel", "Jimmy Garoppolo", "Christian McCaffrey", "Josh Johnson"], answer: 3 },
-    { question: "Who has more Super Bowl Appearances since the turn of the century (2000)", choices: ["49ers", "Eagles"], answer: 0 },
+    { question: "Who has more Super Bowl Appearances since the turn of the century (2000)", choices: ["49ers", "Eagles"], answer: 1 },
     { question: "How many Super Bowl championships has each franchise won all-time?", choices: ["49ers 5, Eagles 2", "49ers 6, Eagles 1", "49ers 4, Eagles 2", "Both have 3"], answer: 0 },
     { question: "Between both teams, who had the most receiving yards this season?", choices: ["Jauan Jennings", "DeVonta Smith", "Christian McCaffrey", "AJ Brown"], answer: 1 },
     ],
