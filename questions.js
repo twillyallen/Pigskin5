@@ -484,21 +484,21 @@ export const CALENDAR = {
     "2026-01-11": { //Sunday
     event: "ChargersPatriots",
     questions: [
-    { question: "The Bills and Jaguars have met twice in the playoffs. Which team leads the other 2-0?", choices: ["Bills", "Jaguars"], answer: 1 },
-    { question: "The Bills haven't won a road playoff game since what season?", choices: ["2022", "2023", "2001", "1992"], answer: 3 },
-    { question: "Josh Allen vs Trevor Lawrence: Who has won more of their head-to-head matchups?", choices: ["3-0 (Allen undefeated)", "2-1 (Lawrence leads)", "2-1 (Allen leads)", "0-3 (Allen winless)"], answer: 1 },
-    { question: "Jacksonville entered the 2026 playoffs riding a massive winning streak. How many consecutive games did the Jaguars win to end the regular season?", choices: ["8", "6", "10", "7"], answer: 0 },
-    { question: "James Cook led the league in rushing in 2025 with 1,621 yards. Who was the last Bills RB to lead the league in rushing?", choices: ["Thurman Thomas", "Cookie Gilchrist", "O.J. Simpson", "Fred Jackson"], answer: 2 },
+    { question: "Drake Maye is among the MVP frontrunners in 2025. How many passing touchdowns has Maye thrown this season?", choices: ["29", "31", "34", "38"], answer: 1 },
+    { question: "Chargers and Patriots met in the 2007 AFC Championship...\nWhat injury was Philip Rivers playing through?", choices: ["AC Joint Sprain", "Broken Foot", "Torn ACL", "Bulging Disc"], answer: 3 },
+    { question: "The Patriots hold a 6-2 Playoff Record over the Chargers. What season did they most recently beat the Chargers?", choices: ["2007", "2009", "2015", "2018"], answer: 3 },
+    { question: "Which Player leads the AFC in Passing Yards?", choices: ["Bo Nix", "Drake Maye", "Justin Herbert", "Josh Allen"], answer: 1 },
+    { question: "Who forced the infamous fumble on Chargers' Marlon McCree after his interception of Tom Brady in the 2006 AFC Divisional Game?", choices: ["Jabar Gafney", "Mike Vrabel", "Troy Brown", "Kevin Faulk"], answer: 2 },
     ],
   },
     "2026-01-12": { //Monday
     event: "SteelersTexans",
     questions: [
-    { question: "The Bills and Jaguars have met twice in the playoffs. Which team leads the other 2-0?", choices: ["Bills", "Jaguars"], answer: 1 },
-    { question: "The Bills haven't won a road playoff game since what season?", choices: ["2022", "2023", "2001", "1992"], answer: 3 },
-    { question: "Josh Allen vs Trevor Lawrence: Who has won more of their head-to-head matchups?", choices: ["3-0 (Allen undefeated)", "2-1 (Lawrence leads)", "2-1 (Allen leads)", "0-3 (Allen winless)"], answer: 1 },
-    { question: "Jacksonville entered the 2026 playoffs riding a massive winning streak. How many consecutive games did the Jaguars win to end the regular season?", choices: ["8", "6", "10", "7"], answer: 0 },
-    { question: "James Cook led the league in rushing in 2025 with 1,621 yards. Who was the last Bills RB to lead the league in rushing?", choices: ["Thurman Thomas", "Cookie Gilchrist", "O.J. Simpson", "Fred Jackson"], answer: 2 },
+    { question: "In their first ever meeting in 2002, the expansion Texans beat the Steelers with how many total yards of offense?", choices: ["47", "93", "159", "184"], answer: 0 },
+    { question: "What is the Steelers' all-time regular season record against the Texans (including playoffs)?", choices: ["3-5", "5-3", "6-2", "4-4"], answer: 1 },
+    { question: "What year was the last time these teams met in the playoffs?", choices: ["2008", "2010", "2019", "Never"], answer: 3 },
+    { question: "True or False: Mike Tomlin has never finished with a losing record", choices: ["True", "False"], answer: 0 },
+    { question: "The Steelers are hosting their first playoff game since 2020. When was the last time they won a playoff a game?", choices: ["2020", "2019", "2016", "2014"], answer: 2 },
     ],
   },
   
