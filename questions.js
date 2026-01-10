@@ -478,7 +478,7 @@ export const CALENDAR = {
     { question: "True or False: The Bears FINALLY have a 4,000 Yard single season passer!", choices: ["True", "False"], answer: 1 },
     { question: "Between both teams, which player finished the 2025 regular season with the most receiving yards?", choices: ["Christian Watson", "DJ Moore", "Rome Odunze", "Romeo Doubs"], answer: 3 },
     { question: "Which team has more playoff wins during the Super Bowl Era?", choices: ["Bears", "Packers"], answer: 1 },
-    { question: "Which Bears QB has the most Single Season Passing Yards in Franchise History?", choices: ["Caleb Williams", "Jay Cutler", "Sid Luckman", "Erik Kramer"], answer: 3 },
+    { question: "Which Bears QB has the most Single Season Passing Yards in Franchise History?", choices: ["Caleb Williams", "Jay Cutler", "Sid Luckman", "Erik Kramer"], answer: 0 },
     ],
   },
     "2026-01-11": { //Sunday
