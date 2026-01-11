@@ -485,7 +485,7 @@ export const CALENDAR = {
     event: "ChargersPatriots",
     questions: [
     { question: "Drake Maye is among the MVP frontrunners in 2025. How many passing touchdowns has Maye thrown this season?", choices: ["29", "31", "34", "38"], answer: 1 },
-    { question: "Chargers and Patriots met in the 2007 AFC Championship...\nWhat injury was Philip Rivers playing through?", choices: ["AC Joint Sprain", "Broken Foot", "Torn ACL", "Bulging Disc"], answer: 3 },
+    { question: "Chargers and Patriots met in the 2007 AFC Championship...\nWhat injury was Philip Rivers playing through?", choices: ["AC Joint Sprain", "Broken Foot", "Torn ACL", "Bulging Disc"], answer: 2 },
     { question: "The Patriots hold a 6-2 Playoff Record over the Chargers. What season did they most recently beat the Chargers?", choices: ["2007", "2009", "2015", "2018"], answer: 3 },
     { question: "Which Player leads the AFC in Passing Yards?", choices: ["Bo Nix", "Drake Maye", "Justin Herbert", "Josh Allen"], answer: 1 },
     { question: "Who forced the infamous fumble on Chargers' Marlon McCree after his interception of Tom Brady in the 2006 AFC Divisional Game?", choices: ["Jabar Gafney", "Mike Vrabel", "Troy Brown", "Kevin Faulk"], answer: 2 },
