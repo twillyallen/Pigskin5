@@ -495,7 +495,7 @@ export const CALENDAR = {
     event: "SteelersTexans",
     questions: [
     { question: "In their first ever meeting in 2002, the expansion Texans beat the Steelers with how many total yards of offense?", choices: ["47", "93", "159", "184"], answer: 0 },
-    { question: "What is the Steelers' all-time regular season record against the Texans (including playoffs)?", choices: ["3-5", "5-3", "6-2", "4-4"], answer: 1 },
+    { question: "What is the Steelers' all-time record against the Texans (including playoffs)?", choices: ["3-5", "5-3", "6-2", "4-4"], answer: 1 },
     { question: "What year was the last time these teams met in the playoffs?", choices: ["2008", "2010", "2019", "Never"], answer: 3 },
     { question: "True or False: Mike Tomlin has never finished with a losing record", choices: ["True", "False"], answer: 0 },
     { question: "The Steelers are hosting their first playoff game since 2020. When was the last time they won a playoff a game?", choices: ["2020", "2019", "2016", "2014"], answer: 2 },
