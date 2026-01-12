@@ -478,14 +478,14 @@ export const CALENDAR = {
     { question: "True or False: The Bears FINALLY have a 4,000 Yard single season passer!", choices: ["True", "False"], answer: 1 },
     { question: "Between both teams, which player finished the 2025 regular season with the most receiving yards?", choices: ["Christian Watson", "DJ Moore", "Rome Odunze", "Romeo Doubs"], answer: 3 },
     { question: "Which team has more playoff wins during the Super Bowl Era?", choices: ["Bears", "Packers"], answer: 1 },
-    { question: "Which Bears QB has the most Single Season Passing Yards in Franchise History?", choices: ["Caleb Williams", "Jay Cutler", "Sid Luckman", "Erik Kramer"], answer: 3 },
+    { question: "Which Bears QB has the most Single Season Passing Yards in Franchise History?", choices: ["Caleb Williams", "Jay Cutler", "Sid Luckman", "Erik Kramer"], answer: 0 },
     ],
   },
     "2026-01-11": { //Sunday
     event: "ChargersPatriots",
     questions: [
     { question: "Drake Maye is among the MVP frontrunners in 2025. How many passing touchdowns has Maye thrown this season?", choices: ["29", "31", "34", "38"], answer: 1 },
-    { question: "Chargers and Patriots met in the 2007 AFC Championship...\nWhat injury was Philip Rivers playing through?", choices: ["AC Joint Sprain", "Broken Foot", "Torn ACL", "Bulging Disc"], answer: 3 },
+    { question: "Chargers and Patriots met in the 2007 AFC Championship...\nWhat injury was Philip Rivers playing through?", choices: ["AC Joint Sprain", "Broken Foot", "Torn ACL", "Bulging Disc"], answer: 2 },
     { question: "The Patriots hold a 6-2 Playoff Record over the Chargers. What season did they most recently beat the Chargers?", choices: ["2007", "2009", "2015", "2018"], answer: 3 },
     { question: "Which Player leads the AFC in Passing Yards?", choices: ["Bo Nix", "Drake Maye", "Justin Herbert", "Josh Allen"], answer: 1 },
     { question: "Who forced the infamous fumble on Chargers' Marlon McCree after his interception of Tom Brady in the 2006 AFC Divisional Game?", choices: ["Jabar Gafney", "Mike Vrabel", "Troy Brown", "Kevin Faulk"], answer: 2 },
