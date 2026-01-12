@@ -501,7 +501,36 @@ export const CALENDAR = {
     { question: "The Steelers are hosting their first playoff game since 2020. When was the last time they won a playoff a game?", choices: ["2020", "2019", "2016", "2014"], answer: 2 },
     ],
   },
-  
+    "2026-01-13": { //Tuesday
+    event: "",
+    questions: [
+    { question: "Who has the most playoff wins of these QBs?", choices: ["Baker Mayfield", "Tua Tagovailoa", "Jordan Love", "Trevor Lawrence"], answer: 0 },
+    { question: "Guess the QB based off their Playoff Career:\n- 8 Pass TDs\n- 3 INTs\n- 1,605 Yards\n- 61.9 Comp.%\n- 93.8 Rating?\n- 5 QB Wins", choices: ["Jalen Hurts", "Joe Burrow", "Brock Purdy", "Jared Goff"], answer: 2 },
+    { question: "True or False: Josh Allen has the most Playoff wins of any QB left in the playoffs.", choices: ["True", "False"], answer: 0 },
+    { question: "'Beast Quake' refers to a playoff run by which player?", choices: ["Derrick Henry", "Marshawn Lynch", "Adrian Peterson", "Shaun Alexander"], answer: 1 },
+    { question: "Of the remaining teams, who had the most Rushing TDs in the 2025 Regular Season?", choices: ["Patriots", "Bears", "Seahawks", "Bills"], answer: 3 },
+    ],
+  },
+    "2026-01-14": { //Wednesday
+    event: "",
+    questions: [
+    { question: "Guess the WR in 2025:\n- 789 Yards\n- 14 TDs\n- 60 Rec", choices: ["Rashid Shaheed", "Stefon Diggs", "Davante Adams", "Jauan Jennings"], answer: 2 },
+    { question: "Who led 2025 in Tackles for Loss?", choices: ["Will Anderson", "Maxx Crosby", "Brian Burns", "Myles Garrett"], answer: 3 },
+    { question: "Who led the Broncos in receiving yards this season?", choices: ["Troy Franklin", "Courtland Sutton", "RJ Harvey", "Evan Engram"], answer: 1 },
+    { question: "True or False: The Seahawks allowed the least amount of points in 2025", choices: ["True", "False"], answer: 0 },
+    { question: "Who threw Stefon Diggs the game winning TD over the Saints in the 2017 Playoffs?", choices: ["Teddy Bridgewater", "Case Keenum", "Kirk Cousins", "Ryan Fitzpatrick"], answer: 1 },
+    ],
+  },
+    "2026-01-15": { //Thursday
+    event: "49ersSeahawks",
+    questions: [
+    { question: "The 49ers and Seahawks rivalry is one of the NFL's most intense. Which team leads the all-time series INCLUDING playoffs?", choices: ["Seahawks", "49ers"], answer: 0 },
+    { question: "True or False: The Seahawks have never won a playoff game at Levi's Stadium.", choices: ["True", "False"], answer: 0 },
+    { question: "Who is the 49ers' all-time leading rusher?", choices: ["Christian McCaffrey", "Joe Perry", "Frank Gore", "Roger Craig"], answer: 2 },
+    { question: "The 49ers and Seahawks met in the 2013 NFC Championship Game.\nWho tipped the game-sealing interception intended for a Michael Crabtree?", choices: ["Kam Chancellor", "Richard Sherman", "Earl Thomas", "Bobby Wagner"], answer: 1 },
+    { question: "Who has the most Receiving Yards in Post-Season Career history?", choices: ["Steve Largent", "Jerry Rice", "Tyler Lockett", "Travis Kelce"], answer: 1 },
+    ],
+  },
 };
 
 

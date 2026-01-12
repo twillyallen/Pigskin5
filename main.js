@@ -47,6 +47,7 @@ const EVENT_LOGOS = {
   "PackersBears": "logos/PackersBears.png",
   "ChargersPatriots": "logos/ChargersPatriots.png",
   "SteelersTexans": "logos/SteelersTexans.png",
+  "49ersSeahawks": "logos/49ersSeahawks.png"
   // add more events here 
 };
 
