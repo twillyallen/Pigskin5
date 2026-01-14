@@ -212,13 +212,43 @@ export const CALENDAR = {
     ],
   },
     "2026-01-15": { //Thursday
+    event: "BillsBroncos",
+    questions: [
+    { question: "Who leads the all-time playoff series between the Bills and Broncos?", choices: ["Broncos", "Bills"], answer: 1 },
+    { question: "Who were the Broncos playing in the 1986 AFC Championship when John Elway orchestrated “The Drive”?", choices: ["Bills", "Seahawks", "Steelers", "Browns"], answer: 3 },
+    { question: "The Bills went to four straight Super Bowls. Which team did they face in Super Bowl XXVII (Jan 30th, 1994)?", choices: ["Redskins", "Cowboys", "49ers", "Packers"], answer: 1 },
+    { question: "Which Bills QB led them to four straight Super Bowl appearances?", choices: ["Jim Kelly", "Doug Flutie", "Drew Bledsoe", "Joe Ferguson"], answer: 0 },
+    { question: "Between both teams, which defender came away with the most interceptions in 2025?", choices: ["JaQuan McMillian", "Cole Bishop", "AJ Epenesa", "Pat Surtain II"], answer: 1 },
+    ],
+  },
+    "2026-01-16": { //Friday
     event: "49ersSeahawks",
     questions: [
     { question: "The 49ers and Seahawks rivalry is one of the NFL's most intense. Which team leads the all-time series INCLUDING playoffs?", choices: ["Seahawks", "49ers"], answer: 0 },
     { question: "True or False: The Seahawks have never won a playoff game at Levi's Stadium.", choices: ["True", "False"], answer: 0 },
     { question: "Who is the 49ers' all-time leading rusher?", choices: ["Christian McCaffrey", "Joe Perry", "Frank Gore", "Roger Craig"], answer: 2 },
-    { question: "The 49ers and Seahawks met in the 2013 NFC Championship Game.\nWho tipped the game-sealing interception intended for a Michael Crabtree?", choices: ["Kam Chancellor", "Richard Sherman", "Earl Thomas", "Bobby Wagner"], answer: 1 },
+    { question: "The 49ers and Seahawks met in the 2013 NFC Championship Game.\nWho tipped the game-sealing interception intended for Michael Crabtree?", choices: ["Kam Chancellor", "Richard Sherman", "Earl Thomas", "Bobby Wagner"], answer: 1 },
     { question: "Who has the most Receiving Yards in Post-Season Career history?", choices: ["Steve Largent", "Jerry Rice", "Tyler Lockett", "Travis Kelce"], answer: 1 },
+    ],
+  },
+    "2026-01-17": { //Saturday
+    event: "TexansPatriots",
+    questions: [
+    { question: "What year did the Houston Texans enter the NFL as an expansion franchise?", choices: ["1995", "2000", "2001", "2002",], answer: 3 },
+    { question: "True or False: The Texans have never beaten the Patriots in a playoff game.", choices: ["True", "False"], answer: 0 },
+    { question: "How many Super Bowls have the Patriots gone to as a Franchise?", choices: ["8", "9", "10", "11"], answer: 3 },
+    { question: "Between both teams, who led the NFL in receiving yards during the 2025 regular season?", choices: ["Stefon Diggs", "Nico Collins", "Dalton Schultz", "Kayshon Boutte"], answer: 1 },
+    { question: "How many division titles did the Patriots win during their dynasty run from 2001–2019?", choices: ["12", "14", "17", "19"], answer: 2 },
+    ],
+  },
+    "2026-01-18": { //Sunday
+    event: "RamsBears",
+    questions: [
+    { question: "Who leads the all-time playoff series between the Rams and Bears?", choices: ["Rams", "Bears", "Never Played in the Playoffs", "Tied",], answer: 3 },
+    { question: "The Bears won Super Bowl XX in dominant fashion. Who was their head coach during that championship season?", choices: ["Dick Butkus", "George Halas", "Mike Ditka", "Buddy Ryan"], answer: 2 },
+    { question: "The Rams originally began their franchise in which city?", choices: ["Los Angeles", "Cleveland", "St. Louis", "Chicago"], answer: 1 },
+    { question: "Between both teams, which player had the most sacks in 2025?", choices: ["Byron Young", "Montez Sweat", "Jared Verse", "Austin Booker"], answer: 0 },
+    { question: "What season did the Rams win their first ever Super Bowl?", choices: ["1980", "1999", "2001", "2021"], answer: 1 },
     ],
   },
 };
