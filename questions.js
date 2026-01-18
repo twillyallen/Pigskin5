@@ -251,6 +251,16 @@ export const CALENDAR = {
     { question: "What season did the Rams win their first ever Super Bowl?", choices: ["1980", "1999", "2001", "2021"], answer: 1 },
     ],
   },
+    "2026-01-19": { //Monday
+    event: "",
+    questions: [
+    { question: "Who is the Arizona Cardinals' all-time leading passer?", choices: ["Kyler Murray", "Jake Plummer", "Jim Hart", "Kurt Warner",], answer: 2 },
+    { question: "Who was the last running back to win NFL MVP?", choices: ["Jonathan Taylor", "Adrian Peterson", "LaDainian Tomlinson", "Shaun Alexander"], answer: 1 },
+    { question: "Which kicker has made the most field goals in 2025?", choices: ["Kaimi Fairbairn", "Will Reichard", "Cameron Dicker", "Jason Myers"], answer: 0 },
+    { question: "How many Rush TDs did Jalen Hurts have in 2025?", choices: ["3", "8", "11", "13"], answer: 1 },
+    { question: "What city do the NY Giants/Jets play their home games?", choices: ["Manhattan, NY", "New York City, NY", "East Rutherford, NJ", "Brooklyn, NY"], answer: 1 },
+    ],
+  },
 };
 
 
