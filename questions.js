@@ -261,6 +261,66 @@ export const CALENDAR = {
     { question: "What city do the NY Giants/Jets play their home games?", choices: ["Manhattan, NY", "New York City, NY", "East Rutherford, NJ", "Brooklyn, NY"], answer: 2 },
     ],
   },
+    "2026-01-20": { //Tuesday
+    event: "",
+    questions: [
+    { question: "Which two teams are tied for the most Super Bowl losses?", choices: ["Broncos & Patriots", "Patriots & Bills", "Broncos & Bills", "Vikings & Patriots",], answer: 0 },
+    { question: "Name the WR Career:\n17,492 Yards\n121 TDs\n41 Tackles\n29 Dropped Passes", choices: ["Terrell Owens", "Larry Fitzgerald", "Isaac Bruce", "Reggie Wayne"], answer: 1 },
+    { question: "How many MVP Votes does Russell Wilson have in his Legendary Career?", choices: ["37", "0", "7", "24"], answer: 1 },
+    { question: "Of these players, who had the most Rec. TDs this Post Season?", choices: ["Luther Burden III", "AJ Brown", "Courtland Sutton", "Matthew Golden"], answer: 3 },
+    { question: "True or False: Caleb 'ICEMAN' Williams has a career playoff Comp. % of more then 53%?", choices: ["True", "False"], answer: 1 },
+    ],
+  },
+    "2026-01-21": { //Wednesday
+    event: "",
+    questions: [
+    { question: "Which NFL player once celebrated a TD by putting a cell phone under the goalpost?", choices: ["Terrell Owens", "Chad Johnson", "Randy Moss", "Joe Horn"], answer: 3 },
+    { question: "Who has the best Pass TD-INT ratio in the 2025-26 Post Season?", choices: ["Bo Nix", "Matthew Stafford", "Jordan Love", "Josh Allen"], answer: 2 },
+    { question: "What was the original location and name of the Kansas City Chiefs franchise?", choices: ["Dallas Texans", "Missouri Warriors", "Kansas Reds", "Chicago Hard-Hitters"], answer: 0 },
+    { question: "Which pass catcher has the most career playoff TD receptions?", choices: ["Jerry Rice", "Rob Gronkowski", "Randy Moss", "Travis Kelce"], answer: 0 },
+    { question: "Which team has the ZERO takeaways this Post Season despite having the MOST takeaways in Regular Season", choices: ["49ers", "Bears", "Chargers", "Panthers"], answer: 1 },
+    ],
+  },
+    "2026-01-22": { //Thursday
+    event: "",
+    questions: [
+    { question: "Which player NEVER won League MVP AND the Super Bowl in the same season?", choices: ["Patrick Mahomes", "Tom Brady", "Emmitt Smith", "Joe Montana"], answer: 1 }, 
+    { question: "Which team has had the most 1st Overall Draft Picks?", choices: ["Colts", "Browns", "Buccaneers", "Bengals"], answer: 0 },
+    { question: "Who had the most Yards After Catch in 2025?", choices: ["Puka Nacua", "JaMarr Chase", "Trey McBride", "Bijan Robinson"], answer: 3 },
+    { question: "Which wide receiver caught the “Mile-High Miracle” in the 2012 playoffs?", choices: ["Torrey Smith", "Demaryius Thomas", "Anquan Boldin", "Jacoby Jones"], answer: 3 },
+    { question: "Name the QBs Playoff Career:\n18 Games\n5,366 Yards\n37 TDs\n9-9 Playoff Record", choices: ["Aaron Rodgers", "Drew Brees", "Philip Rivers", "Josh Allen"], answer: 1 },
+    ],
+  },
+    "2026-01-23": { //Friday
+    event: "ConferenceChampionship",
+    questions: [
+    { question: "Who has more Conference Championship Appearances among these Quarterbacks?", choices: ["Jalen Hurts", "Josh Allen", "Brock Purdy", "Joe Flacco"], answer: 3 }, 
+    { question: "Which defender laid the controversial hit on Tommylee Lewis in the 2018 NFC Championship?", choices: ["Marshon Lattimore", "Eli Apple", "Nickell Robey-Coleman", "Marcus Williams"], answer: 2 },
+    { question: "Who was the winner of the final NFL Championship en route to the first 'Super Bowl'?", choices: ["Green Bay Packers", "Dallas Cowboys", "Kansas City Chiefs", "Cleveland Browns"], answer: 0 },
+    { question: "Which legendary Vikings QB threw a game losing INT in the NFC Champtionship?", choices: ["Case Keenum", "Carson Wentz", "Brett Favre", "Fran Tarkenton"], answer: 2 },
+    { question: "Which bozo lined up OFFSIDES, negating a Tom Brady game losing INT in the AFC Champtionship", choices: ["Frank Clark", "Chris Jones", "Dee Ford", "Charvarius Ward"], answer: 2 },
+    ],
+  },
+    "2026-01-24": { //Saturday
+    event: "PatriotsBroncos",
+    questions: [
+    { question: "These teams have met in the AFC Championship twice before.\nWhat is the record?", choices: ["Patriots 2-0", "Broncos 2-0", "Tied 1-1", ], answer: 1 }, 
+    { question: "True or False: Patriots have MORE Super Bowl losses than the Broncos?", choices: ["True", "False"], answer: 1 },
+    { question: "Who picked off Tom Brady's 2PT Attempt in the final moments of the 2015 AFC Championship?", choices: ["Bradley Roby", "Aqib Talib", "Chris Harris Jr.", "Von Miller"], answer: 0 },
+    { question: "Guess the player in the Patriots vs Broncos Playoff Rivalry:\n2 Games\n289 Rec. Yards\n4 TDs\n18 Receptions?", choices: ["Wes Welker", "Julian Edelman", "Demaryius Thomas", "Rob Gronkowski"], answer: 3 },
+    { question: "Who had the most Receiving Yards between these teams in 2025?", choices: ["Troy Franklin", "Kayshon Boutte", "Stefon Diggs", "Courtland Sutton"], answer: 3 },
+    ],
+  },
+    "2026-01-25": { //Sunday
+    event: "RamsSeahawks",
+    questions: [
+    { question: "Who won the last playoff matchup and during what season?", choices: ["Rams 2020", "Seahawks 2022", "Seahawks 2006", "Rams 2004"], answer: 0 }, 
+    { question: "True or False: Sam Darnold is the only QB in NFL History to win 14+ games for 2 different teams in consecutive seasons?", choices: ["True", "False"], answer: 0 },
+    { question: "How many teams has Sean McVay coached against in his 15 Playoff Games", choices: ["9", "11", "12", "15"], answer: 3 },
+    { question: "What season was the 'Beast Quake' playoff game?", choices: ["2009", "2010", "2013", "2014"], answer: 1 },
+    { question: "Who was the Rams' starting QB in their 2004 playoff win against Seattle?", choices: ["Trent Green", "Matt Hasselbeck", "Kurt Warner", "Marc Bulger"], answer: 3 },
+    ],
+  },
 };
 
 
