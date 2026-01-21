@@ -278,7 +278,7 @@ export const CALENDAR = {
     { question: "Who has the best Pass TD-INT ratio in the 2025-26 Post Season?", choices: ["Bo Nix", "Matthew Stafford", "Jordan Love", "Josh Allen"], answer: 2 },
     { question: "What was the original location and name of the Kansas City Chiefs franchise?", choices: ["Dallas Texans", "Missouri Warriors", "Kansas Reds", "Chicago Hard-Hitters"], answer: 0 },
     { question: "Which pass catcher has the most career playoff TD receptions?", choices: ["Jerry Rice", "Rob Gronkowski", "Randy Moss", "Travis Kelce"], answer: 0 },
-    { question: "Which team has the ZERO takeaways this Post Season despite having the MOST takeaways in Regular Season", choices: ["49ers", "Bears", "Chargers", "Panthers"], answer: 1 },
+    { question: "Which team has ZERO takeaways this Post Season despite having the MOST takeaways in the Regular Season", choices: ["49ers", "Bears", "Chargers", "Panthers"], answer: 1 },
     ],
   },
     "2026-01-22": { //Thursday
