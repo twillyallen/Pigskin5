@@ -321,6 +321,16 @@ export const CALENDAR = {
     { question: "Who was the Rams' starting QB in their 2004 playoff win against Seattle?", choices: ["Trent Green", "Matt Hasselbeck", "Kurt Warner", "Marc Bulger"], answer: 3 },
     ],
   },
+    "2026-01-26": { //Monday
+    event: "",
+    questions: [
+    { question: "Who was last year's Super Bowl MVP?", choices: ["Cooper DeJean", "Jalen Hurts", "Josh Sweat", "Saquon Barkley"], answer: 1 }, 
+    { question: "Since 2010, which team has the most Super Bowl Appearances?", choices: ["Chiefs", "Eagles", "49ers", "Patriots"], answer: 3 },
+    { question: "Who has the most Sacks this Post Season?", choices: ["Will Anderson Jr", "K'Lavon Chaisson", "Danielle Hunter", "Odafe Oweh"], answer: 0 },
+    { question: "What is the NFC Championship Trophy called?", choices: ["The Bart Starr Trophy", "The Chicago Trophy", "The George Halas Trophy", "The Lamar Hunt Trophy"], answer: 2 },
+    { question: "Which team has had the most Points per Game this Post Season?", choices: ["Broncos", "Bills", "Seahawks", "Rams"], answer: 2 },
+    ],
+  },
 };
 
 
