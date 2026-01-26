@@ -331,6 +331,16 @@ export const CALENDAR = {
     { question: "Which team has had the most Points per Game this Post Season?", choices: ["Broncos", "Bills", "Seahawks", "Rams"], answer: 2 },
     ],
   },
+    "2026-01-27": { //Tuesday
+    event: "",
+    questions: [
+    { question: "Which of these franchises have never appeared in a Super Bowl?", choices: ["Chargers", "Cardinals", "Titans", "Lions"], answer: 3 }, 
+    { question: "Who was the first player to ever rush for over 2,000 Yards?", choices: ["Eric Dickerson", "Jamal Lewis", "OJ Simpson", "Barry Sanders"], answer: 2 },
+    { question: "Which quarterback threw a touchdown pass to himself in a playoff game?", choices: ["Patrick Mahomes", "Marcus Mariota", "Nick Foles", "Ben Roethlisberger"], answer: 1 },
+    { question: "Who holds the record for most passing yards in a single season?", choices: ["Drew Brees", "Patrick Mahomes", "Jameis Winston", "Peyton Manning"], answer: 3 },
+    { question: "Who is the shortest player in NFL history?", choices: ["Jack Shapiro", "Kyler Murray", "Darren Sproles", "Brandon Banks"], answer: 0 },
+    ],
+  },
 };
 
 
