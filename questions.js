@@ -341,6 +341,16 @@ export const CALENDAR = {
     { question: "Who is the shortest player in NFL history?", choices: ["Jack Shapiro", "Kyler Murray", "Darren Sproles", "Brandon Banks"], answer: 0 },
     ],
   },
+    "2026-01-28": { //Wednesday
+    event: "",
+    questions: [
+    { question: "Which defender had the most interceptions in a single season?", choices: ["Paul Krause", "Night Train Lane", "Trevon Diggs", "Antonio Cromartie"], answer: 1 }, 
+    { question: "Which Super Bowl featured the 'Helmet Catch'?", choices: ["Super Bowl XLII", "Super Bowl XL", "Super Bowl XLIII", "Super Bowl XXXI"], answer: 0 },
+    { question: "Name the Super Bowl MVP based off their stats:\n- 22/33\n- 287 Yards\n- 3TDs\n- 90.2 QBR", choices: ["Patrick Mahomes", "Peyton Manning", "Joe Flacco", "Nick Foles"], answer: 2 },
+    { question: "True or False: The Seahawks have made the Super Bowl the past 3 times a new Pope has been elected.", choices: ["True", "False"], answer: 0 },
+    { question: "Who led the NFL in total touchdowns (rushing + receiving) this season?", choices: ["Jahmyr Gibbs", "Josh Allen", "Davante Adams", "Jonathan Taylor"], answer: 3 },
+    ],
+  },
 };
 
 
