@@ -351,6 +351,26 @@ export const CALENDAR = {
     { question: "Who led the NFL in total touchdowns (rushing + receiving) this season?", choices: ["Jahmyr Gibbs", "Josh Allen", "Davante Adams", "Jonathan Taylor"], answer: 3 },
     ],
   },
+    "2026-01-29": { //Thursday
+    event: "",
+    questions: [
+    { question: "Who led the AFC in Receiving TDs this season?", choices: ["Tee Higgins", "Quentin Johnston", "Brock Bowers", "JaMarr Chase"], answer: 0 }, 
+    { question: "Which WR was this in 2025?\n- 100 Rec.\n- 1163 Yards\n- 9 TDs", choices: ["Amon-Ra St. Brown", "Nico Collins", "Chris Olave", "Justin Jefferson"], answer: 2 },
+    { question: "How many different teams has Ryan Fitzpatrick started for?", choices: ["7", "9", "11", "13"], answer: 1 },
+    { question: "How many NFL championships did the Lions win before the Super Bowl era?", choices: ["0", "2", "3", "4"], answer: 3 },
+    { question: "True or False: No kicker has ever been selected in the first round of the NFL Draft", choices: ["True", "False"], answer: 1 },
+    ],
+  },
+    "2026-01-30": { //Friday
+    event: "",
+    questions: [
+    { question: "Which Offensive Lineman has the most Receiving Yards in the Super Bowl Era?", choices: ["Bob Pratt", "Joe Staley", "Ty Sambrailo", "Brian Baldinger"], answer: 3 }, 
+    { question: "Who had the most Kick Return Yards this season?", choices: ["Myles Price", "Devin Duvernay", "KaVontae Turpin", "Ray Davis"], answer: 2 },
+    { question: "Who leads this Postseason in Passer Rating?", choices: ["Jordan Love", "Sam Darnold", "Josh Allen", "Matthew Stafford"], answer: 1 },
+    { question: "True or False: Brett Favre threw an interception on his first-ever NFL pass attempt (as a Falcon).", choices: ["True", "False"], answer: 0 },
+    { question: "Who is the all-time leader in receptions for the Chargers?", choices: ["Antonio Gates", "Kellen Winslow", "Keenan Allen", "Lance Alworth"], answer: 2 },
+    ],
+  },
 };
 
 
