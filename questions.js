@@ -371,6 +371,16 @@ export const CALENDAR = {
     { question: "Who is the all-time leader in receptions for the Chargers?", choices: ["Antonio Gates", "Kellen Winslow", "Keenan Allen", "Lance Alworth"], answer: 2 },
     ],
   },
+      "2026-01-31": { //Saturday
+    event: "",
+    questions: [
+    { question: "How many INTs did Peyton Manning throw his rookie season?", choices: ["28", "31", "32", "34"], answer: 0 }, 
+    { question: "What was the score of Peyton Manning's 2nd Super Bowl LOSS?", choices: ["24-21", "43-19", "34-16", "43-8"], answer: 3 },
+    { question: "Which of these players did Peyton Manning SHARE an MVP award with?", choices: ["Brett Favre", "Steve McNair", "Tom Brady", "Drew Brees"], answer: 1 },
+    { question: "What year was Peyton Manning drafted?", choices: ["1996", "1998", "2000", "2001"], answer: 1 },
+    { question: "True or False: Peyton Manning has the most Pass Yards in NFL History?", choices: ["True", "False"], answer: 1 },
+    ],
+  },
 };
 
 
