@@ -283,7 +283,7 @@ function getRunDateISO() {
 
 
   // === DEV DATE OVERRIDE ===
-  // return "2026-01-25";   // Change this date to test
+  // return "2026-01-31";   // Change this date to test
   // ====================
 
 
@@ -724,10 +724,11 @@ function renderStartScorecard() {
   
   // Update yesterday's data
   if (yesterdayResult && yesterdayResult.picks) {
-    // Create emoji grid
-    const squares = yesterdayResult.picks.map(p => 
-      (p.pick === p.correct ? "🟩" : "⬜")
-    ).join("");
+    // Create emoji grid - handle multiple correct answers
+    const squares = yesterdayResult.picks.map(p => {
+      const correctAnswers = Array.isArray(p.correct) ? p.correct : [p.correct];
+      return correctAnswers.includes(p.pick) ? "🟩" : "⬜";
+    }).join("");
     
     if (emojiEl) emojiEl.textContent = squares;
     
@@ -965,7 +966,11 @@ function renderPersistedResult(dateStr, persisted) {
   picks = Array.isArray(persisted?.picks) ? persisted.picks : [];
   score = Number.isFinite(persisted?.score)
     ? persisted.score
-    : picks.filter(p => p && p.pick === p.correct).length; // Recalculate if needed
+    : picks.filter(p => {
+        if (!p) return false;
+        const correctAnswers = Array.isArray(p.correct) ? p.correct : [p.correct];
+        return correctAnswers.includes(p.pick);
+      }).length; // Recalculate if needed
 
   // Update body classes to show results screen
   document.body.classList.remove("no-scroll");
@@ -1010,8 +1015,14 @@ function renderPersistedResult(dateStr, persisted) {
     const you = document.createElement("div");
     you.innerHTML = `Your answer: <strong>${yourAnswerText}</strong>`;
 
-    // Correct answer text
-    const correctText = q.choices?.[correct] ?? `Choice ${Number(correct) + 1}`;
+    // Correct answer text - handle multiple correct answers
+    const correctAnswers = Array.isArray(correct) ? correct : [correct];
+    const correctTexts = correctAnswers.map(idx => 
+      q.choices?.[idx] ?? `Choice ${Number(idx) + 1}`
+    );
+    const correctText = correctTexts.length > 1 
+      ? correctTexts.join(" OR ")
+      : correctTexts[0];
     const cor = document.createElement("div");
     cor.innerHTML = `Correct: <strong>${correctText}</strong>`;
 
@@ -1021,7 +1032,7 @@ function renderPersistedResult(dateStr, persisted) {
     ex.textContent = q.explanation ?? "";
 
     // Color-code the review based on correct/incorrect
-    if (pick === correct) {
+    if (correctAnswers.includes(pick)) {
       // Correct answer - green styling
       you.style.color = "#28a745";
       div.style.background = "rgba(40, 167, 69, 0.22)";
@@ -1477,8 +1488,14 @@ function showResult() {
     const you = document.createElement("div");
     you.innerHTML = `Your answer: <strong>${yourAnswerText}</strong>`;
 
-    // Get correct answer text
-    const correctText = q.choices?.[correct] ?? `Choice ${Number(correct) + 1}`;
+    // Get correct answer text - handle multiple correct answers
+    const correctAnswers = Array.isArray(correct) ? correct : [correct];
+    const correctTexts = correctAnswers.map(idx => 
+      q.choices?.[idx] ?? `Choice ${Number(idx) + 1}`
+    );
+    const correctText = correctTexts.length > 1 
+      ? correctTexts.join(" OR ")
+      : correctTexts[0];
     const cor = document.createElement("div");
     cor.innerHTML = `Correct: <strong>${correctText}</strong>`;
 
@@ -1488,7 +1505,7 @@ function showResult() {
     ex.textContent = q.explanation || "";
 
     // Apply color coding based on correct/incorrect
-    if (pick === correct) {
+    if (correctAnswers.includes(pick)) {
       // Correct answer styling (green)
       you.style.color = "#28a745";
       div.style.background = "rgba(40, 167, 69, 0.22)";
@@ -1617,21 +1634,24 @@ function pickAnswer(i, correct) {
   const buttons = Array.from(choicesEl.querySelectorAll("button"));
   buttons.forEach(b => { b.disabled = true; });
 
-  // Highlight the correct answer in green
-  if (typeof correct === "number" && buttons[correct]) {
-    buttons[correct].classList.add("correct");
-  }
-  
-  // If user picked wrong answer, highlight it in red
-  if (i !== null && i !== correct && typeof i === "number" && buttons[i]) {
-    buttons[i].classList.add("wrong");
+  // Handle multiple correct answers (if answer is an array)
+  const correctAnswers = Array.isArray(correct) ? correct : [correct];
+  const isCorrect = correctAnswers.includes(i);
+
+  // Only highlight the player's choice
+  if (i !== null && typeof i === "number" && buttons[i]) {
+    if (isCorrect) {
+      buttons[i].classList.add("correct");  // Green if correct
+    } else {
+      buttons[i].classList.add("wrong");     // Red if wrong
+    }
   }
 
   // Calculate points for this question
   // - score = total number of correct answers
   // - totalPoints = leaderboard points (reward speed: 100 points per second remaining)
   let questionPoints = 0;
-  if (i === correct) {
+  if (isCorrect) {
     score++;  // Increment correct answer count
     const safeTimeLeft = Math.max(0, Number(timeLeft) || 0);
     questionPoints = 100 * safeTimeLeft;   // e.g., 7s left = 700 points
@@ -1706,7 +1726,10 @@ function injectShareSummary() {
 
   // Create visual grid of results using emojis
   // Green square = correct, white square = wrong
-  const squares = picks.map(p => (p.pick === p.correct ? "🟩" : "⬜")).join("");
+  const squares = picks.map(p => {
+    const correctAnswers = Array.isArray(p.correct) ? p.correct : [p.correct];
+    return correctAnswers.includes(p.pick) ? "🟩" : "⬜";
+  }).join("");
   const grid = document.createElement("div");
   grid.className = "share-grid";
   grid.textContent = squares;
@@ -1719,8 +1742,11 @@ function injectShareSummary() {
   
   // Handle share button click
   shareBtn.addEventListener("click", async () => {
-    // Regenerate squares in case they changed
-    const squaresNow = picks.map(p => (p.pick === p.correct ? "🟩" : "⬜")).join("");
+    // Regenerate squares in case they changed - handle multiple correct answers
+    const squaresNow = picks.map(p => {
+      const correctAnswers = Array.isArray(p.correct) ? p.correct : [p.correct];
+      return correctAnswers.includes(p.pick) ? "🟩" : "⬜";
+    }).join("");
     
     // Get current streaks
   const dailyStreak = computeAndSaveStreak(RUN_DATE);
