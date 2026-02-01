@@ -371,7 +371,26 @@ export const CALENDAR = {
     { question: "Who is the all-time leader in receptions for the Chargers?", choices: ["Antonio Gates", "Kellen Winslow", "Keenan Allen", "Lance Alworth"], answer: 2 },
     ],
   },
-
+      "2026-01-31": { //Saturday
+    event: "",
+    questions: [
+    { question: "How many INTs did Peyton Manning throw in his rookie season?", choices: ["28", "31", "32", "34"], answer: 0 }, 
+    { question: "What was the score of Peyton Manning's 2nd Super Bowl LOSS?", choices: ["24-21", "43-19", "34-16", "43-8"], answer: 3 },
+    { question: "Which of these players did Peyton Manning SHARE an MVP award with?", choices: ["Brett Favre", "Steve McNair", "Tom Brady", "Drew Brees"], answer: 1 },
+    { question: "What year was Peyton Manning drafted?", choices: ["1996", "1998", "2000", "2001"], answer: 1 },
+    { question: "True or False: Peyton Manning has the most Pass Yards in NFL History?", choices: ["True", "False"], answer: 1 },
+    ],
+  },
+      "2026-02-01": { //Sunday
+    event: "",
+    questions: [
+    { question: "Who led the Commanders in sacks in 2025?", choices: ["Bobby Wagner", "Jer'Zahn Newton", "Von Miller", "Dorrance Armstrong"], answer: 2 }, 
+    { question: "True or False: Bill Belichick is a 1st Ballot Hall of Famer", choices: ["True", "False", "What the actual F*** were the voters thinking??"], answer: [1, 2] },
+    { question: "How many NFC Championships has Davante Adams lost?", choices: ["2", "3", "4", "5"], answer: 3 },
+    { question: "Who has the LEAST amount of Playoff Wins?", choices: ["Trevor Lawrence", "Caleb Williams", "Kirk Cousins", "Justin Herbert"], answer: 3 },
+    { question: "Which of these players had the most Receiving Yards this Postseason?", choices: ["Josh Jacobs (RB, Green Bay)", "Mecole Hardman (WR, Buffalo)", "Darian Kinnard (Offensive Tackle, Green Bay)", "Jaleel McLaughlin (RB, Denver)"], answer: 2 },
+    ],
+  },
 };
 
 
