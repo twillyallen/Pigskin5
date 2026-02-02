@@ -1718,7 +1718,7 @@ function injectShareSummary() {
   // Create date line at top of results
   const dateLine = document.createElement("div");
   dateLine.className = "date-line";
-  dateLine.textContent = `Pigskin 5 - ${RUN_DATE}`;
+  dateLine.textContent = `Pigskin5 - ${RUN_DATE}`;
   resultTop.insertBefore(dateLine, resultTop.firstChild);  // Add at very top
 
   // Build share header container
@@ -1773,7 +1773,7 @@ pigskin5.com
 @twillystakes`;
   } else if (score === 0) {
     // Zero correct - humorous message
-    shareText = `Pigskin 5 ${RUN_DATE}
+    shareText = `Pigskin5 ${RUN_DATE}
 ${squaresNow}
 ${totalPoints.toLocaleString()} pts · ${latestAvgTime.toFixed(1)}s avg
 Daily Streak: ${shareTier.emoji} ${dailyStreak}
@@ -1786,7 +1786,7 @@ pigskin5.com
 @twillystakes`;
   } else {
     // Regular score
-    shareText = `Pigskin 5 ${RUN_DATE}
+    shareText = `Pigskin5 ${RUN_DATE}
 ${squaresNow}
 ${totalPoints.toLocaleString()} pts · ${latestAvgTime.toFixed(1)}s avg
 Daily Streak: ${shareTier.emoji} ${dailyStreak}
