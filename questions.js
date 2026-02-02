@@ -391,6 +391,66 @@ export const CALENDAR = {
     { question: "Which of these players had the most Receiving Yards this Postseason?", choices: ["Josh Jacobs (RB, Green Bay)", "Mecole Hardman (WR, Buffalo)", "Darian Kinnard (Offensive Tackle, Green Bay)", "Jaleel McLaughlin (RB, Denver)"], answer: 2 },
     ],
   },
+    "2026-02-02": { //Monday
+    event: "SuperBowlWeek",
+    questions: [
+    { question: "Who famously \"Guaranteed\" a Super Bowl Victory?", choices: ["Russell Wilson", "Joe Namath", "Jalen Ramsey", "Jim Kelly"], answer: 1 }, 
+    { question: "Which team won Super Bowl XXXIV with a tackle on the 1-yard line as time expired?", choices: ["Ravens", "Redskins", "Saints", "Rams"], answer: 3 },
+    { question: "True or False: The Packers won the first two Super Bowls", choices: ["True", "False"], answer: 0 },
+    { question: "Which kicker infamously went “Wide Right” in the Super Bowl?", choices: ["Scott Norwood", "John Kasay", "Blair Walsh", "Stephen Gostkowski"], answer: 0 },
+    { question: "Who has scored the most career Super Bowl TDs?", choices: ["Rob Gronkowski", "Jerry Rice", "Emmitt Smith", "Roger Craig"], answer: 1 },
+    ],
+  },
+    "2026-02-03": { //Tuesday
+    event: "SuperBowlWeek",
+    questions: [
+    { question: "Which team completed the only undefeated season including a Super Bowl win?", choices: ["Packers", "Patriots", "Dolphins", "Chiefs"], answer: 2 }, 
+    { question: "Who rushed for a Super Bowl record 204 yards?", choices: ["Marcus Allen", "Timmy Smith", "Emmitt Smith", "Terrell Davis"], answer: 1 },
+    { question: "Which team lost four consecutive Super Bowls in the early 1990s?", choices: ["Vikings", "Bills", "Broncos", "Patriots"], answer: 1 },
+    { question: "Which Super Bowl featured a power outage during the game?", choices: ["Super Bowl XXXI", "Super Bowl L", "Super Bowl XLIV", "Super Bowl XLVII"], answer: 3 },
+    { question: "True or False: Only 1 Super Bowl has ever gone to Overtime", choices: ["True", "False"], answer: 1 },
+    ],
+  },
+    "2026-02-04": { //Wednesday
+    event: "SuperBowlWeek",
+    questions: [
+    { question: "Which Player holds the record for the most Super Bowl MVP Awards?", choices: ["Patrick Mahomes", "Tom Brady", "Joe Montana", "Terry Bradshaw"], answer: 1 }, 
+    { question: "How many teams have never won a Super Bowl?", choices: ["12", "14", "15", "18"], answer: 0 },
+    { question: "Who caught the game-winning Toe Tap TD against the Cardinals in Super Bowl XLIII?", choices: ["Larry Fitzgerald", "Hines Ward", "Santonio Holmes", "Antonio Brown"], answer: 2 },
+    { question: "Who holds the record for the most receiving yards in a single Super Bowl?", choices: ["Isaac Bruce", "Jerry Rice", "Danny Amendola", "Lynn Swann"], answer: 1 },
+    { question: "Who scored the game-winning TD vs the Falcons in Super Bowl LI?", choices: ["Julian Edelman", "LaGarrette Blount", "Danny Amendola", "James White"], answer: 3 },
+    ],
+  },
+    "2026-02-05": { //Thursday
+    event: "NFLHonorsEdition",
+    questions: [
+    { question: "Who was the oldest player to win NFL MVP?", choices: ["Tom Brady", "Peyton Manning", "Aaron Rodgers", "Adrian Peterson"], answer: 0 }, 
+    { question: "Which quarterback famously won Comeback Player of the Year after recovering from a gruesome leg injury that included 17 surgeries?", choices: ["Joe Burrow", "Alex Smith", "Joe Theismann", "Ryan Tannehill"], answer: 1 },
+    { question: "True or False: Tom Brady has won more Super Bowl MVP awards than regular season MVP awards.", choices: ["True", "False"], answer: 0 },
+    { question: "Who was the first Defensive Player to win MVP?", choices: ["Lawrence Taylor", "Joe Greene", "Dick Anderson", "Alan Page"], answer: 3 },
+    { question: "Which position has NEVER won NFL MVP?", choices: ["Defensive Tackle", "Kicker", "Wide Receiver", "Line Backer"], answer: 2 },
+    ],
+  },
+    "2026-02-06": { //Friday
+    event: "SeahawksEdition",
+    questions: [
+    { question: "Which RB holds the Seahawk’s All-Time Rushing Yard Record?", choices: ["Chris Warren", "Marshawn Lynch", "Curt Warner", "Shaun Alexander"], answer: 3 }, 
+    { question: "What year were the Seattle Seahawks founded?", choices: ["1962", "1967", "1974", "1978"], answer: 2 },
+    { question: "Which quarterback threw the infamous interception at the goal line in Super Bowl XLIX?", choices: ["Matt Hasselback", "Dave Krieg", "Geno Smith", "Russell Wilson"], answer: 3 },
+    { question: "Before being retired for the 12th man, who wore #12 in Seattle?", choices: ["Sam Adkins", "Dave Krieg", "Jim Zorn", "Rick Mirer"], answer: 0 },
+    { question: "Which Division did the Seattle Seahawks start their franchise in?", choices: ["AFC West", "NFC West", "AFC Central", "NFC North"], answer: 1 },
+    ],
+  },
+    "2026-02-07": { //Saturday
+    event: "PatriotsEdition",
+    questions: [
+    { question: "Who was the Patriots' head coach before Bill Belichick?", choices: ["Pete Carroll", "Bill Parcells", "Raymond Barry", "Mike Holgrem"], answer: 0 }, 
+    { question: "Who is the Patriots' all-time leading receiver in career receiving yards?", choices: ["Stanley Morgan", "Troy Brown", "Rob Gronkowski", "Wes Welker"], answer: 0 },
+    { question: "Before becoming the “New England Patriots”, what was the team’s official title?", choices: ["Boston Colonials", "Massachusetts Liberty", "Boston Patriots", "New England Muskets"], answer: 2 },
+    { question: "True or False: The Patriots were the first team to finish a regular season 16-0.", choices: ["True", "False"], answer: 0 },
+    { question: "In Super Bowl LI, what deficit did the Patriots overcome against the Atlanta Falcons?", choices: ["21-3", "25-3", "28-3", "28-0"], answer: 2 },
+    ],
+  },
 };
 
 

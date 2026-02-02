@@ -53,6 +53,10 @@ const EVENT_LOGOS = {
   "RamsBears": "logos/RamsBears.png",
   "PatriotsBroncos": "logos/PatriotsBroncos.png",
   "RamsSeahawks": "logos/RamsSeahawks.png",
+  "SuperBowlWeek": "logos/SuperBowlWeek.png",
+  "PatriotsEdition": "logos/PatriotsEdition.png",
+  "SeahawksEdition": "logos/SeahawksEdition.png",
+  "NFLHonorsEdition": "logos/NFLHonorsEdition.png",
   // add more events here 
 };
 
@@ -283,7 +287,7 @@ function getRunDateISO() {
 
 
   // === DEV DATE OVERRIDE ===
-  // return "2026-01-31";   // Change this date to test
+  // return "2026-02-07";   // Change this date to test
   // ====================
 
 
