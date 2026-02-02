@@ -1339,6 +1339,10 @@ document.querySelector(".title-wrap")?.classList.remove("title-wrap");
   else if (eventName === "NYE") {
     startConfetti();
   }
+  else if (eventName === "SUPERBOWL")
+  {
+    startConfetti();
+  }
 }
 
 
