@@ -67,10 +67,10 @@ const EVENT_LOGOS = {
 // ==============================
 const STREAK_TIERS = [
   { name: "Rookie", minDays: 0, emoji: "🫡", color: "#95a5a6" },
-  { name: "Starter", minDays: 7, emoji: "⚡", color: "#3498db" },
+  { name: "Starter", minDays: 7, emoji: "🏈", color: "#3498db" },
   { name: "Pro", minDays: 14, emoji: "🔥", color: "#9b59b6" },
   { name: "All-Pro", minDays: 30, emoji: "⭐", color: "#f39c12" },
-  { name: "Hall of Fame", minDays: 60, emoji: "🏆", color: "#e67e22" },
+  { name: "Hall of Fame", minDays: 50, emoji: "🏆", color: "#e67e22" },
   { name: "Legend", minDays: 100, emoji: "👑", color: "#e74c3c" }
 ];
 
@@ -88,8 +88,8 @@ function getTierForStreak(streakDays) {
 }
 
 // Custom popup to show tier badge info (replaces alert)
-function showTierTooltip(emoji, tierName, streak, playerName) {
-  console.log('showTierTooltip called!', emoji, tierName, streak);
+function showTierTooltip(emoji, tierName, streak, playerName, emojiScore) {
+  console.log('showTierTooltip called!', emoji, tierName, streak, emojiScore);
   
   // Remove any existing tooltip
   let existing = document.getElementById('tier-popup-container');
@@ -186,6 +186,20 @@ function showTierTooltip(emoji, tierName, streak, playerName) {
   
   popup.appendChild(nameEl);
   popup.appendChild(streakEl);
+  
+  // Add emoji score if provided
+  if (emojiScore) {
+    const emojiScoreEl = document.createElement('div');
+    emojiScoreEl.textContent = emojiScore;
+    emojiScoreEl.style.cssText = `
+      font-size: 24px;
+      margin-top: 12px;
+      letter-spacing: 2px;
+      line-height: 1.4;
+    `;
+    popup.appendChild(emojiScoreEl);
+  }
+  
   popup.appendChild(hintEl);
   container.appendChild(popup);
   
@@ -656,7 +670,7 @@ function renderStartLeaderboard(dateStr) {
         tierBadge.style.cursor = "pointer";
         // Add click handler
         const showTierInfo = () => {
-          showTierTooltip(tier.emoji, tier.name, streak, e.name || "Anonymous");
+          showTierTooltip(tier.emoji, tier.name, streak, e.name || "Anonymous", e.emojiScore);
           console.log("Badge clicked!", tier.emoji, tier.name, streak);
         };
         tierBadge.addEventListener("click", showTierInfo);
@@ -825,7 +839,7 @@ function renderLeaderboard(dateStr) {
         tierBadge.style.cursor = "pointer";
         // Add click handler
         const showTierInfo = () => {
-          showTierTooltip(tier.emoji, tier.name, streak, e.name || "Anonymous");
+          showTierTooltip(tier.emoji, tier.name, streak, e.name || "Anonymous", e.emojiScore);
           console.log("Badge clicked!", tier.emoji, tier.name, streak);
         };
         tierBadge.addEventListener("click", showTierInfo);
@@ -907,12 +921,20 @@ async function handleLeaderboardSubmit(evt) {
   
   // Get current daily streak to include in submission
   const dailyStreak = parseInt(localStorage.getItem("dailyStreak") || "0", 10);
+  
+  // Create emoji string from picks
+  const emojiScore = picks.map(p => {
+    const correctAnswers = Array.isArray(p.correct) ? p.correct : [p.correct];
+    return correctAnswers.includes(p.pick) ? "🟩" : "⬜";
+  }).join("");
+  
   // Create the entry object to submit
   const entry = {
     name,
     points: totalPoints,
     avgTime: latestAvgTime,
     dailyStreak: dailyStreak,
+    emojiScore: emojiScore,
     createdAt: Date.now() // Timestamp of submission
   };
   // Submit to Google Sheets
@@ -1331,7 +1353,9 @@ document.querySelector(".title-wrap")?.classList.remove("title-wrap");
   // Clear any existing effects first
   stopSnow();
   stopConfetti();
-  
+
+
+  //CONFETTI OR SNOW EFFECT
   // Start appropriate effect based on event
   if (eventName === "Christmas") {
     startSnow();
