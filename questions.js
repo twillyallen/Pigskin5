@@ -451,6 +451,16 @@ export const CALENDAR = {
     { question: "In Super Bowl LI, what deficit did the Patriots overcome against the Atlanta Falcons?", choices: ["21-3", "25-3", "28-3", "28-0"], answer: 2 },
     ],
   },
+    "2026-02-08": { //Sunday
+    event: "SUPERBOWL",
+    questions: [
+    { question: "Dating back to 1977, which team leads the All-Time Patriots vs Seahawks Series?", choices: ["Seahawks", "Patriots", "Tied"], answer: 0 }, 
+    { question: "Which Patriots player won Super Bowl XLIX MVP honors?", choices: ["Julian Edelman", "Malcolm Butler", "Rob Gronkowski", "Tom Brady"], answer: 3 },
+    { question: "Which of the following Seahawks defenders was NOT a member of the “Legion of Boom” during Super Bowl XLIX?", choices: ["Kam Chancellor", "Shaquill Griffin", "Earl Thomas", "Byron Maxwell"], answer: 1 },
+    { question: "Which 2025 WR Was this:\n- 119 Rec.\n- 1793 Yards\n- 10 TDs", choices: ["Cooper Kupp", "Stefon Diggs", "Jaxon Smith-Njigba", "Kayshon Boutte"], answer: 2 },
+    { question: "True or False: 2025 was the Seahawks’ winningest regular season ever.", choices: ["True", "False"], answer: 0 },
+    ],
+  },
 };
 
 

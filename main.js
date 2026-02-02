@@ -57,6 +57,7 @@ const EVENT_LOGOS = {
   "PatriotsEdition": "logos/PatriotsEdition.png",
   "SeahawksEdition": "logos/SeahawksEdition.png",
   "NFLHonorsEdition": "logos/NFLHonorsEdition.png",
+  "SUPERBOWL": "logos/SUPERBOWL.png",
   // add more events here 
 };
 
@@ -287,7 +288,7 @@ function getRunDateISO() {
 
 
   // === DEV DATE OVERRIDE ===
-  // return "2026-02-07";   // Change this date to test
+  // return "2026-02-08";   // Change this date to test
   // ====================
 
 
