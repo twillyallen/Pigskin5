@@ -1,0 +1,32 @@
+/* Hearts Effect for Valentine's Day Event */
+
+.heart {
+  position: fixed;
+  top: -20px;
+  color: #ff1493; /* Deep pink color for hearts */
+  text-shadow: 0 0 5px rgba(255, 20, 147, 0.6);
+  pointer-events: none;
+  z-index: 9999;
+  user-select: none;
+  animation: heartfall linear infinite;
+  opacity: 0.9;
+}
+
+@keyframes heartfall {
+  0% {
+    transform: translateY(-20px) translateX(0) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.9;
+  }
+  90% {
+    opacity: 0.9;
+  }
+  100% {
+    transform: translateY(100vh) translateX(var(--drift, 0)) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+/* Add some variety with different heart sizes that are set inline via JavaScript */

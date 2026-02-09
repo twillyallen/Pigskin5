@@ -474,11 +474,51 @@ export const CALENDAR = {
     "2026-02-10": { //Tuesday
     event: "",
     questions: [
-    { question: "How many Field Goals did Jason Myers kick in Super Bowl 60?", choices: ["5/5", "4/6", "4/5", "4/4"], answer: 0 }, 
-    { question: "Which QB had more Passing Yards?", choices: ["Sam Darnold", "Tommy DeVito", "Josh Dobbs", "Drake Maye"], answer: 3 },
-    { question: "Which Seahawk scored the Pick Six deep in the 4th Quarter?", choices: ["Devon Witherspoon", "Josh Jobe", "Uchenna Nwosu", "Julian Love"], answer: 2 },
-    { question: "Who had the most Receiving Yards in the Super Bowl?", choices: ["Cooper Kupp", "Mack Hollins", "Rhamondre Stevenson", "AJ Barner"], answer: 1 },
-    { question: "True or False: The Patriots have the most Super Bowl losses in NFL History", choices: ["True", "False"], answer: 0 },
+    { question: "Who was this season's Walter Payton Man of the Year recipient?", choices: ["Cameron Dicker", "Bobby Wagner", "Baker Mayfield", "Jordan Love"], answer: 1 }, 
+    { question: "Which QB is NOT in the All-Time Top 10 Career Pass TDs?", choices: ["Matt Ryan", "Ben Roethlisberger", "Matthew Stafford", "Eli Manning"], answer: 3 },
+    { question: "True or False: The Giants legal government official name is 'The New York Football Giants'.", choices: ["True", "False"], answer: 0 },
+    { question: "Who was the first QB from the 2018 Draft Class to make a Super Bowl Appearance?", choices: ["Baker Mayfield", "Josh Allen", "Sam Darnold", "Lamar Jackson"], answer: 2 },
+    { question: "Name the RB Career:\n- 13,018 Rush Yards\n- 122 Rush TDs\n- 24 Fumbles\n- 1,801 Rec. Yards", choices: ["LaDainian Tomlinson", "Derrick Henry", "Adrian Peterson", "Shaun Alexander"], answer: 1 },
+    ],
+  },
+    "2026-02-11": { //Wednesday
+    event: "",
+    questions: [
+    { question: "Who has the most Rushing Yards in Green Bay Packers history?", choices: ["Aaron Jones", "Jim Taylor", "Dorsey Levens", "Ahman Green"], answer: 3 }, 
+    { question: "What year did the Cardinals move from St. Louis to Arizona", choices: ["1965", "1974", "1981", "1988"], answer: 3 },
+    { question: "Who threw for the most yards in a single Super Bowl game?", choices: ["Nick Foles", "Tom Brady", "Dan Marino", "Patrick Mahomes"], answer: 1 },
+    { question: "Which player won Comeback Player of the Year this season?", choices: ["Aidan Hutchinson", "Dak Prescott", "Christian McCaffrey", "Philip Rivers"], answer: 2 },
+    { question: "Which QB threw the most interceptions ever in a single game?", choices: ["Jim Hardy", "Ken Stabler", "Peyton Manning", "Nathan Peterman"], answer: 0 },
+    ],
+  },
+    "2026-02-12": { //Thursday
+    event: "",
+    questions: [
+    { question: "How many teams has Peyton Manning played for?", choices: ["1", "3", "2", "1"], answer: 2 },
+    { question: "Which is the oldest NFL Franchise", choices: ["Bears/Staleys", "Packers", "Cardinals", "Lions"], answer: 2 },
+    { question: "What was the original name of the New York Jets?", choices: ["Giants", "Football Yankees", "Titans", "Flyers"], answer: 2 },
+    { question: "First QB to throw for 5,000 Yards?", choices: ["Drew Brees", "Steve Young", "Dan Marino", "Brett Favre"], answer: 2 },
+    { question: "Which two players SHARED the MVP Award?", choices: ["Brett Favre & Barry Sanders", "Steve Young & Kurt Warner", "Peyton Manning & Brett Favre", "LaDainian Tomlinson & Steve McNair"], answer: 0 },
+    ],
+  },
+    "2026-02-13": { //Friday
+    event: "",
+    questions: [
+    { question: "Who was the last player to win Back-to-Back MVP Awards?", choices: ["Peyton Manning", "Aaron Rodgers", "Lamar Jackson", "Tom Brady"], answer: 1 },
+    { question: "What year were the Raiders established", choices: ["1955", "1960", "1963", "1966"], answer: 1 },
+    { question: "What surface do the Arizona Cardinals play on?", choices: ["Matrix Turf", "Kentucky Bluegrass", "SIS Grass", "Bermuda Grass"], answer: 3 },
+    { question: "Who was the last Giants player to win MVP?", choices: ["Y.A. Tittle", "Eli Manning", "Michael Strahan", "Lawrence Taylor"], answer: 3 },
+    { question: "Who was the NFC's 3 Seed this season?", choices: ["Philadelphia Eagles", "Chicago Bears", "Los Angeles Rams", "Carolina Panthers"], answer: 0 },
+    ],
+  },
+    "2026-02-14": { //Saturday
+    event: "ValentinesDay",
+    questions: [
+    { question: "What day is the Super Bowl in 2027?", choices: ["February 8", "February 9", "February 11", "February 14"], answer: 3 },
+    { question: "What year was Jordan LOVE drafted", choices: ["2018", "2020", "2021", "2023"], answer: 1 },
+    { question: "What year did Travis Kelce start dating Taylor Swift?", choices: ["2021", "2022", "2023", "2024"], answer: 2 },
+    { question: "Name the 2025 WR:\n- 55 Rec.\n- 724 Yards\n- 6 TDs", choices: ["ROMEO Doubs", "Colston LOVEland", "Blake WhiteHEART", "Carrington VALENTINE"], answer: 0 },
+    { question: "Which NFL team plays in the 'City of Brotherly Love'?", choices: ["Dallas Cowboys", "Chicago Bears", "Philadelphia Eagles", "Los Angeles Rams"], answer: 2 },
     ],
   },
 };

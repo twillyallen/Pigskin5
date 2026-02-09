@@ -58,6 +58,7 @@ const EVENT_LOGOS = {
   "SeahawksEdition": "logos/SeahawksEdition.png",
   "NFLHonorsEdition": "logos/NFLHonorsEdition.png",
   "SUPERBOWL": "logos/SUPERBOWL.png",
+  "ValentinesDay": "logos/ValentinesDay.png",
   // add more events here 
 };
 
@@ -304,7 +305,7 @@ function getRunDateISO() {
 
 
   // === DEV DATE OVERRIDE ===
-  // return "2026-02-08";   // Change this date to test
+   return "2026-02-14";   // Change this date to test
   // ====================
 
 
@@ -1186,6 +1187,10 @@ console.log('Setting regular logo');
 
 let snowInterval = null; // Store the interval ID so we can stop it
 
+// ---------- Heart Effect ----------
+
+let heartsInterval = null; // Store the interval ID so we can stop it
+
 // Create a single snowflake
 function createSnowflake() {
   const container = document.getElementById("startScreen");
@@ -1245,6 +1250,66 @@ function stopSnow() {
   // Remove all existing snowflakes
   const snowflakes = document.querySelectorAll(".snowflake");
   snowflakes.forEach(flake => flake.remove());
+}
+
+// --------------------HEARTS----------------------
+function createHeart() {
+  const container = document.getElementById("startScreen");
+  if (!container) return;
+  
+  const heart = document.createElement("div");
+  heart.className = "heart";
+  heart.textContent = "❤"; // You can also use "💕", "💖", "💗", or "♥"
+  
+  // Random starting position across the width
+  heart.style.left = Math.random() * 100 + "%";
+  
+  // Random animation duration
+  const duration = 5 + Math.random() * 10; // 5-15 seconds
+  heart.style.animationDuration = duration + "s";
+  
+  // Random size
+  const size = 15 + Math.random() * 25; // 15-40px (slightly bigger than snowflakes)
+  heart.style.fontSize = size + "px";
+  
+  // Random horizontal drift
+  const drift = -20 + Math.random() * 40; // -20px to +20px
+  heart.style.setProperty('--drift', drift + 'px');
+  
+  container.appendChild(heart);
+  
+  // Remove heart after animation completes
+  setTimeout(() => {
+    heart.remove();
+  }, (duration + 1) * 1000);
+}
+
+function startHearts() {
+  // Stop any existing hearts first
+  stopHearts();
+  
+  // Create initial batch of hearts
+  for (let i = 0; i < 30; i++) {
+    setTimeout(() => createHeart(), i * 100);
+  }
+  
+  // Continue creating hearts every 300ms
+  heartsInterval = setInterval(() => {
+    createHeart();
+  }, 300);
+}
+
+// Stop and clear all hearts
+function stopHearts() {
+  // Stop creating new hearts
+  if (heartsInterval) {
+    clearInterval(heartsInterval);
+    heartsInterval = null;
+  }
+  
+  // Remove all existing hearts
+  const hearts = document.querySelectorAll(".heart");
+  hearts.forEach(heart => heart.remove());
 }
 
 // ---------- Confetti Effect (Canvas-Confetti Library) ----------
@@ -1355,6 +1420,7 @@ document.querySelector(".title-wrap")?.classList.remove("title-wrap");
   // Clear any existing effects first
   stopSnow();
   stopConfetti();
+  stopHearts();
 
 
   //CONFETTI OR SNOW EFFECT
@@ -1368,6 +1434,10 @@ document.querySelector(".title-wrap")?.classList.remove("title-wrap");
   else if (eventName === "SUPERBOWL")
   {
     startConfetti();
+  }
+  else if (eventName === "ValentinesDay")
+  {
+    startHearts();
   }
 }
 
