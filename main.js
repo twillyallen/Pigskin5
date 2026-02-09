@@ -156,6 +156,8 @@ function showTierTooltip(emoji, tierName, streak, playerName, emojiScore) {
     color: rgba(255, 255, 255, 0.9);
     font-weight: 600;
   `;
+
+  
   
   // Tap to close hint
   const hintEl = document.createElement('div');
@@ -1671,12 +1673,18 @@ function pickAnswer(i, correct) {
   const correctAnswers = Array.isArray(correct) ? correct : [correct];
   const isCorrect = correctAnswers.includes(i);
 
-  // Only highlight the player's choice
+  // Highlight the player's choice
   if (i !== null && typeof i === "number" && buttons[i]) {
     if (isCorrect) {
       buttons[i].classList.add("correct");  // Green if correct
     } else {
       buttons[i].classList.add("wrong");     // Red if wrong
+      // Also highlight the correct answer(s) in green
+      correctAnswers.forEach(correctIdx => {
+        if (buttons[correctIdx]) {
+          buttons[correctIdx].classList.add("correct");
+        }
+      });
     }
   }
 

@@ -461,6 +461,26 @@ export const CALENDAR = {
     { question: "True or False: 2025 was the Seahawks’ winningest regular season ever.", choices: ["True", "False"], answer: 0 },
     ],
   },
+    "2026-02-09": { //Monday
+    event: "",
+    questions: [
+    { question: "How many Field Goals did Jason Myers kick in Super Bowl 60?", choices: ["5/5", "4/6", "4/5", "4/4"], answer: 0 }, 
+    { question: "Which QB had more Passing Yards?", choices: ["Sam Darnold", "Tommy DeVito", "Josh Dobbs", "Drake Maye"], answer: 3 },
+    { question: "Which Seahawk scored the Pick Six deep in the 4th Quarter?", choices: ["Devon Witherspoon", "Josh Jobe", "Uchenna Nwosu", "Julian Love"], answer: 2 },
+    { question: "Who had the most Receiving Yards in the Super Bowl?", choices: ["Cooper Kupp", "Mack Hollins", "Rhamondre Stevenson", "AJ Barner"], answer: 1 },
+    { question: "True or False: The Patriots have the most Super Bowl losses in NFL History", choices: ["True", "False"], answer: 0 },
+    ],
+  },
+    "2026-02-10": { //Tuesday
+    event: "",
+    questions: [
+    { question: "How many Field Goals did Jason Myers kick in Super Bowl 60?", choices: ["5/5", "4/6", "4/5", "4/4"], answer: 0 }, 
+    { question: "Which QB had more Passing Yards?", choices: ["Sam Darnold", "Tommy DeVito", "Josh Dobbs", "Drake Maye"], answer: 3 },
+    { question: "Which Seahawk scored the Pick Six deep in the 4th Quarter?", choices: ["Devon Witherspoon", "Josh Jobe", "Uchenna Nwosu", "Julian Love"], answer: 2 },
+    { question: "Who had the most Receiving Yards in the Super Bowl?", choices: ["Cooper Kupp", "Mack Hollins", "Rhamondre Stevenson", "AJ Barner"], answer: 1 },
+    { question: "True or False: The Patriots have the most Super Bowl losses in NFL History", choices: ["True", "False"], answer: 0 },
+    ],
+  },
 };
 
 
