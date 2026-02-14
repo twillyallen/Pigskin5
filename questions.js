@@ -521,6 +521,16 @@ export const CALENDAR = {
     { question: "Which NFL team plays in the 'City of Brotherly Love'?", choices: ["Dallas Cowboys", "Chicago Bears", "Philadelphia Eagles", "Los Angeles Rams"], answer: 2 },
     ],
   },
+    "2026-02-15": { //Sunday
+    event: "",
+    questions: [
+    { question: "Career pass TD leader?", choices: ["Brady", "Brees", "Manning", "Rodgers"], answer: 0 },
+    { question: "Who was the Defensive Player of the Year in 2023?", choices: ["Nick Bosa", "TJ Watt", "Myles Garrett", "Micah Parsons"], answer: 2 },
+    { question: "Which Head Coach is responsible for the largest blown lead in NFL History?", choices: ["Jack Pardee", "Dan Quinn", "Jeff Saturday", "Brandon Staley"], answer: 2 },
+    { question: "Who has the most Yards from Scrimmage in a single season?", choices: ["Chris Johnson", "Barry Sanders", "Marshall Faulk", "Derrick Henry"], answer: 0 },
+    { question: "Which WR had the 'Helmet Catch'?", choices: ["Plaxico Burress", "Victor Cruz", "David Tyree", "Mario Manningham"], answer: 2 },
+    ],
+  },
 };
 
 
