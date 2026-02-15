@@ -524,11 +524,81 @@ export const CALENDAR = {
     "2026-02-15": { //Sunday
     event: "",
     questions: [
-    { question: "Career pass TD leader?", choices: ["Brady", "Brees", "Manning", "Rodgers"], answer: 0 },
+    { question: "Career pass TD leader?", choices: ["Tom Brady", "Drew Brees", "Peyton Manning", "Aaron Rodgers"], answer: 0 },
     { question: "Who was the Defensive Player of the Year in 2023?", choices: ["Nick Bosa", "TJ Watt", "Myles Garrett", "Micah Parsons"], answer: 2 },
     { question: "Which Head Coach is responsible for the largest blown lead in NFL History?", choices: ["Jack Pardee", "Dan Quinn", "Jeff Saturday", "Brandon Staley"], answer: 2 },
     { question: "Who has the most Yards from Scrimmage in a single season?", choices: ["Chris Johnson", "Barry Sanders", "Marshall Faulk", "Derrick Henry"], answer: 0 },
     { question: "Which WR had the 'Helmet Catch'?", choices: ["Plaxico Burress", "Victor Cruz", "David Tyree", "Mario Manningham"], answer: 2 },
+    ],
+  },
+    "2026-02-16": { //Monday
+    event: "",
+    questions: [
+    { question: "Name the QB Career:\n-22,464 Pass Yards\n- 6,109 Rush Yards\n- 133 Pass TDs\n- 36 Rush TDs ", choices: ["Cam Newton", "Michael Vick", "Lamar Jackson", "Josh Allen"], answer: 1 },
+    { question: "What was the Wind-Chill in the coldest game of all time (1982 AFC Championship)?", choices: ["-59°F", "-48°F", "-44°F", "-25°F"], answer: 0 },
+    { question: "Which Dolphins quarterback led the team to a perfect 17-0 season in 1972?", choices: ["Craig Morton", "Greg Landry", "Dan Marino", "Bob Griese"], answer: 3 },
+    { question: "Who has the record for most Receiving Yards in a game?", choices: ["Calvin Johnson", "Flipper Anderson", "Stephone Paige", "Julio Jones"], answer: 1 },
+    { question: "What season did the Ravens win their first Super Bowl?", choices: ["2000", "2008", "2011", "2012"], answer: 0 },
+    ],
+  },
+    "2026-02-17": { //Tuesday
+    event: "",
+    questions: [
+    { question: "Who led the Bills in sacks last season?", choices: ["Joey Bosa", "Matt Milano", "Ed Oliver", "Greg Rousseau"], answer: 3 },
+    { question: "True or False: The Bengals have never won a Super Bowl.", choices: ["True", "False"], answer: 0 },
+    { question: "Who was the MVP of Super Bowl X? (Cowboys vs Steelers)", choices: ["Franco Harris", "Roger Staubach", "Lynn Swann", "Terry Bradshaw"], answer: 2 },
+    { question: "Who was the first team in win the Super Bowl in their home stadium?", choices: ["Buccaneers", "Rams", "Giants", "Colts"], answer: 0 },
+    { question: "What is the most amount of Receiving Yards Antonio Brown ever had in a season?", choices: ["1,698", "1,943", "1,834", "1,572"], answer: 2 },
+    ],
+  },
+    "2026-02-18": { //Wednesday
+    event: "",
+    questions: [
+    { question: "Who has the longest Playoff Win drought?", choices: ["Dolphins", "Jets", "Raiders", "Cardinals"], answer: 0 },
+    { question: "When was the season the Cowboys won a Super Bowl?", choices: ["1990", "1995", "2002", "2004"], answer: 1 },
+    { question: "Which QB holds the record for most Passing TDs as a rookie?", choices: ["Bo Nix", "Peyton Manning", "Justin Herbert", "Baker Mayfield"], answer: 2 },
+    { question: "Which WR had the most Receiving Yards ever in a season?", choices: ["Julio Jones", "Antonio Brown", "Calvin Johnson", "Cooper Kupp"], answer: 2 },
+    { question: "True or False: Kirk Cousins has more Career Pass TDs than John Elway?", choices: ["True", "False"], answer: 1 },
+    ],
+  },
+    "2026-02-19": { //Thursday
+    event: "",
+    questions: [
+    { question: "Which legendary owner was known for his motto 'Just Win, Baby'?", choices: ["Mark Davis", "Jerry Jones", "Al Davis", "Lamar Hunt"], answer: 2 },
+    { question: "Name the 2025 Rookie WR:\n- 938 Rec. Yards\n- 6 TDs\n- 63 Receptions", choices: ["Tet McMillan", "Emeka Egbuka", "Luther Burden III", "RJ Harvey"], answer: 1 },
+    { question: "Who was the 2011 MVP?", choices: ["Drew Brees", "Tom Brady", "Matthew Stafford", "Aaron Rodgers"], answer: 3 },
+    { question: "Who is the only Special Teamer to ever win Super Bowl MVP?", choices: ["Adam Vinatieri (Kicker)", "Ray Wersching (Kicker)", "Desmond Howard (Kick Returner)", "Michael Dickson (Punter)"], answer: 2 },
+    { question: "Who holds the record for most career games played?", choices: ["Morten Anderson", "Brett Favre", "Tom Brady", "Gary Anderson"], answer: 0 },
+    ],
+  },
+    "2026-02-20": { //Friday
+    event: "",
+    questions: [
+    { question: "Which defense allows the FEWEST passing yards per game in 2025?", choices: ["Vikings", "Browns", "Bills", "Texans"], answer: 0 },
+    { question: "Which Super Bowl featured the 'Philly Special' trick play?", choices: ["Super Bowl L", "Super Bowl XLII", "Super Bowl LII", "Super Bowl XXX"], answer: 2 },
+    { question: "How many League MVP Awards did Peyton Manning win OUTRIGHT (Not sharing the award)?", choices: ["3", "4", "5", "6"], answer: 1 },
+    { question: "How many League MVP Awards did Aaron Rodgers win OUTRIGHT?", choices: ["2", "3", "4", "5"], answer: 2 },
+    { question: "True or False: The Cardinals franchise is older than the state of Arizona.", choices: ["True", "False"], answer: 0 },
+    ],
+  },
+    "2026-02-21": { //Saturday
+    event: "",
+    questions: [
+    { question: "Who was the first Wild Card team to win the Super Bowl?", choices: ["2010 Packers", "1988 Redskins", "1980 Raiders", "2007 Giants"], answer: 2 },
+    { question: "Which team had the Most Rush Yards per Game in 2025?", choices: ["Buffalo Bills", "Baltimore Ravens", "Chicago Bears", "Atlanta Falcons"], answer: [0, 1] },
+    { question: "_____ has 208 Career Touchdowns.", choices: ["Emmitt Smith", "Walter Payton", "Jerry Rice", "LaDainian Tomlinson"], answer: 2 },
+    { question: "Who ran the fastest 40yd Dash in Combine History?", choices: ["Xavier Worthy", "John Ross III", "Tyreek Hill", "Chris Johnson"], answer: 0 },
+    { question: "Who led the Buccaneers in receiving yards in 2025?", choices: ["Emeka Egbuka", "Mike Evans", "Chris Godwin", "Cade Otton"], answer: 0 },
+    ],
+  },
+    "2026-02-22": { //Sunday
+    event: "",
+    questions: [
+    { question: "Which city is hosting Super Bowl LXI?", choices: ["New Orleans, LA", "Glendale, AZ", "Inglewood, CA", "Las Vegas, NV"], answer: 2 },
+    { question: "What was the original name of the Detroit Lions?", choices: ["Detroit Tigers", "Detroit Lions", "Portsmouth Spartans", "Motor City Monsters"], answer: 2 },
+    { question: "How many MVP Votes does Russell Wilson have in his Legendary Career?", choices: ["37", "0", "7", "24"], answer: 1 },
+    { question: "All-Time Career Rushing Yards Leader?", choices: ["Frank Gore", "Emmitt Smith", "LaDainian Tomlinson", "Barry Sanders"], answer: 1 },
+    { question: "What city did the Chargers first belong to?", choices: ["Pasadena", "San Diego", "Los Angeles", "San Fransisco"], answer: 2 },
     ],
   },
 };
