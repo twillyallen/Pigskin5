@@ -564,7 +564,7 @@ export const CALENDAR = {
     "2026-02-19": { //Thursday
     event: "",
     questions: [
-    { question: "Which legendary owner was known for his motto 'Just Win, Baby'?", choices: ["Mark Davis", "Jerry Jones", "Al Davis", "Lamar Hunt"], answer: 2 },
+    { question: "Who is the Special Teams Coordinator for the Green Bay Packers?", choices: ["NOT RICH BISACCIA 🙌💯😮‍💨", "Rich Bisaccia"], answer: 0 },
     { question: "Name the 2025 Rookie WR:\n- 938 Rec. Yards\n- 6 TDs\n- 63 Receptions", choices: ["Tet McMillan", "Emeka Egbuka", "Luther Burden III", "RJ Harvey"], answer: 1 },
     { question: "Who was the 2011 MVP?", choices: ["Drew Brees", "Tom Brady", "Matthew Stafford", "Aaron Rodgers"], answer: 3 },
     { question: "Who is the only Special Teamer to ever win Super Bowl MVP?", choices: ["Adam Vinatieri (Kicker)", "Ray Wersching (Kicker)", "Desmond Howard (Kick Returner)", "Michael Dickson (Punter)"], answer: 2 },
@@ -595,6 +595,16 @@ export const CALENDAR = {
     event: "",
     questions: [
     { question: "Which city is hosting Super Bowl LXI?", choices: ["New Orleans, LA", "Glendale, AZ", "Inglewood, CA", "Las Vegas, NV"], answer: 2 },
+    { question: "What was the original name of the Detroit Lions?", choices: ["Detroit Tigers", "Detroit Lions", "Portsmouth Spartans", "Motor City Monsters"], answer: 2 },
+    { question: "How many MVP Votes does Russell Wilson have in his Legendary Career?", choices: ["37", "0", "7", "24"], answer: 1 },
+    { question: "All-Time Career Rushing Yards Leader?", choices: ["Frank Gore", "Emmitt Smith", "LaDainian Tomlinson", "Barry Sanders"], answer: 1 },
+    { question: "What city did the Chargers first belong to?", choices: ["Pasadena", "San Diego", "Los Angeles", "San Fransisco"], answer: 2 },
+    ],
+  },
+    "2026-02-23": { //Monday
+    event: "",
+    questions: [
+    { question: "Which legendary owner was known for his motto 'Just Win, Baby'?", choices: ["Mark Davis", "Jerry Jones", "Al Davis", "Lamar Hunt"], answer: 2 },
     { question: "What was the original name of the Detroit Lions?", choices: ["Detroit Tigers", "Detroit Lions", "Portsmouth Spartans", "Motor City Monsters"], answer: 2 },
     { question: "How many MVP Votes does Russell Wilson have in his Legendary Career?", choices: ["37", "0", "7", "24"], answer: 1 },
     { question: "All-Time Career Rushing Yards Leader?", choices: ["Frank Gore", "Emmitt Smith", "LaDainian Tomlinson", "Barry Sanders"], answer: 1 },
