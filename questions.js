@@ -555,7 +555,7 @@ export const CALENDAR = {
     event: "",
     questions: [
     { question: "Who has the longest Playoff Win drought?", choices: ["Dolphins", "Jets", "Raiders", "Cardinals"], answer: 0 },
-    { question: "When was the season the Cowboys won a Super Bowl?", choices: ["1990", "1995", "2002", "2004"], answer: 1 },
+    { question: "When was the last season the Cowboys won a Super Bowl?", choices: ["1990", "1995", "2002", "2004"], answer: 1 },
     { question: "Which QB holds the record for most Passing TDs as a rookie?", choices: ["Bo Nix", "Peyton Manning", "Justin Herbert", "Baker Mayfield"], answer: 2 },
     { question: "Which WR had the most Receiving Yards ever in a season?", choices: ["Julio Jones", "Antonio Brown", "Calvin Johnson", "Cooper Kupp"], answer: 2 },
     { question: "True or False: Kirk Cousins has more Career Pass TDs than John Elway?", choices: ["True", "False"], answer: 1 },
