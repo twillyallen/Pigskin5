@@ -5,10 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   
   <!-- Favicons -->
-  <link rel="icon" type="image/png" sizes="192x192" href="pigskin5share.png" />
+  <link rel="icon" type="image/png" sizes="192x192" href="logos/pigskin5share.png" />
   <link rel="icon" type="image/png" href="favicon.png" />
   <link rel="icon" type="image/x-icon" href="favicon.ico" />
-  <link rel="apple-touch-icon" sizes="180x180" href="pigskin5share.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="logos/pigskin5share.png" />
   
   <title>Pigskin5 – Daily NFL Trivia Game</title>
   <meta name="description" content="Pigskin5 is a daily NFL trivia game. Answer 5 football questions in 15 seconds each, keep your streak alive, and climb the daily leaderboard.">
@@ -27,9 +27,6 @@
   <meta property="og:url" content="https://pigskin5.com/">
   <meta property="og:type" content="website">
   <meta property="og:image" content="https://pigskin5.com/logos/pigskin5share.png">
-  <meta name="twitter:image" content="https://pigskin5.com/logos/pigskin5share.png">
-  <link rel="icon" type="image/png" sizes="192x192" href="logos/pigskin5share.png" />
-  <link rel="apple-touch-icon" sizes="180x180" href="logos/pigskin5share.png" />
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
@@ -37,20 +34,14 @@
   <meta name="twitter:description" content="Daily NFL trivia: 5 questions, 15 seconds each, new quiz every day.">
   <meta name="twitter:image" content="https://pigskin5.com/logos/pigskin5share.png">
 
-
-
-  <!-- PAGE COUNTER -->
-   <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-375271620"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-45YQHZHDHZ');
-</script>
-
-
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-45YQHZHDHZ"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-45YQHZHDHZ');
+  </script>
 
 </head>
 <body>
@@ -86,118 +77,115 @@
     <h1 class="visually-hidden">Pigskin5 – Free Daily NFL Trivia Game</h1>
 
     <!-- START SCREEN -->
-<section id="startScreen" class="start-screen">
-  <div class="overlay">
-    <img src="pigskin5logo.png" alt="Pigskin5 Logo" class="title-logo"/>
+    <section id="startScreen" class="start-screen">
+      <div class="overlay">
+        <img src="pigskin5logo.png" alt="Pigskin5 Logo" class="title-logo"/>
 
-    <button id="startBtn" class="btn">START</button>
-    <!-- <div class="byline">BY TWILLYALLEN</div> -->
+        <button id="startBtn" class="btn">START</button>
 
-    <div style="height:30px;"></div>
+        <div style="height:30px;"></div>
 
-    <p class="start-description">
-      <strong>Daily NFL Trivia</strong><br>
-      Five questions. Fifteen seconds each.<br>
-      New challenge daily!<br>
-      Test your football knowledge and climb the leaderboard!
-    </p>
+        <p class="start-description">
+          <strong>Daily NFL Trivia</strong><br>
+          Five questions. Fifteen seconds each.<br>
+          New challenge daily!<br>
+          Test your football knowledge and climb the leaderboard!
+        </p>
 
-    <!-- Start Screen Personal Stats Scorecard -->
-<div id="startScorecard" class="start-scorecard">
-  <div class="scorecard-stats">
-    <div class="scorecard-stat">
-      <span class="stat-label">Daily Streak:</span>
-      <span class="stat-value" id="scorecardDailyStreak">0</span>
-    </div>
-    <div class="scorecard-stat">
-      <span class="stat-label">Touchdown Streak:</span>
-      <span class="stat-value" id="scorecardTDStreak">0</span>
-    </div>
-  </div>
-  
-  <div class="scorecard-header">Yesterday's Results</div>
-  
-  <div class="scorecard-emoji" id="scorecardEmoji">⬜⬜⬜⬜⬜</div>
-  
-  <div class="scorecard-stats">
-    <div class="scorecard-stat">
-      <span class="stat-label"><br>Yesterday's Score:</span>
-      <span class="stat-value" id="scorecardYesterday">-</span>
-    </div>
-  </div>
-</div>
+        <!-- Start Screen Personal Stats Scorecard -->
+        <div id="startScorecard" class="start-scorecard">
+          <div class="scorecard-stats">
+            <div class="scorecard-stat">
+              <span class="stat-label">Daily Streak:</span>
+              <span class="stat-value" id="scorecardDailyStreak">0</span>
+            </div>
+            <div class="scorecard-stat">
+              <span class="stat-label">Touchdown Streak:</span>
+              <span class="stat-value" id="scorecardTDStreak">0</span>
+            </div>
+          </div>
+          
+          <div class="scorecard-header">Yesterday's Results</div>
+          
+          <div class="scorecard-emoji" id="scorecardEmoji">⬜⬜⬜⬜⬜</div>
+          
+          <div class="scorecard-stats">
+            <div class="scorecard-stat">
+              <span class="stat-label"><br>Yesterday's Score:</span>
+              <span class="stat-value" id="scorecardYesterday">-</span>
+            </div>
+          </div>
+        </div>
 
-    <!-- Leaderboard -->
-    <section class="start-leaderboard">
-      <h3>Today's Leaderboard</h3>
-      <table class="leaderboard-table">
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Name</th>
-            <th>Points</th>
-            <th>Avg Time</th>
-          </tr>
-        </thead>
-        <tbody id="startLeaderboardBody">
-          <tr><td colspan='4'>Loading...</td></tr>
-        </tbody>
-      </table>
+        <!-- Leaderboard -->
+        <section class="start-leaderboard">
+          <h3>Today's Leaderboard</h3>
+          <table class="leaderboard-table">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>Points</th>
+                <th>Avg Time</th>
+              </tr>
+            </thead>
+            <tbody id="startLeaderboardBody">
+              <tr><td colspan='4'>Loading...</td></tr>
+            </tbody>
+          </table>
+        </section>
+
+      </div>
     </section>
-
-  </div>
-</section>
 
     <!-- QUIZ SECTION -->
     <section id="card" class="card hidden">
       <header class="header">
-      <div class="header-top">
-      <div id="progress" class="progress">Question 1 / 5</div>
-      <div id="timer" class="timer" aria-live="polite">15s</div>
-    </div>
-    <h2 id="question" class="question">Loading…</h2>
-  </header>
+        <div class="header-top">
+          <div id="progress" class="progress">Question 1 / 5</div>
+          <div id="timer" class="timer" aria-live="polite">15s</div>
+        </div>
+        <h2 id="question" class="question">Loading…</h2>
+      </header>
       <div id="choices" class="choices"></div>
     </section>
 
-    <!--RESULTS-->
-<section id="result" class="result hidden">
-  <h2>Your Score</h2>
-  <p id="scoreText"></p>
-  <!-- metrics text will be injected right under this via JS -->
-  <div id="review" class="review"></div>
+    <!-- RESULTS -->
+    <section id="result" class="result hidden">
+      <h2>Your Score</h2>
+      <p id="scoreText"></p>
+      <!-- metrics text will be injected right under this via JS -->
+      <div id="review" class="review"></div>
 
+      <!-- Daily Leaderboard -->
+      <section id="leaderboard" class="leaderboard">
+        <h3>Daily Leaderboard</h3>
+        <form id="leaderboardForm" class="leaderboard-form">
+          <label for="playerName">Name:</label>
+          <input
+            id="playerName"
+            maxlength="20"
+            autocomplete="name"
+            placeholder="Your name or initials"
+          />
+          <button type="submit" class="btn small">Submit Score</button>
+        </form>
+        <div id="leaderboardWarning" class="leaderboard-warning"></div>
+        <table class="leaderboard-table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Name</th>
+              <th>Points</th>
+              <th>Avg Time</th>
+            </tr>
+          </thead>
+          <tbody id="leaderboardBody"></tbody>
+        </table>
+      </section>
 
-
-  <!-- Daily Leaderboard -->
-  <section id="leaderboard" class="leaderboard">
-    <h3>Daily Leaderboard</h3>
-    <form id="leaderboardForm" class="leaderboard-form">
-      <label for="playerName">Name:</label>
-      <input
-        id="playerName"
-        maxlength="20"
-        autocomplete="name"
-        placeholder="Your name or initials"
-      />
-      <button type="submit" class="btn small">Submit Score</button>
-    </form>
-    <div id="leaderboardWarning" class="leaderboard-warning"></div>
-    <table class="leaderboard-table">
-      <thead>
-        <tr>
-          <th>#</th>
-          <th>Name</th>
-          <th>Points</th>
-          <th>Avg Time</th>
-        </tr>
-      </thead>
-      <tbody id="leaderboardBody"></tbody>
-    </table>
-  </section>
-
-  <button id="restartBtn" class="btn">Restart</button>
-</section>
+      <button id="restartBtn" class="btn">Restart</button>
+    </section>
 
   </main>
 
@@ -211,94 +199,61 @@
       <span> - </span>
       <a href="blog/blog-index.html">Blog</a>
     </nav>
-
     <small>&copy; 2025 Pigskin5 - Not affiliated with the NFL</small>
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
 
-
-
-<div id="cookie-consent-banner" style="display: none; position: fixed; bottom: 20px; right: 20px; max-width: 400px; background-color: rgba(44, 62, 80, 0.95); color: white; padding: 20px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.3); z-index: 9999; font-family: Arial, sans-serif;">
-  <p style="margin: 0 0 15px 0; font-size: 13px; line-height: 1.5;">
-    We use cookies for analytics and ads. 
-    <a href="cookies.html" style="color: #3498db; text-decoration: underline;">Learn more</a>
-  </p>
-  <div style="display: flex; gap: 10px;">
-    <button onclick="acceptCookies()" style="flex: 1; background-color: #27ae60; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; font-size: 13px; font-weight: bold;">
-      Accept
-    </button>
-    <button onclick="rejectCookies()" style="flex: 1; background-color: transparent; color: white; border: 1px solid white; padding: 8px 16px; border-radius: 4px; cursor: pointer; font-size: 13px;">
-      Decline
-    </button>
+  <!-- Cookie Consent Banner -->
+  <div id="cookie-consent-banner" style="display: none; position: fixed; bottom: 20px; right: 20px; max-width: 400px; background-color: rgba(44, 62, 80, 0.95); color: white; padding: 20px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.3); z-index: 9999; font-family: Arial, sans-serif;">
+    <p style="margin: 0 0 15px 0; font-size: 13px; line-height: 1.5;">
+      We use cookies for analytics and ads. 
+      <a href="cookies.html" style="color: #3498db; text-decoration: underline;">Learn more</a>
+    </p>
+    <div style="display: flex; gap: 10px;">
+      <button onclick="acceptCookies()" style="flex: 1; background-color: #27ae60; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; font-size: 13px; font-weight: bold;">
+        Accept
+      </button>
+      <button onclick="rejectCookies()" style="flex: 1; background-color: transparent; color: white; border: 1px solid white; padding: 8px 16px; border-radius: 4px; cursor: pointer; font-size: 13px;">
+        Decline
+      </button>
+    </div>
   </div>
-</div>
 
-<script>
-// Cookie Consent Banner JavaScript
-(function() {
-  // Check if user has already made a choice
-  function getCookieConsent() {
-    return localStorage.getItem('cookieConsent');
-  }
-
-  // Show banner if no consent recorded
-  function showCookieBanner() {
-    const consent = getCookieConsent();
-    if (!consent) {
-      document.getElementById('cookie-consent-banner').style.display = 'block';
+  <script>
+  (function() {
+    function getCookieConsent() {
+      return localStorage.getItem('cookieConsent');
     }
-  }
 
-  // Hide the banner
-  function hideBanner() {
-    document.getElementById('cookie-consent-banner').style.display = 'none';
-  }
+    function showCookieBanner() {
+      if (!getCookieConsent()) {
+        document.getElementById('cookie-consent-banner').style.display = 'block';
+      }
+    }
 
-  // Accept all cookies
-  window.acceptCookies = function() {
-    localStorage.setItem('cookieConsent', 'all');
-    hideBanner();
-    // Enable Google AdSense and other tracking here
-    enableAnalytics();
-  };
+    function hideBanner() {
+      document.getElementById('cookie-consent-banner').style.display = 'none';
+    }
 
-  // Reject non-essential cookies
-  window.rejectCookies = function() {
-    localStorage.setItem('cookieConsent', 'essential');
-    hideBanner();
-    // Disable non-essential cookies
-    disableAnalytics();
-  };
+    window.acceptCookies = function() {
+      localStorage.setItem('cookieConsent', 'all');
+      hideBanner();
+    };
 
-  // Manage cookie preferences (redirect to cookies page)
-  window.manageCookies = function() {
-    window.location.href = 'cookies.html';
-  };
+    window.rejectCookies = function() {
+      localStorage.setItem('cookieConsent', 'essential');
+      hideBanner();
+    };
 
-  // Enable analytics and ads
-  function enableAnalytics() {
-    // Add your Google AdSense code here
-    // Example: Load Google AdSense script
-    console.log('Analytics and ads enabled');
-  }
+    window.manageCookies = function() {
+      window.location.href = 'cookies.html';
+    };
 
-  // Disable analytics and ads
-  function disableAnalytics() {
-    // Disable tracking
-    console.log('Only essential cookies enabled');
-  }
-
-  // Show banner on page load
-  showCookieBanner();
-})();
-</script>
-
-<!-- END COOKIE CONSENT BANNER -->
-
-
-
-
+    showCookieBanner();
+  })();
+  </script>
+  <!-- End Cookie Consent Banner -->
 
 </body>
 </html>
