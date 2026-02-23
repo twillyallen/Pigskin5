@@ -17,6 +17,35 @@
   <link rel="stylesheet" href="./style.css" />
   <script type="module" src="./main.js?v=20250203"></script>
 
+  <style>
+    .start-nav-btns {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 10px;
+    }
+    .start-nav-btn {
+      display: inline-block;
+      background: rgba(255, 255, 255, 0.15);
+      color: #fff;
+      font-size: clamp(13px, 3vw, 17px);
+      font-weight: 700;
+      padding: 10px 20px;
+      border-radius: 10px;
+      text-decoration: none;
+      border: 2px solid rgba(255, 255, 255, 0.35);
+      transition: background 0.15s ease, transform 0.12s ease;
+      letter-spacing: 0.03em;
+    }
+    .start-nav-btn:hover {
+      background: rgba(255, 255, 255, 0.28);
+      transform: translateY(-1px);
+    }
+    .start-nav-btn:active {
+      transform: translateY(1px);
+    }
+  </style>
   <link rel="stylesheet" href="snow-effect.css">
   <link rel="stylesheet" href="confetti.css">
   <link rel="stylesheet" href="hearts.css">
@@ -83,7 +112,7 @@
 
         <button id="startBtn" class="btn">START</button>
 
-        <div style="height:30px;"></div>
+        <div style="height:16px;"></div>
 
         <p class="start-description">
           <strong>Daily NFL Trivia</strong><br>
@@ -91,6 +120,11 @@
           New challenge daily!<br>
           Test your football knowledge and climb the leaderboard!
         </p>
+
+        <div class="start-nav-btns">
+          <a href="blog/blog-index.html" class="start-nav-btn">NFL Blog</a>
+          <a href="terms.html" class="start-nav-btn">Terms &amp; Conditions</a>
+        </div>
 
         <!-- Start Screen Personal Stats Scorecard -->
         <div id="startScorecard" class="start-scorecard">
