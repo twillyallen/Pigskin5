@@ -128,95 +128,116 @@ function showTierTooltip(emoji, tierName, streak, playerName, emojiScore, points
     max-width: 90vw;
     animation: popupSlideIn 0.3s ease-out;
   `;
-  
-  // Emoji
-  const emojiEl = document.createElement('div');
-  emojiEl.textContent = emoji;
-  emojiEl.style.cssText = `
-    font-size: 60px;
-    margin-bottom: 15px;
-    line-height: 1;
-  `;
-  
-  // Tier name
-  const nameEl = document.createElement('div');
-  nameEl.textContent = tierName;
-  nameEl.style.cssText = `
-    font-size: 28px;
-    font-weight: 900;
-    color: white;
-    margin-bottom: 8px;
-    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-  `;
-  
-  // Streak text
-  const streakEl = document.createElement('div');
-  streakEl.textContent = `${streak}-day streak`;
-  streakEl.style.cssText = `
-    font-size: 18px;
-    color: rgba(255, 255, 255, 0.9);
-    font-weight: 600;
-  `;
 
-  
-  
-  // Tap to close hint
-  const hintEl = document.createElement('div');
-  hintEl.textContent = 'Tap anywhere to close';
-  hintEl.style.cssText = `
-    font-size: 12px;
-    color: rgba(255, 255, 255, 0.6);
-    margin-top: 15px;
-    font-style: italic;
-  `;
-  
-  // Assemble popup
-  popup.appendChild(emojiEl);
-  
-  // Player name (if provided)
-  if (playerName) {
-    const playerEl = document.createElement('div');
-    playerEl.textContent = playerName;
-    playerEl.style.cssText = `
-      font-size: 22px;
-      font-weight: 700;
-      color: rgba(255, 255, 255, 0.95);
-      margin-bottom: 12px;
-      letter-spacing: 0.5px;
-    `;
-    popup.appendChild(playerEl);
-  }
-  
-  popup.appendChild(nameEl);
-  popup.appendChild(streakEl);
-  
-  // Add emoji score if provided
-  if (emojiScore) {
-    const emojiScoreEl = document.createElement('div');
-    emojiScoreEl.textContent = emojiScore;
-    emojiScoreEl.style.cssText = `
-      font-size: 24px;
-      margin-top: 12px;
-      letter-spacing: 2px;
-      line-height: 1.4;
-    `;
-    popup.appendChild(emojiScoreEl);
-  }
+  // ============================================================
+  // POPUP ELEMENTS — edit styles here, reorder the array below
+  // ============================================================
 
-  // Add points if provided
-  if (points !== undefined && points !== null) {
-    const pointsEl = document.createElement('div');
-    pointsEl.textContent = `${Number(points).toLocaleString()} pts`;
-    pointsEl.style.cssText = `
-      font-size: 20px;
-      font-weight: 700;
-      color: var(--btn-cyan, #b7f7ff);
-      margin-top: 8px;
-    `;
-    popup.appendChild(pointsEl);
-  }
-  
-  popup.appendChild(hintEl);
+  const elements = {
+
+    tierEmoji: (() => {
+      const el = document.createElement('div');
+      el.textContent = emoji;
+      el.style.cssText = `
+        font-size: 60px;
+        margin-bottom: 15px;
+        line-height: 1;
+      `;
+      return el;
+    })(),
+
+    playerName: (() => {
+      if (!playerName) return null;
+      const el = document.createElement('div');
+      el.textContent = playerName;
+      el.style.cssText = `
+        font-size: 22px;
+        font-weight: 700;
+        color: rgba(255, 255, 255, 0.95);
+        margin-bottom: 12px;
+        letter-spacing: 0.5px;
+      `;
+      return el;
+    })(),
+
+    tierName: (() => {
+      const el = document.createElement('div');
+      el.textContent = tierName;
+      el.style.cssText = `
+        font-size: 28px;
+        font-weight: 900;
+        color: white;
+        margin-bottom: 8px;
+        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+      `;
+      return el;
+    })(),
+
+    streak: (() => {
+      const el = document.createElement('div');
+      el.textContent = `${streak}-day streak`;
+      el.style.cssText = `
+        font-size: 18px;
+        color: rgba(255, 255, 255, 0.9);
+        font-weight: 600;
+      `;
+      return el;
+    })(),
+
+    emojiScore: (() => {
+      if (!emojiScore) return null;
+      const el = document.createElement('div');
+      el.textContent = emojiScore;
+      el.style.cssText = `
+        font-size: 24px;
+        margin-top: 12px;
+        letter-spacing: 2px;
+        line-height: 1.4;
+      `;
+      return el;
+    })(),
+
+    points: (() => {
+      if (points === undefined || points === null) return null;
+      const el = document.createElement('div');
+      el.textContent = `${Number(points).toLocaleString()} pts`;
+      el.style.cssText = `
+        font-size: 20px;
+        font-weight: 700;
+        color: var(--btn-cyan, #b7f7ff);
+        margin-top: 8px;
+      `;
+      return el;
+    })(),
+
+    hint: (() => {
+      const el = document.createElement('div');
+      el.textContent = 'Tap anywhere to close';
+      el.style.cssText = `
+        font-size: 12px;
+        color: rgba(255, 255, 255, 0.6);
+        margin-top: 15px;
+        font-style: italic;
+      `;
+      return el;
+    })(),
+
+  };
+
+  // ============================================================
+  // POPUP ORDER — rearrange these to change the layout
+  // ============================================================
+  const order = [
+    elements.tierEmoji,
+    elements.playerName,
+    elements.tierName,
+    elements.streak,
+    elements.emojiScore,
+    elements.points,
+    elements.hint,
+  ];
+
+  order.forEach(el => { if (el) popup.appendChild(el); });
   container.appendChild(popup);
   
   // Add animation
