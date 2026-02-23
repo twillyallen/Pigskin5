@@ -605,10 +605,100 @@ export const CALENDAR = {
     event: "",
     questions: [
     { question: "Which legendary owner was known for his motto 'Just Win, Baby'?", choices: ["Mark Davis", "Jerry Jones", "Al Davis", "Lamar Hunt"], answer: 2 },
-    { question: "What was the original name of the Detroit Lions?", choices: ["Detroit Tigers", "Detroit Lions", "Portsmouth Spartans", "Motor City Monsters"], answer: 2 },
-    { question: "How many MVP Votes does Russell Wilson have in his Legendary Career?", choices: ["37", "0", "7", "24"], answer: 1 },
-    { question: "All-Time Career Rushing Yards Leader?", choices: ["Frank Gore", "Emmitt Smith", "LaDainian Tomlinson", "Barry Sanders"], answer: 1 },
-    { question: "What city did the Chargers first belong to?", choices: ["Pasadena", "San Diego", "Los Angeles", "San Fransisco"], answer: 2 },
+    { question: "Name the Packer Career:\n- 61,655 Pass Yards\n- 442 Pass TDs\n- 3.3% Int Rate\n- 1,786 Rush Yards?", choices: ["Bart Starr", "Brett Favre", "Aaron Rodgers", "Lynn Dickey"], answer: 1 },
+    { question: "True or False: The Lions have been NFC Champions", choices: ["True", "False"], answer: 1 },
+    { question: "LaDainian Tomlinson scored 186 points in 2006.\nWhich entire NFL franchise scored LESS points than LT did that same season?", choices: ["Oakland Raiders", "Cleveland Browns", "Tampa Bay Buccaneers", "Miami Dolphins"], answer: 0 },
+    { question: "Which franchise is the ONLY one in NFL history that has never had a 4,000-yard passer in a single season?", choices: ["Cleveland Browns", "Jacksonville Jaguars", "Miami Dolphins", "Chicago Bears"], answer: 3 },
+    ],
+  },
+    "2026-02-24": { //Tuesday
+    event: "",
+    questions: [
+    { question: "True or False: Tom Brady has more Super Bowl rings than any single NFL franchise.", choices: ["True", "False"], answer: 0 },
+    { question: "Which Franchise left Chicago to go to St. Louis?", choices: ["Bears", "Rams", "Cardinals", "Triangles"], answer: 2 },
+    { question: "Which defensive player won Defensive Player of the Year in 2023", choices: ["Micah Parsons", "Myles Garrett", "TJ Watt", "Maxx Crosby"], answer: 1 },
+    { question: "Which tight end holds the single-season record for most receiving yards by a TE?", choices: ["Rob Gronkowski", "Shannon Sharpe", "Travis Kelce", "Jimmy Graham"], answer: 2 },
+    { question: "The Tampa Bay Buccaneers set the record for the longest losing streak in NFL history (Super Bowl Era).\nHow many consecutive games did they lose across 1976–77?", choices: ["26", "27", "29", "31"], answer: 0 },
+    ],
+  },
+    "2026-02-25": { //Wednesday
+    event: "",
+    questions: [
+    { question: "Which QB threw for 5,000+ yards in a season but did NOT win MVP that year?", choices: ["Peyton Manning", "Drew Brees", "Patrick Mahomes", "Tom Brady"], answer: 1 },
+    { question: "True or False: Brett Favre once threw 6 touchdown passes in a playoff game.", choices: ["True", "False"], answer: 1 },
+    { question: "True or False: Brett Favre once threw 6 interceptions in a playoff game.", choices: ["True", "False"], answer: 0 },
+    { question: "Which QB has the highest single-season passer rating in NFL history?", choices: ["Tom Brady", "Dak Prescott", "Lamar Jackson", "Aaron Rodgers"], answer: 3 },
+    { question: "Which team finished 0-16 before the Browns did in 2017?", choices: ["Raiders", "Lions", "Cardinals", "Browns Again"], answer: 1 },
+    ],
+  },
+    "2026-02-26": { //Thursday
+    event: "",
+    questions: [
+    { question: "True or False: The Houston Texans have played in an AFC Championship Game.", choices: ["True", "False"], answer: 1 },
+    { question: "Which QB is tied for an NFL Record 7 Pass TDs in a single game?", choices: ["Jameis Winston", "Rich Gannon", "Nick Foles", "Ryan Fitzpatrick"], answer: 2 },
+    { question: "Which wide receiver holds the single-season receptions record?", choices: ["Michael Thomas", "Cooper Kupp", "Antonio Brown", "Marvin Harrison"], answer: 0 },
+    { question: "True or False: The Panthers (est. 1995) have won their division more times than the Jets (est. 1959) have won theirs.", choices: ["True", "False"], answer: 0 },
+    { question: "Which RB has the most Receiving TDs of All Time?", choices: ["Marshaull Faulk", "Christian McCaffrey", "Alvin Kamara", "Johnny McNally"], answer: 3 },
+    ],
+  },
+    "2026-02-27": { //Friday
+    event: "",
+    questions: [
+    { question: "Which team holds the NFL record for longest winning streak?", choices: ["Patriots", "Packers", "Colts", "49ers"], answer: 2 },
+    { question: "Which QB led the NFL in completion percentage during the 2025 regular season?", choices: ["Brock Purdy", "Dak Prescott", "Geno Smith", "Drake Maye"], answer: 3 },
+    { question: "The Raiders famously tested JaMarcus Russell's work ethic. What did they do?", choices: ["Hid his playbook", "Gave him a blank DVD and told him it had film on it", "Made him practice alone for two weeks", "Made him Train and Compete in the 2007 Oakland Twerking Competition"], answer: 1 },
+    { question: "Eli Manning refused to play for the team that drafted him #1 overall. Which team was that?", choices: ["Cleveland Browns", "Oakland Raiders", "San Diego Chargers", "Philadelphia Eagles"], answer: 2 },
+    { question: "What was the original name of the Oakland Raiders?", choices: ["Oakland Shovels", "Oakland Gators", "Oakland Pioneers", "Oakland Señors"], answer: 3 },
+    ],
+  },
+    "2026-02-28": { //Saturday
+    event: "",
+    questions: [
+    { question: "In 1979, the Buffalo Bills drafted a player #1 overall who immediately chose to play in Canada instead. Who did the Bills end up getting instead?", choices: ["Bruce Smith", "Jim Kelly", "Andre Reed", "Thurman Thomas"], answer: 1 },
+    { question: "Which WR led the league in receptions in 2025?", choices: ["Puka Nacua", "Jaxon Smith-Njigba", "JaMarr Chase", "Chris Olave"], answer: 0 },
+    { question: "In the 2007 Draft, historical bust JaMarcus Russell went #1 Overall. Who went #2?", choices: ["Adrian Peterson", "Joe Thomas", "Marshawn Lynch", "Calvin Johnson"], answer: 3 },
+    { question: "Which team had the best point differential in 2025?", choices: ["Rams", "Seahawks", "Patriots", "Broncos"], answer: 1 },
+    { question: "Don Shula holds the NFL record for most regular-season wins all time. How many did he finish with?", choices: ["298", "316", "321", "328"], answer: 3 },
+    ],
+  },
+    "2026-03-01": { //Sunday
+    event: "",
+    questions: [
+    { question: "Who threw the lateral in the 'Music City Miracle' to Kevin Dyson?", choices: ["Frank Wycheck", "Eddie George", "Neil O'Donnell", "Yancey Thigpen"], answer: 0 },
+    { question: "What team got bent by the 'Tuck Rule'?", choices: ["Steelers", "Ravens", "Raiders", "Titans"], answer: 2 },
+    { question: "True or False: A team won their division in 2025 despite having a negative point differential.", choices: ["True", "False"], answer: 0 },
+    { question: "Name the 2025 AFC West QB:\n- 17 INTs (Most in NFL)\n- 55 Sacks (Most in NFL)\n- 34.1 QBR (2nd Worst)", choices: ["Gardner Minshew", "Geno Smith", "Justin Herbert", "Bo Pix"], answer: 1 },
+    { question: "How many consecutive 'Non-Losing Seasons' did Mike Tomlin finish with?", choices: ["18", "19", "20", "21"], answer: 1 },
+    ],
+  },
+    "2026-03-02": { //Monday
+    event: "",
+    questions: [
+    { question: "Which school has produced the most #1 Overall Draft Picks?", choices: ["USC", "Alabama", "Georgia", "LSU"], answer: 0 },
+    { question: "Who was the first USC QB to ever win the Super Bowl?", choices: ["John David Booty", "Mark Sanchez", "Sam Darnold", "Carson Palmer"], answer: 2 },
+    { question: "Which team finished with the best red-zone TD percentage in 2025?", choices: ["Bills", "Eagles", "Rams", "Packers"], answer: 1 },
+    { question: "Which team has never lost a Super Bowl?", choices: ["Packers", "Colts", "Dolphins", "Buccaneers"], answer: 3 },
+    { question: "Before moving to Indianapolis, where did the Colts play?", choices: ["Fort Wayne", "Baltimore", "Omaha", "Richmond"], answer: 1 },
+    ],
+  },
+    "2026-03-03": { //Tuesday
+    event: "",
+    questions: [
+    { question: "How many career TD Passes did Dan Marino finish with?", choices: ["487", "392", "420", "438"], answer: 2 },
+    { question: "Who is the all-time leader in career interceptions (as a defender)?", choices: ["Rod Woodson", "Paul Krause", "Ed Reed", "Deion Sanders"], answer: 1 },
+    { question: "Which team drafted Brett Favre?", choices: ["Falcons", "Saints", "Jets", "Packers"], answer: 0 },
+    { question: "Which franchise has the most total wins in NFL history?", choices: ["Bears", "Steelers", "Giants", "Packers"], answer: 3 },
+    { question: "Which running back set the single-season rushing record?", choices: ["Adrian Peterson", "Eric Dickerson", "Jamal Lewis", "Derrick Henry"], answer: 1 },
+    ],
+  },
+    "2026-03-04": { //Wednesday
+    event: "",
+    questions: [
+    { question: "Which quarterback was famously selected before Aaron Rodgers in the 2005 NFL Draft?", choices: ["Eli Manning", "Vince Young", "Alex Smith", "Matt Leinart"], answer: 2 },
+    { question: "Which player holds the record for most career interceptions returned for touchdowns?", choices: ["Rod Woodson", "Darren Sharper", "Charles Woodson", "Aqib Talib"], answer: 0 },
+    { question: "Which QB threw for 55 touchdowns in a single season?", choices: ["Patrick Mahomes", "Peyton Manning", "Dan Marino", "Tom Brady"], answer: 1 },
+    { question: "Who holds the NFL record for most career field goals made?", choices: ["Morten Anderson", "Gary Anderson", "John Kasay", "Adam Vinatieri"], answer: 3 },
+    { question: "Which WR performed a DISGUSTING act and pretended to moon the crowd in Green Bay?", choices: ["Randy Moss", "Terrell Owens", "Antonio Brown", "Chad Johnson"], answer: 0 },
     ],
   },
 };
