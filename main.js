@@ -89,7 +89,7 @@ function getTierForStreak(streakDays) {
 }
 
 // Custom popup to show tier badge info (replaces alert)
-function showTierTooltip(emoji, tierName, streak, playerName, emojiScore) {
+function showTierTooltip(emoji, tierName, streak, playerName, emojiScore, points) {
   console.log('showTierTooltip called!', emoji, tierName, streak, emojiScore);
   
   // Remove any existing tooltip
@@ -201,6 +201,19 @@ function showTierTooltip(emoji, tierName, streak, playerName, emojiScore) {
       line-height: 1.4;
     `;
     popup.appendChild(emojiScoreEl);
+  }
+
+  // Add points if provided
+  if (points !== undefined && points !== null) {
+    const pointsEl = document.createElement('div');
+    pointsEl.textContent = `${Number(points).toLocaleString()} pts`;
+    pointsEl.style.cssText = `
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--btn-cyan, #b7f7ff);
+      margin-top: 8px;
+    `;
+    popup.appendChild(pointsEl);
   }
   
   popup.appendChild(hintEl);
@@ -673,7 +686,7 @@ function renderStartLeaderboard(dateStr) {
         tierBadge.style.cursor = "pointer";
         // Add click handler
         const showTierInfo = () => {
-          showTierTooltip(tier.emoji, tier.name, streak, e.name || "Anonymous", e.emojiScore);
+          showTierTooltip(tier.emoji, tier.name, streak, e.name || "Anonymous", e.emojiScore, e.points);
           console.log("Badge clicked!", tier.emoji, tier.name, streak);
         };
         tierBadge.addEventListener("click", showTierInfo);
@@ -842,7 +855,7 @@ function renderLeaderboard(dateStr) {
         tierBadge.style.cursor = "pointer";
         // Add click handler
         const showTierInfo = () => {
-          showTierTooltip(tier.emoji, tier.name, streak, e.name || "Anonymous", e.emojiScore);
+          showTierTooltip(tier.emoji, tier.name, streak, e.name || "Anonymous", e.emojiScore, e.points);
           console.log("Badge clicked!", tier.emoji, tier.name, streak);
         };
         tierBadge.addEventListener("click", showTierInfo);
