@@ -501,7 +501,7 @@ function fetchLeaderboardJSONP() {
   });
 }
 
-function createTierBadgeElement(streak, name, points) {
+function createTierBadgeElement(streak, name, points, emojiScore) {
   const tier = getTierForStreak(streak);
   const nameContainer = document.createElement("div");
   nameContainer.className = "name-with-tier";
@@ -514,7 +514,7 @@ function createTierBadgeElement(streak, name, points) {
   tierBadge.style.cursor = "pointer";
 
   const showTierInfo = () => {
-    showTierTooltip(tier.emoji, tier.name, streak, name || "Anonymous", "", points);
+    showTierTooltip(tier.emoji, tier.name, streak, name || "Anonymous", emojiScore || "", points);
   };
 
   tierBadge.addEventListener("click", showTierInfo);
@@ -583,7 +583,7 @@ function renderStartLeaderboard(dateStr) {
 
         const nameTd = document.createElement("td");
         const streak = e.dailyStreak ?? 0;
-        nameTd.appendChild(createTierBadgeElement(streak, e.name, e.points));
+        nameTd.appendChild(createTierBadgeElement(streak, e.name, e.points, e.emojiScore));
 
         const pointsTd = document.createElement("td");
         pointsTd.textContent = (e.points ?? 0).toLocaleString();
@@ -701,7 +701,7 @@ function renderLeaderboard(dateStr) {
 
         const nameTd = document.createElement("td");
         const streak = e.dailyStreak ?? 0;
-        nameTd.appendChild(createTierBadgeElement(streak, e.name, e.points));
+        nameTd.appendChild(createTierBadgeElement(streak, e.name, e.points, e.emojiScore));
 
         const pointsTd = document.createElement("td");
         pointsTd.textContent = (e.points ?? 0).toLocaleString();
