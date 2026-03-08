@@ -8,9 +8,40 @@
   <title>About Pigskin5 – Free Daily NFL Trivia Game</title>
   <meta name="description" content="Pigskin5 is a free daily NFL trivia game built by Thomas Allen, a lifelong football fan and web developer. Learn how it works and why it was built.">
   <link rel="stylesheet" href="style.css" />
+
+  <style>
+    #backBtn {
+      position: fixed;
+      top: 14px; left: 14px;
+      background: rgba(0,0,0,0.55);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 9px;
+      padding: 7px;
+      width: 38px;
+      height: 38px;
+      cursor: pointer;
+      z-index: 60;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(6px);
+      transition: background 0.15s, border-color 0.15s;
+    }
+    #backBtn:hover {
+      background: rgba(0,0,0,0.8);
+      border-color: rgba(255,255,255,0.4);
+    }
+    #backBtn img {
+      width: 20px;
+      height: 20px;
+      filter: invert(1);
+    }
+  </style>
 </head>
 
 <body>
+  <a href="index.html" id="backBtn"><img src="back-icon.png" alt="Back to game" /></a>
   <main class="page">
     <h1>About Pigskin5</h1>
 
@@ -35,7 +66,7 @@
     <p>
       You can find me online as <strong>Twillyallen</strong>. If you've got feedback, a correction,
       or just want to talk football, I genuinely want to hear from you... 
-      Reach me at <strong>pigskin5game@gmail.com</strong> or through the <a href="contact.html">Contact page</a>.
+      Reach me through the <a href="contact.html">Contact page</a>.
     </p>
 
     <h2>How Pigskin5 Works</h2>
@@ -135,20 +166,19 @@
       <li><a href="blog/blog-index.html">NFL Blog</a></li>
     </ul>
 
-    <p><br><a href="index.html" class="back-link">← Back to the game</a></p>
+    
   </main>
 
   <footer class="site-footer">
-    <nav class="footer-nav">
-      <a href="privacy.html">Privacy Policy</a>
-      <span> - </span>
-      <a href="terms.html">Terms of Service</a>
-      <span> - </span>
+    <nav class="footer-links-grid" aria-label="Footer navigation">
+      <a href="index.html">Home</a>
+      <a href="question-archive.html">Question Archive</a>
+      <a href="blog/blog-index.html">NFL Blog</a>
+      <a href="about.html">About</a>
       <a href="contact.html">Contact</a>
-      <span> - </span>
-      <a href="blog/blog-index.html">Blog</a>
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="cookies.html">Cookie Policy</a>
+      <a href="terms.html">Terms of Service</a>
     </nav>
-    <small>&copy; 2025 Pigskin5 - Not affiliated with the NFL</small>
+    <small>&copy; 2026 Pigskin5 - Not affiliated with the NFL</small>
   </footer>
-</body>
-</html>

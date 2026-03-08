@@ -367,6 +367,28 @@ body{ display:flex; flex-direction:column; min-height:100vh; }
 .hide-footer .site-footer{ display:none !important; }
 .hide-footer{ padding-bottom:0 !important; }
 
+.footer-links-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 5px 14px;
+  margin-bottom: 10px;
+}
+.footer-links-grid a {
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.footer-nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 4px;
+  margin-bottom: 8px;
+  font-size: 0.75rem;
+  opacity: 0.7;
+}
+
 /* Start page fixes footer to bottom of viewport for nice hero */
 .start-page .site-footer{ position:sticky; bottom:0; z-index:5; }
 .start-page .app{ padding-bottom:96px; }

@@ -45,6 +45,143 @@
     .start-nav-btn:active {
       transform: translateY(1px);
     }
+
+    /* ── Hide chrome during quiz and results ── */
+    body.quiz-active .site-nav,
+    body.quiz-active .how-it-works,
+    body.quiz-active .about-strip,
+    body.quiz-active .site-footer,
+    body.results-active .site-nav,
+    body.results-active .how-it-works,
+    body.results-active .about-strip {
+      display: none !important;
+    }
+
+    /* ── Visible top nav ── */
+    .site-nav {
+      display: flex;
+      justify-content: center;
+      gap: 6px;
+      flex-wrap: wrap;
+      padding: 8px 16px;
+      background: rgba(0,0,0,0.25);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .site-nav a {
+      color: rgba(255,255,255,0.75);
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-decoration: none;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: 6px;
+      transition: color 0.15s, background 0.15s;
+    }
+    .site-nav a:hover {
+      color: #fff;
+      background: rgba(255,255,255,0.1);
+    }
+
+    /* ── How It Works strip ── */
+    .how-it-works {
+      max-width: 640px;
+      margin: 32px auto 0;
+      padding: 0 16px;
+    }
+    .how-it-works h2 {
+      text-align: center;
+      font-size: 0.85rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: rgba(255,255,255,0.4);
+      margin: 0 0 14px;
+    }
+    .hiw-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+    .hiw-card {
+      background: rgba(0,0,0,0.3);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 14px;
+      padding: 18px 12px;
+      text-align: center;
+    }
+    .hiw-icon {
+      font-size: 1.8rem;
+      margin-bottom: 8px;
+      display: block;
+    }
+    .hiw-title {
+      font-size: 0.78rem;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 5px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .hiw-desc {
+      font-size: 0.71rem;
+      color: rgba(255,255,255,0.5);
+      line-height: 1.45;
+      margin: 0;
+    }
+
+    /* ── About section ── */
+    .about-strip {
+      max-width: 640px;
+      margin: 24px auto 32px;
+      padding: 20px 22px;
+      background: rgba(0,0,0,0.25);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px;
+    }
+    .about-strip h2 {
+      font-size: 0.85rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: rgba(255,255,255,0.45);
+      margin: 0 0 10px;
+    }
+    .about-strip p {
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.6);
+      line-height: 1.7;
+      margin: 0 0 8px;
+    }
+    .about-strip p:last-child { margin-bottom: 0; }
+    .about-strip a {
+      color: rgba(183,247,255,0.9);
+      text-decoration: none;
+      font-weight: 700;
+    }
+    .about-strip a:hover { text-decoration: underline; }
+
+    /* ── Enhanced footer ── */
+    .footer-links-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 5px 14px;
+      margin-bottom: 10px;
+    }
+    .footer-links-grid a {
+      color: rgba(255,255,255,0.55);
+      font-size: 0.75rem;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .footer-links-grid a:hover { color: #fff; text-decoration: underline; }
+
+    @media (max-width: 480px) {
+      .hiw-grid { grid-template-columns: 1fr; }
+      .hiw-card { padding: 14px 16px; display: flex; gap: 12px; text-align: left; align-items: flex-start; }
+      .hiw-icon { font-size: 1.5rem; margin-bottom: 0; flex-shrink: 0; }
+    }
   </style>
   <link rel="stylesheet" href="snow-effect.css">
   <link rel="stylesheet" href="confetti.css">
@@ -74,25 +211,6 @@
 
 </head>
 <body>
-  <header class="topbar" id="topbar">
-    <button id="menuBtn" class="icon-btn" aria-expanded="false" aria-controls="menuDropdown" title="Menu">
-      <img src="./hamburger-logo.png" alt="Menu" width="24" height="24" />
-    </button>
-    <button id="helpBtn" class="icon-btn" aria-expanded="false" aria-controls="howTo" title="How to play">
-      <img src="./question-logo.png" alt="Help" width="24" height="24" />
-    </button>
-  </header>
-
-  <!-- Hamburger Menu Dropdown -->
-  <nav id="menuDropdown" class="menu-dropdown" hidden>
-    <a href="about.html">About</a>
-    <a href="privacy.html">Privacy Policy</a>
-    <a href="cookies.html">Cookie Policy</a>
-    <a href="terms.html">Terms of Service</a>
-    <a href="contact.html">Contact</a>
-    <a href="blog/blog-index.html">NFL Blog</a>
-  </nav>
-
   <aside id="howTo" class="howto" hidden>
     <h3>How to Play</h3>
     <ol>
@@ -101,6 +219,16 @@
       <li>See your score and review answers at the end.</li>
     </ol>
   </aside>
+
+  <!-- Visible site navigation -->
+  <nav class="site-nav" aria-label="Site navigation">
+    <a href="index.html">Home</a>
+    <a href="question-archive.html">Archive</a>
+    <a href="blog/blog-index.html">Blog</a>
+    <a href="about.html">About</a>
+    <a href="contact.html">Contact</a>
+    <button id="helpBtn" class="icon-btn site-nav-help" aria-expanded="false" aria-controls="howTo" title="How to play" style="background:none;border:none;color:rgba(255,255,255,0.75);font-size:0.78rem;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;cursor:pointer;padding:4px 10px;border-radius:6px;transition:color 0.15s,background 0.15s;">How to Play</button>
+  </nav>
 
   <main class="app">
     <h1 class="visually-hidden">Pigskin5 – Free Daily NFL Trivia Game</h1>
@@ -116,15 +244,10 @@
 
         <p class="start-description">
           <strong>Daily NFL Trivia</strong><br>
-          Five questions. Fifteen seconds each.<br>
+          5 questions. 15 seconds each.<br>
           New challenge daily!<br>
           Test your football knowledge and climb the leaderboard!
         </p>
-
-        <div class="start-nav-btns">
-          <a href="blog/blog-index.html" class="start-nav-btn">NFL Blog</a>
-          <a href="terms.html" class="start-nav-btn">Terms &amp; Conditions</a>
-        </div>
 
         <!-- Start Screen Personal Stats Scorecard -->
         <div id="startScorecard" class="start-scorecard">
@@ -234,18 +357,94 @@
 
   </main>
 
+  <!-- How It Works -->
+  <section class="how-it-works" aria-label="How Pigskin5 works">
+    <h2>How It Works</h2>
+    <div class="hiw-grid">
+      <div class="hiw-card">
+
+        <div class="hiw-title">Daily Quiz</div>
+        <p class="hiw-desc">A fresh set of 5 NFL trivia questions drops every day. One chance... no re-dos.</p>
+      </div>
+      <div class="hiw-card">
+
+        <div class="hiw-title">Beat the Clock</div>
+        <p class="hiw-desc">15 seconds per question. Answer fast to earn bonus points and climb the board.</p>
+      </div>
+      <div class="hiw-card">
+
+        <div class="hiw-title">Keep Your Streak</div>
+        <p class="hiw-desc">Come back daily to keep your streak alive. Miss a day and it resets... No mercy.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Pigskin5 -->
+  <section class="about-strip" aria-label="About Pigskin5">
+    <h2>About Pigskin5</h2>
+    <p>Pigskin5 is a free daily NFL trivia game for football fans. Each day brings five new questions covering NFL history, current season stats, legendary players, records, and more. It's the perfect two-minute challenge to test your football IQ before or after Sunday's games.</p>
+    <p>Browse the full <a href="question-archive.html">question archive</a> to revisit every quiz since September 2025, or head to our <a href="blog/blog-index.html">NFL blog</a> for football deep dives and trivia breakdowns. New quiz unlocks every day at midnight.</p>
+  </section>
+
   <footer class="site-footer">
-    <nav class="footer-nav">
-      <a href="privacy.html">Privacy Policy</a>
-      <span> - </span>
-      <a href="terms.html">Terms of Service</a>
-      <span> - </span>
+    <nav class="footer-links-grid" aria-label="Footer navigation">
+      <a href="index.html">Home</a>
+      <a href="question-archive.html">Question Archive</a>
+      <a href="blog/blog-index.html">NFL Blog</a>
+      <a href="about.html">About</a>
       <a href="contact.html">Contact</a>
-      <span> - </span>
-      <a href="blog/blog-index.html">Blog</a>
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="cookies.html">Cookie Policy</a>
+      <a href="terms.html">Terms of Service</a>
     </nav>
-    <small>&copy; 2025 Pigskin5 - Not affiliated with the NFL</small>
+    <small>&copy; 2026 Pigskin5 - Not affiliated with the NFL</small>
   </footer>
+
+  <script>
+  // Mirror main.js topbar logic: hide chrome during quiz, restore on results/restart
+  (function() {
+    function getTodayISO() {
+      const d = new Date();
+      return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+    }
+
+    // If player already played today, set results-active immediately on load
+    // so the nav/about sections never flash in before main.js hides them
+    if (localStorage.getItem('ft5_attempt_' + getTodayISO()) === '1') {
+      document.body.classList.add('results-active');
+    }
+
+    function setQuizMode(active) {
+      document.body.classList.toggle('quiz-active', active);
+      if (active) document.body.classList.remove('results-active');
+    }
+    function setResultsMode(active) {
+      document.body.classList.toggle('results-active', active);
+      if (active) document.body.classList.remove('quiz-active');
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      const startBtn   = document.getElementById('startBtn');
+      const restartBtn = document.getElementById('restartBtn');
+      const result     = document.getElementById('result');
+
+      // Hide everything when quiz starts
+      startBtn?.addEventListener('click', () => setQuizMode(true));
+
+      // Switch to results mode when results screen appears
+      if (result) {
+        new MutationObserver(() => {
+          if (!result.classList.contains('hidden')) setResultsMode(true);
+        }).observe(result, { attributes: true, attributeFilter: ['class'] });
+      }
+
+      // Clear everything on restart
+      restartBtn?.addEventListener('click', () => {
+        document.body.classList.remove('quiz-active', 'results-active');
+      });
+    });
+  })();
+  </script>
 
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
 
@@ -296,6 +495,33 @@
     };
 
     showCookieBanner();
+  })();
+  </script>
+  <script>
+  // "See Results" — if player already played today, swap START for a results button
+  (function() {
+    function getTodayISO() {
+      const d = new Date();
+      const y = d.getFullYear();
+      const m = String(d.getMonth() + 1).padStart(2, '0');
+      const day = String(d.getDate()).padStart(2, '0');
+      return `${y}-${m}-${day}`;
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      const today = getTodayISO();
+      const hasPlayed = localStorage.getItem('ft5_attempt_' + today) === '1';
+      if (!hasPlayed) return;
+
+      const startBtn = document.getElementById('startBtn');
+      if (!startBtn) return;
+
+      // Restyle as a secondary "see results" button
+      startBtn.textContent = '📋 See Results';
+      startBtn.style.background = 'rgba(255,255,255,0.15)';
+      startBtn.style.border = '2px solid rgba(255,255,255,0.35)';
+      startBtn.style.color = '#fff';
+    });
   })();
   </script>
   <!-- End Cookie Consent Banner -->

@@ -1243,7 +1243,7 @@ function showStartScreen() {
 
   if (startBtn) {
     startBtn.disabled = false;
-    startBtn.textContent = "START";
+    startBtn.textContent = "PLAY PIGSKIN5";
   }
 
   renderStartScorecard();
