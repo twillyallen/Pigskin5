@@ -324,7 +324,7 @@
       <h1>🏈 NFL Field Report</h1>
       <p>History, analysis, trivia strategy &amp; more from the Pigskin5 team.</p>
       <div class="stats-row">
-        <div class="stat-pill"><span id="stat-articles">13</span> Articles</div>
+        <div class="stat-pill"><span id="stat-articles">29</span> Articles</div>
         <div class="stat-pill"><span>5</span> Categories</div>
       </div>
     </div>
@@ -377,14 +377,60 @@
     // To add a new article: copy one object, update all fields, set published to today's date.
     // The NEW badge appears automatically for 3 days then disappears.
     const ARTICLES = [
+      // ── Current Season ──
       {
-        slug: "2026-nfl-draft-positional-needs.html",
-        title: "2026 NFL Draft: Full League Positional Needs Breakdown",
-        excerpt: "Every team's most pressing long-term needs — from QB uncertainty to trench sustainability. AFC and NFC covered in full.",
-        category: "draft",
-        categoryLabel: "Draft",
+        slug: "2026-nfl-free-agency-biggest-names.html",
+        title: "2026 NFL Free Agency: Biggest Names & Where They Could Land",
+        excerpt: "NFL free agency 2026 is loaded with talent at premium positions. A breakdown of the biggest names on the market and the teams most likely to pursue them.",
+        category: "season",
+        categoryLabel: "Current Season",
+        published: "2026-03-08",
+        section: "Current Season"
+      },
+      {
+        slug: "2026-nfl-trade-rumors.html",
+        title: "NFL Trade Rumors 2026: Blockbuster Deals That Could Reshape the League",
+        excerpt: "Which stars could be on the move in 2026? A look at the trade scenarios worth monitoring and the teams most likely to be players in blockbuster deals.",
+        category: "season",
+        categoryLabel: "Current Season",
+        published: "2026-03-08",
+        section: "Current Season"
+      },
+      {
+        slug: "2026-nfl-cap-casualties.html",
+        title: "2026 NFL Cap Casualties: Stars Who Could Be Cut This Offseason",
+        excerpt: "Every March, the salary cap forces painful decisions. Here's how cap casualties happen, which positions are most affected, and what it means for free agency.",
+        category: "season",
+        categoryLabel: "Current Season",
+        published: "2026-03-07",
+        section: "Current Season"
+      },
+      {
+        slug: "nfl-offseason-sport-of-its-own.html",
+        title: "Why the NFL Offseason Has Become a Sport of Its Own",
+        excerpt: "Free agency, the draft, trade rumors, schedule release — the NFL offseason has transformed into a year-round content machine that never really turns off.",
+        category: "season",
+        categoryLabel: "Current Season",
+        published: "2026-03-07",
+        section: "Current Season"
+      },
+      {
+        slug: "nfl-free-agency-what-it-says.html",
+        title: "What Free Agency Really Says About the Teams That Win",
+        excerpt: "Free agency reveals how organizations think. The smartest teams use it with discipline — not just to add names, but to make the roster function better in January.",
+        category: "season",
+        categoryLabel: "Current Season",
         published: "2026-03-06",
-        section: "NFL Draft"
+        section: "Current Season"
+      },
+      {
+        slug: "nfl-trade-rumor-season.html",
+        title: "The Trade Rumor Season That Never Really Ends",
+        excerpt: "NFL trade talk is now a year-round sport. Why the rumor cycle matters, how to read it intelligently, and what it reveals about where franchises actually stand.",
+        category: "season",
+        categoryLabel: "Current Season",
+        published: "2026-03-06",
+        section: "Current Season"
       },
       {
         slug: "nfc-north-division-race-2025.html",
@@ -413,6 +459,52 @@
         published: "2026-02-15",
         section: "Current Season"
       },
+      // ── NFL Draft ──
+      {
+        slug: "2026-nfl-draft-qb-prospects.html",
+        title: "2026 NFL Draft: Top Quarterback Prospects to Watch",
+        excerpt: "A detailed look at the top QB prospects entering the 2026 draft, from Shedeur Sanders to Cam Ward and what each brings to the next level.",
+        category: "draft",
+        categoryLabel: "Draft",
+        published: "2026-03-08",
+        section: "NFL Draft"
+      },
+      {
+        slug: "2026-nfl-draft-edge-rushers.html",
+        title: "2026 NFL Draft: Best Edge Rushers in the Class",
+        excerpt: "Pass rush wins football games. A breakdown of the top edge rusher prospects in the 2026 class and what each one offers an NFL defense.",
+        category: "draft",
+        categoryLabel: "Draft",
+        published: "2026-03-07",
+        section: "NFL Draft"
+      },
+      {
+        slug: "2026-nfl-draft-offensive-tackles.html",
+        title: "2026 NFL Draft: Offensive Tackle Prospects Who Could Go Early",
+        excerpt: "Elite tackles are among the most valuable assets in football. A look at the top OT prospects in the 2026 class and what makes them special.",
+        category: "draft",
+        categoryLabel: "Draft",
+        published: "2026-03-07",
+        section: "NFL Draft"
+      },
+      {
+        slug: "nfl-draft-prospects-believers.html",
+        title: "Why Draft Prospects Turn Every Fan Into a Believer",
+        excerpt: "Every spring, hope gets repackaged into player profiles and projection language. Why the draft does something to people that no other part of the calendar can.",
+        category: "draft",
+        categoryLabel: "Draft",
+        published: "2026-03-06",
+        section: "NFL Draft"
+      },
+      {
+        slug: "2026-nfl-draft-positional-needs.html",
+        title: "2026 NFL Draft: Full League Positional Needs Breakdown",
+        excerpt: "Every team's most pressing long-term needs — from QB uncertainty to trench sustainability. AFC and NFC covered in full.",
+        category: "draft",
+        categoryLabel: "Draft",
+        published: "2026-03-06",
+        section: "NFL Draft"
+      },
       {
         slug: "nfl-draft-history.html",
         title: "NFL Draft History: First Overall Picks",
@@ -421,6 +513,34 @@
         categoryLabel: "Draft",
         published: "2026-02-01",
         section: "NFL Draft"
+      },
+      // ── NFL History & Records ──
+      {
+        slug: "greatest-nfl-dynasties.html",
+        title: "The Greatest Dynasties in NFL History: How They Were Built",
+        excerpt: "From the 1970s Steelers to the Patriots era, the NFL's greatest dynasties share common traits. Here's how they were built and what made them unstoppable.",
+        category: "history",
+        categoryLabel: "History",
+        published: "2026-03-06",
+        section: "NFL History & Records"
+      },
+      {
+        slug: "nfl-quarterback-evolution.html",
+        title: "How the NFL Quarterback Position Has Evolved Over 50 Years",
+        excerpt: "From drop-back pocket passers to dual-threat athletes, the quarterback position has transformed dramatically. Here's how it happened and why it matters.",
+        category: "history",
+        categoryLabel: "History",
+        published: "2026-03-06",
+        section: "NFL History & Records"
+      },
+      {
+        slug: "nfl-history-facts-unbelievable.html",
+        title: "Fun NFL History Facts That Still Feel Unbelievable",
+        excerpt: "The NFL's history is packed with facts that sound made up. Weird franchise twists, bizarre records, and stories that never get old no matter how many times you hear them.",
+        category: "history",
+        categoryLabel: "History",
+        published: "2026-03-06",
+        section: "NFL History & Records"
       },
       {
         slug: "super-bowl-history.html",
@@ -458,6 +578,34 @@
         published: "2026-02-01",
         section: "NFL History & Records"
       },
+      // ── Team Spotlights ──
+      {
+        slug: "chargers-pressure-to-break-through.html",
+        title: "The Chargers and the Pressure to Finally Break Through",
+        excerpt: "The Chargers have talent, a franchise QB, and endless potential. Why they keep generating so much interest — and what a real breakthrough would actually require.",
+        category: "teams",
+        categoryLabel: "Teams",
+        published: "2026-03-07",
+        section: "Team Spotlights"
+      },
+      {
+        slug: "texans-most-interesting-team.html",
+        title: "How the Texans Became One of Football's Most Interesting Teams",
+        excerpt: "Houston went from draft-position discussions to a team people actually want to watch. What changed, why it matters, and how high the ceiling might actually go.",
+        category: "teams",
+        categoryLabel: "Teams",
+        published: "2026-03-07",
+        section: "Team Spotlights"
+      },
+      {
+        slug: "vikings-nfl-fascinating.html",
+        title: "Why the Vikings Never Stop Fascinating the NFL World",
+        excerpt: "Minnesota is football drama in team form. Why the Vikings always carry emotional tension regardless of their record, and what makes them endlessly compelling.",
+        category: "teams",
+        categoryLabel: "Teams",
+        published: "2026-03-07",
+        section: "Team Spotlights"
+      },
       {
         slug: "team-origins.html",
         title: "NFL Team Names: Origins & Stories",
@@ -465,8 +613,9 @@
         category: "teams",
         categoryLabel: "Teams",
         published: "2026-02-01",
-        section: "NFL History & Records"
+        section: "Team Spotlights"
       },
+      // ── Trivia & Strategy ──
       {
         slug: "mastering-nfl-trivia.html",
         title: "How to Master NFL Trivia",
@@ -510,17 +659,14 @@
       const newBadge = isNew(a.published)
         ? `<span class="event-badge badge-new">New</span>`
         : '';
-      const catBadge = `<span class="event-badge badge-${a.category}">${a.categoryLabel}</span>`;
+
       return `
         <a class="quiz-card cat-${a.category}" href="${a.slug}" data-category="${a.category}" data-title="${a.title.toLowerCase()}" data-excerpt="${a.excerpt.toLowerCase()}">
           <div class="card-top">
             <div>
               <div class="card-date">${a.title}</div>
             </div>
-            <div style="display:flex;gap:5px;flex-wrap:wrap;">
-              ${catBadge}
-              ${newBadge}
-            </div>
+            ${newBadge ? `<div>${newBadge}</div>` : ''}
           </div>
           <div class="card-preview">${a.excerpt}</div>
           <div class="card-footer">
