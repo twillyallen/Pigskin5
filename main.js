@@ -1486,7 +1486,7 @@ Touchdown Streak: 🏈 ${tdStreak}
 
 pigskin5.com
 
-@twillystakes`;
+Can you beat me score???`;
     } else if (score === 0) {
       shareText = `Pigskin5 ${RUN_DATE}
 ${squaresNow}
@@ -1496,9 +1496,7 @@ Daily Streak: ${shareTier.emoji} ${dailyStreak}
 I do NOT know ball 🤦
 
 Can you beat my score?
-pigskin5.com
-
-@twillystakes`;
+pigskin5.com`;
     } else {
       shareText = `Pigskin5 ${RUN_DATE}
 ${squaresNow}
