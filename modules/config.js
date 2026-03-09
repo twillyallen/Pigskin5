@@ -55,3 +55,8 @@ export const STREAK_TIERS = [
   { name: "Hall of Fame", minDays: 50, emoji: "🏆", color: "#e67e22" },
   { name: "Legend", minDays: 100, emoji: "👑", color: "#e74c3c" }
 ];
+
+// Banned words for leaderboard name validation
+export const BANNED_WORDS = [
+  "Nigger", "Cunt", "Hitler", "Faggot", "Fag", "Shit", "Fuck", "Bitch",
+];

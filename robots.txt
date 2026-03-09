@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://pigskin5.com/sitemap.xml

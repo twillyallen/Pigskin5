@@ -182,6 +182,21 @@
       .hiw-card { padding: 14px 16px; display: flex; gap: 12px; text-align: left; align-items: flex-start; }
       .hiw-icon { font-size: 1.5rem; margin-bottom: 0; flex-shrink: 0; }
     }
+
+    /* ── Ad Slots ── */
+    .ad-slot {
+      width: 100%;
+      max-width: 640px;
+      margin: 0 auto;
+      overflow: hidden;
+      min-height: 90px; /* prevent layout shift while ad loads */
+    }
+    .ad-slot--start {
+      margin: 16px auto;
+    }
+    .ad-slot--results {
+      margin: 20px auto;
+    }
   </style>
   <link rel="stylesheet" href="snow-effect.css">
   <link rel="stylesheet" href="confetti.css">
@@ -199,6 +214,25 @@
   <meta name="twitter:title" content="Pigskin5 – Daily NFL Trivia Game">
   <meta name="twitter:description" content="Daily NFL trivia: 5 questions, 15 seconds each, new quiz every day.">
   <meta name="twitter:image" content="https://pigskin5.com/logos/pigskin5share.png">
+
+  <!-- Google AdSense (loaded only after cookie consent) -->
+  <script>
+    // Inject AdSense script on demand — called after user accepts cookies
+    window._adsenseLoaded = false;
+    window.loadAdSense = function() {
+      if (window._adsenseLoaded) return;
+      window._adsenseLoaded = true;
+      var s = document.createElement('script');
+      s.async = true;
+      s.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8430547369793861';
+      s.crossOrigin = 'anonymous';
+      document.head.appendChild(s);
+    };
+    // If user already consented in a previous session, load immediately
+    if (localStorage.getItem('cookieConsent') === 'all') {
+      document.addEventListener('DOMContentLoaded', window.loadAdSense);
+    }
+  </script>
 
   <!-- Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-45YQHZHDHZ"></script>
@@ -285,6 +319,17 @@
           </div>
         </div>
 
+        <!-- Ad Slot 1: Start Screen (between scorecard and leaderboard) -->
+        <div class="ad-slot ad-slot--start" id="adSlotStart">
+          <ins class="adsbygoogle"
+               style="display:block"
+               data-ad-client="ca-pub-8430547369793861"
+               data-ad-slot="XXXXXXXXXX"
+               data-ad-format="auto"
+               data-full-width-responsive="true"></ins>
+          <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+        </div>
+
         <!-- Leaderboard -->
         <section class="start-leaderboard">
           <h3>Today's Leaderboard</h3>
@@ -324,6 +369,17 @@
       <p id="scoreText"></p>
       <!-- metrics text will be injected right under this via JS -->
       <div id="review" class="review"></div>
+
+      <!-- Ad Slot 2: Results Screen (between answer review and leaderboard) -->
+      <div class="ad-slot ad-slot--results" id="adSlotResults">
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-8430547369793861"
+             data-ad-slot="XXXXXXXXXX"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+      </div>
 
       <!-- Daily Leaderboard -->
       <section id="leaderboard" class="leaderboard">
@@ -483,6 +539,7 @@
     window.acceptCookies = function() {
       localStorage.setItem('cookieConsent', 'all');
       hideBanner();
+      if (typeof window.loadAdSense === 'function') window.loadAdSense();
     };
 
     window.rejectCookies = function() {
