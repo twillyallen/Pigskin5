@@ -34,3 +34,8 @@ export function getRunDateISO() {
   const day = String(d.getDate()).padStart(2, "0");
   return `${y}-${m}-${day}`;
 }
+
+
+//HOW TO TEST:
+//in browser:
+//http://127.0.0.1:5500/index.html?date=2025-01-15
