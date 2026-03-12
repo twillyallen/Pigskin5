@@ -1495,7 +1495,6 @@ Daily Streak: ${shareTier.emoji} ${dailyStreak}
 
 I do NOT know ball 🤦
 
-Can you beat my score?
 pigskin5.com`;
     } else {
       shareText = `Pigskin5 ${RUN_DATE}
@@ -1505,7 +1504,7 @@ Daily Streak: ${shareTier.emoji} ${dailyStreak}
 
 pigskin5.com
 
-@twillystakes`;
+Can you beat my score?`;
     }
 
     try {
