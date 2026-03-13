@@ -219,20 +219,53 @@
 
   <!-- Google AdSense (loaded only after cookie consent) -->
   <script>
-    // Inject AdSense script on demand — called after user accepts cookies
+    // Load AdSense only after consent, then manually initialize each slot once.
     window._adsenseLoaded = false;
-    window.loadAdSense = function() {
+    window._adsenseReady = false;
+    window._pendingAdCallbacks = [];
+
+    window.runWhenAdsReady = function(cb) {
+      if (typeof cb !== 'function') return;
+      if (window._adsenseReady) cb();
+      else window._pendingAdCallbacks.push(cb);
+    };
+
+    window.loadAdSense = function(callback) {
+      if (callback) window.runWhenAdsReady(callback);
       if (window._adsenseLoaded) return;
       window._adsenseLoaded = true;
+
       var s = document.createElement('script');
       s.async = true;
       s.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8430547369793861';
       s.crossOrigin = 'anonymous';
+      s.onload = function() {
+        window._adsenseReady = true;
+        var callbacks = window._pendingAdCallbacks.slice();
+        window._pendingAdCallbacks.length = 0;
+        callbacks.forEach(function(fn) {
+          try { fn(); } catch (e) { console.error('Ad callback failed:', e); }
+        });
+      };
       document.head.appendChild(s);
     };
-    // If user already consented in a previous session, load immediately
+
+    window.initAdSlot = function(selector) {
+      var el = document.querySelector(selector);
+      if (!el || el.dataset.adInitialized === '1') return;
+      try {
+        (adsbygoogle = window.adsbygoogle || []).push({});
+        el.dataset.adInitialized = '1';
+      } catch (e) {
+        console.error('Ad slot init failed for', selector, e);
+      }
+    };
+
+    // If user already consented in a previous session, load immediately.
     if (localStorage.getItem('cookieConsent') === 'all') {
-      document.addEventListener('DOMContentLoaded', window.loadAdSense);
+      document.addEventListener('DOMContentLoaded', function() {
+        window.loadAdSense();
+      });
     }
   </script>
 
@@ -339,13 +372,13 @@
         </section>
 
         <!-- Ad: Start Screen Square — below leaderboard, above How It Works -->
-        <div style="text-align:center; margin:24px auto 8px;">
-          <ins class="adsbygoogle"
+        <div id="startSquareAdWrap" style="text-align:center; margin:24px auto 8px; min-height:250px;">
+          <ins id="startSquareAd"
+               class="adsbygoogle"
                style="display:inline-block;width:250px;height:250px;"
                data-ad-client="ca-pub-8430547369793861"
                data-ad-slot="2057016496"
                data-ad-format="rectangle"></ins>
-          <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
         </div>
 
       </div>
@@ -366,15 +399,16 @@
     <!-- RESULTS -->
            <!-- Ad: tippy top of results -->
       <div style="width:100%; margin:0 auto 20px; text-align:center; overflow:hidden;">
-        <ins class="adsbygoogle res-banner-desktop"
+        <ins id="resultsBannerDesktop"
+             class="adsbygoogle res-banner-desktop"
              style="display:inline-block;width:728px;height:90px;"
              data-ad-client="ca-pub-8430547369793861"
              data-ad-slot="9640719395"></ins>
-        <ins class="adsbygoogle res-banner-mobile"
+        <ins id="resultsBannerMobile"
+             class="adsbygoogle res-banner-mobile"
              style="display:inline-block;width:320px;height:50px;"
              data-ad-client="ca-pub-8430547369793861"
              data-ad-slot="9640719395"></ins>
-        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
       </div>
       <style>
         @media (min-width:728px) { .res-banner-mobile { display:none !important; } }
@@ -515,16 +549,17 @@
   <!-- Cookie Consent Banner -->
   <!-- Ad Popup Modal -->
   <div id="adModal" style="display:none; position:fixed; inset:0; width:100vw; height:100vh; background:rgba(0,0,0,0.75); z-index:99999; justify-content:center; align-items:center;">
-    <div style="position:relative; background:#101418; border:1px solid rgba(255,255,255,0.18); border-radius:14px; padding:40px 16px 20px; width:300px; max-width:90vw; max-height:90vh; overflow:hidden; text-align:center; box-shadow:0 12px 42px rgba(0,0,0,0.6);">
+    <div id="adModalBackdrop" style="position:absolute; inset:0;"></div>
+    <div style="position:relative; background:#101418; border:1px solid rgba(255,255,255,0.18); border-radius:14px; padding:40px 16px 20px; width:300px; max-width:90vw; max-height:90vh; overflow:hidden; text-align:center; box-shadow:0 12px 42px rgba(0,0,0,0.6); z-index:1;">
       <button id="adModalClose" style="position:absolute; top:8px; right:8px; background:rgba(255,255,255,0.9); color:#111; border:0; border-radius:10px; width:32px; height:32px; font-size:20px; font-weight:900; cursor:pointer; display:flex; align-items:center; justify-content:center; line-height:1;">&times;</button>
       <p style="margin:0 0 10px; font-size:10px; text-transform:uppercase; letter-spacing:0.12em; color:rgba(255,255,255,0.35);">Advertisement</p>
-      <ins class="adsbygoogle"
-           style="display:block;width:100%;"
+      <ins id="popupAdSlot"
+           class="adsbygoogle"
+           style="display:block;width:100%;min-height:250px;"
            data-ad-client="ca-pub-8430547369793861"
            data-ad-slot="3343356628"
            data-ad-format="auto"
            data-full-width-responsive="true"></ins>
-      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
     </div>
   </div>
 
@@ -608,14 +643,37 @@
 
   <script>
   (function() {
+    function getTodayISO() {
+      var d = new Date();
+      return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+    }
+
+    function hasConsent() {
+      return localStorage.getItem('cookieConsent') === 'all';
+    }
+
+    function alreadyPlayedToday() {
+      return localStorage.getItem('ft5_attempt_' + getTodayISO()) === '1';
+    }
+
+    function onStartScreen() {
+      return !document.body.classList.contains('quiz-active') && !document.body.classList.contains('results-active');
+    }
+
     function openAdModal() {
       var m = document.getElementById('adModal');
-      if (!m) return;
+      if (!m || !hasConsent() || alreadyPlayedToday() || !onStartScreen()) return;
+
+      window.loadAdSense(function() {
+        window.initAdSlot('#popupAdSlot');
+      });
+
       m.style.display = 'flex';
       document.body.style.overflow = 'hidden';
       document.body.style.position = 'fixed';
       document.body.style.width = '100%';
     }
+
     function closeAdModal() {
       var m = document.getElementById('adModal');
       if (!m) return;
@@ -624,29 +682,70 @@
       document.body.style.position = '';
       document.body.style.width = '';
     }
+
+    function initStartScreenAds() {
+      if (!hasConsent() || alreadyPlayedToday()) return;
+      window.loadAdSense(function() {
+        window.initAdSlot('#startSquareAd');
+      });
+    }
+
+    function initResultsAds() {
+      if (!hasConsent()) return;
+      window.loadAdSense(function() {
+        var desktop = document.getElementById('resultsBannerDesktop');
+        var mobile = document.getElementById('resultsBannerMobile');
+        if (desktop && getComputedStyle(desktop).display !== 'none') {
+          window.initAdSlot('#resultsBannerDesktop');
+        } else if (mobile && getComputedStyle(mobile).display !== 'none') {
+          window.initAdSlot('#resultsBannerMobile');
+        }
+      });
+    }
+
     document.addEventListener('DOMContentLoaded', function() {
-      // Only show popup on start screen, not after returning from results
-      var alreadyPlayed = localStorage.getItem('ft5_attempt_' + (function(){
-        var d = new Date(); return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
-      })()) === '1';
-      if (localStorage.getItem('cookieConsent') === 'all' && !alreadyPlayed) {
+      initStartScreenAds();
+
+      if (hasConsent() && !alreadyPlayedToday()) {
         openAdModal();
       }
-      // Show after first-time consent (only if on start screen)
+
       var origAccept = window.acceptCookies;
       window.acceptCookies = function() {
         if (origAccept) origAccept();
-        if (!alreadyPlayed) openAdModal();
+        initStartScreenAds();
+        if (!alreadyPlayedToday() && onStartScreen()) {
+          openAdModal();
+        }
       };
-      // Close via button
+
       var closeBtn = document.getElementById('adModalClose');
       if (closeBtn) closeBtn.addEventListener('click', closeAdModal);
-      // Close via backdrop click
+
       var backdrop = document.getElementById('adModalBackdrop');
       if (backdrop) backdrop.addEventListener('click', closeAdModal);
+
+      var result = document.getElementById('result');
+      if (result) {
+        new MutationObserver(function() {
+          if (!result.classList.contains('hidden')) {
+            closeAdModal();
+            initResultsAds();
+          }
+        }).observe(result, { attributes: true, attributeFilter: ['class'] });
+      }
+
+      var restartBtn = document.getElementById('restartBtn');
+      if (restartBtn) {
+        restartBtn.addEventListener('click', function() {
+          closeAdModal();
+          initStartScreenAds();
+        });
+      }
     });
   })();
   </script>
+
 
 </body>
 </html>
