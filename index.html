@@ -220,19 +220,60 @@
   <!-- Google AdSense (loaded only after cookie consent) -->
   <script>
     // Inject AdSense script on demand — called after user accepts cookies
-    window._adsenseLoaded = false;
-    window.loadAdSense = function() {
-      if (window._adsenseLoaded) return;
-      window._adsenseLoaded = true;
+    window._adsenseLoading = false;
+    window._adsenseReady = false;
+    window._adsenseCallbacks = [];
+
+    window.onAdSenseReady = function(cb) {
+      if (window._adsenseReady) {
+        cb();
+      } else {
+        window._adsenseCallbacks.push(cb);
+      }
+    };
+
+    window.loadAdSense = function(cb) {
+      if (typeof cb === 'function') window.onAdSenseReady(cb);
+      if (window._adsenseReady || window._adsenseLoading) return;
+      window._adsenseLoading = true;
       var s = document.createElement('script');
       s.async = true;
       s.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8430547369793861';
       s.crossOrigin = 'anonymous';
+      s.onload = function() {
+        window._adsenseReady = true;
+        window._adsenseLoading = false;
+        var callbacks = window._adsenseCallbacks.slice();
+        window._adsenseCallbacks.length = 0;
+        callbacks.forEach(function(fn) {
+          try { fn(); } catch (e) { console.error('AdSense callback failed', e); }
+        });
+      };
+      s.onerror = function() {
+        window._adsenseLoading = false;
+        console.error('AdSense script failed to load');
+      };
       document.head.appendChild(s);
     };
+
+    window.initAdSlot = function(id) {
+      var el = document.getElementById(id);
+      if (!el || el.dataset.adInitialized === '1') return;
+      try {
+        (adsbygoogle = window.adsbygoogle || []).push({});
+        el.dataset.adInitialized = '1';
+      } catch (e) {
+        console.error('Ad init failed for', id, e);
+      }
+    };
+
     // If user already consented in a previous session, load immediately
     if (localStorage.getItem('cookieConsent') === 'all') {
-      document.addEventListener('DOMContentLoaded', window.loadAdSense);
+      document.addEventListener('DOMContentLoaded', function() {
+        window.loadAdSense(function() {
+          window.initAdSlot('startSquareAd');
+        });
+      });
     }
   </script>
 
@@ -339,8 +380,8 @@
         </section>
 
         <!-- Ad: Start Screen Square — below leaderboard, above How It Works -->
-        <div id="startScreenAdWrap" style="text-align:center; margin:24px auto 8px;">
-          <ins id="startScreenSquareAd"
+        <div style="text-align:center; margin:24px auto 8px;">
+          <ins id="startSquareAd"
                class="adsbygoogle"
                style="display:inline-block;width:250px;height:250px;"
                data-ad-client="ca-pub-8430547369793861"
@@ -366,12 +407,12 @@
     <!-- RESULTS -->
            <!-- Ad: tippy top of results -->
       <div style="width:100%; margin:0 auto 20px; text-align:center; overflow:hidden;">
-        <ins id="resultsBannerDesktopAd"
+        <ins id="resultsBannerDesktop"
              class="adsbygoogle res-banner-desktop"
              style="display:inline-block;width:728px;height:90px;"
              data-ad-client="ca-pub-8430547369793861"
              data-ad-slot="9640719395"></ins>
-        <ins id="resultsBannerMobileAd"
+        <ins id="resultsBannerMobile"
              class="adsbygoogle res-banner-mobile"
              style="display:inline-block;width:320px;height:50px;"
              data-ad-client="ca-pub-8430547369793861"
@@ -520,14 +561,12 @@
     <div style="position:relative; background:#101418; border:1px solid rgba(255,255,255,0.18); border-radius:14px; padding:40px 16px 20px; width:300px; max-width:90vw; max-height:90vh; overflow:hidden; text-align:center; box-shadow:0 12px 42px rgba(0,0,0,0.6); z-index:1;">
       <button id="adModalClose" style="position:absolute; top:8px; right:8px; background:rgba(255,255,255,0.9); color:#111; border:0; border-radius:10px; width:32px; height:32px; font-size:20px; font-weight:900; cursor:pointer; display:flex; align-items:center; justify-content:center; line-height:1;">&times;</button>
       <p style="margin:0 0 10px; font-size:10px; text-transform:uppercase; letter-spacing:0.12em; color:rgba(255,255,255,0.35);">Advertisement</p>
-      <div style="display:flex; justify-content:center; min-height:250px; align-items:center;">
-        <ins id="popupAdSlot"
-             class="adsbygoogle"
-             style="display:inline-block; width:250px; height:250px;"
-             data-ad-client="ca-pub-8430547369793861"
-             data-ad-slot="3343356628"
-             data-ad-format="rectangle"></ins>
-      </div>
+      <ins id="popupAd"
+           class="adsbygoogle"
+           style="display:block;width:300px;height:250px;"
+           data-ad-client="ca-pub-8430547369793861"
+           data-ad-slot="3343356628"
+           data-ad-format="rectangle"></ins>
     </div>
   </div>
 
@@ -552,6 +591,18 @@
       return localStorage.getItem('cookieConsent');
     }
 
+    function getTodayISO() {
+      const d = new Date();
+      const y = d.getFullYear();
+      const m = String(d.getMonth() + 1).padStart(2, '0');
+      const day = String(d.getDate()).padStart(2, '0');
+      return `${y}-${m}-${day}`;
+    }
+
+    function hasPlayedToday() {
+      return localStorage.getItem('ft5_attempt_' + getTodayISO()) === '1';
+    }
+
     function showCookieBanner() {
       if (!getCookieConsent()) {
         document.getElementById('cookie-consent-banner').style.display = 'block';
@@ -562,10 +613,47 @@
       document.getElementById('cookie-consent-banner').style.display = 'none';
     }
 
+    function isResultsVisible() {
+      var result = document.getElementById('result');
+      return !!(result && !result.classList.contains('hidden'));
+    }
+
+    function openAdModal() {
+      var m = document.getElementById('adModal');
+      if (!m || isResultsVisible()) return;
+      m.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+      document.body.style.position = 'fixed';
+      document.body.style.width = '100%';
+      if (typeof window.loadAdSense === 'function') {
+        window.loadAdSense(function() {
+          setTimeout(function() {
+            window.initAdSlot('popupAd');
+          }, 150);
+        });
+      }
+    }
+
+    function closeAdModal() {
+      var m = document.getElementById('adModal');
+      if (!m) return;
+      m.style.display = 'none';
+      document.body.style.overflow = '';
+      document.body.style.position = '';
+      document.body.style.width = '';
+    }
+
     window.acceptCookies = function() {
       localStorage.setItem('cookieConsent', 'all');
       hideBanner();
-      if (typeof window.loadAdSense === 'function') window.loadAdSense();
+      if (typeof window.loadAdSense === 'function') {
+        window.loadAdSense(function() {
+          window.initAdSlot('startSquareAd');
+          if (!hasPlayedToday()) {
+            openAdModal();
+          }
+        });
+      }
     };
 
     window.rejectCookies = function() {
@@ -577,124 +665,46 @@
       window.location.href = 'cookies.html';
     };
 
-    showCookieBanner();
-  })();
-  </script>
-  <script>
-  // "See Results" — if player already played today, swap START for a results button
-  (function() {
-    function getTodayISO() {
-      const d = new Date();
-      const y = d.getFullYear();
-      const m = String(d.getMonth() + 1).padStart(2, '0');
-      const day = String(d.getDate()).padStart(2, '0');
-      return `${y}-${m}-${day}`;
-    }
-
     document.addEventListener('DOMContentLoaded', function() {
-      const today = getTodayISO();
-      const hasPlayed = localStorage.getItem('ft5_attempt_' + today) === '1';
-      if (!hasPlayed) return;
+      showCookieBanner();
 
       const startBtn = document.getElementById('startBtn');
-      if (!startBtn) return;
-
-      // Restyle as a secondary "see results" button
-      startBtn.textContent = 'See Results';
-      startBtn.style.background = 'rgba(255,255,255,0.15)';
-      startBtn.style.border = '2px solid rgba(255,255,255,0.35)';
-      startBtn.style.color = '#fff';
-    });
-  })();
-  </script>
-  <!-- End Cookie Consent Banner -->
-
-  <script>
-  (function() {
-    function pushAd(el) {
-      if (!el || el.dataset.adInitialized === '1') return;
-      if (!window._adsenseLoaded || typeof window.adsbygoogle === 'undefined') return;
-      try {
-        (adsbygoogle = window.adsbygoogle || []).push({});
-        el.dataset.adInitialized = '1';
-      } catch (e) {}
-    }
-
-    function initVisibleAds() {
-      pushAd(document.getElementById('startScreenSquareAd'));
-      pushAd(document.getElementById('resultsBannerDesktopAd'));
-      pushAd(document.getElementById('resultsBannerMobileAd'));
-    }
-
-    function waitForAdSenseAndInit() {
-      var tries = 0;
-      var timer = setInterval(function() {
-        tries += 1;
-        if (window._adsenseLoaded && typeof window.adsbygoogle !== 'undefined') {
-          clearInterval(timer);
-          initVisibleAds();
-        }
-        if (tries > 80) clearInterval(timer);
-      }, 150);
-    }
-
-    document.addEventListener('DOMContentLoaded', function() {
-      if (localStorage.getItem('cookieConsent') === 'all') {
-        waitForAdSenseAndInit();
+      if (hasPlayedToday() && startBtn) {
+        startBtn.textContent = 'See Results';
+        startBtn.style.background = 'rgba(255,255,255,0.15)';
+        startBtn.style.border = '2px solid rgba(255,255,255,0.35)';
+        startBtn.style.color = '#fff';
       }
 
-      var origAccept = window.acceptCookies;
-      window.acceptCookies = function() {
-        if (origAccept) origAccept();
-        waitForAdSenseAndInit();
-      };
-
-      window.initPopupAd = function() {
-        pushAd(document.getElementById('popupAdSlot'));
-      };
-    });
-  })();
-  </script>
-
-  <script>
-  (function() {
-    function openAdModal() {
-      var m = document.getElementById('adModal');
-      if (!m) return;
-      m.style.display = 'flex';
-      if (typeof window.initPopupAd === 'function') window.initPopupAd();
-      document.body.style.overflow = 'hidden';
-      document.body.style.position = 'fixed';
-      document.body.style.width = '100%';
-    }
-    function closeAdModal() {
-      var m = document.getElementById('adModal');
-      if (!m) return;
-      m.style.display = 'none';
-      document.body.style.overflow = '';
-      document.body.style.position = '';
-      document.body.style.width = '';
-    }
-    document.addEventListener('DOMContentLoaded', function() {
-      // Only show popup on start screen, not after returning from results
-      var alreadyPlayed = localStorage.getItem('ft5_attempt_' + (function(){
-        var d = new Date(); return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
-      })()) === '1';
-      if (localStorage.getItem('cookieConsent') === 'all' && !alreadyPlayed) {
-        openAdModal();
+      if (getCookieConsent() === 'all') {
+        window.loadAdSense(function() {
+          window.initAdSlot('startSquareAd');
+          if (!hasPlayedToday()) {
+            openAdModal();
+          }
+        });
       }
-      // Show after first-time consent (only if on start screen)
-      var origAccept = window.acceptCookies;
-      window.acceptCookies = function() {
-        if (origAccept) origAccept();
-        if (!alreadyPlayed) openAdModal();
-      };
-      // Close via button
+
       var closeBtn = document.getElementById('adModalClose');
       if (closeBtn) closeBtn.addEventListener('click', closeAdModal);
-      // Close via backdrop click
+
       var backdrop = document.getElementById('adModalBackdrop');
       if (backdrop) backdrop.addEventListener('click', closeAdModal);
+
+      var result = document.getElementById('result');
+      if (result) {
+        new MutationObserver(function() {
+          if (!result.classList.contains('hidden')) {
+            closeAdModal();
+            if (getCookieConsent() === 'all') {
+              window.loadAdSense(function() {
+                var isDesktop = window.matchMedia('(min-width: 728px)').matches;
+                window.initAdSlot(isDesktop ? 'resultsBannerDesktop' : 'resultsBannerMobile');
+              });
+            }
+          }
+        }).observe(result, { attributes: true, attributeFilter: ['class'] });
+      }
     });
   })();
   </script>
