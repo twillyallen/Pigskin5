@@ -186,10 +186,12 @@
     /* ── Ad Slots ── */
     .ad-slot {
       width: 100%;
+      min-width: 300px;
       max-width: 640px;
       margin: 0 auto;
       overflow: hidden;
       min-height: 90px; /* prevent layout shift while ad loads */
+      display: block;
     }
     .ad-slot--start {
       margin: 16px auto;
@@ -322,9 +324,9 @@
         <!-- Ad Slot 1: Start Screen (between scorecard and leaderboard) -->
         <div class="ad-slot ad-slot--start" id="adSlotStart">
           <ins class="adsbygoogle"
-               style="display:block"
+               style="display:block;width:100%;min-width:300px;"
                data-ad-client="ca-pub-8430547369793861"
-               data-ad-slot="XXXXXXXXXX"
+               data-ad-slot="2057016496"
                data-ad-format="auto"
                data-full-width-responsive="true"></ins>
           <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
@@ -373,9 +375,9 @@
       <!-- Ad Slot 2: Results Screen (between answer review and leaderboard) -->
       <div class="ad-slot ad-slot--results" id="adSlotResults">
         <ins class="adsbygoogle"
-             style="display:block"
+             style="display:block;width:100%;min-width:300px;"
              data-ad-client="ca-pub-8430547369793861"
-             data-ad-slot="XXXXXXXXXX"
+             data-ad-slot="9640719395"
              data-ad-format="auto"
              data-full-width-responsive="true"></ins>
         <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
