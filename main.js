@@ -827,6 +827,7 @@ function renderPersistedResult(dateStr, persisted) {
   document.body.classList.remove("no-scroll");
   document.body.classList.remove("start-page");
   document.body.classList.remove("quiz-active");
+  document.body.classList.add("results-active");
 
   startScreen.classList.add("hidden");
   cardSec.classList.add("hidden");
@@ -927,6 +928,7 @@ function showLockedGate(dateStr) {
   document.body.classList.remove("no-scroll");
   document.body.classList.remove("start-page");
   document.body.classList.remove("quiz-active");
+  document.body.classList.add("results-active");
 
   startScreen.classList.add("hidden");
   cardSec.classList.add("hidden");
@@ -1222,6 +1224,7 @@ function showStartScreen() {
   document.body.classList.remove("no-scroll");
   document.body.classList.remove("hide-footer");
   document.body.classList.remove("quiz-active");
+  document.body.classList.remove("results-active");
   document.body.classList.add("start-page");
 
   const runDate = getRunDateISO();
@@ -1326,6 +1329,7 @@ function showResult() {
   document.body.classList.remove("no-scroll");
   document.body.classList.remove("hide-footer");
   document.body.classList.remove("quiz-active");
+  document.body.classList.add("results-active");
 
   cardSec.classList.add("hidden");
   resultSec.classList.remove("hidden");
