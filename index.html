@@ -53,7 +53,8 @@
     body.quiz-active .site-footer,
     body.results-active .site-nav,
     body.results-active .how-it-works,
-    body.results-active .about-strip {
+    body.results-active .about-strip,
+    body.results-active #adModal {
       display: none !important;
     }
 
@@ -320,7 +321,7 @@
           </div>
         </div>
 
-        <!-- Ad Slot: Start Screen Square -->
+        <!-- Ad: Start Screen Square (250x250) -->
         <div style="text-align:center; margin:16px auto;">
           <ins class="adsbygoogle"
                style="display:inline-block;width:250px;height:250px;"
@@ -521,7 +522,6 @@
            style="display:inline-block;width:250px;height:250px;"
            data-ad-client="ca-pub-8430547369793861"
            data-ad-slot="3343356628"></ins>
-           
       <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
     </div>
   </div>
@@ -623,15 +623,18 @@
       document.body.style.width = '';
     }
     document.addEventListener('DOMContentLoaded', function() {
-      // Show on load if already consented
-      if (localStorage.getItem('cookieConsent') === 'all') {
+      // Only show popup on start screen, not after returning from results
+      var alreadyPlayed = localStorage.getItem('ft5_attempt_' + (function(){
+        var d = new Date(); return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+      })()) === '1';
+      if (localStorage.getItem('cookieConsent') === 'all' && !alreadyPlayed) {
         openAdModal();
       }
-      // Show after first-time consent
+      // Show after first-time consent (only if on start screen)
       var origAccept = window.acceptCookies;
       window.acceptCookies = function() {
         if (origAccept) origAccept();
-        openAdModal();
+        if (!alreadyPlayed) openAdModal();
       };
       // Close via button
       var closeBtn = document.getElementById('adModalClose');
