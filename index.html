@@ -585,7 +585,9 @@
       window.location.href = 'cookies.html';
     };
 
-    showCookieBanner();
+    // Delay banner until ad modal closes (or 8s fallback)
+    window._showCookieBannerWhenReady = showCookieBanner;
+    window._cookieBannerFallback = setTimeout(showCookieBanner, 8000);
   })();
   </script>
   <script>
@@ -693,6 +695,9 @@
   }
 
   function closeAdModal() {
+    // Show cookie banner now (and cancel the fallback timer)
+    clearTimeout(window._cookieBannerFallback);
+    if (typeof window._showCookieBannerWhenReady === "function") window._showCookieBannerWhenReady();
     var m = document.getElementById('adModal');
     if (!m) return;
     m.style.display = 'none';
