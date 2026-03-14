@@ -78,7 +78,7 @@ export const CALENDAR = {
     { question: "Who is the Cincinnati Bengals' all-time leader in passing yards?", choices: ["Andy Dalton", "Ken Anderson", "Joe Burrow", "Boomer Esiason"], answer: 1 },
     { question: "Which kicker has the most career game-winning field goals?", choices: ["Adam Vinatieri", "Justin Tucker", "Morten Andersen", "Gary Anderson"], answer: 0 },
     { question: "Which WR has the most 100+ Rec. seasons in their career?", choices: ["Antonio Brown", "Davante Adams", "Keenan Allen", "Brandon Marshall"], answer: [0, 3] },
-    { question: "OVER or UNDER: Tom Brady has O/U 5.5 Super Bowl MVP Awards", choices: ["OVER", "UNDER"], answer: 1 },
+    { question: "Who was the first player with 4 Super Bowl rings?", choices: ["Terry Bradshaw", "Marv Fleming", "Tom Brady", "Adam Vinatieri"], answer: 1 },
     { question: "Who led the NFL in Passing Yards in 2025?", choices: ["Jared Goff", "Dak Prescott", "Matthew Stafford", "Drake Maye"], answer: 2 },
     ],
   },
