@@ -523,7 +523,7 @@
 
   <!-- Cookie Consent Banner -->
   <!-- Ad Popup Modal -->
-  <div id="adModal" style="display:none; position:fixed; inset:0; width:100vw; height:100vh; background:rgba(0,0,0,0.75); z-index:99999; justify-content:center; align-items:center;">
+  <div id="adModal" style="display:flex; position:fixed; inset:0; width:100vw; height:100vh; background:rgba(0,0,0,0.75); z-index:99999; justify-content:center; align-items:center;">
     <div id="adModalBackdrop" style="position:absolute; inset:0;"></div>
     <div style="position:relative; background:#101418; border:1px solid rgba(255,255,255,0.18); border-radius:14px; padding:40px 16px 20px; width:300px; max-width:90vw; max-height:90vh; overflow:hidden; text-align:center; box-shadow:0 12px 42px rgba(0,0,0,0.6); z-index:1;">
       <button id="adModalClose" style="position:absolute; top:8px; right:8px; background:rgba(255,255,255,0.9); color:#111; border:0; border-radius:10px; width:32px; height:32px; font-size:20px; font-weight:900; cursor:pointer; display:flex; align-items:center; justify-content:center; line-height:1;">&times;</button>
@@ -706,28 +706,27 @@
     document.body.style.width = '';
   }
 
+  // Modal is open by default in HTML — wire up close buttons and hide it for returning players
   document.addEventListener('DOMContentLoaded', function() {
     var closeBtn = document.getElementById('adModalClose');
     if (closeBtn) closeBtn.addEventListener('click', closeAdModal);
     var backdrop = document.getElementById('adModalBackdrop');
     if (backdrop) backdrop.addEventListener('click', closeAdModal);
 
+    // If player already played today, skip the ad modal
     var alreadyPlayed = localStorage.getItem('ft5_attempt_' + (function(){
       var d = new Date();
       return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
     })()) === '1';
 
-    if (!alreadyPlayed) {
-      // If already consented (returning visitor), open modal immediately
-      if (localStorage.getItem('cookieConsent') === 'all') {
-        openAdModal();
-      } else {
-        // First-time visitor: open modal only after they accept cookies
-        var origAccept = window.acceptCookies;
-        window.acceptCookies = function() {
-          if (origAccept) origAccept();
-          openAdModal();
-        };
+    if (alreadyPlayed) {
+      closeAdModal();
+    } else {
+      // Push the ad now that DOM is ready
+      var slot = document.getElementById('popupAdSlot');
+      if (slot && !slot.dataset.adInitialized) {
+        (window.adsbygoogle = window.adsbygoogle || []).push({});
+        slot.dataset.adInitialized = '1';
       }
     }
   });
