@@ -662,49 +662,63 @@
   </script>
 
   <script>
-  (function() {
-    function openAdModal() {
-      var m = document.getElementById('adModal');
-      if (!m) return;
-      m.style.display = 'flex';
-      if (typeof window.initPopupAd === 'function') window.initPopupAd();
-      document.body.style.overflow = 'hidden';
-      document.body.style.position = 'fixed';
-      document.body.style.width = '100%';
-    }
-    function closeAdModal() {
-      var m = document.getElementById('adModal');
-      if (!m) return;
-      m.style.display = 'none';
-      document.body.style.overflow = '';
-      document.body.style.position = '';
-      document.body.style.width = '';
-    }
-    document.addEventListener('DOMContentLoaded', function() {
-      var alreadyPlayed = localStorage.getItem('ft5_attempt_' + (function(){
-        var d = new Date(); return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
-      })()) === '1';
-      var popupShown = false;
-      // Show popup on load (never if already played today)
-      if (!alreadyPlayed) {
-        popupShown = true;
-        openAdModal();
+(function() {
+  function pushAd(el) {
+    if (!el || el.dataset.adInitialized === '1') return;
+    if (!window._adsenseLoaded || typeof window.adsbygoogle === 'undefined') return;
+    try {
+      (adsbygoogle = window.adsbygoogle || []).push({});
+      el.dataset.adInitialized = '1';
+    } catch (e) {}
+  }
+
+  function openAdModal() {
+    var m = document.getElementById('adModal');
+    if (!m) return;
+    m.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+    document.body.style.position = 'fixed';
+    document.body.style.width = '100%';
+
+    // Wait for AdSense to be ready, then push the popup ad
+    var tries = 0;
+    var timer = setInterval(function() {
+      tries++;
+      var slot = document.getElementById('popupAdSlot');
+      if (window._adsenseLoaded && typeof window.adsbygoogle !== 'undefined') {
+        clearInterval(timer);
+        pushAd(slot);
       }
-      // Do NOT reopen popup when player accepts cookies — they already saw it
-      var origAccept = window.acceptCookies;
-      window.acceptCookies = function() {
-        if (origAccept) origAccept();
-        // intentionally not reopening popup here
-      };
-      // Close via button
-      var closeBtn = document.getElementById('adModalClose');
-      if (closeBtn) closeBtn.addEventListener('click', closeAdModal);
-      // Close via backdrop click
-      var backdrop = document.getElementById('adModalBackdrop');
-      if (backdrop) backdrop.addEventListener('click', closeAdModal);
-    });
-  })();
-  </script>
+      if (tries > 80) clearInterval(timer); // ~12s timeout
+    }, 150);
+  }
+
+  function closeAdModal() {
+    var m = document.getElementById('adModal');
+    if (!m) return;
+    m.style.display = 'none';
+    document.body.style.overflow = '';
+    document.body.style.position = '';
+    document.body.style.width = '';
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    var alreadyPlayed = localStorage.getItem('ft5_attempt_' + (function(){
+      var d = new Date();
+      return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+    })()) === '1';
+
+    if (!alreadyPlayed) {
+      openAdModal();
+    }
+
+    var closeBtn = document.getElementById('adModalClose');
+    if (closeBtn) closeBtn.addEventListener('click', closeAdModal);
+    var backdrop = document.getElementById('adModalBackdrop');
+    if (backdrop) backdrop.addEventListener('click', closeAdModal);
+  });
+})();
+</script>
 
 </body>
 </html>
