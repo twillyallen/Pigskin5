@@ -238,6 +238,7 @@
       s.async = true;
       s.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8430547369793861';
       s.crossOrigin = 'anonymous';
+      s.onload = function() { window._adsenseLoaded = true; };
       document.head.appendChild(s);
     };
     // Load immediately — no consent required
@@ -722,11 +723,21 @@
     if (alreadyPlayed) {
       closeAdModal();
     } else {
-      // Push the ad now that DOM is ready
+      // Wait for AdSense script to finish loading, then push the slot
       var slot = document.getElementById('popupAdSlot');
       if (slot && !slot.dataset.adInitialized) {
-        (window.adsbygoogle = window.adsbygoogle || []).push({});
-        slot.dataset.adInitialized = '1';
+        var tries = 0;
+        var timer = setInterval(function() {
+          tries++;
+          if (typeof window.adsbygoogle !== 'undefined' && window._adsenseLoaded) {
+            clearInterval(timer);
+            if (!slot.dataset.adInitialized) {
+              (window.adsbygoogle = window.adsbygoogle || []).push({});
+              slot.dataset.adInitialized = '1';
+            }
+          }
+          if (tries > 100) clearInterval(timer); // ~15s timeout
+        }, 150);
       }
     }
   });
