@@ -222,9 +222,14 @@
   <meta name="twitter:description" content="Daily NFL trivia: 5 questions, 15 seconds each, new quiz every day.">
   <meta name="twitter:image" content="https://pigskin5.com/logos/pigskin5share.png">
 
-  <!-- Google AdSense (loaded only after cookie consent) -->
+  <!-- Google AdSense — loads unconditionally; consent controls personalization only -->
   <script>
-    // Inject AdSense script on demand — called after user accepts cookies
+    // Signal non-personalized ads until/unless user consents
+    window.adsbygoogle = window.adsbygoogle || [];
+    var _hasConsent = localStorage.getItem('cookieConsent') === 'all';
+    if (!_hasConsent) {
+      window.adsbygoogle.push({ params: { google_npa: '1' } });
+    }
     window._adsenseLoaded = false;
     window.loadAdSense = function() {
       if (window._adsenseLoaded) return;
@@ -235,10 +240,8 @@
       s.crossOrigin = 'anonymous';
       document.head.appendChild(s);
     };
-    // If user already consented in a previous session, load immediately
-    if (localStorage.getItem('cookieConsent') === 'all') {
-      document.addEventListener('DOMContentLoaded', window.loadAdSense);
-    }
+    // Load immediately — no consent required
+    window.loadAdSense();
   </script>
 
   <!-- Google Analytics -->
@@ -570,7 +573,7 @@
     window.acceptCookies = function() {
       localStorage.setItem('cookieConsent', 'all');
       hideBanner();
-      if (typeof window.loadAdSense === 'function') window.loadAdSense();
+
     };
 
     window.rejectCookies = function() {
