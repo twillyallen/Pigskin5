@@ -699,19 +699,29 @@
   }
 
   document.addEventListener('DOMContentLoaded', function() {
+    var closeBtn = document.getElementById('adModalClose');
+    if (closeBtn) closeBtn.addEventListener('click', closeAdModal);
+    var backdrop = document.getElementById('adModalBackdrop');
+    if (backdrop) backdrop.addEventListener('click', closeAdModal);
+
     var alreadyPlayed = localStorage.getItem('ft5_attempt_' + (function(){
       var d = new Date();
       return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
     })()) === '1';
 
     if (!alreadyPlayed) {
-      openAdModal();
+      // If already consented (returning visitor), open modal immediately
+      if (localStorage.getItem('cookieConsent') === 'all') {
+        openAdModal();
+      } else {
+        // First-time visitor: open modal only after they accept cookies
+        var origAccept = window.acceptCookies;
+        window.acceptCookies = function() {
+          if (origAccept) origAccept();
+          openAdModal();
+        };
+      }
     }
-
-    var closeBtn = document.getElementById('adModalClose');
-    if (closeBtn) closeBtn.addEventListener('click', closeAdModal);
-    var backdrop = document.getElementById('adModalBackdrop');
-    if (backdrop) backdrop.addEventListener('click', closeAdModal);
   });
 })();
 </script>
