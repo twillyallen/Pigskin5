@@ -13,6 +13,10 @@ const KEY_RESULT_PREFIX  = "ft5_result_";
 const KEY_LEADERBOARD    = "ps5_leaderboard_v1";
 const KEY_LB_SUBMIT_PREFIX = "ps5_leaderboard_submit_";
 
+// SessionStorage keys for mid-quiz state (cleared on tab/browser close)
+const KEY_SESSION_DATE  = "ps5_session_date";
+const KEY_SESSION_PICKS = "ps5_session_picks";
+
 const PROD_HOSTS = ["twillyallen.github.io", "pigskin5.com"];
 const LEADERBOARD_API_URL = "https://script.google.com/macros/s/AKfycbzLIkEvrtXNYc0zgtvpMYqma8YngyvMfmhfr2k2-xC6_po-rC5unN2KxLbqnJo4JraLwA/exec";
 
@@ -1207,6 +1211,9 @@ function pickAnswer(i, correct) {
     points: questionPoints
   });
 
+  // Keep session state current in case of mid-quiz refresh
+  saveSessionState();
+
   setTimeout(() => {
     current++;
 
@@ -1273,6 +1280,120 @@ function showStartScreen() {
   }
 }
 
+// ==============================
+// TAB-OUT / REFRESH PROTECTION
+// ==============================
+
+function isQuizInProgress() {
+  return cardSec && !cardSec.classList.contains("hidden");
+}
+
+function saveSessionState() {
+  try {
+    sessionStorage.setItem(KEY_SESSION_DATE, RUN_DATE || "");
+    sessionStorage.setItem(KEY_SESSION_PICKS, JSON.stringify(picks));
+  } catch {}
+}
+
+function clearSessionState() {
+  try {
+    sessionStorage.removeItem(KEY_SESSION_DATE);
+    sessionStorage.removeItem(KEY_SESSION_PICKS);
+  } catch {}
+}
+
+// Fill any unanswered questions as "Not Attempted" and go straight to results.
+// Called when the player tabs out or refreshes mid-quiz.
+function forfeitAndFinish() {
+  stopTimer();
+
+  // Fill remaining questions as not attempted (pick: null, 0 points)
+  for (let i = picks.length; i < QUESTIONS.length; i++) {
+    const q = QUESTIONS[i];
+    picks.push({
+      idx: i,
+      pick: null,
+      correct: q.answer,
+      elapsed: TIME_LIMIT,
+      points: 0
+    });
+    questionTimes.push(TIME_LIMIT);
+  }
+
+  // Recalculate score/totals from picks (answered questions already tallied)
+  score = picks.filter(p => {
+    const correct = Array.isArray(p.correct) ? p.correct : [p.correct];
+    return correct.includes(p.pick);
+  }).length;
+
+  const totalTime = questionTimes.reduce((s, t) => s + (t || 0), 0);
+  latestAvgTime = questionTimes.length ? totalTime / questionTimes.length : 0;
+
+  clearSessionState();
+  showResult();
+}
+
+// On page load: if the player has an attempt flag but no saved result,
+// they must have refreshed/closed mid-quiz. Recover gracefully.
+function recoverFromLimbo() {
+  const runDate = getRunDateISO();
+  if (!hasAttempt(runDate)) return false;   // never started
+  if (loadResult(runDate)) return false;    // finished normally
+
+  // They're stuck in limbo — reconstruct from whatever sessionStorage has
+  RUN_DATE   = runDate;
+  QUESTIONS  = getQuestionsForDate(runDate);
+
+  let savedPicks = [];
+  try {
+    const raw = sessionStorage.getItem(KEY_SESSION_PICKS);
+    savedPicks = raw ? JSON.parse(raw) : [];
+  } catch {}
+
+  picks         = Array.isArray(savedPicks) ? savedPicks : [];
+  score         = 0;
+  totalPoints   = 0;
+  questionTimes = picks.map(p => p.elapsed ?? TIME_LIMIT);
+
+  // Recalculate running totals from the picks we recovered
+  picks.forEach(p => {
+    const correct = Array.isArray(p.correct) ? p.correct : [p.correct];
+    if (correct.includes(p.pick)) {
+      score++;
+      totalPoints += (p.points || 0);
+    }
+  });
+
+  // Fill the rest as "Not Attempted"
+  for (let i = picks.length; i < QUESTIONS.length; i++) {
+    const q = QUESTIONS[i];
+    picks.push({ idx: i, pick: null, correct: q.answer, elapsed: TIME_LIMIT, points: 0 });
+    questionTimes.push(TIME_LIMIT);
+  }
+
+  const totalTime = questionTimes.reduce((s, t) => s + (t || 0), 0);
+  latestAvgTime = questionTimes.length ? totalTime / questionTimes.length : 0;
+
+  clearSessionState();
+  saveResult(runDate, { score, picks, totalTime, avgTime: latestAvgTime, totalPoints });
+
+  return true; // caller should now call showResult() / renderPersistedResult()
+}
+
+function _onVisibilityChange() {
+  if (document.hidden && isQuizInProgress()) {
+    document.removeEventListener("visibilitychange", _onVisibilityChange);
+    window.removeEventListener("beforeunload", _onBeforeUnload);
+    forfeitAndFinish();
+  }
+}
+
+function _onBeforeUnload() {
+  // Can't show UI during unload — just keep session picks current so
+  // recoverFromLimbo() has accurate data on next page load.
+  saveSessionState();
+}
+
 function startGame() {
   stopSnow();
   stopConfetti();
@@ -1321,10 +1442,24 @@ function startGame() {
 
   renderQuestion();
 
+  // Persist in-progress state so a refresh can recover gracefully
+  saveSessionState();
+
+  // Tab-out: forfeit remaining questions and go straight to results
+  document.addEventListener("visibilitychange", _onVisibilityChange);
+
+  // Refresh / close: update session picks so recovery has latest data
+  window.addEventListener("beforeunload", _onBeforeUnload);
+
   window.scrollTo({ top: 0, behavior: "instant" });
 }
 
 function showResult() {
+  // Clean up tab-out/unload listeners — quiz is over
+  document.removeEventListener("visibilitychange", _onVisibilityChange);
+  window.removeEventListener("beforeunload", _onBeforeUnload);
+  clearSessionState();
+
   document.body.classList.remove("start-page");
   document.body.classList.remove("no-scroll");
   document.body.classList.remove("hide-footer");
@@ -1589,6 +1724,13 @@ function init() {
 
   setLogoForDay();
   setTimeout(() => setLogoForDay(), 100);
+
+  // If player refreshed mid-quiz, recover their partial result and show it
+  if (recoverFromLimbo()) {
+    renderPersistedResult(getRunDateISO(), loadResult(getRunDateISO()));
+    return;
+  }
+
   showStartScreen();
 
   leaderboardForm      = document.getElementById("leaderboardForm");
