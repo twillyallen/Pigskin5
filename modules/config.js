@@ -53,7 +53,8 @@ export const STREAK_TIERS = [
   { name: "Pro", minDays: 14, emoji: "🔥", color: "#9b59b6" },
   { name: "All-Pro", minDays: 30, emoji: "⭐", color: "#f39c12" },
   { name: "Hall of Fame", minDays: 50, emoji: "🏆", color: "#e67e22" },
-  { name: "Legend", minDays: 100, emoji: "👑", color: "#e74c3c" }
+  { name: "ABSOLUTE NERD", minDays: 100, emoji: "🧌", color: "#e74c3c" },
+  { name: "Legend", minDays: 101, emoji: "👑", color: "#e74c3c" }
 ];
 
 // Banned words for leaderboard name validation
