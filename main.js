@@ -1605,6 +1605,15 @@ function injectShareSummary() {
   shareBtn.textContent = "Share";
 
   shareBtn.addEventListener("click", async () => {
+    /* Track the raw button tap immediately */
+    if (typeof gtag === "function") {
+      gtag("event", "share_click", {
+        event_category: "engagement",
+        score: score,
+        score_out_of: QUESTIONS.length
+      });
+    }
+
     const squaresNow = picks.map(p => {
       const correctAnswers = Array.isArray(p.correct) ? p.correct : [p.correct];
       return correctAnswers.includes(p.pick) ? "🟩" : "⬜";
@@ -1671,6 +1680,21 @@ function injectShareSummary() {
       "pigskin5.com"
     ].filter(Boolean).join("\n");
 
+    /* ── Analytics: share event ── */
+    const shareData = {
+      event_category: "engagement",
+      score: score,
+      score_out_of: QUESTIONS.length,
+      score_tier: score === QUESTIONS.length ? "perfect"
+                : score >= 3 ? "good"
+                : score >= 1 ? "mid" : "zero",
+      daily_streak: dailyStreak,
+      td_streak: Number(tdStreak),
+      avg_time: Number(latestAvgTime.toFixed(1)),
+      total_points: totalPoints,
+      cta_used: cta
+    };
+
     try {
       if (navigator.clipboard && window.isSecureContext) {
         await navigator.clipboard.writeText(shareText);
@@ -1688,12 +1712,31 @@ function injectShareSummary() {
 
       showToast("Copied to clipboard");
 
+      /* Track successful copy */
+      if (typeof gtag === "function") {
+        gtag("event", "share_copied", shareData);
+      }
+
       if (navigator.share) {
-        navigator.share({ text: shareText }).catch(() => {});
+        navigator.share({ text: shareText })
+          .then(() => {
+            if (typeof gtag === "function") {
+              gtag("event", "share_native", { ...shareData, share_method: "native" });
+            }
+          })
+          .catch(() => {
+            /* User cancelled native share dialog — still copied */
+            if (typeof gtag === "function") {
+              gtag("event", "share_native_dismissed", shareData);
+            }
+          });
       }
     } catch (e) {
       console.error("Share failed:", e);
       showToast("Could not copy. Try manual paste.");
+      if (typeof gtag === "function") {
+        gtag("event", "share_failed", shareData);
+      }
     }
   });
 
