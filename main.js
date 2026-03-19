@@ -1614,37 +1614,62 @@ function injectShareSummary() {
     const tdStreak = localStorage.getItem("tdStreak") || 0;
     const shareTier = getTierForStreak(dailyStreak);
 
-    let shareText;
+    /* ── Rotating CTA pools by score tier ── */
+    const CTA_PERFECT = [
+      "Think you can go 5 for 5?",
+      "I am BUILT DIFFERENT. Your turn.",
+      "Flawless victory. Try me.",
+      "Prove you know ball too."
+    ];
+    const CTA_GOOD = [  // 3–4 correct
+      "Think you know ball?",
+      "Prove you're not a casual.",
+      "Couch coaches only 🛋️",
+      "NFL brain check 🧠",
+      "Can you beat my score?"
+    ];
+    const CTA_MID = [  // 1–2 correct
+      "I need backup… you try.",
+      "Humbling. Your turn though.",
+      "Don't let me suffer alone...",
+      "Surely you can beat this...",
+      "Low bar. Go clear it."
+    ];
+    const CTA_ZERO = [
+      "I do NOT know ball 🤦",
+      "Down bad. Historically bad.",
+      "0 for 5. I'm cooked 💀",
+      "Proof I should stop talking football.",
+      "Rock bottom looks like this."
+    ];
 
-    if (score === QUESTIONS.length) {
-      shareText = `TOUCHDOWN! ${RUN_DATE}
-${squaresNow}
-${totalPoints.toLocaleString()} pts · ${latestAvgTime.toFixed(1)}s avg
-Daily Streak: ${shareTier.emoji} ${dailyStreak}
-Touchdown Streak: 🏈 ${tdStreak}
+    const pickRandom = (arr) => arr[Math.floor(Math.random() * arr.length)];
 
-pigskin5.com
+    let cta;
+    if (score === QUESTIONS.length) cta = pickRandom(CTA_PERFECT);
+    else if (score >= 3)            cta = pickRandom(CTA_GOOD);
+    else if (score >= 1)            cta = pickRandom(CTA_MID);
+    else                            cta = pickRandom(CTA_ZERO);
 
-Can you beat me score???`;
-    } else if (score === 0) {
-      shareText = `Pigskin5 ${RUN_DATE}
-${squaresNow}
-${totalPoints.toLocaleString()} pts · ${latestAvgTime.toFixed(1)}s avg
-Daily Streak: ${shareTier.emoji} ${dailyStreak}
+    /* ── Build share text ── */
+    const header = score === QUESTIONS.length
+      ? `🏆 #Pigskin5 ${score}/${QUESTIONS.length} — ${RUN_DATE}`
+      : `#Pigskin5 ${score}/${QUESTIONS.length} — ${RUN_DATE}`;
 
-I do NOT know ball 🤦
+    const statsLine = `${totalPoints.toLocaleString()} pts · ${latestAvgTime.toFixed(1)}s avg`;
+    const streakLine = `Daily Streak: ${shareTier.emoji} ${dailyStreak}`;
+    const tdLine = score === QUESTIONS.length
+      ? `Touchdown Streak: 🏈 ${tdStreak}\n`
+      : "";
 
-pigskin5.com`;
-    } else {
-      shareText = `Pigskin5 ${RUN_DATE}
-${squaresNow}
-${totalPoints.toLocaleString()} pts · ${latestAvgTime.toFixed(1)}s avg
-Daily Streak: ${shareTier.emoji} ${dailyStreak}
-
-pigskin5.com
-
-Can you beat my score?`;
-    }
+    const shareText = [
+      header,
+      squaresNow,
+      statsLine,
+      streakLine,
+      tdLine + cta,
+      "pigskin5.com"
+    ].filter(Boolean).join("\n");
 
     try {
       if (navigator.clipboard && window.isSecureContext) {
