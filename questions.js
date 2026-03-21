@@ -152,6 +152,26 @@ export const CALENDAR = {
     { question: "Which WR has more Career Receiving Yards?", choices: ["Doug Baldwin", "Cris Collinsworth", "Michael Thomas", "Ricky Sanders"], answer: 1 },
     ],
   },
+    "2026-03-22": { //Sunday
+    event: "",
+    questions: [
+    { question: "Which one of these teams does NOT have 4 or more Super Bowl LOSSES?", choices: ["Patriots", "Chargers", "Vikings", "Broncos"], answer: 1 },
+    { question: "Where were the Tennessee Titans originally located?", choices: ["Memphis", "Nashville", "Tennessee", "Houston"], answer: 3 },
+    { question: "Eric Dickerson set the single-season rushing yards record with how many yards?", choices: ["2,008", "2,066", "2,105", "2,167"], answer: 2 },
+    { question: "What was the Pittsburgh Steelers’ original team name?", choices: ["Pirates", "Beams", "Hope-Harveys", "Rooneys"], answer: 0 },
+    { question: "True or False: Brett Favre was originally drafted by the Green Bay Packers.", choices: ["True", "False"], answer: 1 },
+    ],
+  },
+    "2026-03-23": { //Monday
+    event: "",
+    questions: [
+    { question: "Who scored the first TD in Super Bowl History?", choices: ["Marv Fleming", "Elijah Pitts", "Max McGee", "Dick Capp"], answer: 2 },
+    { question: "Who won Offensive Rookie of the Year in 2025?", choices: ["Emeka Egbuka", "Tyler Shough", "Tetairoa McMillan", "Jaxson Dart"], answer: 2 },
+    { question: "Which sports franchise originally drafted Russell Wilson?", choices: ["Saints", "Seahawks", "Packers", "Colorado Rockies"], answer: 3 },
+    { question: "Who was the first player with 4 Super Bowl rings?", choices: ["Terry Bradshaw", "Marv Fleming", "Tom Brady", "Adam Vinatieri"], answer: 1 },
+    { question: "Which WR has more Career Receiving Yards?", choices: ["Doug Baldwin", "Cris Collinsworth", "Michael Thomas", "Ricky Sanders"], answer: 1 },
+    ],
+  },
 };
 
 
