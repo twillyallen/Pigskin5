@@ -166,10 +166,160 @@ export const CALENDAR = {
     event: "",
     questions: [
     { question: "Who scored the first TD in Super Bowl History?", choices: ["Marv Fleming", "Elijah Pitts", "Max McGee", "Dick Capp"], answer: 2 },
-    { question: "Who won Offensive Rookie of the Year in 2025?", choices: ["Emeka Egbuka", "Tyler Shough", "Tetairoa McMillan", "Jaxson Dart"], answer: 2 },
-    { question: "Which sports franchise originally drafted Russell Wilson?", choices: ["Saints", "Seahawks", "Packers", "Colorado Rockies"], answer: 3 },
-    { question: "Who was the first player with 4 Super Bowl rings?", choices: ["Terry Bradshaw", "Marv Fleming", "Tom Brady", "Adam Vinatieri"], answer: 1 },
-    { question: "Which WR has more Career Receiving Yards?", choices: ["Doug Baldwin", "Cris Collinsworth", "Michael Thomas", "Ricky Sanders"], answer: 1 },
+    { question: "Which player caught the touchdown on the \"Philly Special\" in Super Bowl LII?", choices: ["Trey Burton", "Nick Foles", "Zach Ertz", "Nelson Agholor"], answer: 1 },
+    { question: "True or False: Drew Brees never won a League MVP award.", choices: ["True", "False"], answer: 0 },
+    { question: "Which coach said the famous quote \"Playoffs?! Don't talk about playoffs!\"?", choices: ["Mike Singletary", "Dennis Green", "Herm Edwards", "Jim Mora"], answer: 3 },
+    { question: "OVER or UNDER: The 2013 Broncos scored O/U 580.5 total points in the regular season.", choices: ["OVER", "UNDER"], answer: 0 },
+    ],
+  },
+    "2026-03-24": { //Tuesday
+    event: "",
+    questions: [
+    { question: "Which team originally drafted Eli Manning?", choices: ["Raiders", "Saints", "Giants", "Chargers"], answer: 3 },
+    { question: "Who holds the record for most rushing yards in a single game with 296?", choices: ["Adrian Peterson", "Emmitt Smith", "Barry Sanders", "Jim Taylor"], answer: 0 },
+    { question: "True or False: The Packers won the first three Super Bowls.", choices: ["True", "False"], answer: 1 },
+    { question: "Which QB threw the Minneapolis Miracle?", choices: ["Nick Foles", "Kirk Cousins", "Case Keenum", "Sam Bradford"], answer: 2 },
+    { question: "Who is the Cowboys' all-time sacks leader?", choices: ["DeMarcus Ware", "Jim Jeffcoat", "Greg Ellis", "DeMarcus Lawrence"], answer: 0 },
+    ],
+  },
+    "2026-03-25": { //Wednesday
+    event: "",
+    questions: [
+    { question: "Which player returned the opening kickoff of Super Bowl XLI for a touchdown?", choices: ["Joseph Addai", "Brandon Stokely", "Devin Hester", "Thomas Jones"], answer: 2 },
+    { question: "Over or Under: Adam Vinatieri finished with 2,672.5 career points.", choices: ["OVER", "UNDER"], answer: 0 },
+    { question: "Which NFL team was originally called the \"Decatur Staleys\"?", choices: ["Cardinals", "Lions", "Browns", "Bears"], answer: 3 },
+    { question: "True or False: Johnny Manziel started more than 10 career NFL games.", choices: ["True", "False"], answer: 1 },
+    { question: "Which franchise drafted Terrell Owens?", choices: ["Eagles", "49ers", "Cowboys", "Bengals"], answer: 1 },
+    ],
+  },
+    "2026-03-26": { //Thursday
+    event: "",
+    questions: [
+    { question: "Who is the Bills' all-time rushing leader?", choices: ["Thurman Thomas", "Josh Allen", "Fred Jackson", "OJ Simpson"], answer: 0 },
+    { question: "Which player famously stripped Cam Newton late in Super Bowl 50?", choices: ["DeMarcus Ware", "TJ Ward", "Von Miller", "Derek Wolfe"], answer: 2 },
+    { question: "In what year did the \"Fail Mary\" replacement referee game occur between the Seahawks and Packers?", choices: ["2010", "2011", "2012", "2014"], answer: 2 },
+    { question: "Which head coach has the highest career winning percentage (min 100 games)?", choices: ["Matt LaFleur", "George Allen", "Vince Lombardi", "John Madden"], answer: 3 },
+    { question: "True or False: A TE has led the league in receiving yards.", choices: ["True", "False"], answer: 1 },
+    ],
+  },
+    "2026-03-27": { //Friday
+    event: "",
+    questions: [
+    { question: "Guess the 2013 QB:\n- 5,477 Pass Yards\n- 55 Pass TDs\n- 10 Int\n- 115.1 Passer Rating\n", choices: ["Aaron Rodgers", "Peyton Manning", "Tom Brady", "Drew Brees"], answer: 1 },
+    { question: "Which team did the Rams beat in Super Bowl XXXIV on \"The Tackle\"?", choices: ["Titans", "Patriots", "Broncos", "Bills"], answer: 0 },
+    { question: "Who is the heaviest player to throw a TD pass in NFL history at 346 lbs?", choices: ["Vince Wilfork", "William \"The Refrigerator\" Perry", "Dontari Poe", "BJ Raji"], answer: 2 },
+    { question: "Which team drafted Drew Brees?", choices: ["Giants", "Jets", "Chargers", "Saints"], answer: 2 },
+    { question: "True or False: An offensive lineman has caught a TD pass in the Super Bowl.", choices: ["True", "False"], answer: 1 },
+    ],
+  },
+    "2026-03-28": { //Saturday
+    event: "",
+    questions: [
+    { question: "Which running back scored the game-winning touchdown in the first overtime Super Bowl?", choices: ["LeGarrette Blount", "Ray Rice", "Devonta Freeman", "James White"], answer: 3 },
+    { question: "Which franchise did Reggie White join and change after leaving the Eagles?", choices: ["Bills", "Packers", "Cowboys", "Raiders"], answer: 1 },
+    { question: "Which player once celebrated a TD by pulling a Sharpie out of his sock to sign the football?", choices: ["Terrell Owens", "Chad Johnson", "Randy Moss", "Joe Horn"], answer: 0 },
+    { question: "True or False: The Texans have reached a conference championship game.", choices: ["True", "False"], answer: 1 },
+    { question: "Which QB was drafted #1 overall in 2007?", choices: ["Brady Quinn", "Vince Young", "JaMarcus Russell", "Matt Leinart"], answer: 2 },
+    ],
+  },
+    "2026-03-29": { //Sunday
+    event: "",
+    questions: [
+    { question: "Who is the Patriots' all-time leader in receiving yards?", choices: ["Julian Edelman", "Stanley Morgan", "Ben Coates", "Rob Gronkowski"], answer: 1 },
+    { question: "Over or Under: Drew Brees finished with 80,400 regular-season passing yards.", choices: ["OVER", "UNDER"], answer: 1 },
+    { question: "Who holds the record for most receiving TDs in a single season with 23?", choices: ["Davante Adams", "Jerry Rice", "Randy Moss", "Cris Carter"], answer: 2 },
+    { question: "Which head coach lost four straight Super Bowls with the Bills?", choices: ["Marv Levy", "Wade Phillips", "Bill Parcells", "Dennis Green"], answer: 0 },
+    { question: "Which player performed the last successful drop kick in NFL history?", choices: ["Adam Vinatieri", "Morten Anderson", "Nick Novak", "Doug Flutie"], answer: 3 },
+    ],
+  },
+    "2026-03-30": { //Monday
+    event: "",
+    questions: [
+    { question: "True or False: Ray Lewis won Super Bowl MVP with ZERO sacks in that game.", choices: ["True", "False"], answer: 0 },
+    { question: "Who is the Vikings' all-time passing leader?", choices: ["Daunte Culpepper", "Fran Tarkenton", "Kirk Cousins", "Tommy Kramer"], answer: 1 },
+    { question: "Which RB once scored 28 rushing TDs in a single season?", choices: ["LaDainian Tomlinson", "Priest Holmes", "Emmitt Smith", "Shaun Alexander"], answer: 0 },
+    { question: "Which team's fan base is famous for throwing snowballs at Santa Claus?", choices: ["Chicago Bears", "Buffalo Bills", "Philadelphia Eagles", "Denver Broncos"], answer: 2 },
+    { question: "Which WR caught the game-winning TD against the Cardinals in the Super Bowl?", choices: ["Heath Miller", "Santonio Holmes", "Hines Ward", "Anquan Boldin"], answer: 1 },
+    ],
+  },
+    "2026-03-31": { //Tuesday
+    event: "",
+    questions: [
+    { question: "Tom Brady was famously drafted in Round 6. What pick number was he?", choices: ["199", "202", "213", "215"], answer: 0 },
+    { question: "Which team did John Elway beat for his first Super Bowl win as a starter?", choices: ["Packers", "Falcons", "Rams", "Redskins"], answer: 0 },
+    { question: "True or False: The Saints existed for more than 30 seasons before winning their first playoff game.", choices: ["True", "False"], answer: 0 },
+    { question: "Who is the only QB to throw 30+ INTs and 30+ TDs in the same season?", choices: ["Ryan Fitzpatrick", "Brett Favre", "Philip Rivers", "Jameis Winston"], answer: 3 },
+    { question: "Which announcer is famous for the catchphrase \"He could... go... all... the... way!\"?", choices: ["Al Michaels", "Howard Cosell", "Chris Berman", "John Madden"], answer: 2 },
+    ],
+  },
+    "2026-04-01": { //Wednesday
+    event: "",
+    questions: [
+    { question: "Which franchise did Steve Young make his first NFL starts for?", choices: ["Chargers", "49ers", "Buccaneers", "Seahawks"], answer: 2 },
+    { question: "True or False: A kicker has won NFL MVP.", choices: ["True", "False"], answer: 0 },
+    { question: "Who is the Bengals' all-time leader in receiving yards?", choices: ["AJ Green", "Cris Collinsworth", "Chad Johnson", "JaMarr Chase"], answer: 2 },
+    { question: "Which coach was caught on camera stepping onto the field to interfere with a kick returner?", choices: ["Rex Ryan", "Jim Schwartz", "Gregg Williams", "Mike Tomlin"], answer: 3 },
+    { question: "Guess the 1984 RB:\n- 2,105 Rush Yards\n- 14 TDs\n- 5.6yd Avg.", choices: ["Walter Payton", "Eric Dickerson", "Marcus Allen", "Tony Dorsett"], answer: 1 },
+    ],
+  },
+    "2026-04-02": { //Thursday
+    event: "",
+    questions: [
+    { question: "What year was the NFL Established?", choices: ["1912", "1914", "1920", "1922"], answer: 2 },
+    { question: "Which team did Brett Favre and the Packers defeat in Super Bowl XXXI?", choices: ["Broncos", "Patriots", "Bills", "Chiefs"], answer: 1 },
+    { question: "Which QB once threw a TD pass to HIMSELF in a playoff game?", choices: ["Patrick Mahomes", "Nick Foles", "Marcus Mariota", "Ben Roethlisberger"], answer: 2 },
+    { question: "Who is the Eagles' all-time leading rusher?", choices: ["LeSean McCoy", "Steve Van Buren", "Brian Westbrook", "Wilbert Montgomery"], answer: 0 },
+    { question: "OVER or UNDER: The Bears have O/U 1.5 Super Bowl victories all-time.", choices: ["OVER", "UNDER"], answer: 0 },
+    ],
+  },
+    "2026-04-03": { //Friday
+    event: "",
+    questions: [
+    { question: "True or False: The Jaguars made the AFC Championship Game in both the 1996 and 1999 seasons.", choices: ["True", "False"], answer: 0 },
+    { question: "What league did the Cleveland Browns' originally belong to before joining the NFL?", choices: ["AFL", "AAF", "AAFC", "USFL"], answer: 2 },
+    { question: "Which kicker made 8 field goals in a single game in 2007?", choices: ["Adam Vinatieri", "Mason Crosby", "Robbie Gould", "Rob Bironas"], answer: 3 },
+    { question: "Who is the Titans/Oilers' all-time passing leader?", choices: ["George Blanda", "Warren Moon", "Steve McNair", "Ryan Tannehill"], answer: 1 },
+    { question: "Which Running Back won league MVP in 2005?", choices: ["LaDainian Tomlinson", "Edgerrin James", "Shaun Alexander", "Adrian Peterson"], answer: 2 },
+    ],
+  },
+    "2026-04-04": { //Saturday
+    event: "",
+    questions: [
+    { question: "Which team did the Colts beat in Super Bowl XLI to win the Peyton Manning era's first title?", choices: ["Giants", "Saints", "Bears", "Rams"], answer: 2 },
+    { question: "Who was the QB that fumbled his own snap on a botched FG hold, then tried to run, costing his team a playoff game in 2006?", choices: ["Rex Grossman", "Tony Romo", "Drew Bledsoe", "Matt Hasselbeck"], answer: 1 },
+    { question: "True or False: Tom Brady has more division titles than the entire Jets franchise has in the Super Bowl era.", choices: ["True", "False"], answer: 0 },
+    { question: "Which team drafted Charles Woodson in 1998?", choices: ["Bears", "Packers", "Raiders", "Jets"], answer: 2 },
+    { question: "Over or Under: Larry Fitzgerald finished with O/U 29.5 Drops in his career.", choices: ["OVER", "UNDER"], answer: 1 },
+    ],
+  },
+    "2026-04-05": { //Sunday
+    event: "",
+    questions: [
+    { question: "Who is the Chiefs' all-time sacks leader?", choices: ["Crhis Jones", "Tamba Hali", "Justin Houston", "Derrick Thomas"], answer: 3 },
+    { question: "Which player caught Joe Montana's game-winning touchdown in \"The Catch\"?", choices: ["Dwight Clark", "Jerry Rice", "Roger Craig", "Russ Francis"], answer: 0 },
+    { question: "How many teams did Vinny Testaverde start for during his career?", choices: ["4", "5", "6", "7"], answer: 3 },
+    { question: "True or False: The Super Bowl has been played on every day of the week at some point.", choices: ["True", "False"], answer: 1 },
+    { question: "Which team was the last to join the NFL, making it a 32-team league?", choices: ["Browns", "Panthers", "Texans", "Jaguars"], answer: 2 },
+    ],
+  },
+    "2026-04-06": { //Monday
+    event: "",
+    questions: [
+    { question: "The Tampa Bay Buccaneers were originally placed in which surprising division?", choices: ["AFC East", "NFC Central", "NFC North", "AFC West"], answer: 3 },
+    { question: "Which player scored the winning touchdown on the Immaculate Reception?", choices: ["Franco Harris", "Jerome Bettis", "Dennis Hughes", "Dick Hoak"], answer: 0 },
+    { question: "True or False: A QB has thrown for 600+ yards in a single game.", choices: ["True", "False"], answer: 1 },
+    { question: "What number did Reggie White wear?", choices: ["56", "59", "92", "99"], answer: 2 },
+    { question: "Who holds the record for most career receiving TDs by a tight end?", choices: ["Rob Gronkowski", "Antonio Gates", "Tony Gonzalez", "Travis Kelce"], answer: 1 },
+    ],
+  },
+    "2026-04-07": { //Tuesday
+    event: "",
+    questions: [
+    { question: "True or False: The Jets won a Super Bowl before the Giants did.", choices: ["True", "False"], answer: 0 },
+    { question: "Which WR holds the record for most consecutive games with a reception?", choices: ["Davante Adams", "Jerry Rice", "Don Hutson", "Steve Smith Sr."], answer: 1 },
+    { question: "Which stadium was the first outdoor, cold-weather venue to host a Super Bowl?", choices: ["Lambeau Field", "Soldier Field", "MetLife Stadium", "Heinz Field"], answer: 2 },
+    { question: "In what year did the NFL expand to a 14-team playoff format?", choices: ["2014", "2017", "2020", "2022"], answer: 2 },
+    { question: "True or False: The Packers have more total NFL Championships (including pre-Super Bowl era) than any other franchise.", choices: ["True", "False"], answer: 0 },
     ],
   },
 };
