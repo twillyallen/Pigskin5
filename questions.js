@@ -158,7 +158,7 @@ export const CALENDAR = {
     { question: "Which one of these teams does NOT have 4 or more Super Bowl LOSSES?", choices: ["Patriots", "Chargers", "Vikings", "Broncos"], answer: 1 },
     { question: "Where were the Tennessee Titans originally located?", choices: ["Memphis", "Nashville", "Tennessee", "Houston"], answer: 3 },
     { question: "Eric Dickerson set the single-season rushing yards record with how many yards?", choices: ["2,008", "2,066", "2,105", "2,167"], answer: 2 },
-    { question: "What was the Pittsburgh Steelers’ original team name?", choices: ["Pirates", "Beams", "Hope-Harveys", "Rooneys"], answer: 0 },
+    { question: "What was the Pittsburgh Steelers original team name?", choices: ["Pirates", "Beams", "Hope-Harveys", "Rooneys"], answer: 0 },
     { question: "True or False: Brett Favre was originally drafted by the Green Bay Packers.", choices: ["True", "False"], answer: 1 },
     ],
   },
