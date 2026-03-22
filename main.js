@@ -1625,31 +1625,30 @@ function injectShareSummary() {
 
     /* ── Rotating CTA pools by score tier ── */
     const CTA_PERFECT = [
-      "Think you can go 5 for 5?",
-      "I am BUILT DIFFERENT. Your turn.",
-      "Flawless victory. Try me.",
-      "Prove you know ball too."
+      "\nThink you can go 5 for 5?",
+      "\nI am BUILT DIFFERENT. Your turn.",
+      "\nFlawless victory. Try me.",
+      "\nProve you know ball too."
     ];
     const CTA_GOOD = [  // 3–4 correct
-      "Think you know ball?",
-      "Prove you're not a casual.",
-      "Couch coaches only 🛋️",
-      "NFL brain check 🧠",
-      "Can you beat my score?"
+      "\nThink you know ball?",
+      "\nProve you're not a casual.",
+      "\nNFL brain check 🧠",
+      "\nCan you beat my score?"
     ];
     const CTA_MID = [  // 1–2 correct
-      "I need backup… you try.",
-      "Humbling. Your turn though.",
-      "Don't let me suffer alone...",
-      "Surely you can beat this...",
-      "Low bar. Go clear it."
+      "\nI need backup… you try.",
+      "\nHumbling. Your turn though.",
+      "\nDon't let me suffer alone...",
+      "\nSurely you can beat this...",
+      "\nLow bar. Go clear it."
     ];
     const CTA_ZERO = [
-      "I do NOT know ball 🤦",
-      "Down bad. Historically bad.",
-      "0 for 5. I'm cooked 💀",
-      "Proof I should stop talking football.",
-      "Rock bottom looks like this."
+      "\nI do NOT know ball 🤦",
+      "\nDown bad. Historically bad.",
+      "\n0 for 5. I'm cooked 💀",
+      "\nProof I should stop talking football.",
+      "\nRock bottom looks like this."
     ];
 
     const pickRandom = (arr) => arr[Math.floor(Math.random() * arr.length)];
