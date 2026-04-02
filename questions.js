@@ -269,7 +269,7 @@ export const CALENDAR = {
     { question: "Which team did Brett Favre and the Packers defeat in Super Bowl XXXI?", choices: ["Broncos", "Patriots", "Bills", "Chiefs"], answer: 1 },
     { question: "Which QB once threw a TD pass to HIMSELF in a playoff game?", choices: ["Patrick Mahomes", "Nick Foles", "Marcus Mariota", "Ben Roethlisberger"], answer: 2 },
     { question: "Who is the Eagles' all-time leading rusher?", choices: ["LeSean McCoy", "Steve Van Buren", "Brian Westbrook", "Wilbert Montgomery"], answer: 0 },
-    { question: "OVER or UNDER: The Bears have O/U 1.5 Super Bowl victories all-time.", choices: ["OVER", "UNDER"], answer: 0 },
+    { question: "OVER or UNDER: The Bears have O/U 1.5 Super Bowl victories all-time.", choices: ["OVER", "UNDER"], answer: 1 },
     ],
   },
     "2026-04-03": { //Friday
