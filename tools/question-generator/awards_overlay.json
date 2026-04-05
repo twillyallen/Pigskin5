@@ -1,0 +1,80 @@
+{
+  "_comment": "Pigskin5 Awards Overlay — Update each offseason. nflverse doesn't track awards, so these are manual.",
+  "_last_updated": "2026-04-05",
+
+  "qb_awards": {
+    "Tom Brady": {"super_bowls_won": 7, "mvps": 3},
+    "Peyton Manning": {"super_bowls_won": 2, "mvps": 5},
+    "Aaron Rodgers": {"super_bowls_won": 1, "mvps": 4},
+    "Brett Favre": {"super_bowls_won": 1, "mvps": 3},
+    "Patrick Mahomes": {"super_bowls_won": 3, "mvps": 2},
+    "Drew Brees": {"super_bowls_won": 1, "mvps": 0},
+    "Ben Roethlisberger": {"super_bowls_won": 2},
+    "Eli Manning": {"super_bowls_won": 2},
+    "Russell Wilson": {"super_bowls_won": 1},
+    "Matt Ryan": {"super_bowls_won": 0, "mvps": 1},
+    "Cam Newton": {"super_bowls_won": 0, "mvps": 1},
+    "Kurt Warner": {"super_bowls_won": 1, "mvps": 2},
+    "Josh Allen": {"super_bowls_won": 0, "mvps": 1},
+    "Lamar Jackson": {"super_bowls_won": 0, "mvps": 2},
+    "Matthew Stafford": {"super_bowls_won": 1, "mvps": 1},
+    "Joe Burrow": {"super_bowls_won": 0},
+    "Dak Prescott": {"super_bowls_won": 0},
+    "Jared Goff": {"super_bowls_won": 0},
+    "Philip Rivers": {"super_bowls_won": 0},
+    "Ryan Fitzpatrick": {"super_bowls_won": 0},
+    "Jameis Winston": {"super_bowls_won": 0}
+  },
+
+  "season_awards": {
+    "2025": {
+      "mvp": "Matthew Stafford",
+      "opoy": "Ja'Marr Chase",
+      "dpoy": "Myles Garrett",
+      "oroy": "Tetairoa McMillan",
+      "droy": "Carson Schwesinger",
+      "coach_of_year": "Mike Vrabel",
+      "comeback_player": "Joe Burrow"
+    },
+    "2024": {
+      "mvp": "Josh Allen",
+      "opoy": "Saquon Barkley",
+      "dpoy": "Myles Garrett",
+      "oroy": "Jayden Daniels",
+      "droy": "Jared Verse",
+      "coach_of_year": "Kevin O'Connell"
+    },
+    "2023": {
+      "mvp": "Lamar Jackson",
+      "opoy": "CeeDee Lamb",
+      "dpoy": "Myles Garrett",
+      "oroy": "Puka Nacua",
+      "droy": "Will Anderson Jr.",
+      "coach_of_year": "Kevin Stefanski"
+    },
+    "2022": {
+      "mvp": "Patrick Mahomes",
+      "opoy": "Justin Jefferson",
+      "dpoy": "Nick Bosa",
+      "oroy": "Garrett Wilson",
+      "droy": "Sauce Gardner",
+      "coach_of_year": "Brian Daboll"
+    },
+    "2021": {
+      "mvp": "Aaron Rodgers",
+      "opoy": "Cooper Kupp",
+      "dpoy": "T.J. Watt",
+      "oroy": "Ja'Marr Chase",
+      "droy": "Micah Parsons",
+      "coach_of_year": "Mike Vrabel"
+    },
+    "2020": {
+      "mvp": "Aaron Rodgers",
+      "opoy": "Derrick Henry",
+      "dpoy": "Aaron Donald",
+      "oroy": "Justin Herbert",
+      "droy": "Chase Young",
+      "coach_of_year": "Kevin Stefanski"
+    }
+  }
+}
