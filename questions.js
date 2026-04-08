@@ -89,8 +89,8 @@ export const CALENDAR = {
     { question: "True or False: Steve Young made his first NFL starts for the Buccaneers.", choices: ["True", "False"], answer: 0 },
     { question: "Which RB has more Career Rushing TDs?", choices: ["Jim Brown", "Frank Gore", "LaDainian Tomlinson", "Shaun Alexander"], answer: 2 },
     { question: "What year was the Packers' first season?", choices: ["1919", "1921", "1925", "1930"], answer: 0 },
-    { question: "OVER or UNDER: The Patriots have O/U 4.5 Super Bowl losses all-time.", choices: ["OVER", "UNDER"], answer: 0 },
-    { question: "Which of these was an ACTUAL NFL player?", choices: ["Deontarius Crumbleton", "Malcontavious Ashcastle", "Manti Te'o", "Sequester Grundelplith M.D."], answer: 2 },
+    { question: "OVER or UNDER: The Patriots have O/U 5.5 Super Bowl LOSSES all-time.", choices: ["OVER", "UNDER"], answer: 0 },
+    { question: "True or False: The Giants play their Home Games in the state of New York.", choices: ["True", "False"], answer: 1 },
     ],
   },
     "2026-04-11": { //Saturday
@@ -99,14 +99,14 @@ export const CALENDAR = {
     { question: "Who is the San Francisco 49ers' all-time leader in receiving yards?", choices: ["Deebo Samuel Sr.", "Willie Snead", "Jerry Rice", "Logan Thomas"], answer: 2 },
     { question: "Guess the All-Time QB:\n- 27,989 Pass Yards\n- 212 Pass TDs\n- 210 INTs\n- 70.9 Passer Rating", choices: ["Terry Bradshaw", "Peyton Manning", "Troy Aikman", "Matt Hasselbeck"], answer: 0 },
     { question: "Which of these was an ACTUAL NFL player?", choices: ["D'Onta Foreman", "Breshawn Bonecastle", "La'Vondrius McThunderson", "Ventravian Pennywhistle"], answer: 0 },
-    { question: "Who led the NFL in Rushing Yards in 2005?", choices: ["Breece Hall", "LaDainian Tomlinson", "Damien Harris", "Shaun Alexander"], answer: 3 },
+    { question: "Who led the NFL in Rushing Yards in 2005?", choices: ["Tiki Barber", "LaDainian Tomlinson", "Edgerrin James", "Shaun Alexander"], answer: 3 },
     { question: "OVER or UNDER: The Browns have O/U 3.5 NFL championships (all-time).", choices: ["OVER", "UNDER"], answer: 0 },
     ],
   },
     "2026-04-12": { //Sunday
     event: "",
     questions: [
-    { question: "Guess the Career WR:\n- 14,185 Rec. Yards\n- 70 Rec. TDs\n- 1,062 Receptions", choices: ["Kendall Wright", "Amon-Ra St. Brown", "Andre Johnson", "Jaylen Waddle"], answer: 2 },
+    { question: "Guess the Career WR:\n- 14,185 Rec. Yards\n- 70 Rec. TDs\n- 1,062 Receptions", choices: ["Kendall Wright", "Odelle Beckham Jr.", "Andre Johnson", "Jaylen Waddle"], answer: 2 },
     { question: "OVER or UNDER: The Jaguars have O/U 0.5 Super Bowl victories all-time.", choices: ["OVER", "UNDER"], answer: 1 },
     { question: "Who won Defensive Rookie of the Year in 2009?", choices: ["Fred Warner", "Will Anderson Jr.", "Brian Cushing", "Chris Jones"], answer: 2 },
     { question: "True or False: The Arizona Cardinals were originally called the Chicago Cardinals.", choices: ["True", "False"], answer: 0 },
