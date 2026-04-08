@@ -78,9 +78,9 @@ export const CALENDAR = {
     questions: [
     { question: "Who won MVP in 2004?", choices: ["Jason Campbell", "Peyton Manning", "David Garrard", "Drew Brees"], answer: 1 },
     { question: "Which RB has more Career Rushing Yards?", choices: ["Derrick Henry", "Adrian Peterson", "Barry Sanders", "Edgerrin James"], answer: 2 },
-    { question: "Guess the Career QB:\n- 28,209 Pass Yards\n- 161 Pass TDs\n- 156 INTs\n- 77.4 Passer Rating", choices: ["Jeff Garcia", "Jon Kitna", "John Elway", "Troy Aikman"], answer: 1 },
+    { question: "Guess the Career QB:\n- 25,537 Pass Yards\n- 161 Pass TDs\n- 83 INTs\n- 87.5 Passer Rating", choices: ["Jeff Garcia", "Jon Kitna", "John Elway", "Troy Aikman"], answer: 0 },
     { question: "OVER or UNDER: The Steelers have O/U 6.5 Super Bowl victories all-time.", choices: ["OVER", "UNDER"], answer: 1 },
-    { question: "Which of these was an ACTUAL NFL player?", choices: ["Booger McFarland", "Fartrell Cluggins", "Zayvarious Picklesmith", "Ravioli Buccatini Sr."], answer: 0 },
+    { question: "Which of these was an ACTUAL NFL player?", choices: ["Zayvarious Picklesmith", "Fartrell Cluggins", "Booger McFarland", "Ravioli Buccatini Sr."], answer: 2 },
     ],
   },
     "2026-04-10": { //Friday
