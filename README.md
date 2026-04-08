@@ -203,7 +203,7 @@ cd question-gen/
 \# Generate 7 days of questions starting April 15
 
 
-
+##### "cd tools/question-generator"
 ##### "py .\generate_questions.py --days 14 --start-date 2026-04-08"
 
 

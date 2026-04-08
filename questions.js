@@ -67,10 +67,10 @@ export const CALENDAR = {
     event: "",
     questions: [
     { question: "Which of these was an ACTUAL NFL player?", choices: ["Jaiveon Whistleblower", "Dekambrian Quartermaine", "Cartwright Beauregard VII", "Ndamukong Suh"], answer: 3 },
-    { question: "Who is the Kansas City Chiefs' all-time leader in passing yards?", choices: ["Gardner Minshew", "Carson Wentz", "Len Dawson", "Joe Montana"], answer: 2 },
-    { question: "True or False: Ray Lewis won Super Bowl MVP with ZERO sacks in that game.", choices: ["True", "False"], answer: 0 },
+    { question: "Who is the Kansas City Chiefs' all-time leader in passing yards?", choices: ["Gardner Minshew", "Carson Wentz", "Len Dawson", "Patrick Mahomes"], answer: 3 },
+    { question: "How many rushing TDs did LaDainian Tomlinson score in 2006?", choices: ["30", "24", "28", "26"], answer: 2 },
     { question: "Guess the Career RB:\n- 13,018 Rush Yards\n- 127 Total TDs\n- 122 Rush TDs\n- 14,819 Yards from Scrimmage", choices: ["Derrick Henry", "Antonio Gibson", "James Cook", "LeSean McCoy"], answer: 0 },
-    { question: "OVER or UNDER: Sam Darnold has O/U 20,481.5 Career Passing Yards.", choices: ["OVER", "UNDER"], answer: 1 },
+    { question: "OVER or UNDER: Sam Darnold has O/U 20,432.5 Career Passing Yards.", choices: ["OVER", "UNDER"], answer: 1 },
     ],
   },
     "2026-04-09": { //Thursday
