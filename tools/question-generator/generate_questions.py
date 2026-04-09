@@ -229,9 +229,62 @@ def main():
                        help="Output filename")
     parser.add_argument("--seed", type=int, default=None,
                        help="Random seed for reproducibility")
+    parser.add_argument("--only", type=str, default=None,
+                   choices=["stat_leader", "true_false", "over_under", 
+                            "guess_player", "franchise", "history", "real_player"],
+                   help="Generate only this question type (ignores day structure)")
+    parser.add_argument("--count", type=int, default=10,
+                   help="When using --only, how many questions to generate")
+    parser.add_argument("--save", action="store_true",
+                   help="When using --only, also write questions to the output file")
     
     args = parser.parse_args()
     
+
+    # Initialize generators
+    generators = {
+        "stat_leader": StatLeaderGenerator(),
+        "true_false": TrueFalseGenerator(),
+        "over_under": OverUnderGenerator(),
+        "guess_player": GuessPlayerGenerator(),
+        "franchise": FranchiseGenerator(),
+        "history": HistoryGenerator(),
+        "real_player": RealPlayerGenerator(),
+    }    
+    if args.only:
+            gen = generators[args.only]
+            print(f"🎯 Generating {args.count} {args.only} questions only")
+            print()
+            
+            collected = []
+            for i in range(args.count):
+                diff = random.choice(["easy", "medium", "hard"])
+                q = gen.generate(difficulty=diff)
+                collected.append(q)
+                
+                print(f"[{i+1}] ({diff})")
+                print(f"    Q: {q['question']}")
+                for j, c in enumerate(q['choices']):
+                    marker = "✅" if j == q['answer'] else "  "
+                    print(f"    {marker} {c}")
+                print()
+            
+            if args.save:
+                # Wrap in a fake "day" so format_as_js works
+                fake_day = {
+                    "date": datetime.now().strftime("%Y-%m-%d"),
+                    "day_name": "TestBatch",
+                    "questions": collected,
+                }
+                js_output = format_as_js([fake_day])
+                output_path = Path(args.output)
+                output_path.write_text(js_output, encoding="utf-8")
+                print(f"   📝 Wrote {len(collected)} questions to {args.output}")
+            
+            return
+
+
+
     if args.seed is not None:
         random.seed(args.seed)
     
@@ -246,16 +299,7 @@ def main():
     print(f"   Output: {args.output}")
     print()
     
-    # Initialize generators
-    generators = {
-        "stat_leader": StatLeaderGenerator(),
-        "true_false": TrueFalseGenerator(),
-        "over_under": OverUnderGenerator(),
-        "guess_player": GuessPlayerGenerator(),
-        "franchise": FranchiseGenerator(),
-        "history": HistoryGenerator(),
-        "real_player": RealPlayerGenerator(),
-    }
+
     
     used_questions = set()
     days = []

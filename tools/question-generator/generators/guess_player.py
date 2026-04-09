@@ -73,14 +73,36 @@ class GuessPlayerGenerator(BaseGenerator):
         
         stat_block = "\n".join(f"- {l}" for l in lines)
         
-        # Get distractors (same era, same position)
-        era = correct[3]
-        same_era = [p for p in QUARTERBACKS if p[3] == era and p[0] != name]
-        if len(same_era) < 3:
-            same_era = [p for p in QUARTERBACKS if p[0] != name]
-        
-        random.shuffle(same_era)
-        distractors = [p[0] for p in same_era[:3]]
+        # Get distractors with similar career stat magnitude
+        correct_yards = stats.get("pass_yards", 0)
+        if correct_yards > 0:
+            # Find QBs within ±30% of the correct player's pass yards
+            lower = correct_yards * 0.70
+            upper = correct_yards * 1.30
+            similar_tier = [
+                p for p in QUARTERBACKS 
+                if p[0] != name 
+                and lower <= p[2].get("pass_yards", 0) <= upper
+            ]
+            
+            # If too few in tight band, expand to ±50%
+            if len(similar_tier) < 3:
+                lower = correct_yards * 0.50
+                upper = correct_yards * 1.50
+                similar_tier = [
+                    p for p in QUARTERBACKS 
+                    if p[0] != name 
+                    and lower <= p[2].get("pass_yards", 0) <= upper
+                ]
+            
+            # Final fallback: any QB
+            if len(similar_tier) < 3:
+                similar_tier = [p for p in QUARTERBACKS if p[0] != name]
+        else:
+            similar_tier = [p for p in QUARTERBACKS if p[0] != name]
+
+        random.shuffle(similar_tier)
+        distractors = [p[0] for p in similar_tier[:3]]
         
         choices = [name] + distractors
         random.shuffle(choices)

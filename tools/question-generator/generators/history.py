@@ -9,7 +9,8 @@ from generators import BaseGenerator
 from generators.nfl_data import (
     SUPER_BOWLS, ICONIC_MOMENTS, COACHES, DRAFT_NOTABLES,
     RECORDS, NFL_FACTS, MVP_WINNERS, KICKER_MVP, SEASON_LEADERS,
-    FRANCHISES, QUARTERBACKS
+    FRANCHISES, QUARTERBACKS, RUNNING_BACKS, WIDE_RECEIVERS,
+    TIGHT_ENDS, DEFENSIVE_PLAYERS
 )
 
 
@@ -203,7 +204,6 @@ class HistoryGenerator(BaseGenerator):
             era is one of: classic, modern, current
             """
             era = player[3]
-
             if year_val >= 2016:
                 return era == "current"
             elif year_val >= 2000:
@@ -211,35 +211,29 @@ class HistoryGenerator(BaseGenerator):
             else:
                 return True
 
-        # Build smarter distractor pools by award type
+        # Build smarter distractor pools by award type — ALL filtered by year relevance
         if "Coach" in award:
+            # Coaches don't have era tags in the same shape; leave as-is for now
             pool = [c["name"] for c in COACHES if c["name"] != correct]
 
         elif award in ["Defensive Player of the Year", "Defensive Rookie of the Year"]:
-            defensive_pool = [
-                "Myles Garrett", "T.J. Watt", "Nick Bosa", "Micah Parsons",
-                "Aaron Donald", "Maxx Crosby", "Chris Jones", "Trey Hendrickson",
-                "Aidan Hutchinson", "Will Anderson Jr.", "Jared Verse",
-                "Carson Schwesinger", "Roquan Smith", "Fred Warner"
+            pool = [
+                p[0] for p in DEFENSIVE_PLAYERS
+                if p[0] != correct and _is_relevant(p, year_int)
             ]
-            pool = [n for n in defensive_pool if n != correct]
 
         elif award == "Offensive Rookie of the Year":
-            offensive_rookie_pool = [
-                "Jayden Daniels", "Puka Nacua", "Garrett Wilson", "Ja'Marr Chase",
-                "Justin Herbert", "C.J. Stroud", "Bijan Robinson",
-                "Marvin Harrison Jr.", "Malik Nabers", "Brock Bowers",
-                "Tetairoa McMillan", "Drake Maye", "Bo Nix", "Caleb Williams"
+            # Rookies are always "of their era" — filter offensive skill players by year
+            pool = [
+                p[0] for p in (QUARTERBACKS + RUNNING_BACKS + WIDE_RECEIVERS + TIGHT_ENDS)
+                if p[0] != correct and _is_relevant(p, year_int)
             ]
-            pool = [n for n in offensive_rookie_pool if n != correct]
 
         elif award == "Offensive Player of the Year":
-            offensive_pool = [
-                "Ja'Marr Chase", "Saquon Barkley", "Justin Jefferson",
-                "Christian McCaffrey", "Tyreek Hill", "Cooper Kupp",
-                "Derrick Henry", "CeeDee Lamb", "Davante Adams"
+            pool = [
+                p[0] for p in (QUARTERBACKS + RUNNING_BACKS + WIDE_RECEIVERS + TIGHT_ENDS)
+                if p[0] != correct and _is_relevant(p, year_int)
             ]
-            pool = [n for n in offensive_pool if n != correct]
 
         elif award == "MVP":
             pool = [
@@ -256,9 +250,14 @@ class HistoryGenerator(BaseGenerator):
         random.shuffle(pool)
         distractors = pool[:3]
 
-        # fallback if somehow pool is too small
+        # Fallback if filtering was too aggressive — relax era constraint but stay in position group
         if len(distractors) < 3:
-            fallback_pool = [p[0] for p in QUARTERBACKS if p[0] != correct]
+            if award in ["Defensive Player of the Year", "Defensive Rookie of the Year"]:
+                fallback_pool = [p[0] for p in DEFENSIVE_PLAYERS if p[0] != correct]
+            elif "Coach" in award:
+                fallback_pool = [c["name"] for c in COACHES if c["name"] != correct]
+            else:
+                fallback_pool = [p[0] for p in QUARTERBACKS if p[0] != correct]
             random.shuffle(fallback_pool)
             for name in fallback_pool:
                 if name not in distractors:
