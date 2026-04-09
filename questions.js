@@ -86,11 +86,11 @@ export const CALENDAR = {
     "2026-04-10": { //Friday
     event: "",
     questions: [
-    { question: "True or False: Steve Young made his first NFL starts for the Buccaneers.", choices: ["True", "False"], answer: 0 },
+    { question: "Steve Young made his first NFL start for which team?", choices: ["49ers", "Chargers", "Buccaneers", "Rams"], answer: 2 },
     { question: "Which RB has more Career Rushing TDs?", choices: ["Jim Brown", "Frank Gore", "LaDainian Tomlinson", "Shaun Alexander"], answer: 2 },
     { question: "What year was the Packers' first season?", choices: ["1919", "1921", "1925", "1930"], answer: 0 },
-    { question: "OVER or UNDER: The Patriots have O/U 5.5 Super Bowl LOSSES all-time.", choices: ["OVER", "UNDER"], answer: 0 },
-    { question: "True or False: The Giants play their Home Games in the state of New York.", choices: ["True", "False"], answer: 1 },
+    { question: "OVER or UNDER: The Patriots have O/U 5.5 Super Bowl losses all-time.", choices: ["OVER", "UNDER"], answer: 0 },
+    { question: "True or False: The Giants play in New York.", choices: ["True", "False"], answer: 1 },
     ],
   },
     "2026-04-11": { //Saturday
