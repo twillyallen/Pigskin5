@@ -98,7 +98,7 @@ export const CALENDAR = {
     questions: [
     { question: "Who is the San Francisco 49ers' 2nd all-time leader in receiving yards?", choices: ["Deebo Samuel Sr.", "Terrell Owens", "Jerry Rice", "Vernon Davis"], answer: 1 },
     { question: "Guess the All-Time QB:\n- 27,989 Pass Yards\n- 212 Pass TDs\n- 210 INTs\n- 70.9 Passer Rating", choices: ["Terry Bradshaw", "Peyton Manning", "Troy Aikman", "Matt Hasselbeck"], answer: 0 },
-    { question: "Which of these was an ACTUAL NFL player?", choices: ["Nnamdi Asomugha", "Breshawn Bonecastle", "La'Vondrius McThunderson", "Ventravian Pennywhistle"], answer: 0 },
+    { question: "Which of these was an ACTUAL NFL player?", choices: ["Nnamdi Asomugha", "Breshawn Slycastle", "La'Vondrius McWeeson", "Ventravian Penny"], answer: 0 },
     { question: "Who led the NFL in Rushing Yards in 2005?", choices: ["Tiki Barber", "LaDainian Tomlinson", "Edgerrin James", "Shaun Alexander"], answer: 3 },
     { question: "True or False: The Browns have OVER 3.5 NFL championships.", choices: ["True", "False"], answer: 0 },
     ],
