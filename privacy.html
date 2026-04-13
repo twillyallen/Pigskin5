@@ -43,7 +43,7 @@
   <a href="index.html" id="backBtn"><img src="back-icon.png" alt="Back to game" /></a>
   <main class="page">
     <h1>Privacy Policy</h1>
-    <p><em>Last updated: January 3, 2026</em></p>
+    <p><em>Last updated: April 12, 2026</em></p>
 
     <h2>1) Who We Are</h2>
     <p>
@@ -56,10 +56,10 @@
 
     <h2>2) Quick Summary</h2>
     <ul>
-      <li><strong>No account required.</strong> You can play without creating an account or providing personal details.</li>
-      <li><strong>Local game data stays on your device.</strong> Streaks and completion status are stored in your browser's 'local storage.</li>
-      <li><strong>Leaderboard is optional.</strong> If you submit a score, we receive your (optional) display name + score + timing.</li>
-      <li><strong>We use cookies.</strong> Cookies may be used for analytics and advertising (including Google AdSense).</li>
+      <li><strong>You can play anonymously.</strong> No account is required to play the daily quiz.</li>
+      <li><strong>Accounts require email.</strong> Posting to the leaderboard, saving streaks to your account, and receiving optional reminders require a free account, which requires an email address.</li>
+      <li><strong>Local game data stays on your device</strong> if you don't sign in. Signed-in users' streaks and play history are stored on our servers.</li>
+      <li><strong>We use cookies</strong> for analytics, advertising (Google AdSense), and keeping you signed in.</li>
     </ul>
 
     <h2>3) Information We Collect</h2>
@@ -92,19 +92,21 @@
       You can clear local storage at any time through your browser settings.
     </p>
 
-    <h3>C) Automatically Collected Information (Standard Website Data)</h3>
-    <p>
-      Like most websites, when you visit Pigskin5 we (or our service providers) may automatically collect certain information, such as:
-    </p>
+    <h3>C) Account Data (If You Create an Account)</h3>
+    <p>If you create an account, we collect and store on our servers:</p>
     <ul>
-      <li>Browser type and version</li>
-      <li>Device type and operating system</li>
-      <li>Approximate location (e.g., country/region derived from IP)</li>
-      <li>IP address</li>
-      <li>Pages viewed and time spent</li>
-      <li>Referring/exit pages</li>
-      <li>Date/time of access</li>
+      <li>Email address (used for sign-in links and optional reminders)</li>
+      <li>Username (a public handle you choose)</li>
+      <li>Display name (the name shown on the leaderboard, which you can change)</li>
+      <li>Your quiz attempts: date, score, time, and choices made</li>
+      <li>Streak counts (current and longest)</li>
+      <li>Your timezone and optional reminder time preferences</li>
+      <li>Whether you've opted into email reminders</li>
+      <li>Dates you accepted our Terms of Service</li>
     </ul>
+    <p>
+      Account data is stored via Supabase, our backend service provider. See Section 7 for more.
+    </p>
 
     <h2>4) Cookies, Consent, and Tracking Technologies</h2>
 
@@ -146,16 +148,15 @@
       <li><a href="https://optout.networkadvertising.org/" target="_blank" rel="noopener">Network Advertising Initiative opt-out page</a></li>
     </ul>
 
-    <h2>6) How We Use Information</h2>
-    <p>We use information collected to:</p>
+    <h2>6) Email Communications</h2>
+    <p>If you have an account, we may send:</p>
     <ul>
-      <li>Operate and maintain Pigskin5</li>
-      <li>Display daily leaderboards (when users submit scores)</li>
-      <li>Improve gameplay, features, and site performance</li>
-      <li>Analyze usage trends and troubleshoot issues</li>
-      <li>Help prevent spam, abuse, or fraudulent activity</li>
-      <li>Display and measure advertising (when enabled)</li>
+      <li><strong>Transactional emails:</strong> sign-in links and account-related notices. These are necessary to operate your account and cannot be disabled while your account is active.</li>
+      <li><strong>Optional reminder emails:</strong> daily notifications when a new quiz is available. These are sent only if you opt in, and you can unsubscribe at any time using the link in any reminder email.</li>
     </ul>
+    <p>
+      We do not sell your email address or share it with third parties for marketing purposes.
+    </p>
 
     <h2>7) Sharing of Information</h2>
     <p>
@@ -163,8 +164,16 @@
     </p>
     <ul>
       <li>
-        <strong>Service providers:</strong> analytics, hosting, and advertising partners may process data on our behalf to provide their services.
-      </li>
+      <strong>Service providers:</strong> We use the following to operate Pigskin5:
+      <ul>
+        <li><strong>Supabase</strong> (database, authentication, and hosting of account data)</li>
+        <li><strong>GitHub Pages</strong> (website hosting)</li>
+        <li><strong>Google AdSense</strong> (advertising)</li>
+        <li><strong>Google Analytics</strong> (site usage analytics, if applicable)</li>
+        <li><strong>Resend</strong> (sending transactional and reminder emails, when enabled)</li>
+      </ul>
+      These providers process data on our behalf to provide their services.
+    </li>
       <li>
         <strong>Legal requirements:</strong> if required by law, regulation, or valid legal process.
       </li>
@@ -184,6 +193,13 @@
       We take reasonable steps to protect information. However, no method of transmission or storage is 100% secure,
       and we cannot guarantee absolute security.
     </p>
+    <h2>9a) Data Retention</h2>
+    <p>
+      We retain account data for as long as your account is active. If you delete your account,
+      we will delete your email, username, and preferences from our active systems within 30 days.
+      Leaderboard submissions may be retained in anonymized form (without your username or email)
+      for historical integrity.
+    </p>
 
     <h2>10) Children’s Privacy</h2>
     <p>
@@ -192,11 +208,14 @@
     </p>
 
     <h2>11) Your Choices</h2>
-    <ul>
-      <li><strong>Local data:</strong> clear local storage through your browser settings to reset streaks/results.</li>
-      <li><strong>Cookies:</strong> manage cookies via your browser settings and (if present) our cookie banner.</li>
-      <li><strong>Leaderboard:</strong> you can choose not to submit your score.</li>
-    </ul>
+      <ul>
+        <li><strong>Local data:</strong> clear local storage through your browser settings to reset streaks/results.</li>
+        <li><strong>Cookies:</strong> manage cookies via your browser settings and (if present) our cookie banner.</li>
+        <li><strong>Leaderboard:</strong> you can choose not to submit your score.</li>
+        <li><strong>Account deletion:</strong> you can request deletion of your account and all associated data by contacting us.</li>
+        <li><strong>Email preferences:</strong> unsubscribe from reminder emails via the link in any such email.</li>
+        <li><strong>Sign out:</strong> you can sign out at any time using the "Hi, username" button in the site navigation.</li>
+      </ul>
 
     <h2>12) Do Not Track</h2>
     <p>
