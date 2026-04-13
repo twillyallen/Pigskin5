@@ -15,7 +15,8 @@
   <link rel="canonical" href="https://pigskin5.com/">
 
   <link rel="stylesheet" href="./style.css" />
-  <script type="module" src="./main.js?v=20250203"></script>
+  <script type="module" src="modules/auth-ui.js"></script>
+  <script type="module" src="./main.js?v=20260412"></script>
 
   <style>
     .start-nav-btns {
@@ -55,7 +56,7 @@
     body.quiz-active #startScreenAdWrap,
     body.quiz-active .res-banner-desktop,
     body.quiz-active .res-banner-mobile,
-    body.results-active .site-nav,
+
     body.results-active .how-it-works,
     body.results-active .about-strip,
     body.results-active #adModal,
@@ -261,6 +262,17 @@
   </script>
 
 </head>
+<div id="updateBanner" class="update-banner" hidden>
+  <div class="update-banner-inner">
+    <span class="update-banner-emoji">🏈</span>
+    <span class="update-banner-text">
+      <strong>Pigskin5 leveled up!</strong>
+      Accounts are here! Sign up by <strong>May 1</strong> to lock in your streak.
+    </span>
+    <button id="updateBannerAction" class="update-banner-action">Sign up</button>
+    <button id="updateBannerClose" class="update-banner-close" aria-label="Dismiss">×</button>
+  </div>
+</div>
 <body>
   <aside id="howTo" class="howto" hidden>
     <h3>How to Play</h3>
@@ -279,6 +291,8 @@
     <a href="about.html">About</a>
     <a href="contact.html">Contact</a>
     <button id="helpBtn" class="icon-btn site-nav-help" aria-expanded="false" aria-controls="howTo" title="How to play" style="background:none;border:none;color:rgba(255,255,255,0.75);font-size:0.78rem;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;cursor:pointer;padding:4px 10px;border-radius:6px;transition:color 0.15s,background 0.15s;">How to Play</button>
+    <button id="signInBtn" class="sign-in-btn">Sign in</button>
+<!-- This will get swapped for "Hi, username" + "Sign out" once logged in -->
   </nav>
 
   <main class="app">
@@ -529,22 +543,24 @@
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
 
   <!-- Cookie Consent Banner -->
+   
   <!-- Ad Popup Modal -->
-  <div id="adModal" style="display:flex; position:fixed; inset:0; width:100vw; height:100vh; background:rgba(0,0,0,0.75); z-index:99999; justify-content:center; align-items:center;">
-    <div id="adModalBackdrop" style="position:absolute; inset:0;"></div>
-    <div style="position:relative; background:#101418; border:1px solid rgba(255,255,255,0.18); border-radius:14px; padding:40px 16px 20px; width:300px; max-width:90vw; max-height:90vh; overflow:hidden; text-align:center; box-shadow:0 12px 42px rgba(0,0,0,0.6); z-index:1;">
-      <button id="adModalClose" style="position:absolute; top:8px; right:8px; background:rgba(255,255,255,0.9); color:#111; border:0; border-radius:10px; width:32px; height:32px; font-size:20px; font-weight:900; cursor:pointer; display:flex; align-items:center; justify-content:center; line-height:1;">&times;</button>
-      <p style="margin:0 0 10px; font-size:10px; text-transform:uppercase; letter-spacing:0.12em; color:rgba(255,255,255,0.35);">Advertisement</p>
-      <div style="display:flex; justify-content:center; min-height:250px; align-items:center;">
-        <ins id="popupAdSlot"
-             class="adsbygoogle"
-             style="display:inline-block; width:250px; height:250px;"
-             data-ad-client="ca-pub-8430547369793861"
-             data-ad-slot="3343356628"
-             data-ad-format="rectangle"></ins>
-      </div>
+<!-- Ad Popup Modal -->
+<div id="adModal" class="auth-modal" style="display:flex;">
+  <div id="adModalBackdrop" style="position:absolute; inset:0;"></div>
+  <div class="auth-modal-content" style="max-width:340px; padding:40px 16px 20px; text-align:center; position:relative; z-index:1;">
+    <button id="adModalClose" class="auth-close" aria-label="Close">×</button>
+    <p style="margin:0 0 10px; font-size:10px; text-transform:uppercase; letter-spacing:0.12em; color:rgba(255,255,255,0.35);">Advertisement</p>
+    <div style="display:flex; justify-content:center; min-height:250px; align-items:center;">
+      <ins id="popupAdSlot"
+           class="adsbygoogle"
+           style="display:inline-block; width:250px; height:250px;"
+           data-ad-client="ca-pub-8430547369793861"
+           data-ad-slot="3343356628"
+           data-ad-format="rectangle"></ins>
     </div>
   </div>
+</div>
 
     <div id="cookie-consent-banner" style="display: none; position: fixed; bottom: 20px; right: 20px; max-width: 400px; background-color: rgba(44, 62, 80, 0.95); color: white; padding: 20px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.3); z-index: 9999; font-family: Arial, sans-serif;">
     <p style="margin: 0 0 15px 0; font-size: 13px; line-height: 1.5;">
@@ -700,7 +716,11 @@
       return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
     })()) === '1';
 
-    if (alreadyPlayed) {
+    var isMagicLinkReturn = window.location.hash.includes('access_token')
+                         || window.location.hash.includes('type=magiclink')
+                         || window.location.hash.includes('error=');
+
+    if (alreadyPlayed || isMagicLinkReturn) {
       closeAdModal();
       return;
     }
@@ -714,6 +734,57 @@
     }
   });
 })();
+</script>
+
+
+<!-- Auth modal: hidden by default, shown via JS -->
+<div id="authModal" class="auth-modal" hidden>
+  <div class="auth-modal-content">
+    <button class="auth-close" id="authClose" aria-label="Close">×</button>
+    
+    <h2>Sign in to Pigskin5</h2>
+    <p class="auth-subtitle">Enter your email and we'll send you a sign-in link.<br>New here? Same form.</p>
+    
+    <input type="email" id="authEmail" placeholder="your@email.com" autocomplete="email" />
+    
+    <button id="authSubmit" class="auth-submit-btn">Continue with email</button>
+    
+    <div id="authMessage" class="auth-message" hidden></div>
+  </div>
+</div>
+
+<script type="module">
+  import { supabase } from "./modules/supabase-client.js";
+
+  const BANNER_KEY = "ps5_update_banner_dismissed_v1";
+  const CUTOFF = new Date("2026-05-01T00:00:00-07:00");
+  
+  async function maybeShowBanner() {
+    // Past cutoff? Never show again.
+    if (new Date() >= CUTOFF) return;
+    
+    // User dismissed it? Don't show.
+    if (localStorage.getItem(BANNER_KEY) === "1") return;
+    
+    // User logged in? They already know. Don't show.
+    const { data: { user } } = await supabase.auth.getUser();
+    if (user) return;
+    
+    const banner = document.getElementById("updateBanner");
+    if (!banner) return;
+    banner.hidden = false;
+    
+    document.getElementById("updateBannerClose")?.addEventListener("click", () => {
+      localStorage.setItem(BANNER_KEY, "1");
+      banner.hidden = true;
+    });
+    
+    document.getElementById("updateBannerAction")?.addEventListener("click", () => {
+      document.getElementById("signInBtn")?.click();
+    });
+  }
+  
+  maybeShowBanner();
 </script>
 
 </body>

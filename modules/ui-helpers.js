@@ -14,7 +14,7 @@ export function showToast(msg) {
 }
 
 // Custom popup to show tier badge info
-export function showTierTooltip(emoji, tierName, streak, playerName, emojiScore, points) {
+export function showTierTooltip(emoji, tierName, streak, playerName, emojiScore, points, username) {
   console.log('showTierTooltip called!', emoji, tierName, streak, emojiScore);
 
   let existing = document.getElementById('tier-popup-container');
@@ -88,18 +88,31 @@ export function showTierTooltip(emoji, tierName, streak, playerName, emojiScore,
 
   popup.appendChild(emojiEl);
 
-  if (playerName) {
-    const playerEl = document.createElement('div');
-    playerEl.textContent = playerName;
-    playerEl.style.cssText = `
-      font-size: 22px;
-      font-weight: 700;
-      color: rgba(255, 255, 255, 0.95);
+if (playerName) {
+  const playerEl = document.createElement('div');
+  playerEl.textContent = playerName;
+  playerEl.style.cssText = `
+    font-size: 22px;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.95);
+    margin-bottom: 4px;
+    letter-spacing: 0.5px;
+  `;
+  popup.appendChild(playerEl);
+
+  // NEW: username under display name, if provided
+  if (username) {
+    const usernameEl = document.createElement('div');
+    usernameEl.textContent = `@${username}`;
+    usernameEl.style.cssText = `
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.55);
       margin-bottom: 12px;
-      letter-spacing: 0.5px;
+      font-weight: 500;
     `;
-    popup.appendChild(playerEl);
+    popup.appendChild(usernameEl);
   }
+}
 
   popup.appendChild(nameEl);
   popup.appendChild(streakEl);

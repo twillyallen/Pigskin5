@@ -2,7 +2,8 @@
 // PIGSKIN5 - MAIN.JS (REORGANIZED WITH CLEAR SECTIONS)
 // ============================================================================
 
-import { CALENDAR } from "./questions.js?v=20250914c";
+import { CALENDAR } from "./questions.js?v=20260412";
+import { submitEntry, fetchLeaderboard, refreshStreakCache, getCachedDailyStreak, getCachedTDStreak } from "./modules/leaderboard.js";
 
 // ==============================
 // Config
@@ -154,8 +155,8 @@ function getTierForStreak(streakDays) {
   return STREAK_TIERS[0];
 }
 
-function showTierTooltip(emoji, tierName, streak, playerName, emojiScore, points) {
-  console.log('showTierTooltip called!', emoji, tierName, streak, emojiScore);
+function showTierTooltip(emoji, tierName, streak, playerName, emojiScore, points, username) {
+  console.log('showTierTooltip called!', emoji, tierName, streak, emojiScore, 'USERNAME:', username);
 
   let existing = document.getElementById('tier-popup-container');
   if (existing) {
@@ -228,18 +229,33 @@ function showTierTooltip(emoji, tierName, streak, playerName, emojiScore, points
 
   popup.appendChild(emojiEl);
 
-  if (playerName) {
-    const playerEl = document.createElement('div');
-    playerEl.textContent = playerName;
-    playerEl.style.cssText = `
-      font-size: 22px;
-      font-weight: 700;
-      color: rgba(255, 255, 255, 0.95);
+
+popup.appendChild(emojiEl);
+
+if (playerName) {
+  const playerEl = document.createElement('div');
+  playerEl.textContent = playerName;
+  playerEl.style.cssText = `
+    font-size: 22px;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.95);
+    margin-bottom: 4px;
+    letter-spacing: 0.5px;
+  `;
+  popup.appendChild(playerEl);
+
+  if (username) {
+    const usernameEl = document.createElement('div');
+    usernameEl.textContent = `@${username}`;
+    usernameEl.style.cssText = `
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.55);
       margin-bottom: 12px;
-      letter-spacing: 0.5px;
+      font-weight: 500;
     `;
-    popup.appendChild(playerEl);
+    popup.appendChild(usernameEl);
   }
+}
 
   popup.appendChild(nameEl);
   popup.appendChild(streakEl);
@@ -359,7 +375,7 @@ function computeAndSaveStreak(dateStr) {
   const KEY_LAST = "dailyLastDate";
 
   const last = localStorage.getItem(KEY_LAST);
-  let streak = parseInt(localStorage.getItem(KEY_STREAK) || "0", 10);
+  let streak = getCachedDailyStreak()
 
   if (last === dateStr) return streak;
 
@@ -453,59 +469,22 @@ function saveLeaderboardStore(store) {
 }
 
 async function addLeaderboardEntry(dateStr, entry) {
-  try {
-    const body = new URLSearchParams();
-    body.append("date", dateStr);
-    body.append("name", entry.name);
-    body.append("points", String(entry.points ?? 0));
-    body.append("avgTime", String(entry.avgTime ?? 0));
-    body.append("dailyStreak", String(entry.dailyStreak ?? 0));
-    body.append("emojiScore", entry.emojiScore ?? "");
-
-    await fetch(LEADERBOARD_API_URL, {
-      method: "POST",
-      mode: "no-cors",
-      body
-    });
-  } catch (err) {
-    console.error("Failed to submit:", err);
+  const result = await submitEntry(dateStr, entry);
+  if (result.error) {
+    console.error("Submit failed:", result.error);
+    if (leaderboardWarningEl) {
+      leaderboardWarningEl.textContent = result.error;
+    }
+    throw new Error(result.error);
   }
 }
 
-function fetchLeaderboardJSONP() {
-  return new Promise((resolve, reject) => {
-    const callbackName = "ps5LbCallback_" + Date.now() + "_" + Math.floor(Math.random() * 100000);
-
-    window[callbackName] = (data) => {
-      try {
-        delete window[callbackName];
-        script.remove();
-
-        if (data && data.ok === false) {
-          console.error("Leaderboard error:", data.error);
-          reject(new Error(data.error || "Leaderboard error"));
-        } else {
-          resolve(data || []);
-        }
-      } catch (err) {
-        reject(err);
-      }
-    };
-
-    const script = document.createElement("script");
-    script.src = LEADERBOARD_API_URL + "?callback=" + encodeURIComponent(callbackName);
-
-    script.onerror = (err) => {
-      delete window[callbackName];
-      script.remove();
-      reject(err);
-    };
-
-    document.body.appendChild(script);
-  });
+async function fetchLeaderboardJSONP() {
+  const date = RUN_DATE || getRunDateISO();
+  return await fetchLeaderboard(date);
 }
 
-function createTierBadgeElement(streak, name, points, emojiScore) {
+function createTierBadgeElement(streak, name, points, emojiScore, username) {
   const tier = getTierForStreak(streak);
   const nameContainer = document.createElement("div");
   nameContainer.className = "name-with-tier";
@@ -517,9 +496,9 @@ function createTierBadgeElement(streak, name, points, emojiScore) {
   tierBadge.style.color = tier.color;
   tierBadge.style.cursor = "pointer";
 
-  const showTierInfo = () => {
-    showTierTooltip(tier.emoji, tier.name, streak, name || "Anonymous", emojiScore || "", points);
-  };
+const showTierInfo = () => {
+  showTierTooltip(tier.emoji, tier.name, streak, name || "Anonymous", emojiScore || "", points, username);
+};
 
   tierBadge.addEventListener("click", showTierInfo);
   tierBadge.addEventListener("touchend", (e) => {
@@ -587,7 +566,7 @@ function renderStartLeaderboard(dateStr) {
 
         const nameTd = document.createElement("td");
         const streak = e.dailyStreak ?? 0;
-        nameTd.appendChild(createTierBadgeElement(streak, e.name, e.points, e.emojiScore));
+        nameTd.appendChild(createTierBadgeElement(streak, e.name, e.points, e.emojiScore, e.username));
 
         const pointsTd = document.createElement("td");
         pointsTd.textContent = (e.points ?? 0).toLocaleString();
@@ -618,8 +597,8 @@ function renderStartScorecard() {
 
   if (!scorecardEl) return;
 
-  const dailyStreak = localStorage.getItem("dailyStreak") || "0";
-  const tdStreak = localStorage.getItem("tdStreak") || "0";
+  const dailyStreak = String(getCachedDailyStreak())
+  const tdStreak = String(getCachedTDStreak());
 
   const today = getRunDateISO();
   const yesterday = yesterdayOf(today);
@@ -705,7 +684,7 @@ function renderLeaderboard(dateStr) {
 
         const nameTd = document.createElement("td");
         const streak = e.dailyStreak ?? 0;
-        nameTd.appendChild(createTierBadgeElement(streak, e.name, e.points, e.emojiScore));
+        nameTd.appendChild(createTierBadgeElement(streak, e.name, e.points, e.emojiScore, e.username));
 
         const pointsTd = document.createElement("td");
         pointsTd.textContent = (e.points ?? 0).toLocaleString();
@@ -779,6 +758,7 @@ async function handleLeaderboardSubmit(evt) {
   };
 
   await addLeaderboardEntry(RUN_DATE, entry);
+  await refreshStreakCache();
   renderLeaderboard(RUN_DATE);
   setSubmittedLeaderboard(RUN_DATE);
 
@@ -1620,7 +1600,7 @@ function injectShareSummary() {
     }).join("");
 
     const dailyStreak = computeAndSaveStreak(RUN_DATE);
-    const tdStreak = localStorage.getItem("tdStreak") || 0;
+    const tdStreak = getCachedTDStreak();
     const shareTier = getTierForStreak(dailyStreak);
 
     /* ── Rotating CTA pools by score tier ── */
@@ -1832,6 +1812,7 @@ function init() {
   menuBtn?.addEventListener("click", () => {
     menu.classList.toggle("hidden");
   });
+  refreshStreakCache();  // don't await — let it run in background
 }
 
 if (document.readyState === "loading") {
