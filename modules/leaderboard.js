@@ -95,8 +95,8 @@ let _cachedTDStreak = null;
 export async function refreshStreakCache() {
   const user = await getCurrentUser();
   if (!user) {
-    _cachedDailyStreak = parseInt(localStorage.getItem("dailyStreak") || "0", 10);
-    _cachedTDStreak = parseInt(localStorage.getItem("tdStreak") || "0", 10);
+    _cachedDailyStreak = null;   // clear cache so reads fall through to localStorage
+    _cachedTDStreak = null;
     return;
   }
   const { data } = await supabase
