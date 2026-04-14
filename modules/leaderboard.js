@@ -117,3 +117,15 @@ export function getCachedTDStreak() {
   if (_cachedTDStreak !== null) return _cachedTDStreak;
   return parseInt(localStorage.getItem("tdStreak") || "0", 10);
 }
+
+export async function hasPlayedToday(dateStr) {
+  const user = await getCurrentUser();
+  if (!user) return false;
+  const { data } = await supabase
+    .from("quiz_attempts")
+    .select("id, answer_data, display_name_used, score, submitted_at")
+    .eq("user_id", user.id)
+    .eq("quiz_date", dateStr)
+    .maybeSingle();
+  return data || false;
+}

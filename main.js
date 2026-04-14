@@ -5,6 +5,8 @@
 import { CALENDAR } from "./questions.js?v=20260412";
 import { submitEntry, fetchLeaderboard, refreshStreakCache, getCachedDailyStreak, getCachedTDStreak } from "./modules/leaderboard.js";
 
+
+
 // ==============================
 // Config
 // ==============================
@@ -812,6 +814,12 @@ function renderPersistedResult(dateStr, persisted) {
   document.body.classList.remove("start-page");
   document.body.classList.remove("quiz-active");
   document.body.classList.add("results-active");
+
+  function unlockBodyScroll() {
+  document.body.style.overflow = '';
+  document.body.style.position = '';
+  document.body.style.width = '';
+}
 
   startScreen.classList.add("hidden");
   cardSec.classList.add("hidden");
