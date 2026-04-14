@@ -3,7 +3,7 @@
 // ============================================================================
 
 import { CALENDAR } from "./questions.js?v=20260412";
-import { submitEntry, fetchLeaderboard, refreshStreakCache, getCachedDailyStreak, getCachedTDStreak } from "./modules/leaderboard.js";
+import { submitEntry, fetchLeaderboard, refreshStreakCache, getCachedDailyStreak, getCachedTDStreak, getTodaysAttempt } from "./modules/leaderboard.js";
 
 
 
@@ -756,6 +756,7 @@ async function handleLeaderboardSubmit(evt) {
     avgTime: latestAvgTime,
     dailyStreak: dailyStreak,
     emojiScore: emojiScore,
+    picks: picks, 
     createdAt: Date.now()
   };
 
@@ -1213,7 +1214,7 @@ function pickAnswer(i, correct) {
   }, 700);
 }
 
-function showStartScreen() {
+async function showStartScreen() {
   window.scrollTo(0, 0);
 
   document.body.classList.remove("no-scroll");
@@ -1223,6 +1224,18 @@ function showStartScreen() {
   document.body.classList.add("start-page");
 
   const runDate = getRunDateISO();
+  // Check server for signed-in users first
+  const serverAttempt = await getTodaysAttempt(runDate);
+  if (serverAttempt) {
+    // Sync to localStorage so the rest of the app stays consistent
+    setAttempt(runDate);
+    setSubmittedLeaderboard(runDate);
+    saveResult(runDate, serverAttempt);
+    renderPersistedResult(runDate, serverAttempt);
+    return;
+  }
+  
+  // Anonymous users or first-time-today-on-this-device
   if (hasAttempt(runDate)) {
     showLockedGate(runDate);
     return;
@@ -1579,10 +1592,16 @@ function injectShareSummary() {
   const leftRow = document.createElement("div");
   leftRow.className = "share-left-row";
 
-  const squares = picks.map(p => {
+let squares;
+if (picks && picks.length > 0) {
+  squares = picks.map(p => {
     const correctAnswers = Array.isArray(p.correct) ? p.correct : [p.correct];
     return correctAnswers.includes(p.pick) ? "🟩" : "⬜";
   }).join("");
+} else {
+  const persisted = loadResult(RUN_DATE);
+  squares = persisted?.emojiScore || "⬜⬜⬜⬜⬜";
+}
   const grid = document.createElement("div");
   grid.className = "share-grid";
   grid.textContent = squares;

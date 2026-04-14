@@ -24,6 +24,7 @@ export async function submitEntry(dateStr, entry) {
         emojiScore: entry.emojiScore,
         dailyStreak: entry.dailyStreak,
         avgTime: entry.avgTime,
+        picks: entry.picks,  // <-- NEW
       },
     });
 
@@ -128,4 +129,29 @@ export async function hasPlayedToday(dateStr) {
     .eq("quiz_date", dateStr)
     .maybeSingle();
   return data || false;
+}
+
+// Check if signed-in user has already played today; returns the attempt data or null
+export async function getTodaysAttempt(dateStr) {
+  const user = await getCurrentUser();
+  if (!user) return null;
+  
+  const { data, error } = await supabase
+    .from("quiz_attempts")
+    .select("score, display_name_used, time_taken_seconds, submitted_at, answer_data")
+    .eq("user_id", user.id)
+    .eq("quiz_date", dateStr)
+    .maybeSingle();
+  
+  if (error || !data) return null;
+  
+  // Reshape into the format main.js's renderPersistedResult() expects
+return {
+  score: data.score,
+  picks: data.answer_data?.picks || [],
+  totalPoints: data.answer_data?.points || 0,
+  avgTime: data.answer_data?.avgTime ?? data.time_taken_seconds ?? 0,
+  totalTime: (data.answer_data?.avgTime ?? data.time_taken_seconds ?? 0) * 5,
+  emojiScore: data.answer_data?.emojiScore || null,  // <-- NEW
+};
 }
