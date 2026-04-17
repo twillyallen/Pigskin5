@@ -1351,7 +1351,16 @@ function recoverFromLimbo() {
     savedPicks = raw ? JSON.parse(raw) : [];
   } catch {}
 
-  picks         = Array.isArray(savedPicks) ? savedPicks : [];
+  // If they have zero answered questions, they likely got hit by the
+  // visibility-change bug on launch. Clear the attempt and let them
+  // play fresh instead of giving them an automatic 0/5.
+  if (!Array.isArray(savedPicks) || savedPicks.length === 0) {
+    try { localStorage.removeItem(KEY_ATTEMPT_PREFIX + runDate); } catch {}
+    clearSessionState();
+    return false;
+  }
+
+  picks         = savedPicks;
   score         = 0;
   totalPoints   = 0;
   questionTimes = picks.map(p => p.elapsed ?? TIME_LIMIT);
@@ -1382,7 +1391,10 @@ function recoverFromLimbo() {
 }
 
 function _onVisibilityChange() {
-  if (document.hidden && isQuizInProgress()) {
+  // Require at least 1 answered question before forfeiting.
+  // Prevents instant 0/5 when a brief focus-loss (notification,
+  // pull-to-refresh, address-bar animation) fires on game start.
+  if (document.hidden && isQuizInProgress() && picks.length > 0) {
     document.removeEventListener("visibilitychange", _onVisibilityChange);
     window.removeEventListener("beforeunload", _onBeforeUnload);
     forfeitAndFinish();
@@ -1446,8 +1458,15 @@ function startGame() {
   // Persist in-progress state so a refresh can recover gracefully
   saveSessionState();
 
-  // Tab-out: forfeit remaining questions and go straight to results
-  document.addEventListener("visibilitychange", _onVisibilityChange);
+  // Tab-out: forfeit remaining questions and go straight to results.
+  // Delay registration by 2s so brief focus-loss on game launch
+  // (notifications, pull-to-refresh, address-bar animations) can't
+  // instantly forfeit the quiz and lock the player out with 0/5.
+  setTimeout(() => {
+    if (isQuizInProgress()) {
+      document.addEventListener("visibilitychange", _onVisibilityChange);
+    }
+  }, 2000);
 
   // Refresh / close: update session picks so recovery has latest data
   window.addEventListener("beforeunload", _onBeforeUnload);
