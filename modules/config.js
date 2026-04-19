@@ -43,6 +43,7 @@ export const EVENT_LOGOS = {
     "NFLHonorsEdition": "logos/NFLHonorsEdition.png",
     "SUPERBOWL": "logos/SUPERBOWL.png",
     "ValentinesDay": "logos/ValentinesDay.png",
+    "NFLDraft2026": "logos/Draft2026.png",
   // ... etc
 };
 

@@ -188,7 +188,7 @@ export const CALENDAR = {
     questions: [
     { question: "Which of these was an ACTUAL NFL player?", choices: ["Tresharius Bumbleton", "Kendarious McThunderson", "Pisa Tinoisamoa", "Bresharius Stonehammer"], answer: 2 },
     { question: "True or False: The Browns have appeared in a Super Bowl.", choices: ["True", "False"], answer: 1 },
-    { question: "Which franchise originally drafted Eli Manning?", choices: ["Chargers", "Broncos", "Steelers", "Raiders"], answer: 0 },
+    { question: "True or False: Joe Montana has won 5 Super Bowls.", choices: ["True", "False"], answer: 1 },
     { question: "Who led the NFL in 2025 in Receiving Touchdowns?", choices: ["Dallas Goedert", "Puka Nacua", "Davante Adams", "Jackson Smith-Njigba"], answer: 2 },
     { question: "Who was the first unanimous MVP?", choices: ["Lamar Jackson (2019)", "Tom Brady (2007)", "LaDainian Tomlinson (2006)", "Tom Brady (2010)"], answer: 3 },
     ],
@@ -199,8 +199,48 @@ export const CALENDAR = {
     { question: "How many receptions did Trey McBride have in 2025?", choices: ["130", "141", "135", "126"], answer: 3 },
     { question: "What was the Kansas City Chiefs's original team name?", choices: ["Texans", "Rivermen", "Renegades", "Wildcats"], answer: 0 },
     { question: "Guess the All-Time WR:\n- 7,624 Rec. Yards\n- 54 Rec. TDs\n- 630 Receptions", choices: ["Devin Hester", "Randall Cobb", "Brandin Cooks", "Jamison Crowder"], answer: 1 },
-    { question: "Which of these was an ACTUAL NFL player?", choices: ["Varce Upton", "BenJarvus Green-Ellis", "Nyjah West", "Deontarius Crumbleton"], answer: 1 },
+    { question: "Which of these was an ACTUAL NFL player?", choices: ["Varce Upton", "BenJarvus Green-Ellis", "Nyjah West", "Deontarius Sentra-Benz"], answer: 1 },
     { question: "True or False: Wide Receivers have more MVP Awards than Defensive Players.", choices: ["True", "False"], answer: 1 },
+    ],
+  },
+    "2026-04-22": { //Wednesday
+    event: "",
+    questions: [
+    { question: "Guess the Career TE:\n- 2,002 Rec. Yards\n- 16 Rec. TDs\n- 219 Receptions", choices: ["Dalton Schultz", "Kellen Winslow", "Cade Otton", "Logan Thomas"], answer: 3 },
+    { question: "True or False: The Bears have won 2 Super Bowls.", choices: ["True", "False"], answer: 1 },
+    { question: "OVER or UNDER: The Commanders have O/U 2.5 Super Bowl victories all-time.", choices: ["OVER", "UNDER"], answer: 0 },
+    { question: "Who won Offensive Rookie of the Year in 2008?", choices: ["Matt Ryan", "Ocho Cinco", "Ryan Clady", "Matt Forte"], answer: 0 },
+    { question: "Which of these was an ACTUAL NFL player?", choices: ["Pig Prather", "Ja'Vontavious Van Der Berg", "Jammie Johnson IV", "Dequavious Lamb"], answer: 0 },
+    ],
+  },
+    "2026-04-23": { //Thursday
+    event: "NFLDraft2026",
+    questions: [
+    { question: "What team drafted Eli Manning?", choices: ["Colts", "Giants", "Chargers", "Raiders"], answer: 2 },
+    { question: "Which QB was drafted #1 overall by the Colts in 1983 but refused to play for them?", choices: ["Jim Kelly", "John Elway", "Dan Marino", "Troy Aikman"], answer: 1 },
+    { question: "Who was 'The Incredible Bust' taken one pick before Barry Sanders in the 1989 draft?", choices: ["Steve Atwater", "Deion Sanders", "Jeff George", "Tony Mandarich"], answer: 3 },
+    { question: "Which team ended up taking 'The Incredible Bust'?", choices: ["Green Bay Packers", "Houston Oilers", "Chicago Bears", "Phoenix Cardinals"], answer: 0 },
+    { question: "What year was the first NFL Draft held?", choices: ["1920", "1936", "1941", "1952"], answer: 1 },
+    ],
+  },
+    "2026-04-24": { //Friday
+    event: "NFLDraft2026",
+    questions: [
+    { question: "Which team drafted Bo Jackson #1 Overall?", choices: ["Eagles", "Buccaneers", "Raiders", "Browns"], answer: 2 },
+    { question: "The NFL Draft adopted its current 7-round format in what year?", choices: ["1973", "1982", "1987", "1994"], answer: 3 },
+    { question: "Which school has the most first-round NFL Draft picks all-time?", choices: ["USC", "Alabama", "Notre Dame", "Ohio State"], answer: 3 },
+    { question: "Which QB was the first to win the Super Bowl from the 2020 Draft?", choices: ["Joe Burrow", "Jalen Hurts", "Jordan Love", "Justin Herbert"], answer: 1 },
+    { question: "Who ran the fastest 40yd Dash in Combine History?", choices: ["Xavier Worthy", "John Ross III", "Tyreek Hill", "Chris Johnson"], answer: 0 },
+    ],
+  },
+    "2026-04-25": { //Saturday
+    event: "NFLDraft2026",
+    questions: [
+    { question: "What number pick was Tom Brady", choices: ["47", "199", "214", "230"], answer: 1 },
+    { question: "What is the nickname for the last player selected in the NFL Draft?", choices: ["LOOOSER", "The Longshot", "Mr Irrelevant", "Dead Last Jack"], answer: 2 },
+    { question: "Which QB was drafted #2 overall in 1998 and is considered one of the biggest busts ever?", choices: ["JaMarcus Russell", "Ryan Leaf", "Akili Smith", "Tim Couch"], answer: 1 },
+    { question: "Who drafted Brett Favre in the 1991 Draft?", choices: ["New York Jets", "Green Bay Packers", "Minnesota Vikings", "Atlanta Falcons"], answer: 3 },
+    { question: "How many 1st Round picks from the 2021 Draft are still with their original team?", choices: ["21", "17", "12", "9"], answer: 2 },
     ],
   },
 };
