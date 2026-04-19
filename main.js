@@ -744,7 +744,7 @@ async function handleLeaderboardSubmit(evt) {
     return;
   }
 
-  const dailyStreak = parseInt(localStorage.getItem("dailyStreak") || "0", 10);
+  const dailyStreak = getCachedDailyStreak();
 
   const emojiScore = picks.map(p => {
     const correctAnswers = Array.isArray(p.correct) ? p.correct : [p.correct];
