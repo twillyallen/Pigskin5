@@ -540,6 +540,73 @@ PRE_NFLVERSE_TES = [
 ]
 
 
+# ─── MANUAL STAT CORRECTIONS ────────────────────────────────────────────────
+# Players whose nflverse stats are incomplete due to pre-1999 seasons.
+# These override nflverse-derived career totals after the pipeline runs.
+# Format: "Player Name": {"stat_key": correct_value, ...}
+# Also supports "era" and "teams" overrides.
+
+MANUAL_STAT_CORRECTIONS = {
+    # ── QBs with pre-1999 seasons ──────────────────────────────────────────
+    "Kerry Collins":    {"pass_yards": 40922, "pass_tds": 208, "ints": 218, "passer_rating": 73.4, "era": "modern"},
+    "Jay Fiedler":      {"pass_yards": 12521, "pass_tds": 79,  "ints": 78,  "era": "classic"},
+    "Mark Brunell":     {"pass_yards": 32072, "pass_tds": 184, "ints": 134, "passer_rating": 84.0, "era": "modern"},
+    "Vinny Testaverde": {"pass_yards": 46233, "pass_tds": 275, "ints": 267, "passer_rating": 75.6, "era": "classic"},
+    "Brad Johnson":     {"pass_yards": 29054, "pass_tds": 166, "ints": 114, "passer_rating": 84.5, "era": "classic"},
+    "Kurt Warner":      {"pass_yards": 32344, "pass_tds": 208, "ints": 128, "passer_rating": 93.7},
+
+    # ── RBs with pre-1999 seasons ──────────────────────────────────────────
+    "Priest Holmes":    {"rush_yards": 8172,  "rush_tds": 91,  "ypc": 4.6,  "era": "modern", "teams": ["Ravens", "Chiefs"]},
+    "Edgerrin James":   {"rush_yards": 12246, "rush_tds": 80,  "ypc": 4.0,  "rec_yards": 3364, "total_tds": 91, "era": "classic", "teams": ["Colts", "Cardinals", "Seahawks"]},
+    "Eddie George":     {"rush_yards": 10441, "rush_tds": 68,  "ypc": 3.9,  "era": "classic", "teams": ["Titans", "Cowboys"]},
+    "Corey Dillon":     {"rush_yards": 11241, "rush_tds": 82,  "ypc": 4.0,  "era": "modern",  "teams": ["Bengals", "Patriots"]},
+    "Thurman Thomas":   {"rush_yards": 12074, "rush_tds": 65,  "ypc": 4.2,  "rec_yards": 4458, "total_tds": 88, "era": "modern", "teams": ["Bills"]},
+    "O.J. Simpson":     {"rush_yards": 11236, "rush_tds": 57,  "ypc": 4.7,  "rec_yards": 2142, "total_tds": 71, "era": "classic", "teams": ["Bills"]},
+
+    # ── WRs with pre-1999 seasons ──────────────────────────────────────────
+    "Randy Moss":       {"rec_yards": 15292, "rec_tds": 156, "receptions": 982,  "era": "modern"},
+    "Terrell Owens":    {"rec_yards": 15934, "rec_tds": 153, "receptions": 1078, "era": "modern"},
+    "Keyshawn Johnson": {"rec_yards": 10571, "rec_tds": 64,  "receptions": 814,  "era": "modern"},
+    "Marvin Harrison":  {"rec_yards": 14580, "rec_tds": 128, "receptions": 1102, "era": "modern", "teams": ["Colts"]},
+    "Isaac Bruce":      {"rec_yards": 15208, "rec_tds": 91,  "receptions": 1024, "era": "modern", "teams": ["Rams", "49ers"]},
+    "Herman Moore":     {"rec_yards": 9174,  "rec_tds": 62,  "receptions": 670,  "era": "classic", "teams": ["Lions"]},
+    "Calvin Johnson":   {"rec_yards": 11619, "rec_tds": 83,  "receptions": 731,  "era": "modern", "teams": ["Lions"]},
+    "Muhsin Muhammad":  {"rec_yards": 9881,  "rec_tds": 62,  "receptions": 860,  "era": "modern", "teams": ["Panthers", "Bears"]},
+}
+
+
+def apply_stat_corrections(players: list[tuple]) -> list[tuple]:
+    """Override nflverse-derived stats with manually verified career totals."""
+    result = []
+    for p in players:
+        name, pos, stats, era, teams = p
+        if name in MANUAL_STAT_CORRECTIONS:
+            corrections = MANUAL_STAT_CORRECTIONS[name]
+            stats = dict(stats)
+            for k, v in corrections.items():
+                if k == "era":
+                    era = v
+                elif k == "teams":
+                    teams = v
+                else:
+                    stats[k] = v
+        result.append((name, pos, stats, era, teams))
+
+    # Add any entries in corrections that weren't in nflverse at all
+    existing_names = {p[0] for p in result}
+    for name, corrections in MANUAL_STAT_CORRECTIONS.items():
+        if name not in existing_names:
+            pos_guess = "WR" if "rec_yards" in corrections and "rush_yards" not in corrections else \
+                        "RB" if "rush_yards" in corrections else "QB"
+            era = corrections.pop("era", "modern") if "era" in corrections else "modern"
+            teams = corrections.pop("teams", []) if "teams" in corrections else []
+            # re-read since we may have popped
+            corrections = {k: v for k, v in MANUAL_STAT_CORRECTIONS[name].items() if k not in ("era", "teams")}
+            result.append((name, pos_guess, corrections, era, teams))
+
+    return result
+
+
 # ─── SUPER BOWL / AWARDS / CURATED DATA ─────────────────────────────────────
 # These don't come from nflverse stats. Kept as-is from nfl_data.py.
 # The pipeline only touches the player stat arrays and season leaders.
@@ -816,11 +883,17 @@ def main():
     rbs = merge_with_legends(rbs, PRE_NFLVERSE_RBS)
     wrs = merge_with_legends(wrs, PRE_NFLVERSE_WRS)
     tes = merge_with_legends(tes, PRE_NFLVERSE_TES)
-    
-    # 4. Apply award overlay
+
+    # 4. Apply manual corrections (pre-1999 truncation fixes + known bad data)
+    qbs = apply_stat_corrections(qbs)
+    rbs = apply_stat_corrections(rbs)
+    wrs = apply_stat_corrections(wrs)
+    tes = apply_stat_corrections(tes)
+
+    # 5. Apply award overlay
     qbs = apply_award_overlay(qbs, QB_AWARDS)
     
-    # 5. Build season leaders
+    # 6. Build season leaders
     season_leaders = build_season_leaders(stats_df)
     
     print()

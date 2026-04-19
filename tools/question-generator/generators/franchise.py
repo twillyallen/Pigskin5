@@ -31,9 +31,9 @@ class FranchiseGenerator(BaseGenerator):
         """Who is the [Team]'s all-time leader in [stat]?"""
 
         stat_options = [
-            ("all_time_pass_leader", "passing yards", "QB"),
-            ("all_time_rush_leader", "rushing yards", "RB"),
-            ("all_time_rec_leader", "receiving yards", "REC"),
+            ("all_time_pass_leader", "passing yards", "QB", "pass_yards"),
+            ("all_time_rush_leader", "rushing yards", "RB", "rush_yards"),
+            ("all_time_rec_leader", "receiving yards", "REC", "rec_yards"),
         ]
 
         def played_for_team(player, franchise_name):
@@ -43,7 +43,7 @@ class FranchiseGenerator(BaseGenerator):
 
         # Try multiple times to find a franchise/stat combo with enough valid same-team players
         for _ in range(25):
-            stat_key, stat_label, stat_family = random.choice(stat_options)
+            stat_key, stat_label, stat_family, sort_stat = random.choice(stat_options)
 
             eligible = [(name, data) for name, data in FRANCHISES.items() if stat_key in data]
             if not eligible:
@@ -66,15 +66,22 @@ class FranchiseGenerator(BaseGenerator):
                     continue
                 if not played_for_team(p, team_name):
                     continue
-                candidate_pool.append(p[0])
+                candidate_pool.append((p[0], p[2].get(sort_stat, 0)))
 
             # Need at least 3 distractors from players who actually played for that team
-            unique_candidates = list(dict.fromkeys(candidate_pool))
+            unique_seen = set()
+            unique_candidates = []
+            for name, stat_val in candidate_pool:
+                if name not in unique_seen:
+                    unique_seen.add(name)
+                    unique_candidates.append((name, stat_val))
+
             if len(unique_candidates) < 3:
                 continue
 
-            random.shuffle(unique_candidates)
-            distractors = unique_candidates[:3]
+            # Sort by stat descending so we get the most notable players first
+            unique_candidates.sort(key=lambda x: x[1], reverse=True)
+            distractors = [name for name, _ in unique_candidates[:3]]
 
             choices = [correct] + distractors
             random.shuffle(choices)
@@ -135,22 +142,33 @@ class FranchiseGenerator(BaseGenerator):
         }
 
     def _which_team(self, difficulty: str) -> dict:
-        """Which team does X belong to?"""
-        teams = list(FRANCHISES.keys())
+        """How many Super Bowls has [team] won?"""
+        eligible = [(name, data) for name, data in FRANCHISES.items() if "super_bowls_won" in data]
+        if not eligible:
+            return self._franchise_history(difficulty)
 
-        team = random.choice(teams)
-        correct = team
+        team_name, team_data = random.choice(eligible)
+        correct_count = team_data["super_bowls_won"]
 
-        wrongs = random.sample([t for t in teams if t != correct], 3)
+        other_counts = sorted(set(
+            data["super_bowls_won"] for _, data in FRANCHISES.items()
+            if "super_bowls_won" in data and data["super_bowls_won"] != correct_count
+        ))
 
-        choices = [correct] + wrongs
+        for delta in [-1, 1, 2, 3]:
+            n = correct_count + delta
+            if n >= 0 and n not in other_counts and n != correct_count:
+                other_counts.append(n)
+
+        random.shuffle(other_counts)
+        distractors = other_counts[:3]
+
+        choices = [str(correct_count)] + [str(d) for d in distractors]
         random.shuffle(choices)
-        answer_idx = choices.index(correct)
+        answer_idx = choices.index(str(correct_count))
 
         return {
-            "question": "What year was the Packers' first season?",
-            "choices": ["1919", "1921", "1925", "1930"],
-            "answer": 0,
-            "_type": "franchise",
-            "_difficulty": difficulty,
+            "question": f"How many Super Bowls have the {team_name} won?",
+            "choices": choices,
+            "answer": answer_idx,
         }

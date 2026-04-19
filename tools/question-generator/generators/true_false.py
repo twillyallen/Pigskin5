@@ -29,7 +29,7 @@ class TrueFalseGenerator(BaseGenerator):
         for name, data in FRANCHISES.items():
             short = name.split()[-1]
             
-            if data.get("super_bowl_appearances", 0) == 0 and data.get("super_bowls_won", 0) == 0:
+            if data.get("super_bowl_appearances", 0) == 0 and data.get("super_bowls_won", 0) == 0 and data.get("super_bowl_losses", 0) == 0:
                 facts.append((f"The {short} have appeared in a Super Bowl.", False))
             
             if data.get("super_bowls_won", 0) > 0:
@@ -62,7 +62,6 @@ class TrueFalseGenerator(BaseGenerator):
             ("Johnny Manziel started more than 10 career NFL games.", False),
             ("The Texans have reached a conference championship game.", False),
             ("Ray Lewis won Super Bowl MVP with ZERO sacks in that game.", True),
-            ("The Super Bowl has been played on every day of the week at some point.", False),
             ("A TE has led the league in receiving yards.", False),
             ("An offensive lineman has caught a TD pass in the Super Bowl.", False),
             ("A QB has thrown for 600+ yards in a single game.", False),

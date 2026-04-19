@@ -205,11 +205,11 @@ class HistoryGenerator(BaseGenerator):
             """
             era = player[3]
             if year_val >= 2016:
-                return era == "current"
-            elif year_val >= 2000:
                 return era in ["modern", "current"]
+            elif year_val >= 2000:
+                return era == "modern"
             else:
-                return True
+                return era in ["classic", "modern"]
 
         # Build smarter distractor pools by award type — ALL filtered by year relevance
         if "Coach" in award:
@@ -257,7 +257,7 @@ class HistoryGenerator(BaseGenerator):
             elif "Coach" in award:
                 fallback_pool = [c["name"] for c in COACHES if c["name"] != correct]
             else:
-                fallback_pool = [p[0] for p in QUARTERBACKS if p[0] != correct]
+                fallback_pool = [p[0] for p in (QUARTERBACKS + RUNNING_BACKS + WIDE_RECEIVERS + TIGHT_ENDS) if p[0] != correct]
             random.shuffle(fallback_pool)
             for name in fallback_pool:
                 if name not in distractors:

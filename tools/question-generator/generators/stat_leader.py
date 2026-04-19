@@ -124,32 +124,13 @@ class StatLeaderGenerator(BaseGenerator):
             era = player[3]
 
             if year_val >= 2016:
-                return era == "current"
-            elif year_val >= 2000:
                 return era in ["modern", "current"]
+            elif year_val >= 2000:
+                return era == "modern"
             else:
-                return True
+                return era in ["classic", "modern"]
 
-            if record_key == "single_season_rec_tds":
-            # Use players who actually make sense in a single-season receiving TD record convo
-                close_pool = [
-                    "Davante Adams",
-                    "Jerry Rice",
-                    "Randy Moss",
-                    "Terrell Owens",
-                    "Marvin Harrison",
-                    "Cris Carter",
-                    "Rob Gronkowski",
-                    "Antonio Brown",
-                    "Calvin Johnson",
-                    "Dez Bryant",
-                    "Justin Jefferson",
-                    "Ja'Marr Chase",
-                    "Tyreek Hill",
-                    "Cooper Kupp",
-                ]
-                pool = [name for name in close_pool if name != correct]
-            # Generate distractors from same position group, filtered by year relevance
+        # Generate distractors from same position group, filtered by year relevance
         if "pass" in stat_key:
             pool = [p for p in QUARTERBACKS if p[0] != leader_name and _is_relevant(p, year_int)]
         elif "rush" in stat_key:
@@ -195,9 +176,22 @@ class StatLeaderGenerator(BaseGenerator):
             else:
                 pool = [p for p in (QUARTERBACKS + RUNNING_BACKS) if p[0] != leader_name]
 
-        distractor_names = [p[0] for p in pool]
-        random.shuffle(distractor_names)
-        distractors = distractor_names[:3]
+        # Map season stat key to career stat key for sorting
+        career_stat_map = {
+            "passing_yards": "pass_yards",
+            "passing_tds": "pass_tds",
+            "rushing_yards": "rush_yards",
+            "rushing_tds": "rush_tds",
+            "receiving_yards": "rec_yards",
+            "receptions": "receptions",
+        }
+        career_key = career_stat_map.get(stat_key, stat_key)
+
+        # Sort by career stat so the most notable players come first, then add some shuffle
+        pool.sort(key=lambda p: p[2].get(career_key, 0), reverse=True)
+        top_pool = pool[:12]
+        random.shuffle(top_pool)
+        distractors = [p[0] for p in top_pool[:3]]
 
         choices = [leader_name] + distractors
         random.shuffle(choices)
@@ -281,14 +275,43 @@ class StatLeaderGenerator(BaseGenerator):
         elif record_key == "career_te_rec_tds":
             pool = top_names_by_stat(TIGHT_ENDS, "rec_tds", exclude_name=correct)
 
+        elif record_key == "single_season_pass_tds":
+            pool = [n for n in [
+                "Tom Brady", "Patrick Mahomes", "Dan Marino", "Drew Brees",
+                "Aaron Rodgers", "Josh Allen", "Matthew Stafford", "Kurt Warner",
+                "Lamar Jackson", "Dak Prescott", "Andy Dalton", "Nick Foles",
+            ] if n != correct]
+
+        elif record_key == "single_season_rush_yards":
+            pool = [n for n in [
+                "Adrian Peterson", "Barry Sanders", "Jamal Lewis", "Eric Dickerson",
+                "LaDainian Tomlinson", "Earl Campbell", "Marcus Allen", "Derrick Henry",
+                "Christian McCaffrey", "O.J. Simpson",
+            ] if n != correct]
+
+        elif record_key == "single_game_rush_yards":
+            pool = [n for n in [
+                "Adrian Peterson", "Barry Sanders", "LaDainian Tomlinson", "Jamal Lewis",
+                "Bo Jackson", "Derrick Henry", "Christian McCaffrey", "Walter Payton",
+            ] if n != correct]
+
         elif "rush" in record_key:
-            pool = [p[0] for p in RUNNING_BACKS if p[0] != correct]
+            pool = top_names_by_stat(RUNNING_BACKS, "rush_yards", exclude_name=correct)
 
         elif "pass" in record_key:
-            pool = [p[0] for p in QUARTERBACKS if p[0] != correct]
+            pool = top_names_by_stat(QUARTERBACKS, "pass_yards", exclude_name=correct)
+
+        elif record_key == "single_season_rec_tds":
+            pool = top_names_by_stat(WIDE_RECEIVERS + TIGHT_ENDS, "rec_tds", exclude_name=correct)
+
+        elif record_key == "career_rec_yards":
+            pool = top_names_by_stat(WIDE_RECEIVERS + TIGHT_ENDS, "rec_yards", exclude_name=correct)
+
+        elif record_key == "career_te_rec_tds":
+            pool = top_names_by_stat(TIGHT_ENDS, "rec_tds", exclude_name=correct)
 
         elif "rec" in record_key or "te" in record_key:
-            pool = [p[0] for p in WIDE_RECEIVERS + TIGHT_ENDS if p[0] != correct]
+            pool = top_names_by_stat(WIDE_RECEIVERS + TIGHT_ENDS, "rec_tds", exclude_name=correct)
 
         else:
             pool = [p[0] for p in QUARTERBACKS + RUNNING_BACKS + WIDE_RECEIVERS if p[0] != correct]
