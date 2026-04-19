@@ -176,7 +176,7 @@ export const CALENDAR = {
     "2026-04-19": { //Sunday
     event: "",
     questions: [
-    { question: "OVER or UNDER: The Seahawks have O/U 1.5 Super Bowl losses all-time.", choices: ["OVER", "UNDER"], answer: 1 },
+    { question: "OVER or UNDER: The Seahawks have O/U 1.5 Super Bowl losses all-time.", choices: ["OVER", "UNDER"], answer: 0 },
     { question: "How many rushing TDs did LaDainian Tomlinson score in 2006?", choices: ["30", "24", "28", "26"], answer: 2 },
     { question: "Guess the Career TE:\n- 2,501 Rec. Yards\n- 26 Rec. TDs\n- 221 Receptions", choices: ["Heath Miller", "Tyler Eifert", "T.J. Hockenson", "Marcus Pollard"], answer: 1 },
     { question: "What year was the Saints' first season?", choices: ["1965", "1967", "1970", "1961"], answer: 1 },
