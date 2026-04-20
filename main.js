@@ -3,7 +3,7 @@
 // ============================================================================
 
 import { CALENDAR } from "./questions.js?v=20260412";
-import { submitEntry, autoRecordAttempt, fetchLeaderboard, fetchWeeklyLeaderboard, refreshStreakCache, getCachedDailyStreak, getCachedTDStreak, getTodaysAttempt, getCachedFavoriteTeam } from "./modules/leaderboard.js";
+import { submitEntry, fetchLeaderboard, fetchWeeklyLeaderboard, refreshStreakCache, getCachedDailyStreak, getCachedTDStreak, getTodaysAttempt, getCachedFavoriteTeam } from "./modules/leaderboard.js";
 import { getCurrentUser, supabase } from "./modules/supabase-client.js";
 import { NFL_TEAMS } from "./modules/nfl-teams.js";
 import { showTierTooltip } from "./modules/ui-helpers.js";
@@ -927,6 +927,21 @@ async function renderPersistedResult(dateStr, persisted) {
   renderLeaderboard(RUN_DATE, guestDailyEntry);
   initLeaderboardTabs(guestDailyEntry, guestWeeklyEntry);
 
+  if (user && hasSubmittedLeaderboard(RUN_DATE)) {
+    if (leaderboardForm) {
+      leaderboardForm.classList.add("submitted");
+      const btn = leaderboardForm.querySelector('button[type="submit"]');
+      if (btn) { btn.disabled = true; btn.textContent = "Score Submitted"; }
+    }
+  } else if (user) {
+    supabase.from("profiles").select("username").eq("id", user.id).maybeSingle()
+      .then(({ data: profile }) => {
+        if (playerNameInput && profile?.username && !playerNameInput.value) {
+          playerNameInput.value = profile.username;
+        }
+      });
+  }
+
   if (restartBtn) {
     restartBtn.style.display = "inline-block";
     restartBtn.textContent = "COME BACK TOMORROW!";
@@ -1758,6 +1773,13 @@ async function showResult() {
 
   const user = await getCurrentUser();
 
+  // Update server-side streak on quiz completion, regardless of leaderboard submission
+  if (user) {
+    supabase.rpc("update_streaks_on_submit", { did_perfect: score === QUESTIONS.length })
+      .then(() => refreshStreakCache())
+      .catch(() => {});
+  }
+
   const guestDailyEntry  = user ? null : { points: totalPoints, avgTime };
   const guestWeeklyEntry = user ? null : { totalPoints, daysPlayed: 1 };
 
@@ -1777,33 +1799,26 @@ async function showResult() {
     lbForm?.classList.remove("hidden");
     guestLbCta?.classList.add("hidden");
 
-    const emojiScore = picks.map(p => {
-      const correct = Array.isArray(p.correct) ? p.correct : [p.correct];
-      return correct.includes(p.pick) ? "🟩" : "⬜";
-    }).join("");
-
-    autoRecordAttempt(RUN_DATE, {
-      points:      totalPoints,
-      avgTime,
-      emojiScore,
-      dailyStreak: getCachedDailyStreak(),
-      picks,
-    }).then(({ wasNew, displayName }) => {
-      if (wasNew) {
-        refreshStreakCache();
-        setSubmittedLeaderboard(RUN_DATE);
-        renderLeaderboard(RUN_DATE, null);
-      }
+    if (hasSubmittedLeaderboard(RUN_DATE)) {
       if (leaderboardForm) {
         leaderboardForm.classList.add("submitted");
         const btn = leaderboardForm.querySelector('button[type="submit"]');
         if (btn) { btn.disabled = true; btn.textContent = "Score Submitted"; }
       }
-      if (playerNameInput) {
-        playerNameInput.value = displayName;
-        playerNameInput.disabled = true;
-      }
-    });
+    } else {
+      (async () => {
+        const user = await getCurrentUser();
+        if (!user) return;
+        const { data: profile } = await supabase
+          .from("profiles")
+          .select("username")
+          .eq("id", user.id)
+          .maybeSingle();
+        if (playerNameInput && profile?.username) {
+          playerNameInput.value = profile.username;
+        }
+      })();
+    }
   }
 
   initLeaderboardTabs(guestDailyEntry, guestWeeklyEntry);

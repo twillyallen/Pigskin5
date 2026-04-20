@@ -37,15 +37,6 @@ export async function submitEntry(dateStr, entry) {
     return { error: "Could not submit. Try again." };
   }
 
-  // Update server-side streaks
-  const didPerfect = score === 5;
-  const { error: streakError } = await supabase.rpc("update_streaks_on_submit", {
-    did_perfect: didPerfect,
-  });
-  if (streakError) {
-    console.warn("Streak update failed (non-fatal):", streakError);
-  }
-
   // Check and award achievements (best-effort, non-blocking)
   checkAndAwardAchievements(user.id, score, entry.picks).catch(() => {});
 
