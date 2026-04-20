@@ -262,17 +262,6 @@
   </script>
 
 </head>
-<div id="updateBanner" class="update-banner" hidden>
-  <div class="update-banner-inner">
-    <span class="update-banner-emoji">🏈</span>
-    <span class="update-banner-text">
-      <strong>Pigskin5 leveled up!</strong>
-      Accounts are here! Sign up by <strong>May 1</strong> to lock in your streak.
-    </span>
-    <button id="updateBannerAction" class="update-banner-action">Sign up</button>
-    <button id="updateBannerClose" class="update-banner-close" aria-label="Dismiss">×</button>
-  </div>
-</div>
 <body>
   <aside id="howTo" class="howto" hidden>
     <h3>How to Play</h3>
@@ -303,19 +292,14 @@
       <div class="overlay">
         <img src="pigskin5logo.png" alt="Pigskin5 Logo" class="title-logo"/>
 
-        <button id="startBtn" class="btn">START</button>
-
-        <div style="height:16px;"></div>
-
         <p class="start-description">
-          <strong>Daily NFL Trivia</strong><br>
-          5 questions. 15 seconds each.<br>
-          New challenge daily!<br>
-          Test your football knowledge and climb the leaderboard!
+          Daily NFL trivia — 5 questions, 15 seconds, prove you know ball.
         </p>
 
+        <button id="startBtn" class="btn">START</button>
+
         <!-- Start Screen Personal Stats Scorecard -->
-        <div id="startScorecard" class="start-scorecard">
+        <div id="startScorecard" class="start-scorecard hidden">
           <div class="scorecard-stats">
             <div class="scorecard-stat">
               <span class="stat-label">Daily Streak:</span>
@@ -326,7 +310,7 @@
               <span class="stat-value" id="scorecardTDStreak">0</span>
             </div>
           </div>
-          
+
           <div id="scorecardTodayBlock" class="hidden">
             <div class="scorecard-header">Today's Results</div>
             <div class="scorecard-emoji" id="scorecardTodayEmoji">⬜⬜⬜⬜⬜</div>
@@ -339,9 +323,9 @@
           </div>
 
           <div class="scorecard-header">Yesterday's Results</div>
-          
+
           <div class="scorecard-emoji" id="scorecardEmoji">⬜⬜⬜⬜⬜</div>
-          
+
           <div class="scorecard-stats">
             <div class="scorecard-stat">
               <span class="stat-label"><br>Yesterday's Score:</span>
@@ -350,7 +334,7 @@
           </div>
         </div>
         <!-- Leaderboard -->
-        <section class="start-leaderboard">
+        <section id="startLeaderboardSection" class="start-leaderboard hidden">
           <h3>Today's Leaderboard</h3>
           <table class="leaderboard-table">
             <thead>
@@ -368,7 +352,7 @@
         </section>
 
         <!-- Ad: Start Screen Square — below leaderboard, above How It Works -->
-        <div id="startScreenAdWrap" style="text-align:center; margin:24px auto 8px;">
+        <div id="startScreenAdWrap" class="hidden" style="text-align:center; margin:24px auto 8px;">
           <ins id="startScreenSquareAd"
                class="adsbygoogle"
                style="display:inline-block;width:250px;height:250px;"
@@ -421,7 +405,10 @@
 
       <!-- Daily Leaderboard -->
       <section id="leaderboard" class="leaderboard">
-        <h3>Daily Leaderboard</h3>
+        <div class="lb-tabs">
+          <button class="lb-tab lb-tab--active" id="lbTabToday">Today</button>
+          <button class="lb-tab" id="lbTabWeek">This Week</button>
+        </div>
         <form id="leaderboardForm" class="leaderboard-form">
           <label for="playerName">Name:</label>
           <input
@@ -432,9 +419,13 @@
           />
           <button type="submit" class="btn small">Submit Score</button>
         </form>
+        <!-- Sign-in CTA shown instead of form for non-logged-in users -->
+        <div id="guestLeaderboardCta" class="guest-lb-cta hidden">
+          <button class="btn small" id="guestLbSignInBtn">Sign in to add your name</button>
+        </div>
         <div id="leaderboardWarning" class="leaderboard-warning"></div>
         <table class="leaderboard-table">
-          <thead>
+          <thead id="leaderboardHead">
             <tr>
               <th>#</th>
               <th>Name</th>
@@ -753,39 +744,6 @@
   </div>
 </div>
 
-<script type="module">
-  import { supabase } from "./modules/supabase-client.js";
-
-  const BANNER_KEY = "ps5_update_banner_dismissed_v1";
-  const CUTOFF = new Date("2026-05-01T00:00:00-07:00");
-  
-  async function maybeShowBanner() {
-    // Past cutoff? Never show again.
-    if (new Date() >= CUTOFF) return;
-    
-    // User dismissed it? Don't show.
-    if (localStorage.getItem(BANNER_KEY) === "1") return;
-    
-    // User logged in? They already know. Don't show.
-    const { data: { user } } = await supabase.auth.getUser();
-    if (user) return;
-    
-    const banner = document.getElementById("updateBanner");
-    if (!banner) return;
-    banner.hidden = false;
-    
-    document.getElementById("updateBannerClose")?.addEventListener("click", () => {
-      localStorage.setItem(BANNER_KEY, "1");
-      banner.hidden = true;
-    });
-    
-    document.getElementById("updateBannerAction")?.addEventListener("click", () => {
-      document.getElementById("signInBtn")?.click();
-    });
-  }
-  
-  maybeShowBanner();
-</script>
 
 </body>
 </html>

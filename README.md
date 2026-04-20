@@ -103,8 +103,8 @@ pigskin5.com/
 The Python pipeline in `question-gen/` automates bulk question creation.
 
 ```powershell
-cd tools/question-generator
-py .\generate_questions.py --days 14 --start-date 2026-04-08
+cd "C:\Users\twill\Desktop\Coding Projects\NFL Trivia\pigskin5\tools\question-generator"; py generate_questions.py --days 14 --start-date 2026-04-26
+
 ```
 
 For specific subsets of questions, use `--only`. Add `--save` to write to `generated_questions.js`; without it, questions only print to the terminal for quick previewing.
@@ -165,13 +165,30 @@ All generators pull from `nfl_data_GENERATED.py`, which exports:
 
 ### Testing Specific Dates
 
-In `date-utils.js`, you can override the active date with a query string. Paste this in the browser:
+In `date-utils.js`, you can override the active date with a query string (non-production only — disabled on `pigskin5.com` and `twillyallen.github.io`):
 
 ```
-http://127.0.0.1:5500/index.html?date=2025-01-15
+http://127.0.0.1:5500/index.html?date=2026-05-07
 ```
 
-Change the date as needed. If you've already "played" that date, clear localStorage for it: open DevTools → Application → Local Storage → delete keys starting with `ft5_attempt_` and `ft5_result_` for that date.
+### Resetting a Quiz Attempt
+
+After playing, both localStorage and Supabase remember your attempt — clearing just localStorage won't work if you're signed in, because `showStartScreen()` re-fetches the server attempt and syncs it back.
+
+**Use the dev helper in the browser console:**
+
+```js
+__devResetToday()
+```
+
+This wipes today's localStorage keys (`ft5_attempt_`, `ft5_result_`, `ps5_leaderboard_submit_`), clears sessionStorage, deletes the Supabase row if you're signed in, and reloads the start screen. Works for both signed-in and anonymous users.
+
+To reset a **different date** (not today), you need to manually:
+1. Delete these localStorage keys from DevTools → Application → Local Storage:
+   - `ft5_attempt_YYYY-MM-DD`
+   - `ft5_result_YYYY-MM-DD`
+   - `ps5_leaderboard_submit_YYYY-MM-DD`
+2. If signed in, delete the matching row from Supabase `quiz_attempts` (by `quiz_date`).
 
 ---
 
@@ -342,7 +359,8 @@ Pigskin5 is approved for Google AdSense.
 |---|---|
 | Add questions for next week | Edit `questions.js` → add date entries → deploy |
 | Generate questions in bulk | `cd question-gen && python generate_questions.py --days 14 --start-date YYYY-MM-DD` → review `generated_questions.js` → merge into `questions.js` |
-| Test a specific date locally | `http://127.0.0.1:5500/index.html?date=2025-12-25` |
+| Test a specific date locally | Open `http://127.0.0.1:5500/index.html?date=2025-12-25` in browser |
+| Reset today's attempt (signed-in or anon) | Open browser console → `__devResetToday()` |
 | Update the quiz archive | `node generate-archive.mjs` → deploy `archive-static.html` |
 | Add a new blog post | Create `blog/your-slug.html` → add entry to `ARTICLES` array in `blog/blog-index.html` → optionally add to `sitemap.xml` |
 | Update awards data | Edit `question-gen/awards_overlay.json` with new season's MVP, OROY, DPOY, etc. |

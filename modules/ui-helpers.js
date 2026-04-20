@@ -1,3 +1,15 @@
+import { fetchPlayerStats } from "./leaderboard.js";
+import { NFL_TEAMS } from "./nfl-teams.js";
+import { ACHIEVEMENTS } from "./achievements.js";
+import { STREAK_TIERS } from "./config.js";
+
+function getTierForStreak(streakDays) {
+  for (let i = STREAK_TIERS.length - 1; i >= 0; i--) {
+    if (streakDays >= STREAK_TIERS[i].minDays) return STREAK_TIERS[i];
+  }
+  return STREAK_TIERS[0];
+}
+
 // Display a temporary toast notification message
 export function showToast(msg) {
   const t = document.createElement("div");
@@ -13,163 +25,249 @@ export function showToast(msg) {
   }, 1600);
 }
 
-// Custom popup to show tier badge info
-export function showTierTooltip(emoji, tierName, streak, playerName, emojiScore, points, username) {
-  console.log('showTierTooltip called!', emoji, tierName, streak, emojiScore);
-
-  let existing = document.getElementById('tier-popup-container');
-  if (existing) {
-    existing.remove();
-  }
-
-  const container = document.createElement('div');
-  container.id = 'tier-popup-container';
-  container.style.cssText = `
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 999999;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: rgba(0, 0, 0, 0.6);
-  `;
-
-  const popup = document.createElement('div');
-  popup.style.cssText = `
-    background: rgba(0, 0, 0, 0.85);
-    backdrop-filter: blur(6px);
-    -webkit-backdrop-filter: blur(6px);
-    padding: 30px 40px;
-    border-radius: 12px;
-    text-align: center;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    max-width: 90vw;
-    animation: popupSlideIn 0.3s ease-out;
-  `;
-
-  const emojiEl = document.createElement('div');
-  emojiEl.textContent = emoji;
-  emojiEl.style.cssText = `
-    font-size: 60px;
-    margin-bottom: 15px;
-    line-height: 1;
-  `;
-
-  const nameEl = document.createElement('div');
-  nameEl.textContent = tierName;
-  nameEl.style.cssText = `
-    font-size: 28px;
-    font-weight: 900;
-    color: white;
-    margin-bottom: 8px;
-    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-  `;
-
-  const streakEl = document.createElement('div');
-  streakEl.textContent = `${streak}-day streak`;
-  streakEl.style.cssText = `
-    font-size: 18px;
-    color: rgba(255, 255, 255, 0.9);
-    font-weight: 600;
-  `;
-
-  const hintEl = document.createElement('div');
-  hintEl.textContent = 'Tap anywhere to close';
-  hintEl.style.cssText = `
-    font-size: 12px;
-    color: rgba(255, 255, 255, 0.6);
-    margin-top: 15px;
-    font-style: italic;
-  `;
-
-  popup.appendChild(emojiEl);
-
-if (playerName) {
-  const playerEl = document.createElement('div');
-  playerEl.textContent = playerName;
-  playerEl.style.cssText = `
-    font-size: 22px;
-    font-weight: 700;
-    color: rgba(255, 255, 255, 0.95);
-    margin-bottom: 4px;
-    letter-spacing: 0.5px;
-  `;
-  popup.appendChild(playerEl);
-
-  // NEW: username under display name, if provided
-  if (username) {
-    const usernameEl = document.createElement('div');
-    usernameEl.textContent = `@${username}`;
-    usernameEl.style.cssText = `
-      font-size: 13px;
-      color: rgba(255, 255, 255, 0.55);
-      margin-bottom: 12px;
-      font-weight: 500;
-    `;
-    popup.appendChild(usernameEl);
-  }
+function formatMemberSince(isoString) {
+  if (!isoString) return null;
+  const d = new Date(isoString);
+  return d.toLocaleDateString("en-US", { month: "long", year: "numeric" });
 }
 
-  popup.appendChild(nameEl);
-  popup.appendChild(streakEl);
+// Custom popup to show tier badge info
+export async function showTierTooltip(emoji, tierName, streak, playerName, emojiScore, points, username) {
+  const existing = document.getElementById("tier-popup-container");
+  if (existing) existing.remove();
 
+  const container = document.createElement("div");
+  container.id = "tier-popup-container";
+  container.style.cssText = `
+    position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+    z-index: 999999; display: flex; align-items: center;
+    justify-content: center; background: rgba(0,0,0,0.6);
+  `;
+
+  const card = document.createElement("div");
+  card.className = "player-card";
+
+  const body = document.createElement("div");
+  body.className = "player-card__body";
+
+  // --- Header: [color line] [tier emoji] [color line] ---
+  const headerEl = document.createElement("div");
+  headerEl.className = "player-card__header";
+
+  const makeSideLines = () => {
+    const wrap = document.createElement("div");
+    wrap.className = "player-card__team-lines";
+    const primary = document.createElement("div");
+    primary.className = "player-card__team-line player-card__team-line--primary";
+    const secondary = document.createElement("div");
+    secondary.className = "player-card__team-line player-card__team-line--secondary";
+    wrap.appendChild(primary);
+    wrap.appendChild(secondary);
+    return { wrap, primary, secondary };
+  };
+
+  const tierEmojiEl = document.createElement("div");
+  tierEmojiEl.className = "player-card__tier-emoji";
+  tierEmojiEl.textContent = emoji;
+
+  const { wrap: linesLeft,  primary: leftPrimary,  secondary: leftSecondary  } = makeSideLines();
+  const { wrap: linesRight, primary: rightPrimary, secondary: rightSecondary } = makeSideLines();
+
+  headerEl.appendChild(linesLeft);
+  headerEl.appendChild(tierEmojiEl);
+  headerEl.appendChild(linesRight);
+  body.appendChild(headerEl);
+
+  // --- Display name ---
+  const nameEl = document.createElement("div");
+  nameEl.className = "player-card__display-name";
+  nameEl.textContent = playerName || "Anonymous";
+
+  // --- Username ---
+  const usernameEl = document.createElement("div");
+  usernameEl.className = "player-card__username";
+  if (username) usernameEl.textContent = `@${username}`;
+
+  // --- Tier + streak ---
+  const tierRowEl = document.createElement("div");
+  tierRowEl.className = "player-card__tier-row";
+  tierRowEl.textContent = tierName;
+
+  const streakEl = document.createElement("div");
+  streakEl.className = "player-card__streak";
+  streakEl.textContent = `${streak}-day streak`;
+
+  body.appendChild(nameEl);
+  if (username) body.appendChild(usernameEl);
+  body.appendChild(tierRowEl);
+  body.appendChild(streakEl);
+
+  // --- Expanded sections (only for signed-in users with username) ---
+  let memberSinceEl, statsEl, achievementsEl, badgeDescEl;
+
+  if (username) {
+    // Member since (skeleton)
+    memberSinceEl = document.createElement("div");
+    memberSinceEl.className = "player-card__member-since";
+    memberSinceEl.textContent = "Member since …";
+    body.appendChild(memberSinceEl);
+
+    // Stats panel (skeleton)
+    statsEl = document.createElement("div");
+    statsEl.className = "player-card__stats";
+    [["—", "Quizzes"], ["—", "Accuracy"], ["—", "Touchdown"]].forEach(([val, label]) => {
+      const cell = document.createElement("div");
+      cell.className = "player-card__stat";
+      const v = document.createElement("div");
+      v.className = "player-card__stat-value player-card__stat-value--loading";
+      v.textContent = val;
+      const l = document.createElement("div");
+      l.className = "player-card__stat-label";
+      l.textContent = label;
+      cell.appendChild(v);
+      cell.appendChild(l);
+      statsEl.appendChild(cell);
+    });
+    body.appendChild(statsEl);
+
+    // Achievements row (skeleton — all locked)
+    achievementsEl = document.createElement("div");
+    achievementsEl.className = "player-card__achievements";
+    ACHIEVEMENTS.forEach(() => {
+      const b = document.createElement("span");
+      b.className = "player-card__badge player-card__badge--locked";
+      b.textContent = "🔒";
+      achievementsEl.appendChild(b);
+    });
+    body.appendChild(achievementsEl);
+
+    // Badge description area (hidden until a badge is tapped)
+    badgeDescEl = document.createElement("div");
+    badgeDescEl.className = "player-card__badge-desc";
+    body.appendChild(badgeDescEl);
+  }
+
+  // --- Score row + points ---
   if (emojiScore) {
-    const emojiScoreEl = document.createElement('div');
-    emojiScoreEl.textContent = emojiScore;
-    emojiScoreEl.style.cssText = `
-      font-size: 24px;
-      margin-top: 12px;
-      letter-spacing: 2px;
-      line-height: 1.4;
-    `;
-    popup.appendChild(emojiScoreEl);
+    const scoreEl = document.createElement("div");
+    scoreEl.className = "player-card__score-row";
+    scoreEl.textContent = emojiScore;
+    body.appendChild(scoreEl);
   }
 
   if (points !== undefined && points !== null) {
-    const pointsEl = document.createElement('div');
-    pointsEl.textContent = `${Number(points).toLocaleString()} pts`;
-    pointsEl.style.cssText = `
-      font-size: 20px;
-      font-weight: 700;
-      color: var(--btn-cyan, #b7f7ff);
-      margin-top: 8px;
-    `;
-    popup.appendChild(pointsEl);
+    const ptsEl = document.createElement("div");
+    ptsEl.className = "player-card__points";
+    ptsEl.textContent = `${Number(points).toLocaleString()} pts`;
+    body.appendChild(ptsEl);
   }
 
-  popup.appendChild(hintEl);
-  container.appendChild(popup);
+  // --- Close hint ---
+  const hintEl = document.createElement("div");
+  hintEl.className = "player-card__close-hint";
+  hintEl.textContent = "Tap outside to close";
+  body.appendChild(hintEl);
 
-  const style = document.createElement('style');
-  style.textContent = `
-    @keyframes popupSlideIn {
-      from {
-        opacity: 0;
-        transform: scale(0.8) translateY(-20px);
-      }
-      to {
-        opacity: 1;
-        transform: scale(1) translateY(0);
-      }
-    }
-  `;
-  document.head.appendChild(style);
-
+  card.appendChild(body);
+  container.appendChild(card);
   document.body.appendChild(container);
 
+  // Only the backdrop (not the card itself) closes the popup
   const removePopup = () => {
-    container.style.opacity = '0';
-    container.style.transition = 'opacity 0.2s';
-    setTimeout(() => {
-      container.remove();
-      style.remove();
-    }, 200);
+    container.style.opacity = "0";
+    container.style.transition = "opacity 0.2s";
+    setTimeout(() => container.remove(), 200);
   };
+  container.addEventListener("click", removePopup);
+  container.addEventListener("touchend", removePopup);
+  card.addEventListener("click", e => e.stopPropagation());
+  card.addEventListener("touchend", e => e.stopPropagation());
 
-  container.addEventListener('click', removePopup);
-  container.addEventListener('touchend', removePopup);
+  // --- Async stats population ---
+  if (username) {
+    (async () => {
+      const stats = await fetchPlayerStats(username);
+      if (!document.getElementById("tier-popup-container")) return;
+
+      if (!stats) return;
+
+      // Team color lines flanking the emoji
+      if (stats.favoriteTeam) {
+        const team = NFL_TEAMS.get(stats.favoriteTeam);
+        if (team) {
+          leftPrimary.style.background  = team.color;
+          rightPrimary.style.background = team.color;
+          const sec = team.secondary || team.color;
+          leftSecondary.style.background  = sec;
+          rightSecondary.style.background = sec;
+        }
+      }
+
+      // Update streak with authoritative DB value
+      if (stats.currentStreak != null) {
+        const updatedTier = getTierForStreak(stats.currentStreak);
+        streakEl.textContent = `${stats.currentStreak}-day streak`;
+        tierEmojiEl.textContent = updatedTier.emoji;
+        tierRowEl.textContent = updatedTier.name;
+      }
+
+      // Member since
+      const since = formatMemberSince(stats.memberSince);
+      if (since && memberSinceEl) memberSinceEl.textContent = `Member since ${since}`;
+
+      // Stats panel
+      if (statsEl) {
+        const cells = statsEl.querySelectorAll(".player-card__stat");
+        const values = [
+          stats.totalQuizzes.toLocaleString(),
+          `${stats.accuracyPct}%`,
+          stats.totalPerfect.toLocaleString(),
+        ];
+        const labels = [
+          "Quizzes",
+          "Accuracy",
+          stats.totalPerfect === 1 ? "Touchdown" : "Touchdowns",
+        ];
+        cells.forEach((cell, i) => {
+          const v = cell.querySelector(".player-card__stat-value");
+          const l = cell.querySelector(".player-card__stat-label");
+          v.textContent = values[i];
+          v.classList.remove("player-card__stat-value--loading");
+          l.textContent = labels[i];
+        });
+      }
+
+      // Achievements
+      if (achievementsEl) {
+        const earned = new Set(stats.achievements || []);
+        const badges = achievementsEl.querySelectorAll(".player-card__badge");
+        let activeBadge = null;
+
+        ACHIEVEMENTS.forEach((achievement, i) => {
+          const b = badges[i];
+          if (!b) return;
+          const isEarned = earned.has(achievement.id);
+          if (isEarned) {
+            b.textContent = achievement.emoji;
+            b.classList.remove("player-card__badge--locked");
+          }
+
+          const showDesc = (e) => {
+            e.stopPropagation();
+            if (activeBadge === b && badgeDescEl.textContent) {
+              badgeDescEl.textContent = "";
+              activeBadge = null;
+              return;
+            }
+            activeBadge = b;
+            const prefix = isEarned ? achievement.emoji : "🔒";
+            badgeDescEl.textContent = `${prefix} ${achievement.name}: ${achievement.desc}`;
+          };
+
+          b.addEventListener("click", showDesc);
+          b.addEventListener("touchend", (e) => { e.preventDefault(); showDesc(e); });
+        });
+      }
+    })();
+  }
 }

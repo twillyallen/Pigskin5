@@ -3,7 +3,11 @@
 // ============================================================================
 
 import { CALENDAR } from "./questions.js?v=20260412";
-import { submitEntry, fetchLeaderboard, refreshStreakCache, getCachedDailyStreak, getCachedTDStreak, getTodaysAttempt } from "./modules/leaderboard.js";
+import { submitEntry, autoRecordAttempt, fetchLeaderboard, fetchWeeklyLeaderboard, refreshStreakCache, getCachedDailyStreak, getCachedTDStreak, getTodaysAttempt, getCachedFavoriteTeam } from "./modules/leaderboard.js";
+import { getCurrentUser, supabase } from "./modules/supabase-client.js";
+import { NFL_TEAMS } from "./modules/nfl-teams.js";
+import { showTierTooltip } from "./modules/ui-helpers.js";
+import { ACHIEVEMENTS } from "./modules/achievements.js";
 
 
 
@@ -158,167 +162,6 @@ function getTierForStreak(streakDays) {
   return STREAK_TIERS[0];
 }
 
-function showTierTooltip(emoji, tierName, streak, playerName, emojiScore, points, username) {
-  console.log('showTierTooltip called!', emoji, tierName, streak, emojiScore, 'USERNAME:', username);
-
-  let existing = document.getElementById('tier-popup-container');
-  if (existing) {
-    existing.remove();
-  }
-
-  const container = document.createElement('div');
-  container.id = 'tier-popup-container';
-  container.style.cssText = `
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 999999;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: rgba(0, 0, 0, 0.6);
-  `;
-
-  const popup = document.createElement('div');
-  popup.style.cssText = `
-    background: rgba(0, 0, 0, 0.85);
-    backdrop-filter: blur(6px);
-    -webkit-backdrop-filter: blur(6px);
-    padding: 30px 40px;
-    border-radius: 12px;
-    text-align: center;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    max-width: 90vw;
-    animation: popupSlideIn 0.3s ease-out;
-  `;
-
-  const emojiEl = document.createElement('div');
-  emojiEl.textContent = emoji;
-  emojiEl.style.cssText = `
-    font-size: 60px;
-    margin-bottom: 15px;
-    line-height: 1;
-  `;
-
-  const nameEl = document.createElement('div');
-  nameEl.textContent = tierName;
-  nameEl.style.cssText = `
-    font-size: 28px;
-    font-weight: 900;
-    color: white;
-    margin-bottom: 8px;
-    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-  `;
-
-  const streakEl = document.createElement('div');
-  streakEl.textContent = `${streak}-day streak`;
-  streakEl.style.cssText = `
-    font-size: 18px;
-    color: rgba(255, 255, 255, 0.9);
-    font-weight: 600;
-  `;
-
-  const hintEl = document.createElement('div');
-  hintEl.textContent = 'Tap anywhere to close';
-  hintEl.style.cssText = `
-    font-size: 12px;
-    color: rgba(255, 255, 255, 0.6);
-    margin-top: 15px;
-    font-style: italic;
-  `;
-
-  popup.appendChild(emojiEl);
-
-
-popup.appendChild(emojiEl);
-
-if (playerName) {
-  const playerEl = document.createElement('div');
-  playerEl.textContent = playerName;
-  playerEl.style.cssText = `
-    font-size: 22px;
-    font-weight: 700;
-    color: rgba(255, 255, 255, 0.95);
-    margin-bottom: 4px;
-    letter-spacing: 0.5px;
-  `;
-  popup.appendChild(playerEl);
-
-  if (username) {
-    const usernameEl = document.createElement('div');
-    usernameEl.textContent = `@${username}`;
-    usernameEl.style.cssText = `
-      font-size: 13px;
-      color: rgba(255, 255, 255, 0.55);
-      margin-bottom: 12px;
-      font-weight: 500;
-    `;
-    popup.appendChild(usernameEl);
-  }
-}
-
-  popup.appendChild(nameEl);
-  popup.appendChild(streakEl);
-
-  if (emojiScore) {
-    const emojiScoreEl = document.createElement('div');
-    emojiScoreEl.textContent = emojiScore;
-    emojiScoreEl.style.cssText = `
-      font-size: 24px;
-      margin-top: 12px;
-      letter-spacing: 2px;
-      line-height: 1.4;
-    `;
-    popup.appendChild(emojiScoreEl);
-  }
-
-  if (points !== undefined && points !== null) {
-    const pointsEl = document.createElement('div');
-    pointsEl.textContent = `${Number(points).toLocaleString()} pts`;
-    pointsEl.style.cssText = `
-      font-size: 20px;
-      font-weight: 700;
-      color: var(--btn-cyan, #b7f7ff);
-      margin-top: 8px;
-    `;
-    popup.appendChild(pointsEl);
-  }
-
-  popup.appendChild(hintEl);
-  container.appendChild(popup);
-
-  const style = document.createElement('style');
-  style.textContent = `
-    @keyframes popupSlideIn {
-      from {
-        opacity: 0;
-        transform: scale(0.8) translateY(-20px);
-      }
-      to {
-        opacity: 1;
-        transform: scale(1) translateY(0);
-      }
-    }
-  `;
-  document.head.appendChild(style);
-
-  document.body.appendChild(container);
-
-  const removePopup = () => {
-    container.style.opacity = '0';
-    container.style.transition = 'opacity 0.2s';
-    setTimeout(() => {
-      container.remove();
-      style.remove();
-    }, 200);
-  };
-
-  container.addEventListener('click', removePopup);
-  container.addEventListener('touchend', removePopup);
-}
 
 function showToast(msg) {
   const t = document.createElement("div");
@@ -378,7 +221,7 @@ function computeAndSaveStreak(dateStr) {
   const KEY_LAST = "dailyLastDate";
 
   const last = localStorage.getItem(KEY_LAST);
-  let streak = getCachedDailyStreak()
+  let streak = parseInt(localStorage.getItem(KEY_STREAK) || "0", 10);
 
   if (last === dateStr) return streak;
 
@@ -637,7 +480,157 @@ function renderStartScorecard() {
   }
 }
 
-function renderLeaderboard(dateStr) {
+// ---- Weekly leaderboard ----
+
+let _lbActiveTab = 'today';
+
+function buildWeeklyGuestLbRow(rank, entry) {
+  const tr = document.createElement("tr");
+  tr.className = "guest-lb-row";
+
+  const rankTd = document.createElement("td");
+  rankTd.textContent = String(rank);
+
+  const nameTd = document.createElement("td");
+  nameTd.innerHTML = `<span class="guest-lb-claim">🔒 Sign in to compete this week</span>`;
+
+  const pointsTd = document.createElement("td");
+  pointsTd.textContent = (entry.totalPoints ?? 0).toLocaleString();
+
+  const daysTd = document.createElement("td");
+  daysTd.textContent = "1/7";
+
+  tr.append(rankTd, nameTd, pointsTd, daysTd);
+  return tr;
+}
+
+async function renderWeeklyLeaderboard(guestEntry = null) {
+  if (!leaderboardBody) return;
+  leaderboardBody.innerHTML = "<tr><td colspan='4'>Loading...</td></tr>";
+
+  const entries = await fetchWeeklyLeaderboard();
+  leaderboardBody.innerHTML = "";
+
+  if (!entries.length) {
+    if (guestEntry) {
+      leaderboardBody.appendChild(buildWeeklyGuestLbRow(1, guestEntry));
+    } else {
+      const tr = document.createElement("tr");
+      const td = document.createElement("td");
+      td.colSpan = 4;
+      td.textContent = "No scores yet this week.";
+      tr.appendChild(td);
+      leaderboardBody.appendChild(tr);
+    }
+    return;
+  }
+
+  const virtualRows = [];
+  let guestPlaced = false;
+  for (const e of entries) {
+    if (guestEntry && !guestPlaced && Number(e.total_points) < guestEntry.totalPoints) {
+      virtualRows.push({ _guest: true, ...guestEntry });
+      guestPlaced = true;
+    }
+    virtualRows.push(e);
+  }
+  if (guestEntry && !guestPlaced) virtualRows.push({ _guest: true, ...guestEntry });
+
+  virtualRows.forEach((e, idx) => {
+    const rank = idx + 1;
+    if (e._guest) {
+      leaderboardBody.appendChild(buildWeeklyGuestLbRow(rank, e));
+      return;
+    }
+
+    const tr = document.createElement("tr");
+
+    const rankTd = document.createElement("td");
+    rankTd.textContent = String(rank);
+
+    const nameTd = document.createElement("td");
+    nameTd.appendChild(
+      createTierBadgeElement(e.daily_streak ?? 0, e.display_name || e.username || "Player", e.total_points, null, e.username)
+    );
+
+    const pointsTd = document.createElement("td");
+    pointsTd.textContent = Number(e.total_points ?? 0).toLocaleString();
+
+    const daysTd = document.createElement("td");
+    daysTd.textContent = `${e.days_played}/7`;
+
+    tr.append(rankTd, nameTd, pointsTd, daysTd);
+    leaderboardBody.appendChild(tr);
+  });
+}
+
+function initLeaderboardTabs(guestDailyEntry, guestWeeklyEntry) {
+  const tabToday = document.getElementById("lbTabToday");
+  const tabWeek  = document.getElementById("lbTabWeek");
+  const lbForm   = document.getElementById("leaderboardForm");
+  const guestCta = document.getElementById("guestLeaderboardCta");
+  const headEl   = document.getElementById("leaderboardHead");
+  if (!tabToday || !tabWeek) return;
+
+  _lbActiveTab = 'today';
+  tabToday.classList.add("lb-tab--active");
+  tabWeek.classList.remove("lb-tab--active");
+
+  const isGuest = !!guestDailyEntry;
+
+  tabToday.onclick = () => {
+    if (_lbActiveTab === 'today') return;
+    _lbActiveTab = 'today';
+    tabToday.classList.add("lb-tab--active");
+    tabWeek.classList.remove("lb-tab--active");
+    if (headEl) headEl.innerHTML = `<tr><th>#</th><th>Name</th><th>Points</th><th>Avg Time</th></tr>`;
+    renderLeaderboard(RUN_DATE, guestDailyEntry);
+    if (isGuest) {
+      lbForm?.classList.add("hidden");
+      guestCta?.classList.remove("hidden");
+    } else {
+      lbForm?.classList.remove("hidden");
+      guestCta?.classList.add("hidden");
+    }
+  };
+
+  tabWeek.onclick = () => {
+    if (_lbActiveTab === 'week') return;
+    _lbActiveTab = 'week';
+    tabWeek.classList.add("lb-tab--active");
+    tabToday.classList.remove("lb-tab--active");
+    if (headEl) headEl.innerHTML = `<tr><th>#</th><th>Name</th><th>Points</th><th>Days</th></tr>`;
+    lbForm?.classList.add("hidden");
+    guestCta?.classList.add("hidden");
+    renderWeeklyLeaderboard(guestWeeklyEntry);
+  };
+}
+
+function buildGuestLbRow(rank, entry) {
+  const tr = document.createElement("tr");
+  tr.className = "guest-lb-row";
+
+  const rankTd = document.createElement("td");
+  rankTd.textContent = String(rank);
+
+  const nameTd = document.createElement("td");
+  nameTd.innerHTML = `<span class="guest-lb-claim">🔒 Sign in to claim your spot</span>`;
+
+  const pointsTd = document.createElement("td");
+  pointsTd.textContent = (entry.points ?? 0).toLocaleString();
+
+  const avgTd = document.createElement("td");
+  if (typeof entry.avgTime === "number" && !Number.isNaN(entry.avgTime)) {
+    avgTd.textContent = `${entry.avgTime.toFixed(1)}s`;
+  } else {
+    avgTd.textContent = "-";
+  }
+
+  tr.append(rankTd, nameTd, pointsTd, avgTd);
+  return tr;
+}
+
+function renderLeaderboard(dateStr, guestEntry = null) {
   if (!leaderboardBody) return;
 
   leaderboardBody.innerHTML = "<tr><td colspan='4'>Loading...</td></tr>";
@@ -647,12 +640,15 @@ function renderLeaderboard(dateStr) {
       leaderboardBody.innerHTML = "";
 
       if (!Array.isArray(entries)) {
-        const tr = document.createElement("tr");
-        const td = document.createElement("td");
-        td.colSpan = 4;
-        td.textContent = "No scores yet. Be the first!";
-        tr.appendChild(td);
-        leaderboardBody.appendChild(tr);
+        if (guestEntry) leaderboardBody.appendChild(buildGuestLbRow(1, guestEntry));
+        else {
+          const tr = document.createElement("tr");
+          const td = document.createElement("td");
+          td.colSpan = 4;
+          td.textContent = "No scores yet. Be the first!";
+          tr.appendChild(td);
+          leaderboardBody.appendChild(tr);
+        }
         return;
       }
 
@@ -670,20 +666,43 @@ function renderLeaderboard(dateStr) {
       const rowsToShow = todaysEntries.slice(0, 20);
 
       if (!rowsToShow.length) {
-        const tr = document.createElement("tr");
-        const td = document.createElement("td");
-        td.colSpan = 4;
-        td.textContent = "No scores yet. Be the first!";
-        tr.appendChild(td);
-        leaderboardBody.appendChild(tr);
+        if (guestEntry) leaderboardBody.appendChild(buildGuestLbRow(1, guestEntry));
+        else {
+          const tr = document.createElement("tr");
+          const td = document.createElement("td");
+          td.colSpan = 4;
+          td.textContent = "No scores yet. Be the first!";
+          tr.appendChild(td);
+          leaderboardBody.appendChild(tr);
+        }
         return;
       }
 
-      rowsToShow.forEach((e, idx) => {
+      // Merge guest row at the correct rank position
+      const virtualRows = [];
+      let guestPlaced = false;
+      for (const e of rowsToShow) {
+        if (guestEntry && !guestPlaced && (e.points ?? 0) < guestEntry.points) {
+          virtualRows.push({ _guest: true, ...guestEntry });
+          guestPlaced = true;
+        }
+        virtualRows.push(e);
+      }
+      if (guestEntry && !guestPlaced) {
+        virtualRows.push({ _guest: true, ...guestEntry });
+      }
+
+      virtualRows.forEach((e, idx) => {
+        const rank = idx + 1;
+        if (e._guest) {
+          leaderboardBody.appendChild(buildGuestLbRow(rank, e));
+          return;
+        }
+
         const tr = document.createElement("tr");
 
         const rankTd = document.createElement("td");
-        rankTd.textContent = String(idx + 1);
+        rankTd.textContent = String(rank);
 
         const nameTd = document.createElement("td");
         const streak = e.dailyStreak ?? 0;
@@ -799,7 +818,7 @@ function setSubmittedLeaderboard(dateStr) {
 // RESULTS FUNCTIONS
 // ==============================
 
-function renderPersistedResult(dateStr, persisted) {
+async function renderPersistedResult(dateStr, persisted) {
   RUN_DATE = dateStr;
   QUESTIONS = getQuestionsForDate(RUN_DATE);
 
@@ -899,7 +918,14 @@ function renderPersistedResult(dateStr, persisted) {
   `;
   }
 
-  renderLeaderboard(RUN_DATE);
+  const user = await getCurrentUser();
+  const pts = persisted?.totalPoints ?? 0;
+  const at  = persisted?.avgTime ?? 0;
+  const guestDailyEntry  = user ? null : { points: pts, avgTime: at };
+  const guestWeeklyEntry = user ? null : { totalPoints: pts, daysPlayed: 1 };
+
+  renderLeaderboard(RUN_DATE, guestDailyEntry);
+  initLeaderboardTabs(guestDailyEntry, guestWeeklyEntry);
 
   if (restartBtn) {
     restartBtn.style.display = "inline-block";
@@ -1198,7 +1224,8 @@ function pickAnswer(i, correct) {
     pick: i,
     correct,
     elapsed,
-    points: questionPoints
+    points: questionPoints,
+    timeLeft: Math.max(0, Number(timeLeft) || 0),
   });
 
   // Keep session state current in case of mid-quiz refresh
@@ -1253,13 +1280,28 @@ async function showStartScreen() {
 
   stopTimer();
 
-  if (startBtn) {
-    startBtn.disabled = false;
-    startBtn.textContent = "PLAY PIGSKIN5";
-  }
+  const user = await getCurrentUser();
+  const leaderboardSection = document.getElementById("startLeaderboardSection");
+  const adWrap = document.getElementById("startScreenAdWrap");
 
-  renderStartScorecard();
-  renderStartLeaderboard(runDate);
+  if (user) {
+    if (startBtn) {
+      startBtn.disabled = false;
+      startBtn.textContent = "PLAY PIGSKIN5";
+    }
+    renderStartScorecard();
+    renderStartLeaderboard(runDate);
+    leaderboardSection?.classList.remove("hidden");
+    adWrap?.classList.remove("hidden");
+  } else {
+    if (startBtn) {
+      startBtn.disabled = false;
+      startBtn.textContent = "START";
+    }
+    document.getElementById("startScorecard")?.classList.add("hidden");
+    leaderboardSection?.classList.add("hidden");
+    adWrap?.classList.add("hidden");
+  }
 
   const dayData = CALENDAR[runDate];
   const eventName = (dayData && typeof dayData === 'object') ? dayData.event : null;
@@ -1475,7 +1517,139 @@ function startGame() {
   window.scrollTo({ top: 0, behavior: "instant" });
 }
 
-function showResult() {
+function showGuestPlayerCard(score, avgTime) {
+  const existing = document.getElementById("profile-modal-container");
+  if (existing) existing.remove();
+
+  const tier = getTierForStreak(0);
+
+  const container = document.createElement("div");
+  container.id = "profile-modal-container";
+  container.style.cssText = `
+    position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+    z-index: 999999; display: flex; align-items: center;
+    justify-content: center; background: rgba(0,0,0,0.6);
+  `;
+
+  const card = document.createElement("div");
+  card.className = "player-card";
+
+  const body = document.createElement("div");
+  body.className = "player-card__body";
+
+  // Header
+  const headerEl = document.createElement("div");
+  headerEl.className = "player-card__header";
+  const makeSideLines = () => {
+    const wrap = document.createElement("div");
+    wrap.className = "player-card__team-lines";
+    const p = document.createElement("div");
+    p.className = "player-card__team-line player-card__team-line--primary";
+    const s = document.createElement("div");
+    s.className = "player-card__team-line player-card__team-line--secondary";
+    wrap.appendChild(p);
+    wrap.appendChild(s);
+    return wrap;
+  };
+  const tierEmojiEl = document.createElement("div");
+  tierEmojiEl.className = "player-card__tier-emoji";
+  tierEmojiEl.textContent = tier.emoji;
+  headerEl.appendChild(makeSideLines());
+  headerEl.appendChild(tierEmojiEl);
+  headerEl.appendChild(makeSideLines());
+  body.appendChild(headerEl);
+
+  // Identity — CTA instead of name
+  const nameEl = document.createElement("div");
+  nameEl.className = "player-card__display-name";
+  nameEl.textContent = "You earned this. Keep it.";
+  body.appendChild(nameEl);
+
+  // Stats from this session
+  const accuracyPct = Math.round((score / 5) * 100);
+  const touchdowns = score === 5 ? 1 : 0;
+  const statsEl = document.createElement("div");
+  statsEl.className = "player-card__stats";
+  [
+    ["1", "Quizzes"],
+    [`${accuracyPct}%`, "Accuracy"],
+    [String(touchdowns), touchdowns === 1 ? "Touchdown" : "Touchdowns"],
+  ].forEach(([val, label]) => {
+    const cell = document.createElement("div");
+    cell.className = "player-card__stat";
+    const v = document.createElement("div");
+    v.className = "player-card__stat-value";
+    v.textContent = val;
+    const l = document.createElement("div");
+    l.className = "player-card__stat-label";
+    l.textContent = label;
+    cell.appendChild(v);
+    cell.appendChild(l);
+    statsEl.appendChild(cell);
+  });
+  body.appendChild(statsEl);
+
+  // Achievements — First Down unlocked, rest locked
+  const achievementsEl = document.createElement("div");
+  achievementsEl.className = "player-card__achievements";
+  const badgeDescEl = document.createElement("div");
+  badgeDescEl.className = "player-card__badge-desc";
+
+  let activeBadge = null;
+  ACHIEVEMENTS.forEach((achievement, i) => {
+    const b = document.createElement("span");
+    const unlocked = i === 0;
+    b.className = unlocked
+      ? "player-card__badge"
+      : "player-card__badge player-card__badge--locked";
+    b.textContent = unlocked ? achievement.emoji : "🔒";
+
+    b.addEventListener("click", (e) => {
+      e.stopPropagation();
+      if (activeBadge === b && badgeDescEl.textContent) {
+        badgeDescEl.textContent = "";
+        activeBadge = null;
+        return;
+      }
+      activeBadge = b;
+      const prefix = unlocked ? achievement.emoji : "🔒";
+      badgeDescEl.textContent = `${prefix} ${achievement.name}: ${achievement.desc}`;
+    });
+    achievementsEl.appendChild(b);
+  });
+  body.appendChild(achievementsEl);
+  badgeDescEl.textContent = `${ACHIEVEMENTS[0].emoji} ${ACHIEVEMENTS[0].name}: ${ACHIEVEMENTS[0].desc}`;
+  body.appendChild(badgeDescEl);
+
+  // Sign-in button
+  const signInBtn = document.createElement("button");
+  signInBtn.className = "btn";
+  signInBtn.style.cssText = "width:100%; margin-top:6px;";
+  signInBtn.textContent = "Sign In";
+  body.appendChild(signInBtn);
+
+  card.appendChild(body);
+  container.appendChild(card);
+  document.body.appendChild(container);
+
+  const dismiss = () => {
+    container.style.opacity = "0";
+    container.style.transition = "opacity 0.2s";
+    setTimeout(() => container.remove(), 200);
+    document.removeEventListener("keydown", onKey);
+  };
+  const onKey = (e) => { if (e.key === "Escape") dismiss(); };
+
+  const openAuth = () => { dismiss(); document.getElementById("signInBtn")?.click(); };
+  signInBtn.addEventListener("click", openAuth);
+  container.addEventListener("click", dismiss);
+  container.addEventListener("touchend", dismiss);
+  card.addEventListener("click", (e) => e.stopPropagation());
+  card.addEventListener("touchend", (e) => e.stopPropagation());
+  document.addEventListener("keydown", onKey);
+}
+
+async function showResult() {
   // Clean up tab-out/unload listeners — quiz is over
   document.removeEventListener("visibilitychange", _onVisibilityChange);
   window.removeEventListener("beforeunload", _onBeforeUnload);
@@ -1582,8 +1756,57 @@ function showResult() {
 
   saveResult(RUN_DATE, { score, picks, totalTime, avgTime, totalPoints });
 
-  renderLeaderboard(RUN_DATE);
+  const user = await getCurrentUser();
 
+  const guestDailyEntry  = user ? null : { points: totalPoints, avgTime };
+  const guestWeeklyEntry = user ? null : { totalPoints, daysPlayed: 1 };
+
+  renderLeaderboard(RUN_DATE, guestDailyEntry);
+
+  const lbForm   = document.getElementById("leaderboardForm");
+  const guestLbCta = document.getElementById("guestLeaderboardCta");
+
+  if (!user) {
+    lbForm?.classList.add("hidden");
+    guestLbCta?.classList.remove("hidden");
+    document.getElementById("guestLbSignInBtn")?.addEventListener("click", () => {
+      document.getElementById("signInBtn")?.click();
+    });
+    showGuestPlayerCard(score, avgTime);
+  } else {
+    lbForm?.classList.remove("hidden");
+    guestLbCta?.classList.add("hidden");
+
+    const emojiScore = picks.map(p => {
+      const correct = Array.isArray(p.correct) ? p.correct : [p.correct];
+      return correct.includes(p.pick) ? "🟩" : "⬜";
+    }).join("");
+
+    autoRecordAttempt(RUN_DATE, {
+      points:      totalPoints,
+      avgTime,
+      emojiScore,
+      dailyStreak: getCachedDailyStreak(),
+      picks,
+    }).then(({ wasNew, displayName }) => {
+      if (wasNew) {
+        refreshStreakCache();
+        setSubmittedLeaderboard(RUN_DATE);
+        renderLeaderboard(RUN_DATE, null);
+      }
+      if (leaderboardForm) {
+        leaderboardForm.classList.add("submitted");
+        const btn = leaderboardForm.querySelector('button[type="submit"]');
+        if (btn) { btn.disabled = true; btn.textContent = "Score Submitted"; }
+      }
+      if (playerNameInput) {
+        playerNameInput.value = displayName;
+        playerNameInput.disabled = true;
+      }
+    });
+  }
+
+  initLeaderboardTabs(guestDailyEntry, guestWeeklyEntry);
   injectShareSummary();
 
   if (restartBtn) {
@@ -1646,7 +1869,7 @@ if (picks && picks.length > 0) {
       return correctAnswers.includes(p.pick) ? "🟩" : "⬜";
     }).join("");
 
-    const dailyStreak = computeAndSaveStreak(RUN_DATE);
+    const dailyStreak = getCachedDailyStreak();
     const tdStreak = getCachedTDStreak();
     const shareTier = getTierForStreak(dailyStreak);
 
@@ -1697,13 +1920,18 @@ if (picks && picks.length > 0) {
       ? `Touchdown Streak: 🏈 ${tdStreak}\n`
       : "";
 
+    const teamHashtag = (() => {
+      const abbr = getCachedFavoriteTeam();
+      return abbr ? NFL_TEAMS.get(abbr)?.hashtag : null;
+    })();
+
     const shareText = [
       header,
       squaresNow,
       statsLine,
       streakLine,
       tdLine + cta,
-      "pigskin5.com"
+      teamHashtag ? `${teamHashtag} | pigskin5.com` : "pigskin5.com"
     ].filter(Boolean).join("\n");
 
     /* ── Analytics: share event ── */
@@ -1773,7 +2001,7 @@ if (picks && picks.length > 0) {
 
   const daily = document.createElement("div");
   daily.className = "pill";
-  const currentStreak = computeAndSaveStreak(RUN_DATE);
+  const currentStreak = getCachedDailyStreak();
   const tier = getTierForStreak(currentStreak);
   daily.textContent = `Daily Streak: ${tier.emoji} ${currentStreak}`;
 
@@ -1958,3 +2186,28 @@ window.addEventListener("pageshow", () => {
     document.body.classList.remove("no-scroll");
   }
 });
+
+// Dev-only: call window.__devResetToday() in the browser console to wipe today's attempt
+// and reload the start screen — works for both signed-in (clears Supabase row) and anonymous users.
+window.__devResetToday = async function() {
+  const date = getRunDateISO();
+  localStorage.removeItem(KEY_ATTEMPT_PREFIX + date);
+  localStorage.removeItem(KEY_RESULT_PREFIX + date);
+  localStorage.removeItem(KEY_LB_SUBMIT_PREFIX + date);
+  sessionStorage.clear();
+
+  const user = await getCurrentUser();
+  if (user) {
+    const { error } = await supabase
+      .from("quiz_attempts")
+      .delete()
+      .eq("user_id", user.id)
+      .eq("quiz_date", date);
+    if (error) { console.error("Supabase delete failed:", error); return; }
+    console.log(`Deleted server attempt for ${user.email} on ${date}.`);
+  } else {
+    console.log(`Cleared local attempt for ${date} (anonymous).`);
+  }
+
+  await showStartScreen();
+};

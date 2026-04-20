@@ -584,6 +584,31 @@ footer a:visited {
   -webkit-transform: translateZ(0);
 }
 
+.lb-tabs {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.lb-tab {
+  flex: 1;
+  padding: 7px 0;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 8px;
+  color: rgba(255,255,255,0.5);
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+.lb-tab--active {
+  background: rgba(255,255,255,0.14);
+  border-color: rgba(255,255,255,0.3);
+  color: #fff;
+}
+
 .leaderboard-form {
   display: flex;
   flex-wrap: wrap;
@@ -921,6 +946,307 @@ footer a:visited {
   }
 }
 
+/* ---------------- Player Card Modal (Expanded) ---------------- */
+
+@keyframes popupSlideIn {
+  from { opacity: 0; transform: scale(0.8) translateY(-20px); }
+  to   { opacity: 1; transform: scale(1)   translateY(0); }
+}
+
+
+#tier-popup-container .player-card,
+#profile-modal-container .player-card {
+  width: min(380px, 92vw);
+  overflow: hidden;
+  border-radius: 12px;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  animation: popupSlideIn 0.3s ease-out;
+  text-align: center;
+}
+
+.player-card__body {
+  padding: 22px 28px 18px;
+}
+
+.player-card__header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.player-card__team-lines {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1.7px;
+}
+
+.player-card__team-line {
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.1);
+  transition: background-color 0.4s ease;
+  width: 100%;
+}
+
+.player-card__team-line--primary {
+  height: 10px;
+}
+
+.player-card__team-line--secondary {
+  height: 4.5px;
+}
+
+.player-card__tier-emoji {
+  font-size: 52px;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.player-card__display-name {
+  font-size: 22px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.95);
+  margin-bottom: 2px;
+  letter-spacing: 0.3px;
+}
+
+.player-card__username {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.45);
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+
+.player-card__tier-row {
+  font-size: 20px;
+  font-weight: 800;
+  color: white;
+  margin-bottom: 2px;
+}
+
+.player-card__streak {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.6);
+  font-weight: 500;
+  margin-bottom: 6px;
+}
+
+.player-card__member-since {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.35);
+  font-style: italic;
+  margin-bottom: 16px;
+}
+
+.player-card__stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.player-card__stat {
+  background: rgba(255, 255, 255, 0.07);
+  border-radius: 8px;
+  padding: 10px 4px;
+}
+
+.player-card__stat-value {
+  font-size: 20px;
+  font-weight: 800;
+  color: white;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+.player-card__stat-value--loading {
+  color: rgba(255, 255, 255, 0.2);
+  animation: cardShimmer 1.2s ease-in-out infinite;
+}
+
+@keyframes cardShimmer {
+  0%, 100% { opacity: 0.3; }
+  50%       { opacity: 0.8; }
+}
+
+.player-card__stat-label {
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.4);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: 600;
+}
+
+.player-card__achievements {
+  display: flex;
+  gap: 6px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+
+.player-card__badge {
+  font-size: 20px;
+  line-height: 1;
+  cursor: default;
+  position: relative;
+  transition: transform 0.15s ease;
+  flex-shrink: 0;
+}
+
+.player-card__badge:not(.player-card__badge--locked):hover {
+  transform: scale(1.2);
+}
+
+.player-card__badge--locked {
+  opacity: 0.2;
+  filter: grayscale(1);
+}
+
+.player-card__badge-desc {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.7);
+  min-height: 16px;
+  margin-top: -10px;
+  margin-bottom: 14px;
+  padding: 0 4px;
+  line-height: 1.4;
+}
+
+.player-card__score-row {
+  font-size: 22px;
+  letter-spacing: 2px;
+  margin-bottom: 6px;
+}
+
+.player-card__points {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--btn-cyan, #b7f7ff);
+  margin-bottom: 14px;
+}
+
+.player-card__close-hint {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.35);
+  font-style: italic;
+}
+
+/* Profile modal — team selector + sign out */
+.profile-modal__section-label {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.4);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  font-weight: 600;
+  text-align: left;
+  margin-bottom: 6px;
+  margin-top: 4px;
+}
+
+.profile-modal__team-select {
+  width: 100%;
+  padding: 9px 12px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  color: white;
+  font-size: 14px;
+  cursor: pointer;
+  margin-bottom: 14px;
+}
+
+.profile-modal__team-select option {
+  background: #1a1a2e;
+  color: white;
+}
+
+.profile-modal__signout-btn {
+  width: 100%;
+  padding: 10px;
+  background: rgba(231, 76, 60, 0.15);
+  border: 1px solid rgba(231, 76, 60, 0.4);
+  border-radius: 8px;
+  color: #e74c3c;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.profile-modal__signout-btn:hover {
+  background: rgba(231, 76, 60, 0.28);
+}
+
+/* Onboarding team field */
+.auth-field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 12px;
+  text-align: left;
+}
+
+.auth-field-label {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.auth-field-group select {
+  width: 100%;
+  padding: 10px 12px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  color: white;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.auth-field-group select option {
+  background: #1a1a2e;
+  color: white;
+}
+
+.auth-warning {
+  font-size: 12px;
+  color: rgba(255, 200, 100, 0.85);
+  margin: -6px 0 10px;
+  text-align: left;
+}
+
+.auth-skip-btn {
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 13px;
+  cursor: pointer;
+  margin-top: 4px;
+  padding: 6px;
+  text-decoration: underline;
+}
+
+.auth-skip-btn:hover {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+@media (max-width: 400px) {
+  .player-card__body {
+    padding: 18px 16px 14px;
+  }
+  .player-card__stat-value {
+    font-size: 17px;
+  }
+  .player-card__badge {
+    font-size: 19px;
+  }
+}
+
 /* Auth modal */
 .auth-modal {
   position: fixed;
@@ -1220,4 +1546,236 @@ footer a:visited {
     font-size: 0.72rem;
     padding: 5px 10px;
   }
+}
+
+/* =============================================
+   ADMIN PANEL
+   ============================================= */
+
+.admin-panel {
+  position: relative;
+  background: #111418;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 16px;
+  padding: 24px 20px 20px;
+  width: min(960px, 96vw);
+  max-height: 88vh;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.6);
+  z-index: 1;
+  overflow: hidden;
+}
+
+.admin-title {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: 0.01em;
+}
+
+.admin-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.admin-date-picker {
+  padding: 7px 10px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  color: #fff;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.admin-date-picker::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+  cursor: pointer;
+}
+
+/* Buttons */
+.admin-btn {
+  padding: 7px 16px;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+.admin-btn:disabled { opacity: 0.5; cursor: default; }
+.admin-btn--add    { background: var(--btn-cyan, #b7f7ff); color: #000; }
+.admin-btn--save   { background: #2ecc71; color: #000; }
+.admin-btn--cancel { background: rgba(255, 255, 255, 0.1); color: #fff; }
+.admin-btn:not(:disabled):hover { opacity: 0.85; }
+
+/* Add-entry form */
+.admin-add-form {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.admin-form-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.admin-input {
+  padding: 6px 9px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 6px;
+  color: #fff;
+  font-size: 0.82rem;
+  min-width: 0;
+}
+
+.admin-form-row .admin-input {
+  flex: 1 1 120px;
+}
+
+.admin-form-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.admin-msg {
+  font-size: 0.82rem;
+  padding: 6px 0;
+}
+
+/* Status line */
+.admin-status {
+  font-size: 0.82rem;
+  color: rgba(255, 255, 255, 0.5);
+  min-height: 1.2em;
+}
+
+/* Table */
+.admin-table-wrap {
+  overflow-y: auto;
+  flex: 1 1 0;
+  border-radius: 8px;
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.82rem;
+  color: #e8e8e8;
+}
+
+.admin-table thead th {
+  position: sticky;
+  top: 0;
+  background: #1a1e24;
+  padding: 8px 8px;
+  text-align: left;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.admin-table tbody tr:nth-child(even) {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.admin-table tbody tr:hover {
+  background: rgba(183, 247, 255, 0.06);
+}
+
+.admin-table td {
+  padding: 6px 8px;
+  vertical-align: middle;
+}
+
+.adm-rank { color: rgba(255, 255, 255, 0.35); font-size: 0.75rem; width: 28px; }
+.adm-date { color: rgba(255, 255, 255, 0.4); font-size: 0.75rem; white-space: nowrap; }
+.adm-src  { text-align: center; width: 30px; }
+
+/* Inline edit inputs */
+.adm-inp {
+  width: 100%;
+  box-sizing: border-box;
+  font-size: 0.82rem;
+}
+.adm-inp-score { width: auto; }
+
+/* Row action buttons */
+.adm-actions {
+  white-space: nowrap;
+  display: flex;
+  gap: 4px;
+}
+
+.adm-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  padding: 2px 4px;
+  border-radius: 4px;
+  line-height: 1;
+  transition: background 0.1s;
+}
+.adm-btn:hover { background: rgba(255, 255, 255, 0.1); }
+
+/* Admin button in profile modal */
+.profile-modal__admin-btn {
+  width: 100%;
+  margin-top: 8px;
+  padding: 10px;
+  background: rgba(183, 247, 255, 0.12);
+  border: 1px solid rgba(183, 247, 255, 0.3);
+  border-radius: 8px;
+  color: var(--btn-cyan, #b7f7ff);
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.profile-modal__admin-btn:hover {
+  background: rgba(183, 247, 255, 0.2);
+}
+
+@media (max-width: 600px) {
+  .admin-panel {
+    padding: 16px 12px 14px;
+    gap: 10px;
+    max-height: 92vh;
+  }
+  .admin-form-row .admin-input { flex: 1 1 80px; }
+  .adm-date { display: none; }
+}
+
+.guest-lb-cta {
+  margin-bottom: 10px;
+}
+
+.guest-lb-row {
+  background: rgba(255, 180, 0, 0.05) !important;
+}
+
+.guest-lb-row td {
+  font-style: italic;
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.guest-lb-claim {
+  font-style: italic;
+  font-size: 0.85rem;
 }
