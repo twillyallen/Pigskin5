@@ -261,8 +261,9 @@ export function getCachedDailyStreak() {
 }
 
 export function getCachedTDStreak() {
-  if (_cachedTDStreak !== null) return _cachedTDStreak;
-  return parseInt(localStorage.getItem("tdStreak") || "0", 10);
+  const local = parseInt(localStorage.getItem("tdStreak") || "0", 10);
+  if (_cachedTDStreak !== null) return Math.max(_cachedTDStreak, local);
+  return local;
 }
 
 export async function hasPlayedToday(dateStr) {
