@@ -929,7 +929,7 @@ async function renderPersistedResult(dateStr, persisted) {
     (async () => {
       const { data: profile } = await supabase
         .from("profiles")
-        .select("current_streak, current_td_streak")
+        .select("current_streak, current_td_streak, longest_streak")
         .eq("id", user.id)
         .maybeSingle();
       if (!profile) return;
@@ -939,9 +939,11 @@ async function renderPersistedResult(dateStr, persisted) {
       const newTdStreak = didPerfect
         ? Math.max(profile.current_td_streak ?? 0, localTdStreak)
         : 0;
+      const newLongest  = Math.max(profile.longest_streak ?? 0, newStreak);
 
       if (newStreak   !== (profile.current_streak   ?? 0)) updates.current_streak   = newStreak;
       if (newTdStreak !== (profile.current_td_streak ?? 0)) updates.current_td_streak = newTdStreak;
+      if (newLongest  !== (profile.longest_streak   ?? 0)) updates.longest_streak    = newLongest;
 
       if (Object.keys(updates).length > 0) {
         await supabase.from("profiles").update(updates).eq("id", user.id);
@@ -1812,7 +1814,7 @@ async function showResult() {
     (async () => {
       const { data: profile } = await supabase
         .from("profiles")
-        .select("current_streak, current_td_streak")
+        .select("current_streak, current_td_streak, longest_streak")
         .eq("id", user.id)
         .maybeSingle();
       if (!profile) return;
@@ -1822,9 +1824,11 @@ async function showResult() {
       const newTdStreak = didPerfect
         ? Math.max(profile.current_td_streak ?? 0, localTdStreak)
         : 0;
+      const newLongest  = Math.max(profile.longest_streak ?? 0, newStreak);
 
       if (newStreak   !== (profile.current_streak   ?? 0)) updates.current_streak   = newStreak;
       if (newTdStreak !== (profile.current_td_streak ?? 0)) updates.current_td_streak = newTdStreak;
+      if (newLongest  !== (profile.longest_streak   ?? 0)) updates.longest_streak    = newLongest;
 
       if (Object.keys(updates).length > 0) {
         await supabase.from("profiles").update(updates).eq("id", user.id);
