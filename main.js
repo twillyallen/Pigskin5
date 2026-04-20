@@ -921,6 +921,7 @@ async function renderPersistedResult(dateStr, persisted) {
   const user = await getCurrentUser();
 
   if (user) {
+    computeAndSaveStreak(dateStr);
     const localStreak   = parseInt(localStorage.getItem("dailyStreak") || "0", 10);
     const localTdStreak = parseInt(localStorage.getItem("tdStreak")    || "0", 10);
     const didPerfect    = score === (QUESTIONS?.length || 5);
