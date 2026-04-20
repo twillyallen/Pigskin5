@@ -69,7 +69,7 @@ async function checkAndAwardAchievements(userId, score, picks) {
   const totalQuizzes = Math.max(attempts.length, currentStreak);
   const picksArr = picks || [];
   const avgTime = picksArr.length > 0 ? picksArr.reduce((s, p) => s + (p.elapsed ?? 0), 0) / picksArr.length : 15;
-  const hasGunslinger = score === 5 && picksArr.every(p => (p.elapsed ?? Infinity) < 3);
+  const hasGunslinger = score === 5 && picksArr.every(p => (p.elapsed ?? Infinity) < 1);
   const hasTwoMinuteDrill = score === 5 && avgTime < 4;
   const hasPickSix = score === 0;
 

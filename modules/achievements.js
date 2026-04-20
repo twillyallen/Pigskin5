@@ -31,7 +31,7 @@ export const ACHIEVEMENTS = [
     id: "gunslinger",
     emoji: "🔫",
     name: "Gunslinger",
-    desc: "Answer all 5 correctly in under 3 seconds each",
+    desc: "Answer all 5 correctly in under 1 second each",
     check: ({ hasGunslinger }) => !!hasGunslinger,
   },
   {
