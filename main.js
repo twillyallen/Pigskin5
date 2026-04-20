@@ -1303,7 +1303,6 @@ async function showStartScreen() {
   if (serverAttempt) {
     // Sync to localStorage so the rest of the app stays consistent
     setAttempt(runDate);
-    setSubmittedLeaderboard(runDate);
     saveResult(runDate, serverAttempt);
     renderPersistedResult(runDate, serverAttempt);
     return;
