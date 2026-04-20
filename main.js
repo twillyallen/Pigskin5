@@ -1775,9 +1775,32 @@ async function showResult() {
 
   // Update server-side streak on quiz completion, regardless of leaderboard submission
   if (user) {
-    supabase.rpc("update_streaks_on_submit", { did_perfect: score === QUESTIONS.length })
-      .then(() => refreshStreakCache())
-      .catch(() => {});
+    const localStreak   = parseInt(localStorage.getItem("dailyStreak") || "0", 10);
+    const localTdStreak = parseInt(localStorage.getItem("tdStreak")    || "0", 10);
+    const didPerfect    = score === QUESTIONS.length;
+
+    (async () => {
+      const { data: profile } = await supabase
+        .from("profiles")
+        .select("current_streak, current_td_streak")
+        .eq("id", user.id)
+        .maybeSingle();
+      if (!profile) return;
+
+      const updates = {};
+      const newStreak   = Math.max(profile.current_streak   ?? 0, localStreak);
+      const newTdStreak = didPerfect
+        ? Math.max(profile.current_td_streak ?? 0, localTdStreak)
+        : 0;
+
+      if (newStreak   !== (profile.current_streak   ?? 0)) updates.current_streak   = newStreak;
+      if (newTdStreak !== (profile.current_td_streak ?? 0)) updates.current_td_streak = newTdStreak;
+
+      if (Object.keys(updates).length > 0) {
+        await supabase.from("profiles").update(updates).eq("id", user.id);
+        refreshStreakCache();
+      }
+    })().catch(() => {});
   }
 
   const guestDailyEntry  = user ? null : { points: totalPoints, avgTime };
