@@ -74,13 +74,12 @@ async function checkAndAwardAchievements(userId, score, picks) {
   const avgTime = picksArr.length > 0 ? picksArr.reduce((s, p) => s + (p.elapsed ?? 0), 0) / picksArr.length : 15;
   const hasGunslinger = score === 5 && picksArr.every(p => (p.elapsed ?? Infinity) < 1.2);
   const hasTwoMinuteDrill = score === 5 && avgTime < 4;
-  const hasPickSix = score === 0;
+  const hasPickSix = score === 0 || attempts.some(a => a.score === 0);
 
-  // Increment total_touchdowns on a perfect score submission; backfill if behind DB records
+  // Use DB ground truth for perfect count — dbPerfect already includes any newly inserted attempt
   const dbPerfect = attempts.filter(a => a.score === 5).length;
   const storedTDs = profile.total_touchdowns ?? 0;
-  let newTDCount = Math.max(storedTDs, dbPerfect);
-  if (score === 5) newTDCount = storedTDs + 1;
+  const newTDCount = Math.max(storedTDs, dbPerfect);
 
   const profileUpdates = { achievements: null }; // filled below
   if (newTDCount !== storedTDs) profileUpdates.total_touchdowns = newTDCount;
@@ -267,6 +266,13 @@ export function getCachedTDStreak() {
   const local = parseInt(localStorage.getItem("tdStreak") || "0", 10);
   if (_cachedTDStreak !== null) return Math.max(_cachedTDStreak, local);
   return local;
+}
+
+// Call immediately after local streak is computed so the cache doesn't serve
+// a stale DB value (e.g. after a streak break) before the RPC finishes.
+export function overrideCachedStreaks({ daily, td } = {}) {
+  if (daily !== undefined) _cachedDailyStreak = daily;
+  if (td !== undefined) _cachedTDStreak = td;
 }
 
 export async function hasPlayedToday(dateStr) {

@@ -13,6 +13,8 @@ const signInBtn = document.getElementById("signInBtn");
 const submitBtn = document.getElementById("authSubmit");
 const emailInput = document.getElementById("authEmail");
 const messageEl = document.getElementById("authMessage");
+const emailOptInSection = document.getElementById("emailOptInSection");
+const emailOptInToggle = document.getElementById("emailOptInToggle");
 
 function openModal() {
   modal.hidden = false;
@@ -46,10 +48,37 @@ modal?.addEventListener("click", (e) => { if (e.target === modal) closeModal(); 
 submitBtn?.addEventListener("click", handleSubmit);
 emailInput?.addEventListener("keydown", (e) => { if (e.key === "Enter") handleSubmit(); });
 
+function initEmailOptIn(profile) {
+  if (!emailOptInSection || !emailOptInToggle) return;
+  emailOptInToggle.checked = profile?.email_marketing_opt_in ?? false;
+  emailOptInSection.hidden = false;
+}
+
+function hideEmailOptIn() {
+  if (!emailOptInSection) return;
+  emailOptInSection.hidden = true;
+}
+
+emailOptInToggle?.addEventListener("change", async () => {
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) return;
+  const newValue = emailOptInToggle.checked;
+  const { error } = await supabase
+    .from("profiles")
+    .update({ email_marketing_opt_in: newValue })
+    .eq("id", user.id);
+  if (error) {
+    console.error("Failed to update email opt-in:", error);
+    emailOptInToggle.checked = !newValue;
+    showToast("Failed to save preference. Please try again.");
+  }
+});
+
 onAuthChange(async (user) => {
   if (user) {
     closeModal();
     const profile = await getCurrentProfile();
+    initEmailOptIn(profile);
     const needsOnboarding = !profile?.username || profile.username.startsWith('user_');
 
     if (needsOnboarding) {
@@ -63,6 +92,7 @@ onAuthChange(async (user) => {
   } else {
     signInBtn.textContent = "Sign in";
     signInBtn.onclick = openModal;
+    hideEmailOptIn();
   }
 });
 

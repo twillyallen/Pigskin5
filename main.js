@@ -3,7 +3,7 @@
 // ============================================================================
 
 import { CALENDAR } from "./questions.js?v=20260412";
-import { submitEntry, fetchLeaderboard, fetchWeeklyLeaderboard, refreshStreakCache, getCachedDailyStreak, getCachedTDStreak, getTodaysAttempt, getCachedFavoriteTeam } from "./modules/leaderboard.js";
+import { submitEntry, fetchLeaderboard, fetchWeeklyLeaderboard, refreshStreakCache, getCachedDailyStreak, getCachedTDStreak, getTodaysAttempt, getCachedFavoriteTeam, overrideCachedStreaks } from "./modules/leaderboard.js";
 import { getCurrentUser, supabase } from "./modules/supabase-client.js";
 import { NFL_TEAMS } from "./modules/nfl-teams.js";
 import { showTierTooltip } from "./modules/ui-helpers.js";
@@ -921,7 +921,9 @@ async function renderPersistedResult(dateStr, persisted) {
   const user = await getCurrentUser();
 
   if (user) {
-    computeAndSaveStreak(dateStr);
+    const newStreak = computeAndSaveStreak(dateStr);
+    const newTDStreak = parseInt(localStorage.getItem("tdStreak") || "0", 10);
+    overrideCachedStreaks({ daily: newStreak, td: newTDStreak });
     const didPerfect = score === (QUESTIONS?.length || 5);
 
     (async () => {

@@ -389,6 +389,48 @@ body{ display:flex; flex-direction:column; min-height:100vh; }
   opacity: 0.7;
 }
 
+/* Email opt-in toggle */
+#emailOptInSection {
+  margin-bottom: 10px;
+}
+.email-opt-in-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font-size: 0.75rem;
+  user-select: none;
+}
+.email-opt-in-toggle input[type="checkbox"] {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+.toggle-track {
+  position: relative;
+  width: 36px;
+  height: 20px;
+  background: rgba(255,255,255,0.2);
+  border-radius: 10px;
+  transition: background 0.2s;
+  flex-shrink: 0;
+}
+.toggle-thumb {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 16px;
+  height: 16px;
+  background: #fff;
+  border-radius: 50%;
+  transition: transform 0.2s;
+}
+.email-opt-in-toggle input:checked + .toggle-track { background: #2ecc71; }
+.email-opt-in-toggle input:checked + .toggle-track .toggle-thumb { transform: translateX(16px); }
+.email-opt-in-toggle:hover .toggle-track { background: rgba(255,255,255,0.3); }
+.email-opt-in-toggle input:checked:hover + .toggle-track { background: #27ae60; }
+
 /* Start page fixes footer to bottom of viewport for nice hero */
 .start-page .site-footer{ position:sticky; bottom:0; z-index:5; }
 .start-page .app{ padding-bottom:96px; }
