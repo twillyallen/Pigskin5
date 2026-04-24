@@ -66,7 +66,7 @@ export const CALENDAR = {
     "2026-04-24": { //Friday
     event: "NFLDraft2026",
     questions: [
-    { question: "Which team drafted Bo Jackson #1 Overall?", choices: ["Eagles", "Buccaneers", "Raiders", "Browns"], answer: 2 },
+    { question: "Which team drafted Bo Jackson #1 Overall?", choices: ["Eagles", "Buccaneers", "Raiders", "Browns"], answer: 1 },
     { question: "The NFL Draft adopted its current 7-round format in what year?", choices: ["1973", "1982", "1987", "1994"], answer: 3 },
     { question: "Which school has the most first-round NFL Draft picks all-time?", choices: ["USC", "Alabama", "Notre Dame", "Ohio State"], answer: 3 },
     { question: "Which QB was the first to win the Super Bowl from the 2020 Draft?", choices: ["Joe Burrow", "Jalen Hurts", "Jordan Love", "Justin Herbert"], answer: 1 },
