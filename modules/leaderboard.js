@@ -37,6 +37,9 @@ export async function submitEntry(dateStr, entry) {
     return { error: "Could not submit. Try again." };
   }
 
+  // Update server-side streaks (non-blocking, best-effort)
+  supabase.rpc("update_streaks_on_submit", { did_perfect: score === 5 }).catch(() => {});
+
   // Check and award achievements (best-effort, non-blocking)
   checkAndAwardAchievements(user.id, score, entry.picks).catch(() => {});
 
@@ -69,7 +72,7 @@ async function checkAndAwardAchievements(userId, score, picks) {
   const totalQuizzes = Math.max(attempts.length, currentStreak);
   const picksArr = picks || [];
   const avgTime = picksArr.length > 0 ? picksArr.reduce((s, p) => s + (p.elapsed ?? 0), 0) / picksArr.length : 15;
-  const hasGunslinger = score === 5 && picksArr.every(p => (p.elapsed ?? Infinity) < 1);
+  const hasGunslinger = score === 5 && picksArr.every(p => (p.elapsed ?? Infinity) < 1.2);
   const hasTwoMinuteDrill = score === 5 && avgTime < 4;
   const hasPickSix = score === 0;
 

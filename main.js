@@ -922,32 +922,22 @@ async function renderPersistedResult(dateStr, persisted) {
 
   if (user) {
     computeAndSaveStreak(dateStr);
-    const localStreak   = parseInt(localStorage.getItem("dailyStreak") || "0", 10);
-    const localTdStreak = parseInt(localStorage.getItem("tdStreak")    || "0", 10);
-    const didPerfect    = score === (QUESTIONS?.length || 5);
+    const didPerfect = score === (QUESTIONS?.length || 5);
 
     (async () => {
+      await supabase.rpc("update_streaks_on_submit", { did_perfect: didPerfect }).catch(() => {});
+      await refreshStreakCache();
+
       const { data: profile } = await supabase
         .from("profiles")
-        .select("current_streak, current_td_streak, longest_streak")
+        .select("current_streak, longest_streak")
         .eq("id", user.id)
         .maybeSingle();
       if (!profile) return;
 
-      const updates = {};
-      const newStreak   = Math.max(profile.current_streak   ?? 0, localStreak);
-      const newTdStreak = didPerfect
-        ? Math.max(profile.current_td_streak ?? 0, localTdStreak)
-        : 0;
-      const newLongest  = Math.max(profile.longest_streak ?? 0, newStreak);
-
-      if (newStreak   !== (profile.current_streak   ?? 0)) updates.current_streak   = newStreak;
-      if (newTdStreak !== (profile.current_td_streak ?? 0)) updates.current_td_streak = newTdStreak;
-      if (newLongest  !== (profile.longest_streak   ?? 0)) updates.longest_streak    = newLongest;
-
-      if (Object.keys(updates).length > 0) {
-        await supabase.from("profiles").update(updates).eq("id", user.id);
-        refreshStreakCache();
+      const newLongest = Math.max(profile.longest_streak ?? 0, profile.current_streak ?? 0);
+      if (newLongest !== (profile.longest_streak ?? 0)) {
+        await supabase.from("profiles").update({ longest_streak: newLongest }).eq("id", user.id);
       }
     })().catch(() => {});
   }
@@ -1807,32 +1797,25 @@ async function showResult() {
 
   // Update server-side streak on quiz completion, regardless of leaderboard submission
   if (user) {
-    const localStreak   = parseInt(localStorage.getItem("dailyStreak") || "0", 10);
-    const localTdStreak = parseInt(localStorage.getItem("tdStreak")    || "0", 10);
-    const didPerfect    = score === QUESTIONS.length;
+    const didPerfect = score === QUESTIONS.length;
 
     (async () => {
+      // RPC does proper date-based math server-side — avoids stale localStorage issues
+      // where a cleared local streak would prevent the DB from ever incrementing.
+      await supabase.rpc("update_streaks_on_submit", { did_perfect: didPerfect }).catch(() => {});
+      await refreshStreakCache();
+
+      // Update longest_streak based on whatever the RPC set current_streak to
       const { data: profile } = await supabase
         .from("profiles")
-        .select("current_streak, current_td_streak, longest_streak")
+        .select("current_streak, longest_streak")
         .eq("id", user.id)
         .maybeSingle();
       if (!profile) return;
 
-      const updates = {};
-      const newStreak   = Math.max(profile.current_streak   ?? 0, localStreak);
-      const newTdStreak = didPerfect
-        ? Math.max(profile.current_td_streak ?? 0, localTdStreak)
-        : 0;
-      const newLongest  = Math.max(profile.longest_streak ?? 0, newStreak);
-
-      if (newStreak   !== (profile.current_streak   ?? 0)) updates.current_streak   = newStreak;
-      if (newTdStreak !== (profile.current_td_streak ?? 0)) updates.current_td_streak = newTdStreak;
-      if (newLongest  !== (profile.longest_streak   ?? 0)) updates.longest_streak    = newLongest;
-
-      if (Object.keys(updates).length > 0) {
-        await supabase.from("profiles").update(updates).eq("id", user.id);
-        refreshStreakCache();
+      const newLongest = Math.max(profile.longest_streak ?? 0, profile.current_streak ?? 0);
+      if (newLongest !== (profile.longest_streak ?? 0)) {
+        await supabase.from("profiles").update({ longest_streak: newLongest }).eq("id", user.id);
       }
     })().catch(() => {});
   }
