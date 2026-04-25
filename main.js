@@ -921,9 +921,7 @@ async function renderPersistedResult(dateStr, persisted) {
   const user = await getCurrentUser();
 
   if (user) {
-    const newStreak = computeAndSaveStreak(dateStr);
-    const newTDStreak = parseInt(localStorage.getItem("tdStreak") || "0", 10);
-    overrideCachedStreaks({ daily: newStreak, td: newTDStreak });
+    computeAndSaveStreak(dateStr);
     const didPerfect = score === (QUESTIONS?.length || 5);
 
     (async () => {
@@ -1293,6 +1291,11 @@ async function showStartScreen() {
   document.body.classList.add("start-page");
 
   const runDate = getRunDateISO();
+
+  // Load DB streak before any rendering so all paths get the correct cross-device value
+  const user = await getCurrentUser();
+  if (user) await refreshStreakCache();
+
   // Check server for signed-in users first
   const serverAttempt = await getTodaysAttempt(runDate);
   if (serverAttempt) {
@@ -1320,7 +1323,6 @@ async function showStartScreen() {
 
   stopTimer();
 
-  const user = await getCurrentUser();
   const leaderboardSection = document.getElementById("startLeaderboardSection");
   const adWrap = document.getElementById("startScreenAdWrap");
 
@@ -2146,7 +2148,6 @@ function init() {
   menuBtn?.addEventListener("click", () => {
     menu.classList.toggle("hidden");
   });
-  refreshStreakCache();  // don't await — let it run in background
 }
 
 if (document.readyState === "loading") {
