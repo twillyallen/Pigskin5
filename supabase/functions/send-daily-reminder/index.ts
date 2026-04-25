@@ -6,7 +6,7 @@ const supabase = createClient(
 );
 
 const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY")!;
-const FROM = "Pigskin5 <onboarding@resend.dev>";
+const FROM = "Pigskin5 <noreply@pigskin5.com>";
 const SITE_URL = "https://www.pigskin5.com";
 
 function buildEmailHtml(): string {
@@ -59,8 +59,7 @@ function buildEmailHtml(): string {
   `.trim();
 }
 
-Deno.serve(async (req) => {
-  const { test_recipient } = await req.json().catch(() => ({}));
+Deno.serve(async (_req) => {
   // 1. Get opted-in profile IDs
   const { data: profiles, error: profilesError } = await supabase
     .from("profiles")
@@ -91,13 +90,10 @@ Deno.serve(async (req) => {
     return new Response(JSON.stringify({ sent: 0, message: "No valid recipient emails found." }), { status: 200 });
   }
 
-  // Allow overriding recipients for testing (e.g. with onboarding@resend.dev as sender)
-  const finalRecipients = test_recipient ? [test_recipient] : recipients;
-
   // 3. Send via Resend batch API
   const html = buildEmailHtml();
 
-  const batch = finalRecipients.map((email) => ({
+  const batch = recipients.map((email) => ({
     from: FROM,
     to: email,
     subject: "🏈 Your daily Pigskin5 challenge is ready",
@@ -118,5 +114,5 @@ Deno.serve(async (req) => {
     return new Response(JSON.stringify({ error: "Resend error", detail: body }), { status: 502 });
   }
 
-  return new Response(JSON.stringify({ sent: finalRecipients.length }), { status: 200 });
+  return new Response(JSON.stringify({ sent: recipients.length }), { status: 200 });
 });
