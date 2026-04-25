@@ -927,7 +927,7 @@ async function renderPersistedResult(dateStr, persisted) {
     const didPerfect = score === (QUESTIONS?.length || 5);
 
     (async () => {
-      const { error: _streakErr } = await supabase.rpc("update_streaks_on_submit", { did_perfect: didPerfect });
+      const { error: _streakErr } = await supabase.rpc("update_streaks_on_submit", { did_perfect: didPerfect, p_user_id: user.id });
       if (_streakErr) console.error("update_streaks_on_submit failed:", _streakErr);
       await refreshStreakCache();
 
@@ -1805,7 +1805,7 @@ async function showResult() {
     (async () => {
       // RPC does proper date-based math server-side — avoids stale localStorage issues
       // where a cleared local streak would prevent the DB from ever incrementing.
-      const { error: _streakErr2 } = await supabase.rpc("update_streaks_on_submit", { did_perfect: didPerfect });
+      const { error: _streakErr2 } = await supabase.rpc("update_streaks_on_submit", { did_perfect: didPerfect, p_user_id: user.id });
       if (_streakErr2) console.error("update_streaks_on_submit failed:", _streakErr2);
       await refreshStreakCache();
 

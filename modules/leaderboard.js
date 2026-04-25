@@ -38,7 +38,7 @@ export async function submitEntry(dateStr, entry) {
   }
 
   // Update server-side streaks (non-blocking, best-effort)
-  supabase.rpc("update_streaks_on_submit", { did_perfect: score === 5 }).catch(() => {});
+  supabase.rpc("update_streaks_on_submit", { did_perfect: score === 5, p_user_id: user.id }).catch(() => {});
 
   // Check and award achievements (best-effort, non-blocking)
   checkAndAwardAchievements(user.id, score, entry.picks).catch(() => {});
@@ -150,7 +150,7 @@ export async function autoRecordAttempt(dateStr, entry) {
   }
 
   // Fresh insert — update streaks and awards non-blocking
-  supabase.rpc("update_streaks_on_submit", { did_perfect: score === 5 }).catch(() => {});
+  supabase.rpc("update_streaks_on_submit", { did_perfect: score === 5, p_user_id: user.id }).catch(() => {});
   checkAndAwardAchievements(user.id, score, entry.picks).catch(() => {});
 
   return { wasNew: true, displayName };
