@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(Get-Command gh -ErrorAction SilentlyContinue)",
+      "PowerShell(git -C \"C:\\\\Users\\\\twill\\\\Desktop\\\\Coding Projects\\\\NFL Trivia\\\\pigskin5\" remote get-url origin 2>$null)"
+    ]
+  }
+}

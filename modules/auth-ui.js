@@ -178,7 +178,7 @@ function showProfileModal(username) {
 
   const usernameEl = document.createElement("div");
   usernameEl.className = "player-card__username";
-  usernameEl.textContent = `@${username}`;
+  usernameEl.textContent = `${username}`;
 
   const tierRowEl = document.createElement("div");
   tierRowEl.className = "player-card__tier-row";
