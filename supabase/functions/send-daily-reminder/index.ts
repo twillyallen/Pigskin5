@@ -9,6 +9,33 @@ const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY")!;
 const FROM = "Pigskin5 <noreply@pigskin5.com>";
 const SITE_URL = "https://www.pigskin5.com";
 
+const TAGLINES = [
+  "Five questions. One chance. Can you go 5 for 5 today?",
+  "Think you know football? Prove it.",
+  "Five questions stand between you and a perfect score.",
+  "Your daily football IQ test is waiting.",
+  "Five questions. No excuses. Let's go.",
+  "Can you run the table today?",
+  "Five shots at perfection. Take yours.",
+  "Same game, new questions. Think you've got it?",
+  "All football. No mercy. Five questions.",
+  "The scoreboard doesn't lie — how do you stack up?",
+  "Your football knowledge is being put to the test.",
+  "Today's quiz won't complete itself.",
+  "Five questions. How many can you get right?",
+  "Every day's a new chance. Today is yours.",
+  "Don't sleep on today's quiz.",
+];
+
+function getDailyTagline(): string {
+  const today = new Date().toISOString().slice(0, 10);
+  let hash = 0;
+  for (const char of today) {
+    hash = (hash * 31 + char.charCodeAt(0)) & 0xffffffff;
+  }
+  return TAGLINES[Math.abs(hash) % TAGLINES.length];
+}
+
 function buildEmailHtml(): string {
   return `
 <!DOCTYPE html>
@@ -32,7 +59,7 @@ function buildEmailHtml(): string {
             <td style="background:#1a1d23;border-radius:12px;padding:32px;text-align:center;">
               <h2 style="margin:0 0 12px;font-size:1.3rem;">Today's Quiz is LIVE!</h2>
               <p style="margin:0 0 28px;color:#aaa;font-size:0.95rem;line-height:1.6;">
-                Five questions. One chance. Can you go 5 for 5 today?
+                ${getDailyTagline()}
               </p>
               <a href="${SITE_URL}"
                  style="display:inline-block;background:#2ecc71;color:#000;font-weight:700;
