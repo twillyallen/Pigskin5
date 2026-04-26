@@ -88,7 +88,7 @@ export async function showTierTooltip(emoji, tierName, streak, playerName, emoji
   // --- Username ---
   const usernameEl = document.createElement("div");
   usernameEl.className = "player-card__username";
-  if (username) usernameEl.textContent = `@${username}`;
+  if (username) usernameEl.textContent = `${username}`;
 
   // --- Tier + streak ---
   const tierRowEl = document.createElement("div");

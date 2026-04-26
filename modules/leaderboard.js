@@ -18,6 +18,7 @@ export async function submitEntry(dateStr, entry) {
       user_id: user.id,
       quiz_date: dateStr,
       score: score,
+      points: entry.points || 0,
       display_name_used: entry.name,
       time_taken_seconds: Math.round(entry.avgTime || 0),
       answer_data: {
@@ -25,7 +26,7 @@ export async function submitEntry(dateStr, entry) {
         emojiScore: entry.emojiScore,
         dailyStreak: entry.dailyStreak,
         avgTime: entry.avgTime,
-        picks: entry.picks,  // <-- NEW
+        picks: entry.picks,
       },
     });
 
@@ -129,6 +130,7 @@ export async function autoRecordAttempt(dateStr, entry) {
       user_id: user.id,
       quiz_date: dateStr,
       score,
+      points: entry.points || 0,
       display_name_used: displayName,
       time_taken_seconds: Math.round(entry.avgTime || 0),
       answer_data: {
@@ -181,7 +183,7 @@ export async function fetchLeaderboard(dateStr) {
   const [playerRes, manualRes] = await Promise.all([
     supabase
       .from("quiz_attempts")
-      .select("display_name_used, score, time_taken_seconds, submitted_at, answer_data, user_id, profiles!inner(username, twitter_handle)")
+      .select("display_name_used, score, points, time_taken_seconds, submitted_at, answer_data, user_id, profiles!inner(username, twitter_handle)")
       .eq("quiz_date", dateStr)
       .order("submitted_at", { ascending: true })
       .limit(500),
@@ -201,7 +203,7 @@ export async function fetchLeaderboard(dateStr) {
     name: a.display_name_used,
     username: a.profiles?.username || null,
     twitterHandle: a.profiles?.twitter_handle || null,
-    points: a.answer_data?.points || 0,
+    points: a.points ?? a.answer_data?.points ?? 0,
     avgTime: a.answer_data?.avgTime ?? a.time_taken_seconds ?? 0,
     emojiScore: a.answer_data?.emojiScore || "",
     dailyStreak: a.answer_data?.dailyStreak || 0,
