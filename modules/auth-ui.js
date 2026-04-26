@@ -1,6 +1,9 @@
 // auth-ui.js
 import { sendMagicLink, setUsername, signOut } from "./auth.js";
 import { onAuthChange, getCurrentProfile, supabase } from "./supabase-client.js";
+
+const X_SVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="15" height="15" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.748l7.73-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>`;
+const TWITTER_HANDLE_RE = /^[A-Za-z0-9_]{1,15}$/;
 import { refreshStreakCache, checkAchievementsNow, getCachedDailyStreak, getCachedFavoriteTeam, fetchPlayerStats } from "./leaderboard.js";
 import { NFL_TEAMS_SORTED, NFL_TEAMS } from "./nfl-teams.js";
 import { ACHIEVEMENTS } from "./achievements.js";
@@ -185,8 +188,13 @@ function showProfileModal(username) {
   streakEl.className = "player-card__streak";
   streakEl.textContent = `${streak}-day streak`;
 
+  // Twitter row (editable; populated after async stats load)
+  const twitterRowEl = document.createElement("div");
+  twitterRowEl.className = "player-card__twitter-row";
+
   body.appendChild(nameEl);
   body.appendChild(usernameEl);
+  body.appendChild(twitterRowEl);
   body.appendChild(tierRowEl);
   body.appendChild(streakEl);
 
@@ -344,6 +352,113 @@ function showProfileModal(username) {
       tierEmojiEl.textContent = updatedTier.emoji;
       tierRowEl.textContent = updatedTier.name;
     }
+
+    // Twitter section (editable)
+    let currentTwitterHandle = stats.twitterHandle || null;
+
+    const renderTwitterOwn = (handle) => {
+      twitterRowEl.innerHTML = "";
+
+      if (handle) {
+        const xLink = document.createElement("a");
+        xLink.href = `https://twitter.com/${handle}`;
+        xLink.target = "_blank";
+        xLink.rel = "noopener noreferrer";
+        xLink.className = "player-card__twitter-icon";
+        xLink.innerHTML = X_SVG;
+        xLink.addEventListener("click", e => e.stopPropagation());
+
+        const handleLink = document.createElement("a");
+        handleLink.href = `https://twitter.com/${handle}`;
+        handleLink.target = "_blank";
+        handleLink.rel = "noopener noreferrer";
+        handleLink.className = "player-card__twitter-handle-link";
+        handleLink.textContent = `@${handle}`;
+        handleLink.addEventListener("click", e => e.stopPropagation());
+
+        const editBtn = document.createElement("button");
+        editBtn.className = "player-card__twitter-edit-btn";
+        editBtn.textContent = "Edit";
+        editBtn.addEventListener("click", e => { e.stopPropagation(); showTwitterEditForm(handle); });
+
+        twitterRowEl.append(xLink, handleLink, editBtn);
+      } else {
+        const linkBtn = document.createElement("button");
+        linkBtn.className = "player-card__twitter-link-btn";
+        linkBtn.innerHTML = `${X_SVG}<span>Link X</span>`;
+        linkBtn.addEventListener("click", e => { e.stopPropagation(); showTwitterEditForm(null); });
+        twitterRowEl.appendChild(linkBtn);
+      }
+    };
+
+    const showTwitterEditForm = (existingHandle) => {
+      twitterRowEl.innerHTML = "";
+
+      const input = document.createElement("input");
+      input.type = "text";
+      input.className = "player-card__twitter-input";
+      input.placeholder = "username (no @)";
+      input.maxLength = 15;
+      if (existingHandle) input.value = existingHandle;
+      input.addEventListener("click", e => e.stopPropagation());
+
+      const errEl = document.createElement("div");
+      errEl.className = "player-card__twitter-error";
+
+      const btnsEl = document.createElement("div");
+      btnsEl.className = "player-card__twitter-btns";
+
+      const saveBtn = document.createElement("button");
+      saveBtn.className = "player-card__twitter-save-btn";
+      saveBtn.textContent = "Save";
+
+      const cancelBtn = document.createElement("button");
+      cancelBtn.className = "player-card__twitter-cancel-btn";
+      cancelBtn.textContent = "Cancel";
+      cancelBtn.addEventListener("click", e => { e.stopPropagation(); renderTwitterOwn(currentTwitterHandle); });
+
+      btnsEl.append(saveBtn, cancelBtn);
+
+      if (existingHandle) {
+        const removeBtn = document.createElement("button");
+        removeBtn.className = "player-card__twitter-remove-btn";
+        removeBtn.textContent = "Remove";
+        removeBtn.addEventListener("click", async e => {
+          e.stopPropagation();
+          removeBtn.disabled = true;
+          const { data: { user } } = await supabase.auth.getUser();
+          const { error } = await supabase.from("profiles").update({ twitter_handle: null }).eq("id", user.id);
+          removeBtn.disabled = false;
+          if (error) { errEl.textContent = "Failed to remove. Try again."; return; }
+          currentTwitterHandle = null;
+          renderTwitterOwn(null);
+          showToast("X account removed.");
+        });
+        btnsEl.appendChild(removeBtn);
+      }
+
+      saveBtn.addEventListener("click", async e => {
+        e.stopPropagation();
+        const val = input.value.trim();
+        if (!val) { errEl.textContent = "Enter a username."; return; }
+        if (!TWITTER_HANDLE_RE.test(val)) { errEl.textContent = "Letters, numbers, underscores only (1–15 chars)."; return; }
+        saveBtn.disabled = true;
+        const { data: { user } } = await supabase.auth.getUser();
+        const { error } = await supabase.from("profiles").update({ twitter_handle: val }).eq("id", user.id);
+        saveBtn.disabled = false;
+        if (error) { errEl.textContent = "Failed to save. Try again."; return; }
+        currentTwitterHandle = val;
+        renderTwitterOwn(val);
+        showToast("X account linked!");
+      });
+
+      input.addEventListener("keydown", e => { if (e.key === "Enter") saveBtn.click(); });
+
+      twitterRowEl.append(input, errEl, btnsEl);
+      input.focus();
+    };
+
+    renderTwitterOwn(currentTwitterHandle);
 
     // Member since
     const since = formatMemberSinceLocal(stats.memberSince);

@@ -330,7 +330,9 @@ async function fetchLeaderboardJSONP() {
   return await fetchLeaderboard(date);
 }
 
-function createTierBadgeElement(streak, name, points, emojiScore, username) {
+const LB_X_SVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="11" height="11" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.748l7.73-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>`;
+
+function createTierBadgeElement(streak, name, points, emojiScore, username, twitterHandle) {
   const tier = getTierForStreak(streak);
   const nameContainer = document.createElement("div");
   nameContainer.className = "name-with-tier";
@@ -357,6 +359,18 @@ const showTierInfo = () => {
 
   nameContainer.appendChild(tierBadge);
   nameContainer.appendChild(nameSpan);
+
+  if (twitterHandle) {
+    const xLink = document.createElement("a");
+    xLink.href = `https://twitter.com/${twitterHandle}`;
+    xLink.target = "_blank";
+    xLink.rel = "noopener noreferrer";
+    xLink.className = "lb-twitter-icon";
+    xLink.title = `@${twitterHandle} on X`;
+    xLink.innerHTML = LB_X_SVG;
+    xLink.addEventListener("click", e => e.stopPropagation());
+    nameContainer.appendChild(xLink);
+  }
 
   return nameContainer;
 }
@@ -412,7 +426,7 @@ function renderStartLeaderboard(dateStr) {
 
         const nameTd = document.createElement("td");
         const streak = e.dailyStreak ?? 0;
-        nameTd.appendChild(createTierBadgeElement(streak, e.name, e.points, e.emojiScore, e.username));
+        nameTd.appendChild(createTierBadgeElement(streak, e.name, e.points, e.emojiScore, e.username, e.twitterHandle));
 
         const pointsTd = document.createElement("td");
         pointsTd.textContent = (e.points ?? 0).toLocaleString();
@@ -550,7 +564,7 @@ async function renderWeeklyLeaderboard(guestEntry = null) {
 
     const nameTd = document.createElement("td");
     nameTd.appendChild(
-      createTierBadgeElement(e.daily_streak ?? 0, e.display_name || e.username || "Player", e.total_points, null, e.username)
+      createTierBadgeElement(e.daily_streak ?? 0, e.display_name || e.username || "Player", e.total_points, null, e.username, null)
     );
 
     const pointsTd = document.createElement("td");
@@ -706,7 +720,7 @@ function renderLeaderboard(dateStr, guestEntry = null) {
 
         const nameTd = document.createElement("td");
         const streak = e.dailyStreak ?? 0;
-        nameTd.appendChild(createTierBadgeElement(streak, e.name, e.points, e.emojiScore, e.username));
+        nameTd.appendChild(createTierBadgeElement(streak, e.name, e.points, e.emojiScore, e.username, e.twitterHandle));
 
         const pointsTd = document.createElement("td");
         pointsTd.textContent = (e.points ?? 0).toLocaleString();

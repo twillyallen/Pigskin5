@@ -72,7 +72,7 @@ async function checkAndAwardAchievements(userId, score, picks) {
   const totalQuizzes = Math.max(attempts.length, currentStreak);
   const picksArr = picks || [];
   const avgTime = picksArr.length > 0 ? picksArr.reduce((s, p) => s + (p.elapsed ?? 0), 0) / picksArr.length : 15;
-  const hasGunslinger = score === 5 && picksArr.every(p => (p.elapsed ?? Infinity) < 1.2);
+  const hasGunslinger = score === 5 && picksArr.every(p => (p.elapsed ?? Infinity) < 2.4);
   const hasTwoMinuteDrill = score === 5 && avgTime < 4;
   const hasPickSix = score === 0 || attempts.some(a => a.score === 0);
 
@@ -181,7 +181,7 @@ export async function fetchLeaderboard(dateStr) {
   const [playerRes, manualRes] = await Promise.all([
     supabase
       .from("quiz_attempts")
-      .select("display_name_used, score, time_taken_seconds, submitted_at, answer_data, user_id, profiles!inner(username)")
+      .select("display_name_used, score, time_taken_seconds, submitted_at, answer_data, user_id, profiles!inner(username, twitter_handle)")
       .eq("quiz_date", dateStr)
       .order("submitted_at", { ascending: true })
       .limit(500),
@@ -200,6 +200,7 @@ export async function fetchLeaderboard(dateStr) {
   const playerEntries = (playerRes.data || []).map(a => ({
     name: a.display_name_used,
     username: a.profiles?.username || null,
+    twitterHandle: a.profiles?.twitter_handle || null,
     points: a.answer_data?.points || 0,
     avgTime: a.answer_data?.avgTime ?? a.time_taken_seconds ?? 0,
     emojiScore: a.answer_data?.emojiScore || "",
@@ -296,7 +297,7 @@ export async function hasPlayedToday(dateStr) {
 export async function fetchPlayerStats(username) {
   const { data: profile, error: profileErr } = await supabase
     .from("profiles")
-    .select("id, created_at, favorite_team, achievements, current_streak, current_td_streak, total_touchdowns")
+    .select("id, created_at, favorite_team, achievements, current_streak, current_td_streak, total_touchdowns, twitter_handle")
     .eq("username", username)
     .maybeSingle();
 
@@ -327,6 +328,7 @@ export async function fetchPlayerStats(username) {
     memberSince: profile.created_at,
     favoriteTeam: profile.favorite_team || null,
     achievements: profile.achievements || [],
+    twitterHandle: profile.twitter_handle || null,
   };
 }
 

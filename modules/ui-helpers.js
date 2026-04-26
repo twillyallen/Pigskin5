@@ -3,6 +3,8 @@ import { NFL_TEAMS } from "./nfl-teams.js";
 import { ACHIEVEMENTS } from "./achievements.js";
 import { STREAK_TIERS } from "./config.js";
 
+const X_SVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="15" height="15" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.748l7.73-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>`;
+
 function getTierForStreak(streakDays) {
   for (let i = STREAK_TIERS.length - 1; i >= 0; i--) {
     if (streakDays >= STREAK_TIERS[i].minDays) return STREAK_TIERS[i];
@@ -97,8 +99,15 @@ export async function showTierTooltip(emoji, tierName, streak, playerName, emoji
   streakEl.className = "player-card__streak";
   streakEl.textContent = `${streak}-day streak`;
 
+  // Twitter row (populated after async stats load; hidden until then)
+  const twitterRowEl = document.createElement("div");
+  twitterRowEl.className = "player-card__twitter-row";
+
   body.appendChild(nameEl);
-  if (username) body.appendChild(usernameEl);
+  if (username) {
+    body.appendChild(usernameEl);
+    body.appendChild(twitterRowEl);
+  }
   body.appendChild(tierRowEl);
   body.appendChild(streakEl);
 
@@ -209,6 +218,28 @@ export async function showTierTooltip(emoji, tierName, streak, playerName, emoji
         streakEl.textContent = `${stats.currentStreak}-day streak`;
         tierEmojiEl.textContent = updatedTier.emoji;
         tierRowEl.textContent = updatedTier.name;
+      }
+
+      // Twitter handle
+      if (stats.twitterHandle && twitterRowEl) {
+        const xLink = document.createElement("a");
+        xLink.href = `https://twitter.com/${stats.twitterHandle}`;
+        xLink.target = "_blank";
+        xLink.rel = "noopener noreferrer";
+        xLink.className = "player-card__twitter-icon";
+        xLink.innerHTML = X_SVG;
+        xLink.addEventListener("click", e => e.stopPropagation());
+
+        const handleLink = document.createElement("a");
+        handleLink.href = `https://twitter.com/${stats.twitterHandle}`;
+        handleLink.target = "_blank";
+        handleLink.rel = "noopener noreferrer";
+        handleLink.className = "player-card__twitter-handle-link";
+        handleLink.textContent = `@${stats.twitterHandle}`;
+        handleLink.addEventListener("click", e => e.stopPropagation());
+
+        twitterRowEl.appendChild(xLink);
+        twitterRowEl.appendChild(handleLink);
       }
 
       // Member since

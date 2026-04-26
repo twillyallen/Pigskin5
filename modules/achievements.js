@@ -31,7 +31,7 @@ export const ACHIEVEMENTS = [
     id: "gunslinger",
     emoji: "🔫",
     name: "Gunslinger",
-    desc: "Answer all 5 correctly in under 1 second each",
+    desc: "Answer all 5 correctly in under 2 seconds each",
     check: ({ hasGunslinger }) => !!hasGunslinger,
   },
   {
@@ -44,7 +44,7 @@ export const ACHIEVEMENTS = [
   {
     id: "field_general",
     emoji: "🫡",
-    name: "field_general",
+    name: "Field General",
     desc: "Score 5/5 ten times",
     check: ({ totalPerfect }) => totalPerfect >= 10,
   },
