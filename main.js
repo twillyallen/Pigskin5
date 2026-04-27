@@ -21,8 +21,9 @@ const KEY_LEADERBOARD    = "ps5_leaderboard_v1";
 const KEY_LB_SUBMIT_PREFIX = "ps5_leaderboard_submit_";
 
 // SessionStorage keys for mid-quiz state (cleared on tab/browser close)
-const KEY_SESSION_DATE  = "ps5_session_date";
-const KEY_SESSION_PICKS = "ps5_session_picks";
+const KEY_SESSION_DATE        = "ps5_session_date";
+const KEY_SESSION_PICKS       = "ps5_session_picks";
+const KEY_SESSION_Q_WALL_START = "ps5_session_q_wall_start";
 
 const PROD_HOSTS = ["twillyallen.github.io", "pigskin5.com"];
 const LEADERBOARD_API_URL = "https://script.google.com/macros/s/AKfycbzLIkEvrtXNYc0zgtvpMYqma8YngyvMfmhfr2k2-xC6_po-rC5unN2KxLbqnJo4JraLwA/exec";
@@ -79,6 +80,7 @@ let picks = [];
 let timerId = null;
 let timeLeft = TIME_LIMIT;
 let questionStartTime = 0;
+let questionWallStart = 0;
 let questionTimes = [];
 let totalPoints = 0;
 let latestAvgTime = 0;
@@ -186,20 +188,22 @@ function stopTimer() {
 function startTimer(seconds) {
   stopTimer();
   timeLeft = seconds;
+  questionWallStart = Date.now();
+  questionStartTime = performance.now();
 
   if (timerEl) {
     timerEl.textContent = `${timeLeft}s`;
     timerEl.classList.remove("timer-danger");
   }
 
-  questionStartTime = performance.now();
-
   timerId = setInterval(() => {
-    timeLeft--;
+    // Derive timeLeft from wall clock so suspended/backgrounded tabs
+    // catch up instantly when the user returns — no cheating via tab-switch.
+    const wallElapsed = Math.floor((Date.now() - questionWallStart) / 1000);
+    timeLeft = Math.max(0, seconds - wallElapsed);
 
     if (timerEl) {
       timerEl.textContent = `${timeLeft}s`;
-
       if (timeLeft <= 5 && timeLeft > 0) {
         timerEl.classList.add("timer-danger");
       }
@@ -1202,7 +1206,7 @@ function getQuestionsForDate(dateStr) {
   return Array.isArray(dayData) ? dayData : [];
 }
 
-function renderQuestion() {
+function renderQuestion(overrideTime) {
   answered = false;
   const q = QUESTIONS[current];
 
@@ -1226,17 +1230,21 @@ function renderQuestion() {
     choicesEl.appendChild(btn);
   });
 
-  startTimer(TIME_LIMIT);
+  startTimer(overrideTime !== undefined ? overrideTime : TIME_LIMIT);
+  // Persist wall-clock start so a page refresh can resume with the correct time remaining
+  saveSessionState();
 }
 
 function pickAnswer(i, correct) {
   if (answered) return;
   answered = true;
 
-  const now = performance.now();
   const MAX_TIME = TIME_LIMIT || 15;
 
-  let elapsed = (now - questionStartTime) / 1000;
+  // Use wall clock so elapsed matches what the timer actually showed
+  let elapsed = questionWallStart > 0
+    ? (Date.now() - questionWallStart) / 1000
+    : (performance.now() - questionStartTime) / 1000;
 
   if (!Number.isFinite(elapsed) || elapsed < 0) elapsed = MAX_TIME;
   if (elapsed > MAX_TIME) elapsed = MAX_TIME;
@@ -1392,6 +1400,7 @@ function saveSessionState() {
   try {
     sessionStorage.setItem(KEY_SESSION_DATE, RUN_DATE || "");
     sessionStorage.setItem(KEY_SESSION_PICKS, JSON.stringify(picks));
+    sessionStorage.setItem(KEY_SESSION_Q_WALL_START, String(questionWallStart || 0));
   } catch {}
 }
 
@@ -1399,60 +1408,31 @@ function clearSessionState() {
   try {
     sessionStorage.removeItem(KEY_SESSION_DATE);
     sessionStorage.removeItem(KEY_SESSION_PICKS);
+    sessionStorage.removeItem(KEY_SESSION_Q_WALL_START);
   } catch {}
-}
-
-// Fill any unanswered questions as "Not Attempted" and go straight to results.
-// Called when the player tabs out or refreshes mid-quiz.
-function forfeitAndFinish() {
-  stopTimer();
-
-  // Fill remaining questions as not attempted (pick: null, 0 points)
-  for (let i = picks.length; i < QUESTIONS.length; i++) {
-    const q = QUESTIONS[i];
-    picks.push({
-      idx: i,
-      pick: null,
-      correct: q.answer,
-      elapsed: TIME_LIMIT,
-      points: 0
-    });
-    questionTimes.push(TIME_LIMIT);
-  }
-
-  // Recalculate score/totals from picks (answered questions already tallied)
-  score = picks.filter(p => {
-    const correct = Array.isArray(p.correct) ? p.correct : [p.correct];
-    return correct.includes(p.pick);
-  }).length;
-
-  const totalTime = questionTimes.reduce((s, t) => s + (t || 0), 0);
-  latestAvgTime = questionTimes.length ? totalTime / questionTimes.length : 0;
-
-  clearSessionState();
-  showResult();
 }
 
 // On page load: if the player has an attempt flag but no saved result,
 // they must have refreshed/closed mid-quiz. Recover gracefully.
+// Returns false (no recovery needed), 'results' (show result screen),
+// or { resume: true, timeRemaining } (resume the quiz in progress).
 function recoverFromLimbo() {
   const runDate = getRunDateISO();
   if (!hasAttempt(runDate)) return false;   // never started
   if (loadResult(runDate)) return false;    // finished normally
 
-  // They're stuck in limbo — reconstruct from whatever sessionStorage has
-  RUN_DATE   = runDate;
-  QUESTIONS  = getQuestionsForDate(runDate);
+  RUN_DATE  = runDate;
+  QUESTIONS = getQuestionsForDate(runDate);
 
   let savedPicks = [];
+  let savedQWallStart = 0;
   try {
     const raw = sessionStorage.getItem(KEY_SESSION_PICKS);
     savedPicks = raw ? JSON.parse(raw) : [];
+    savedQWallStart = parseInt(sessionStorage.getItem(KEY_SESSION_Q_WALL_START) ?? "0", 10) || 0;
   } catch {}
 
-  // If they have zero answered questions, they likely got hit by the
-  // visibility-change bug on launch. Clear the attempt and let them
-  // play fresh instead of giving them an automatic 0/5.
+  // Zero answered questions means they refreshed right at game start — let them play fresh.
   if (!Array.isArray(savedPicks) || savedPicks.length === 0) {
     try { localStorage.removeItem(KEY_ATTEMPT_PREFIX + runDate); } catch {}
     clearSessionState();
@@ -1464,7 +1444,6 @@ function recoverFromLimbo() {
   totalPoints   = 0;
   questionTimes = picks.map(p => p.elapsed ?? TIME_LIMIT);
 
-  // Recalculate running totals from the picks we recovered
   picks.forEach(p => {
     const correct = Array.isArray(p.correct) ? p.correct : [p.correct];
     if (correct.includes(p.pick)) {
@@ -1473,31 +1452,31 @@ function recoverFromLimbo() {
     }
   });
 
-  // Fill the rest as "Not Attempted"
-  for (let i = picks.length; i < QUESTIONS.length; i++) {
-    const q = QUESTIONS[i];
-    picks.push({ idx: i, pick: null, correct: q.answer, elapsed: TIME_LIMIT, points: 0 });
-    questionTimes.push(TIME_LIMIT);
+  current = picks.length;
+
+  // How much of the current question's 15 seconds remain based on wall clock
+  const wallElapsed = savedQWallStart > 0
+    ? Math.floor((Date.now() - savedQWallStart) / 1000)
+    : TIME_LIMIT;
+  const timeRemaining = TIME_LIMIT - wallElapsed;
+
+  if (timeRemaining <= 0 || current >= QUESTIONS.length) {
+    // Time ran out while they were away — mark remaining questions as timed out
+    for (let i = current; i < QUESTIONS.length; i++) {
+      const q = QUESTIONS[i];
+      picks.push({ idx: i, pick: null, correct: q.answer, elapsed: TIME_LIMIT, points: 0 });
+      questionTimes.push(TIME_LIMIT);
+    }
+    const totalTime = questionTimes.reduce((s, t) => s + (t || 0), 0);
+    latestAvgTime = questionTimes.length ? totalTime / questionTimes.length : 0;
+    clearSessionState();
+    saveResult(runDate, { score, picks, totalTime, avgTime: latestAvgTime, totalPoints });
+    return 'results';
   }
 
-  const totalTime = questionTimes.reduce((s, t) => s + (t || 0), 0);
-  latestAvgTime = questionTimes.length ? totalTime / questionTimes.length : 0;
-
+  // Still time left — resume the quiz where they left off
   clearSessionState();
-  saveResult(runDate, { score, picks, totalTime, avgTime: latestAvgTime, totalPoints });
-
-  return true; // caller should now call showResult() / renderPersistedResult()
-}
-
-function _onVisibilityChange() {
-  // Require at least 1 answered question before forfeiting.
-  // Prevents instant 0/5 when a brief focus-loss (notification,
-  // pull-to-refresh, address-bar animation) fires on game start.
-  if (document.hidden && isQuizInProgress() && picks.length > 0) {
-    document.removeEventListener("visibilitychange", _onVisibilityChange);
-    window.removeEventListener("beforeunload", _onBeforeUnload);
-    forfeitAndFinish();
-  }
+  return { resume: true, timeRemaining };
 }
 
 function _onBeforeUnload() {
@@ -1553,19 +1532,6 @@ function startGame() {
   computeAndSaveStreak(RUN_DATE);
 
   renderQuestion();
-
-  // Persist in-progress state so a refresh can recover gracefully
-  saveSessionState();
-
-  // Tab-out: forfeit remaining questions and go straight to results.
-  // Delay registration by 2s so brief focus-loss on game launch
-  // (notifications, pull-to-refresh, address-bar animations) can't
-  // instantly forfeit the quiz and lock the player out with 0/5.
-  setTimeout(() => {
-    if (isQuizInProgress()) {
-      document.addEventListener("visibilitychange", _onVisibilityChange);
-    }
-  }, 2000);
 
   // Refresh / close: update session picks so recovery has latest data
   window.addEventListener("beforeunload", _onBeforeUnload);
@@ -1706,8 +1672,7 @@ function showGuestPlayerCard(score, avgTime) {
 }
 
 async function showResult() {
-  // Clean up tab-out/unload listeners — quiz is over
-  document.removeEventListener("visibilitychange", _onVisibilityChange);
+  // Clean up unload listener — quiz is over
   window.removeEventListener("beforeunload", _onBeforeUnload);
   clearSessionState();
 
@@ -2119,17 +2084,6 @@ function init() {
   restartBtn   = document.getElementById("restartBtn");
   headerEl     = document.querySelector(".header");
 
-  setLogoForDay();
-  setTimeout(() => setLogoForDay(), 100);
-
-  // If player refreshed mid-quiz, recover their partial result and show it
-  if (recoverFromLimbo()) {
-    renderPersistedResult(getRunDateISO(), loadResult(getRunDateISO()));
-    return;
-  }
-
-  showStartScreen();
-
   leaderboardForm      = document.getElementById("leaderboardForm");
   playerNameInput      = document.getElementById("playerName");
   leaderboardWarningEl = document.getElementById("leaderboardWarning");
@@ -2152,6 +2106,28 @@ function init() {
   startBtn?.addEventListener("click", startGame);
   restartBtn?.addEventListener("click", showStartScreen);
   leaderboardForm?.addEventListener("submit", handleLeaderboardSubmit);
+
+  setLogoForDay();
+  setTimeout(() => setLogoForDay(), 100);
+
+  // If the player refreshed mid-quiz, recover and either resume or show results
+  const recovery = recoverFromLimbo();
+  if (recovery === 'results') {
+    renderPersistedResult(getRunDateISO(), loadResult(getRunDateISO()));
+    return;
+  } else if (recovery && recovery.resume) {
+    // Resume the quiz in progress with the remaining time for the current question
+    document.body.classList.remove("start-page");
+    document.body.classList.add("quiz-active");
+    startScreen.classList.add("hidden");
+    resultSec.classList.add("hidden");
+    cardSec.classList.remove("hidden");
+    headerEl?.classList.remove("hidden");
+    if (timerEl) timerEl.style.display = "block";
+    window.addEventListener("beforeunload", _onBeforeUnload);
+    renderQuestion(recovery.timeRemaining);
+    return;
+  }
 
   showStartScreen();
 
