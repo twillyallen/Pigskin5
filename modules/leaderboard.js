@@ -54,6 +54,14 @@ export async function checkAchievementsNow() {
   checkAndAwardAchievements(user.id, null, null).catch(() => {});
 }
 
+// Call immediately when a quiz finishes so time-sensitive achievements like
+// Gunslinger are checked even if the user never submits to the leaderboard.
+export async function checkAchievementsForScore(score, picks) {
+  const user = await getCurrentUser();
+  if (!user) return;
+  checkAndAwardAchievements(user.id, score, picks).catch(() => {});
+}
+
 async function checkAndAwardAchievements(userId, score, picks) {
   const { data: profile } = await supabase
     .from("profiles")

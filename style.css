@@ -117,6 +117,50 @@ body::before{
   to   { transform: scale(1.08); }
 }
 
+/* Live score during quiz */
+.live-score-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.live-score-pts {
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: rgba(255, 255, 255, 0.85);
+  display: inline-block;
+}
+
+.live-score-pts.score-pop {
+  animation: scorePop 0.4s ease-out;
+}
+
+@keyframes scorePop {
+  0%   { transform: scale(1); }
+  40%  { transform: scale(1.5); color: #4ade80; }
+  70%  { transform: scale(0.95); }
+  100% { transform: scale(1); }
+}
+
+.pts-gained {
+  position: absolute;
+  top: -4px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: #4ade80;
+  pointer-events: none;
+  white-space: nowrap;
+  animation: ptsFloat 0.85s ease-out forwards;
+}
+
+@keyframes ptsFloat {
+  0%   { opacity: 1; transform: translateX(-50%) translateY(0); }
+  100% { opacity: 0; transform: translateX(-50%) translateY(-30px); }
+}
+
 
 /* Progress bar fixed near bottom of screen */
 .progress-bar {

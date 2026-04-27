@@ -3,7 +3,7 @@
 // ============================================================================
 
 import { CALENDAR } from "./questions.js?v=20260412";
-import { submitEntry, fetchLeaderboard, fetchWeeklyLeaderboard, refreshStreakCache, getCachedDailyStreak, getCachedTDStreak, getTodaysAttempt, getCachedFavoriteTeam, overrideCachedStreaks } from "./modules/leaderboard.js";
+import { submitEntry, fetchLeaderboard, fetchWeeklyLeaderboard, refreshStreakCache, getCachedDailyStreak, getCachedTDStreak, getTodaysAttempt, getCachedFavoriteTeam, overrideCachedStreaks, checkAchievementsForScore } from "./modules/leaderboard.js";
 import { getCurrentUser, supabase } from "./modules/supabase-client.js";
 import { NFL_TEAMS } from "./modules/nfl-teams.js";
 import { showTierTooltip } from "./modules/ui-helpers.js";
@@ -61,7 +61,8 @@ const STREAK_TIERS = [
   { name: "Pro", minDays: 14, emoji: "🔥", color: "#9b59b6" },
   { name: "All-Pro", minDays: 30, emoji: "⭐", color: "#f39c12" },
   { name: "Hall of Fame", minDays: 50, emoji: "🏆", color: "#e67e22" },
-  { name: "Legend", minDays: 100, emoji: "👑", color: "#e74c3c" }
+  { name: "Legend", minDays: 100, emoji: "👑", color: "#e74c3c" },
+  { name: "Neck Beard", minDays: 150, emoji: "🧌", color: "#457888" },
 ];
 
 const BANNED_WORDS = [
@@ -1196,6 +1197,26 @@ function setLogoForDay() {
 // QUIZ FUNCTIONS
 // ==============================
 
+function updateLiveScore(pts, earnedPts) {
+  const wrap = document.getElementById("live-score-wrap");
+  const ptsEl = document.getElementById("live-score-pts");
+  if (!wrap || !ptsEl) return;
+
+  ptsEl.textContent = pts.toLocaleString() + " pts";
+
+  if (earnedPts > 0) {
+    ptsEl.classList.remove("score-pop");
+    void ptsEl.offsetWidth;
+    ptsEl.classList.add("score-pop");
+
+    const gained = document.createElement("span");
+    gained.className = "pts-gained";
+    gained.textContent = "+" + earnedPts.toLocaleString();
+    wrap.appendChild(gained);
+    gained.addEventListener("animationend", () => gained.remove());
+  }
+}
+
 function getQuestionsForDate(dateStr) {
   const dayData = CALENDAR[dateStr];
 
@@ -1214,6 +1235,7 @@ function renderQuestion(overrideTime) {
   questionEl.style.whiteSpace = 'pre-line';
 
   progressEl.textContent = `Question ${current + 1} / ${QUESTIONS.length}`;
+  updateLiveScore(totalPoints, 0);
 
   if (progressFillEl && QUESTIONS.length > 0) {
     const completed = current;
@@ -1278,6 +1300,7 @@ function pickAnswer(i, correct) {
     const safeTimeLeft = Math.max(0, Number(timeLeft) || 0);
     questionPoints = 100 * safeTimeLeft;
     totalPoints += questionPoints;
+    updateLiveScore(totalPoints, questionPoints);
   }
 
   picks.push({
@@ -1510,6 +1533,7 @@ function startGame() {
   questionTimes = [];
   totalPoints = 0;
   latestAvgTime = 0;
+  updateLiveScore(0, 0);
 
   if (!Array.isArray(QUESTIONS) || QUESTIONS.length !== 5) {
     startScreen.classList.add("hidden");
@@ -1778,6 +1802,10 @@ async function showResult() {
   saveResult(RUN_DATE, { score, picks, totalTime, avgTime, totalPoints });
 
   const user = await getCurrentUser();
+
+  // Check achievements immediately on quiz finish so Gunslinger (and others)
+  // are awarded even if the user never submits to the leaderboard.
+  if (user) checkAchievementsForScore(score, picks).catch(() => {});
 
   // Update server-side streak on quiz completion, regardless of leaderboard submission
   if (user) {
