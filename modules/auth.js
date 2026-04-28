@@ -28,7 +28,7 @@ export async function setUsername(username) {
   
   const { error } = await supabase
     .from("profiles")
-    .update({ username, current_display_name: username })
+    .update({ username })
     .eq("id", user.id);
   if (error) return { error: error.message };
   return { success: true };
