@@ -59,10 +59,11 @@ export async function checkAchievementsNow() {
 export async function checkAchievementsForScore(score, picks) {
   const user = await getCurrentUser();
   if (!user) return;
-  checkAndAwardAchievements(user.id, score, picks).catch(() => {});
+  // Pass false — the attempt isn't in quiz_attempts yet at quiz completion
+  checkAndAwardAchievements(user.id, score, picks, false).catch(() => {});
 }
 
-async function checkAndAwardAchievements(userId, score, picks) {
+async function checkAndAwardAchievements(userId, score, picks, attemptAlreadyInDb = true) {
   const { data: profile } = await supabase
     .from("profiles")
     .select("current_streak, current_td_streak, total_touchdowns, achievements")
@@ -78,15 +79,18 @@ async function checkAndAwardAchievements(userId, score, picks) {
 
   const currentStreak = profile.current_streak ?? 0;
   const tdStreak = profile.current_td_streak ?? 0;
-  const totalQuizzes = Math.max(attempts.length, currentStreak);
   const picksArr = picks || [];
   const avgTime = picksArr.length > 0 ? picksArr.reduce((s, p) => s + (p.elapsed ?? 0), 0) / picksArr.length : 15;
   const hasGunslinger = score === 5 && picksArr.every(p => (p.elapsed ?? Infinity) < 2.4);
   const hasTwoMinuteDrill = score === 5 && avgTime < 4;
   const hasPickSix = score === 0 || attempts.some(a => a.score === 0);
 
-  // Use DB ground truth for perfect count — dbPerfect already includes any newly inserted attempt
-  const dbPerfect = attempts.filter(a => a.score === 5).length;
+  // When called at quiz completion the attempt isn't inserted yet — adjust counts by 1
+  const pendingOffset = (!attemptAlreadyInDb && score !== null) ? 1 : 0;
+  const totalQuizzes = Math.max(attempts.length + pendingOffset, currentStreak);
+
+  // Use DB ground truth for perfect count; add current attempt if not yet in DB
+  const dbPerfect = attempts.filter(a => a.score === 5).length + (pendingOffset && score === 5 ? 1 : 0);
   const storedTDs = profile.total_touchdowns ?? 0;
   const newTDCount = Math.max(storedTDs, dbPerfect);
 
