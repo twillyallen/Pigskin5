@@ -1,6 +1,7 @@
 // modules/leaderboard.js
 import { supabase, getCurrentUser } from "./supabase-client.js";
 import { computeNewAchievements } from "./achievements.js";
+import { getRunDateISO } from "./date-utils.js";
 
 // Submit a leaderboard entry for the logged-in user
 export async function submitEntry(dateStr, entry) {
@@ -42,7 +43,7 @@ export async function submitEntry(dateStr, entry) {
   supabase.rpc("update_streaks_on_submit", { did_perfect: score === 5, p_user_id: user.id }).catch(() => {});
 
   // Check and award achievements (best-effort, non-blocking)
-  checkAndAwardAchievements(user.id, score, entry.picks).catch(() => {});
+  checkAndAwardAchievements(user.id, score, entry.picks, true, dateStr).catch(() => {});
 
   return { success: true };
 }
@@ -60,22 +61,25 @@ export async function checkAchievementsForScore(score, picks) {
   const user = await getCurrentUser();
   if (!user) return;
   // Pass false — the attempt isn't in quiz_attempts yet at quiz completion
-  checkAndAwardAchievements(user.id, score, picks, false).catch(() => {});
+  checkAndAwardAchievements(user.id, score, picks, false, getRunDateISO()).catch(() => {});
 }
 
-async function checkAndAwardAchievements(userId, score, picks, attemptAlreadyInDb = true) {
-  const { data: profile } = await supabase
-    .from("profiles")
-    .select("current_streak, current_td_streak, total_touchdowns, achievements")
-    .eq("id", userId)
-    .maybeSingle();
-  if (!profile) return;
+async function checkAndAwardAchievements(userId, score, picks, attemptAlreadyInDb = true, dateStr = null) {
+  const [profileRes, attemptsRes] = await Promise.all([
+    supabase
+      .from("profiles")
+      .select("current_streak, current_td_streak, total_touchdowns, achievements")
+      .eq("id", userId)
+      .maybeSingle(),
+    supabase
+      .from("quiz_attempts")
+      .select("score, quiz_date, points, submitted_at")
+      .eq("user_id", userId),
+  ]);
 
-  const { data: attempts } = await supabase
-    .from("quiz_attempts")
-    .select("score")
-    .eq("user_id", userId);
-  if (!attempts) return;
+  const { data: profile } = profileRes;
+  const { data: attempts } = attemptsRes;
+  if (!profile || !attempts) return;
 
   const currentStreak = profile.current_streak ?? 0;
   const tdStreak = profile.current_td_streak ?? 0;
@@ -94,7 +98,125 @@ async function checkAndAwardAchievements(userId, score, picks, attemptAlreadyInD
   const storedTDs = profile.total_touchdowns ?? 0;
   const newTDCount = Math.max(storedTDs, dbPerfect);
 
-  const profileUpdates = { achievements: null }; // filled below
+  // --- Date helpers (local-time safe: avoids UTC midnight issues) ---
+  function localParts(s) { return s.split('-').map(Number); }
+  function localDate(s) { const [y, m, d] = localParts(s); return new Date(y, m - 1, d); }
+  function daysDiff(s1, s2) { return Math.round((localDate(s2) - localDate(s1)) / 86400000); }
+  function prevDay(s) {
+    const dt = localDate(s);
+    dt.setDate(dt.getDate() - 1);
+    return `${dt.getFullYear()}-${String(dt.getMonth() + 1).padStart(2, '0')}-${String(dt.getDate()).padStart(2, '0')}`;
+  }
+  function weekStart(s) {
+    const dt = localDate(s);
+    const sun = new Date(dt.getFullYear(), dt.getMonth(), dt.getDate() - dt.getDay());
+    return `${sun.getFullYear()}-${String(sun.getMonth() + 1).padStart(2, '0')}-${String(sun.getDate()).padStart(2, '0')}`;
+  }
+  function fmtDate(dt) {
+    return `${dt.getFullYear()}-${String(dt.getMonth() + 1).padStart(2, '0')}-${String(dt.getDate()).padStart(2, '0')}`;
+  }
+
+  // --- Comeback Player of the Year ---
+  // Score 5/5 the day after scoring 2 or less
+  const scoreByDate = {};
+  for (const a of attempts) scoreByDate[a.quiz_date] = a.score;
+
+  let hasComeback = false;
+  const sortedAttemptDates = Object.keys(scoreByDate).sort();
+  for (let i = 1; i < sortedAttemptDates.length; i++) {
+    const prev = sortedAttemptDates[i - 1], curr = sortedAttemptDates[i];
+    if (daysDiff(prev, curr) === 1 && scoreByDate[curr] === 5 && scoreByDate[prev] <= 2) {
+      hasComeback = true;
+      break;
+    }
+  }
+  if (!hasComeback && pendingOffset && score === 5 && dateStr) {
+    const prev = prevDay(dateStr);
+    if (scoreByDate[prev] !== undefined && scoreByDate[prev] <= 2) hasComeback = true;
+  }
+
+  // --- Unbreakable ---
+  // Rebuild a 3+ day streak after breaking one of 10+ days
+  const allUserDates = [...new Set(attempts.map(a => a.quiz_date))].sort();
+  if (pendingOffset && dateStr && !allUserDates.includes(dateStr)) {
+    allUserDates.push(dateStr);
+    allUserDates.sort();
+  }
+  const streakRuns = [];
+  if (allUserDates.length > 0) {
+    let run = 1;
+    for (let i = 1; i < allUserDates.length; i++) {
+      if (daysDiff(allUserDates[i - 1], allUserDates[i]) === 1) {
+        run++;
+      } else {
+        streakRuns.push(run);
+        run = 1;
+      }
+    }
+    streakRuns.push(run);
+  }
+  const hasUnbreakable = streakRuns.length >= 2 &&
+    streakRuns.slice(0, -1).some(r => r >= 10) &&
+    streakRuns[streakRuns.length - 1] >= 3;
+
+  // --- Leaderboard-based achievements ---
+  // Daily Bread, Brady Mode, Bridesmaid, Weekly Warrior, Dynasty Talks
+  // Fetch all attempts on dates in weeks the user has played (for daily + weekly rankings)
+  const userDates = [...new Set(attempts.map(a => a.quiz_date))];
+  let dailyWins = 0, dailyTop3NotFirst = 0, weeklyWins = 0;
+
+  if (userDates.length > 0) {
+    // Expand each user play date to its full Sun-Sat week so weekly totals are accurate
+    const allRelevantDatesSet = new Set();
+    for (const d of userDates) {
+      const dt = localDate(d);
+      const dow = dt.getDay();
+      for (let offset = -dow; offset < 7 - dow; offset++) {
+        const wd = new Date(dt.getFullYear(), dt.getMonth(), dt.getDate() + offset);
+        allRelevantDatesSet.add(fmtDate(wd));
+      }
+    }
+
+    const { data: leaderboardData } = await supabase
+      .from("quiz_attempts")
+      .select("quiz_date, user_id, points, submitted_at")
+      .in("quiz_date", [...allRelevantDatesSet])
+      .limit(5000);
+
+    if (leaderboardData) {
+      // Group by date for daily rankings
+      const byDate = {};
+      for (const a of leaderboardData) {
+        if (!byDate[a.quiz_date]) byDate[a.quiz_date] = [];
+        byDate[a.quiz_date].push(a);
+      }
+      for (const date of userDates) {
+        const entries = (byDate[date] || []).sort((a, b) =>
+          b.points !== a.points ? b.points - a.points : new Date(a.submitted_at) - new Date(b.submitted_at)
+        );
+        const rank = entries.findIndex(e => e.user_id === userId) + 1;
+        if (rank === 1) dailyWins++;
+        else if (rank === 2 || rank === 3) dailyTop3NotFirst++;
+      }
+
+      // Aggregate weekly totals per user across all relevant dates
+      const weekTotals = {}; // weekStart -> { userId -> totalPoints }
+      for (const a of leaderboardData) {
+        const wk = weekStart(a.quiz_date);
+        if (!weekTotals[wk]) weekTotals[wk] = {};
+        weekTotals[wk][a.user_id] = (weekTotals[wk][a.user_id] || 0) + (a.points || 0);
+      }
+      const userWeeks = new Set(userDates.map(weekStart));
+      for (const wk of userWeeks) {
+        const totals = weekTotals[wk] || {};
+        const userPts = totals[userId] || 0;
+        const maxPts = Math.max(...Object.values(totals), 0);
+        if (userPts > 0 && userPts >= maxPts) weeklyWins++;
+      }
+    }
+  }
+
+  const profileUpdates = { achievements: null };
   if (newTDCount !== storedTDs) profileUpdates.total_touchdowns = newTDCount;
 
   const stats = {
@@ -105,6 +227,11 @@ async function checkAndAwardAchievements(userId, score, picks, attemptAlreadyInD
     hasGunslinger,
     hasTwoMinuteDrill,
     hasPickSix,
+    hasComeback,
+    hasUnbreakable,
+    dailyWins,
+    dailyTop3NotFirst,
+    weeklyWins,
   };
 
   const existing = profile.achievements || [];
@@ -165,7 +292,7 @@ export async function autoRecordAttempt(dateStr, entry) {
 
   // Fresh insert — update streaks and awards non-blocking
   supabase.rpc("update_streaks_on_submit", { did_perfect: score === 5, p_user_id: user.id }).catch(() => {});
-  checkAndAwardAchievements(user.id, score, entry.picks).catch(() => {});
+  checkAndAwardAchievements(user.id, score, entry.picks, true, dateStr).catch(() => {});
 
   return { wasNew: true, displayName };
 }

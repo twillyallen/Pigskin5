@@ -76,6 +76,62 @@ export const ACHIEVEMENTS = [
     desc: "Score 0/5",
     check: ({ hasPickSix }) => !!hasPickSix,
   },
+  {
+    id: "iron_man",
+    emoji: "🦾",
+    name: "Iron Man",
+    desc: "Reach a 30-day streak",
+    check: ({ currentStreak }) => currentStreak >= 30,
+  },
+  {
+    id: "comeback_player",
+    emoji: "📈",
+    name: "Comeback Player of the Year",
+    desc: "Score 5/5 the day after scoring 2 or less",
+    check: ({ hasComeback }) => !!hasComeback,
+  },
+  {
+    id: "unbreakable",
+    emoji: "💪",
+    name: "Unbreakable",
+    desc: "Rebuild a 3+ day streak after breaking one of 10+ days",
+    check: ({ hasUnbreakable }) => !!hasUnbreakable,
+  },
+  {
+    id: "daily_bread",
+    emoji: "🥇",
+    name: "Daily Bread",
+    desc: "Win a daily leaderboard for the first time",
+    check: ({ dailyWins }) => dailyWins >= 1,
+  },
+  {
+    id: "brady_mode",
+    emoji: "🐐",
+    name: "Brady Mode",
+    desc: "Win 7 daily leaderboards",
+    check: ({ dailyWins }) => dailyWins >= 7,
+  },
+  {
+    id: "bridesmaid",
+    emoji: "💍",
+    name: "Always the Bridesmaid...",
+    desc: "Finish 2nd or 3rd on a daily leaderboard 5 different times",
+    check: ({ dailyTop3NotFirst }) => dailyTop3NotFirst >= 5,
+  },
+  {
+    id: "weekly_warrior",
+    emoji: "🏆",
+    name: "Weekly Warrior",
+    desc: "Win a weekly leaderboard",
+    check: ({ weeklyWins }) => weeklyWins >= 1,
+  },
+  {
+    id: "dynasty_talks",
+    emoji: "🏛️",
+    name: "Dynasty Talks",
+    desc: "Win the weekly leaderboard 3 times",
+    check: ({ weeklyWins }) => weeklyWins >= 3,
+  },
 ];
 
 /**

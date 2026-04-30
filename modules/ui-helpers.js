@@ -139,15 +139,21 @@ export async function showTierTooltip(emoji, tierName, streak, playerName, emoji
     });
     body.appendChild(statsEl);
 
-    // Achievements row (skeleton — all locked)
+    // Achievements grid (skeleton — all locked), split 10 top / 9 bottom
     achievementsEl = document.createElement("div");
     achievementsEl.className = "player-card__achievements";
-    ACHIEVEMENTS.forEach(() => {
+    const row1 = document.createElement("div");
+    row1.className = "player-card__achievements-row";
+    const row2 = document.createElement("div");
+    row2.className = "player-card__achievements-row";
+    ACHIEVEMENTS.forEach((_, i) => {
       const b = document.createElement("span");
       b.className = "player-card__badge player-card__badge--locked";
       b.textContent = "🔒";
-      achievementsEl.appendChild(b);
+      (i < 10 ? row1 : row2).appendChild(b);
     });
+    achievementsEl.appendChild(row1);
+    achievementsEl.appendChild(row2);
     body.appendChild(achievementsEl);
 
     // Badge description area (hidden until a badge is tapped)
@@ -286,13 +292,21 @@ export async function showTierTooltip(emoji, tierName, streak, playerName, emoji
           const showDesc = (e) => {
             e.stopPropagation();
             if (activeBadge === b && badgeDescEl.textContent) {
-              badgeDescEl.textContent = "";
+              badgeDescEl.innerHTML = "";
               activeBadge = null;
               return;
             }
             activeBadge = b;
             const prefix = isEarned ? achievement.emoji : "🔒";
-            badgeDescEl.textContent = `${prefix} ${achievement.name}: ${achievement.desc}`;
+            const nameSpan = document.createElement("span");
+            nameSpan.className = "player-card__badge-name";
+            nameSpan.textContent = `${prefix} ${achievement.name}`;
+            const descSpan = document.createElement("span");
+            descSpan.className = "player-card__badge-desc-text";
+            descSpan.textContent = achievement.desc;
+            badgeDescEl.innerHTML = "";
+            badgeDescEl.appendChild(nameSpan);
+            badgeDescEl.appendChild(descSpan);
           };
 
           b.addEventListener("click", showDesc);
