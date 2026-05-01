@@ -206,8 +206,14 @@ async function checkAndAwardAchievements(userId, score, picks, attemptAlreadyInD
         if (!weekTotals[wk]) weekTotals[wk] = {};
         weekTotals[wk][a.user_id] = (weekTotals[wk][a.user_id] || 0) + (a.points || 0);
       }
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
       const userWeeks = new Set(userDates.map(weekStart));
       for (const wk of userWeeks) {
+        // Only count weeks that have fully ended (Saturday has passed)
+        const weekEndDate = new Date(localDate(wk));
+        weekEndDate.setDate(weekEndDate.getDate() + 6);
+        if (weekEndDate >= today) continue;
         const totals = weekTotals[wk] || {};
         const userPts = totals[userId] || 0;
         const maxPts = Math.max(...Object.values(totals), 0);
