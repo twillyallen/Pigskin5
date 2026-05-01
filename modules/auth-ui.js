@@ -222,15 +222,21 @@ function showProfileModal(username) {
   });
   body.appendChild(statsEl);
 
-  // Achievements (locked skeleton)
+  // Achievements (locked skeleton), split 10 top / 9 bottom
   const achievementsEl = document.createElement("div");
   achievementsEl.className = "player-card__achievements";
-  ACHIEVEMENTS.forEach(() => {
+  const achRow1 = document.createElement("div");
+  achRow1.className = "player-card__achievements-row";
+  const achRow2 = document.createElement("div");
+  achRow2.className = "player-card__achievements-row";
+  ACHIEVEMENTS.forEach((_, i) => {
     const b = document.createElement("span");
     b.className = "player-card__badge player-card__badge--locked";
     b.textContent = "🔒";
-    achievementsEl.appendChild(b);
+    (i < 10 ? achRow1 : achRow2).appendChild(b);
   });
+  achievementsEl.appendChild(achRow1);
+  achievementsEl.appendChild(achRow2);
   body.appendChild(achievementsEl);
 
   const badgeDescEl = document.createElement("div");
