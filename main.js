@@ -1638,6 +1638,10 @@ function showGuestPlayerCard(score, avgTime) {
   // Achievements — First Down unlocked, rest locked
   const achievementsEl = document.createElement("div");
   achievementsEl.className = "player-card__achievements";
+  const achRow1 = document.createElement("div");
+  achRow1.className = "player-card__achievements-row";
+  const achRow2 = document.createElement("div");
+  achRow2.className = "player-card__achievements-row";
   const badgeDescEl = document.createElement("div");
   badgeDescEl.className = "player-card__badge-desc";
 
@@ -1661,8 +1665,10 @@ function showGuestPlayerCard(score, avgTime) {
       const prefix = unlocked ? achievement.emoji : "🔒";
       badgeDescEl.textContent = `${prefix} ${achievement.name}: ${achievement.desc}`;
     });
-    achievementsEl.appendChild(b);
+    (i < 10 ? achRow1 : achRow2).appendChild(b);
   });
+  achievementsEl.appendChild(achRow1);
+  achievementsEl.appendChild(achRow2);
   body.appendChild(achievementsEl);
   badgeDescEl.textContent = `${ACHIEVEMENTS[0].emoji} ${ACHIEVEMENTS[0].name}: ${ACHIEVEMENTS[0].desc}`;
   body.appendChild(badgeDescEl);
