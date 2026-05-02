@@ -31,7 +31,7 @@ export async function getCurrentProfile() {
     .from("profiles")
     .select("*")
     .eq("id", user.id)
-    .single();
+    .maybeSingle();
   
   if (error) {
     console.error("Failed to load profile:", error);
