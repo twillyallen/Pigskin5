@@ -190,7 +190,13 @@ async function checkAndAwardAchievements(userId, score, picks, attemptAlreadyInD
         if (!byDate[a.quiz_date]) byDate[a.quiz_date] = [];
         byDate[a.quiz_date].push(a);
       }
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      const todayStr = today.toISOString().slice(0, 10);
+
       for (const date of userDates) {
+        // Skip today and any future dates — the day isn't over yet
+        if (date >= todayStr) continue;
         const entries = (byDate[date] || []).sort((a, b) =>
           b.points !== a.points ? b.points - a.points : new Date(a.submitted_at) - new Date(b.submitted_at)
         );
@@ -206,8 +212,6 @@ async function checkAndAwardAchievements(userId, score, picks, attemptAlreadyInD
         if (!weekTotals[wk]) weekTotals[wk] = {};
         weekTotals[wk][a.user_id] = (weekTotals[wk][a.user_id] || 0) + (a.points || 0);
       }
-      const today = new Date();
-      today.setHours(0, 0, 0, 0);
       const userWeeks = new Set(userDates.map(weekStart));
       for (const wk of userWeeks) {
         // Only count weeks that have fully ended (Saturday has passed)
