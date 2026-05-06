@@ -186,7 +186,7 @@ export const CALENDAR = {
     "2026-05-06": { //Wednesday
     event: "",
     questions: [
-    { question: "How many Super Bowls have the Indianapolis Colts won?", choices: ["0", "2", "3", "5"], answer: 1 },
+    { question: "How many Super Bowls have the Colts won as a franchise?", choices: ["0", "2", "3", "5"], answer: 1 },
     { question: "How many field goals did Rob Bironas make in his record single-game performance?", choices: ["8", "9", "7", "10"], answer: 0 },
     { question: "Guess the Career WR:\n- 3,311 Rec. Yards\n- 16 Rec. TDs\n- 255 Receptions", choices: ["Ted Ginn", "Brandon Marshall", "Devin Hester", "Golden Tate"], answer: 2 },
     { question: "True or False: The Packers have more total NFL Championships than any other franchise.", choices: ["True", "False"], answer: 0 },
