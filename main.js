@@ -940,7 +940,7 @@ async function renderPersistedResult(dateStr, persisted) {
   const user = await getCurrentUser();
 
   if (user) {
-    computeAndSaveStreak(dateStr);
+    overrideCachedStreaks({ daily: computeAndSaveStreak(dateStr) });
     const didPerfect = score === (QUESTIONS?.length || 5);
 
     (async () => {
