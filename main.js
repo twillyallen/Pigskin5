@@ -212,7 +212,17 @@ function startTimer(seconds) {
 
     if (timeLeft <= 0) {
       stopTimer();
-      pickAnswer(null, QUESTIONS[current].answer);
+      if (document.hidden) {
+        // Tab is backgrounded — defer auto-submit until the user returns so
+        // the timer doesn't silently advance through all remaining questions.
+        const onVisible = () => {
+          document.removeEventListener('visibilitychange', onVisible);
+          if (!answered) pickAnswer(null, QUESTIONS[current].answer);
+        };
+        document.addEventListener('visibilitychange', onVisible);
+      } else {
+        pickAnswer(null, QUESTIONS[current].answer);
+      }
     }
   }, 1000);
 }
@@ -1484,6 +1494,16 @@ function recoverFromLimbo() {
   const timeRemaining = TIME_LIMIT - wallElapsed;
 
   if (timeRemaining <= 0 || current >= QUESTIONS.length) {
+    // If the session is very old (user closed the browser and came back much
+    // later), don't auto-complete — just wipe the stale state and let them
+    // start fresh. A 5-minute window covers accidental closes/restores.
+    const ABANDON_MS = 5 * 60 * 1000;
+    if (savedQWallStart > 0 && (Date.now() - savedQWallStart) > ABANDON_MS) {
+      try { localStorage.removeItem(KEY_ATTEMPT_PREFIX + runDate); } catch {}
+      clearSessionState();
+      return false;
+    }
+
     // Time ran out while they were away — mark remaining questions as timed out
     for (let i = current; i < QUESTIONS.length; i++) {
       const q = QUESTIONS[i];
