@@ -2,6 +2,18 @@
 // Exactly 5 questions per date. Each: { question, choices[4], answer(0..3), explanation? }
 export const CALENDAR = {  
 
+
+    "2026-05-09": { //Saturday
+    event: "",
+    questions: [
+    { question: "OVER or UNDER: The Cowboys have O/U 5.5 NFL championships/Super Bowls (all-time).", choices: ["OVER", "UNDER"], answer: 1 },
+    { question: "Guess the All-Time QB:\n- 12,741 Pass Yards\n- 67 Pass TDs\n- 50 INTs\n- 86.9 Passer Rating", choices: ["Colin Kaepernick", "Rex Grossman", "Mac Jones", "Gardner Minshew"], answer: 2 },
+    { question: "Who is the Buffalo Bills' all-time leader in receiving yards?", choices: ["Stefon Diggs", "Amari Cooper", "Brandin Cooks", "Andre Reed"], answer: 3 },
+    { question: "True or False: Ray Lewis won Super Bowl MVP with ZERO sacks in that game.", choices: ["True", "False"], answer: 0 },
+    { question: "Which of these was an ACTUAL NFL player?", choices: ["Dekambrian Crankshaw", "Ventravian Winterbottom", "Rashaan Salaam", "Mergatroyd Smoot"], answer: 2 },
+    ],
+  },
+
     "2026-05-10": { //Sunday
     event: "",
     questions: [
