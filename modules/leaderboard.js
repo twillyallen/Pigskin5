@@ -328,7 +328,7 @@ export async function fetchLeaderboard(dateStr) {
   const [playerRes, manualRes] = await Promise.all([
     supabase
       .from("quiz_attempts")
-      .select("display_name_used, score, points, time_taken_seconds, submitted_at, answer_data, user_id, profiles!inner(username, twitter_handle)")
+      .select("display_name_used, score, points, time_taken_seconds, submitted_at, answer_data, user_id, profiles!inner(username, twitter_handle, current_streak)")
       .eq("quiz_date", dateStr)
       .order("submitted_at", { ascending: true })
       .limit(500),
@@ -351,7 +351,7 @@ export async function fetchLeaderboard(dateStr) {
     points: a.points ?? a.answer_data?.points ?? 0,
     avgTime: a.answer_data?.avgTime ?? a.time_taken_seconds ?? 0,
     emojiScore: a.answer_data?.emojiScore || "",
-    dailyStreak: a.answer_data?.dailyStreak || 0,
+    dailyStreak: a.profiles?.current_streak ?? a.answer_data?.dailyStreak ?? 0,
     createdAt: new Date(a.submitted_at).getTime(),
     date: dateISO,
   }));

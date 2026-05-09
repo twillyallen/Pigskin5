@@ -103,7 +103,7 @@ pigskin5.com/
 The Python pipeline in `question-gen/` automates bulk question creation.
 
 ```powershell
-cd "C:\Users\twill\Desktop\Coding Projects\NFL Trivia\pigskin5\tools\question-generator"; py generate_questions.py --days 14 --start-date 2026-04-26
+cd "C:\Users\twill\Desktop\Coding Projects\NFL Trivia\pigskin5\tools\question-generator"; py generate_questions.py --days 21 --start-date 2026-05-10
 
 ```
 
