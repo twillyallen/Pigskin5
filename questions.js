@@ -19,7 +19,7 @@ export const CALENDAR = {
     questions: [
     { question: "Guess the Career TE:\n- 4,711 Rec. Yards\n- 33 Rec. TDs\n- 429 Receptions", choices: ["Chris Cooley", "Ryan Griffin", "Desmond Clark", "Brent Celek"], answer: 0 },
     { question: "True or False: The Steelers have won 8 Super Bowls.", choices: ["True", "False"], answer: 1 },
-    { question: "How many yards from scrimmage did Chris Johnson have in 2009?", choices: ["2,523", "2,505", "2,519", "2,509"], answer: 3 },
+    { question: "How many yards from scrimmage did Chris Johnson have in 2009?", choices: ["2,523", "2,505", "2,519", "2,607"], answer: 3 },
     { question: "Which of these was an ACTUAL NFL player?", choices: ["Quavondre Thundergood", "Devontavious McThunderclap", "Manti Te'o", "Kendarious Thunderclap"], answer: 2 },
     { question: "What year was the Jets' first season?", choices: ["1958", "1965", "1954", "1960"], answer: 3 },
     ],
