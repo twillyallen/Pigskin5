@@ -286,17 +286,23 @@
   </nav>
 
   <!-- Sunday Header Banner — only shown on Sundays via JS -->
-  <div id="sundayHeaderBannerWrap" style="display:none; text-align:center; width:100%; padding:4px 0; overflow:hidden;">
-    <ins id="sundayBannerDesktopAd"
-         class="adsbygoogle sunday-banner-desktop"
-         style="display:inline-block;width:728px;height:90px;"
-         data-ad-client="ca-pub-8430547369793861"
-         data-ad-slot="5560840672"></ins>
-    <ins id="sundayBannerMobileAd"
-         class="adsbygoogle sunday-banner-mobile"
-         style="display:inline-block;width:320px;height:50px;"
-         data-ad-client="ca-pub-8430547369793861"
-         data-ad-slot="5560840672"></ins>
+  <div id="sundayHeaderBannerWrap" style="display:none; text-align:center; width:100%; padding:4px 0;">
+    <!-- Desktop: 728x90 leaderboard -->
+    <div class="sunday-banner-desktop" style="display:inline-block;width:728px;height:90px;overflow:hidden;">
+      <ins id="sundayBannerDesktopAd"
+           class="adsbygoogle"
+           style="display:inline-block;width:728px;height:90px;"
+           data-ad-client="ca-pub-8430547369793861"
+           data-ad-slot="5560840672"></ins>
+    </div>
+    <!-- Mobile: 320x50 banner -->
+    <div class="sunday-banner-mobile" style="display:inline-block;width:320px;height:50px;overflow:hidden;">
+      <ins id="sundayBannerMobileAd"
+           class="adsbygoogle"
+           style="display:inline-block;width:320px;height:50px;"
+           data-ad-client="ca-pub-8430547369793861"
+           data-ad-slot="5560840672"></ins>
+    </div>
   </div>
   <style>
     @media (min-width:728px) { .sunday-banner-mobile { display:none !important; } }
