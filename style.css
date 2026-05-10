@@ -1054,6 +1054,18 @@ footer a:visited {
   text-align: center;
 }
 
+.player-card__champion-title {
+  background: linear-gradient(135deg, #FFD700, #FFA500);
+  color: #000;
+  font-weight: 800;
+  font-size: 0.8rem;
+  text-align: center;
+  padding: 10px 16px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border-radius: 12px 12px 0 0;
+}
+
 .player-card__body {
   padding: 22px 28px 18px;
 }

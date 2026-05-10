@@ -23,17 +23,18 @@ class StatLeaderGenerator(BaseGenerator):
             self._season_leader,
             self._record_holder,
             self._stat_value_question,
+            self._season_head_to_head,
+            self._career_total_tds_question,
         ]
-        
+
         # Weight by difficulty
         if difficulty == "easy":
-            # Easy: well-known records and big names
-            weights = [0.3, 0.3, 0.3, 0.1]
+            weights = [0.25, 0.25, 0.25, 0.05, 0.1, 0.1]
         elif difficulty == "hard":
-            weights = [0.3, 0.2, 0.1, 0.4]
+            weights = [0.2, 0.15, 0.1, 0.3, 0.15, 0.1]
         else:
-            weights = [0.25, 0.25, 0.25, 0.25]
-        
+            weights = [0.2, 0.2, 0.2, 0.15, 0.15, 0.1]
+
         gen_func = random.choices(generators, weights=weights, k=1)[0]
         q = gen_func(difficulty)
         q["_type"] = "stat_leader"
@@ -381,6 +382,107 @@ class StatLeaderGenerator(BaseGenerator):
         
         return {
             "question": f"How many {desc}?",
+            "choices": choices,
+            "answer": answer_idx,
+        }
+
+    def _season_head_to_head(self, difficulty: str) -> dict:
+        """Who had more [stat] in [year]: [player A] or [player B]?"""
+        stat_labels = {
+            "passing_yards": "passing yards",
+            "passing_tds": "passing TDs",
+            "rushing_yards": "rushing yards",
+            "rushing_tds": "rushing TDs",
+            "receiving_yards": "receiving yards",
+            "receptions": "receptions",
+        }
+
+        candidates = []
+        for year, season in SEASON_LEADERS.items():
+            for stat_key, label in stat_labels.items():
+                if stat_key in season and isinstance(season[stat_key], tuple):
+                    leader_name, _ = season[stat_key]
+                    candidates.append((year, stat_key, label, leader_name))
+
+        if not candidates:
+            return self._season_leader(difficulty)
+
+        year, stat_key, label, correct = random.choice(candidates)
+        year_int = int(year)
+
+        def _is_relevant(player, year_val: int) -> bool:
+            era = player[3]
+            if year_val >= 2016:
+                return era in ["modern", "current"]
+            elif year_val >= 2000:
+                return era == "modern"
+            else:
+                return era in ["classic", "modern"]
+
+        if "pass" in stat_key:
+            pool = [p[0] for p in QUARTERBACKS if p[0] != correct and _is_relevant(p, year_int)]
+        elif "rush" in stat_key:
+            pool = [p[0] for p in RUNNING_BACKS if p[0] != correct and _is_relevant(p, year_int)]
+        else:
+            pool = [p[0] for p in (WIDE_RECEIVERS + TIGHT_ENDS) if p[0] != correct and _is_relevant(p, year_int)]
+
+        if not pool:
+            return self._season_leader(difficulty)
+
+        random.shuffle(pool)
+        distractor = pool[0]
+
+        if random.random() < 0.5:
+            choices = [correct, distractor]
+            answer_idx = 0
+        else:
+            choices = [distractor, correct]
+            answer_idx = 1
+
+        return {
+            "question": f"Who had more {label} in {year}: {choices[0]} or {choices[1]}?",
+            "choices": choices,
+            "answer": answer_idx,
+        }
+
+    def _career_total_tds_question(self, difficulty: str) -> dict:
+        """How many career [TDs/yards] does [player] have?"""
+        options = []
+
+        for rb in RUNNING_BACKS:
+            name, _, stats = rb[0], rb[1], rb[2]
+            if "total_tds" in stats and stats["total_tds"] >= 50:
+                options.append((name, "career total touchdowns", stats["total_tds"]))
+            elif "rush_tds" in stats and stats["rush_tds"] >= 40:
+                options.append((name, "career rushing touchdowns", stats["rush_tds"]))
+
+        for wr in WIDE_RECEIVERS:
+            name, _, stats = wr[0], wr[1], wr[2]
+            if "rec_tds" in stats and stats["rec_tds"] >= 50:
+                options.append((name, "career receiving touchdowns", stats["rec_tds"]))
+
+        for te in TIGHT_ENDS:
+            name, _, stats = te[0], te[1], te[2]
+            if "rec_tds" in stats and stats["rec_tds"] >= 35:
+                options.append((name, "career receiving touchdowns", stats["rec_tds"]))
+
+        for qb in QUARTERBACKS:
+            name, _, stats = qb[0], qb[1], qb[2]
+            if "pass_tds" in stats and stats["pass_tds"] >= 250:
+                options.append((name, "career passing touchdowns", stats["pass_tds"]))
+
+        if not options:
+            return self._record_holder(difficulty)
+
+        player_name, stat_label, actual_value = random.choice(options)
+
+        wrongs = self._nearby_numbers(actual_value, count=3, min_delta=5, max_delta=30)
+        choices = [str(actual_value)] + [str(w) for w in wrongs]
+        random.shuffle(choices)
+        answer_idx = choices.index(str(actual_value))
+
+        return {
+            "question": f"How many {stat_label} does {player_name} have?",
             "choices": choices,
             "answer": answer_idx,
         }

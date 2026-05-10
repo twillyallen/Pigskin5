@@ -3,7 +3,7 @@
 // ============================================================================
 
 import { CALENDAR } from "./questions.js?v=20260412";
-import { submitEntry, fetchLeaderboard, fetchWeeklyLeaderboard, refreshStreakCache, getCachedDailyStreak, getCachedTDStreak, getTodaysAttempt, getCachedFavoriteTeam, overrideCachedStreaks, checkAchievementsForScore } from "./modules/leaderboard.js";
+import { submitEntry, fetchLeaderboard, fetchWeeklyLeaderboard, fetchLastWeekWinner, refreshStreakCache, getCachedDailyStreak, getCachedTDStreak, getTodaysAttempt, getCachedFavoriteTeam, overrideCachedStreaks, checkAchievementsForScore } from "./modules/leaderboard.js";
 import { getCurrentUser, supabase } from "./modules/supabase-client.js";
 import { NFL_TEAMS } from "./modules/nfl-teams.js";
 import { showTierTooltip } from "./modules/ui-helpers.js";
@@ -1409,6 +1409,34 @@ async function showStartScreen() {
   else if (eventName === "ValentinesDay") {
     startHearts();
   }
+
+  showSundayWinnerCard();
+}
+
+// ==============================
+// SUNDAY CHAMPION POPUP
+// ==============================
+
+async function showSundayWinnerCard() {
+  if (new Date().getDay() !== 0) return;
+  if (sessionStorage.getItem('ft5_sunday_card_shown') === '1') return;
+
+  const winner = await fetchLastWeekWinner();
+  if (!winner) return;
+
+  sessionStorage.setItem('ft5_sunday_card_shown', '1');
+
+  const tier = getTierForStreak(winner.daily_streak ?? 0);
+  showTierTooltip(
+    tier.emoji,
+    tier.name,
+    winner.daily_streak ?? 0,
+    winner.display_name,
+    null,
+    winner.total_points,
+    winner.username,
+    '🏆 Congrats to last week\'s leaderboard Champion!'
+  );
 }
 
 // ==============================

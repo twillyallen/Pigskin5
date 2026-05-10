@@ -34,7 +34,7 @@ function formatMemberSince(isoString) {
 }
 
 // Custom popup to show tier badge info
-export async function showTierTooltip(emoji, tierName, streak, playerName, emojiScore, points, username) {
+export async function showTierTooltip(emoji, tierName, streak, playerName, emojiScore, points, username, titleText = null) {
   const existing = document.getElementById("tier-popup-container");
   if (existing) existing.remove();
 
@@ -48,6 +48,13 @@ export async function showTierTooltip(emoji, tierName, streak, playerName, emoji
 
   const card = document.createElement("div");
   card.className = "player-card";
+
+  if (titleText) {
+    const titleEl = document.createElement("div");
+    titleEl.className = "player-card__champion-title";
+    titleEl.textContent = titleText;
+    card.appendChild(titleEl);
+  }
 
   const body = document.createElement("div");
   body.className = "player-card__body";

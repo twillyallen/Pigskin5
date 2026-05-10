@@ -16,6 +16,8 @@ class FranchiseGenerator(BaseGenerator):
             self._all_time_leader,
             self._franchise_history,
             self._which_team,
+            self._stadium_question,
+            self._relocation_question,
         ]
 
         gen_func = random.choice(generators)
@@ -137,6 +139,57 @@ class FranchiseGenerator(BaseGenerator):
 
         return {
             "question": q_text,
+            "choices": choices,
+            "answer": answer_idx,
+        }
+
+    def _stadium_question(self, difficulty: str) -> dict:
+        """Which NFL team plays their home games at {stadium}?"""
+        options = [(name, data["stadium"]) for name, data in FRANCHISES.items() if "stadium" in data]
+        if not options:
+            return self._franchise_history(difficulty)
+
+        team_name, stadium = random.choice(options)
+
+        other_teams = [name for name, _ in options if name != team_name]
+        random.shuffle(other_teams)
+        distractors = other_teams[:3]
+
+        choices = [team_name] + distractors
+        random.shuffle(choices)
+        answer_idx = choices.index(team_name)
+
+        return {
+            "question": f"Which NFL team plays their home games at {stadium}?",
+            "choices": choices,
+            "answer": answer_idx,
+        }
+
+    def _relocation_question(self, difficulty: str) -> dict:
+        """What year did the {team} relocate to {city}?"""
+        RELOCATIONS = [
+            ("Colts", "Indianapolis", 1984),
+            ("Cardinals", "Arizona", 1988),
+            ("Raiders", "Los Angeles", 1982),
+            ("Raiders", "Las Vegas", 2020),
+            ("Rams", "St. Louis", 1995),
+            ("Rams", "Los Angeles", 2016),
+            ("Chargers", "Los Angeles", 2017),
+            ("Oilers", "Tennessee", 1997),
+        ]
+
+        team, city, year = random.choice(RELOCATIONS)
+        correct = str(year)
+
+        wrongs = self._nearby_numbers(year, count=3, min_delta=2, max_delta=6)
+        distractors = [str(w) for w in wrongs]
+
+        choices = [correct] + distractors
+        random.shuffle(choices)
+        answer_idx = choices.index(correct)
+
+        return {
+            "question": f"What year did the {team} relocate to {city}?",
             "choices": choices,
             "answer": answer_idx,
         }

@@ -303,6 +303,16 @@ export async function autoRecordAttempt(dateStr, entry) {
   return { wasNew: true, displayName };
 }
 
+// Fetch last week's (Sun–Sat) top scorer — used for Sunday champion popup
+export async function fetchLastWeekWinner() {
+  const { data, error } = await supabase.rpc('get_last_week_leaderboard');
+  if (error) {
+    console.error('fetchLastWeekWinner error:', error);
+    return null;
+  }
+  return data?.[0] ?? null;
+}
+
 // Fetch weekly leaderboard — sums points Sun–Sat PT per logged-in player
 export async function fetchWeeklyLeaderboard() {
   const { data, error } = await supabase.rpc('get_weekly_leaderboard');

@@ -191,6 +191,8 @@ class HistoryGenerator(BaseGenerator):
                 options.append(("Coach of the Year", year, data["coach_of_year"]))
             if "dpoy" in data:
                 options.append(("Defensive Player of the Year", year, data["dpoy"]))
+            if "comeback_player" in data:
+                options.append(("Comeback Player of the Year", year, data["comeback_player"]))
 
         if not options:
             return self._super_bowl_question(difficulty)
@@ -238,6 +240,12 @@ class HistoryGenerator(BaseGenerator):
         elif award == "MVP":
             pool = [
                 p[0] for p in QUARTERBACKS
+                if p[0] != correct and _is_relevant(p, year_int)
+            ]
+
+        elif award == "Comeback Player of the Year":
+            pool = [
+                p[0] for p in (QUARTERBACKS + RUNNING_BACKS + WIDE_RECEIVERS + TIGHT_ENDS)
                 if p[0] != correct and _is_relevant(p, year_int)
             ]
 
