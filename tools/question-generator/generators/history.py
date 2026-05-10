@@ -84,25 +84,43 @@ class HistoryGenerator(BaseGenerator):
         if qtype == "who":
             correct = moment["player"]
             name = moment["name"]
-            
+
             if "qb" in moment:
-                q_text = f"Which player caught the game-winning play in \"{name}\"?"
+                q_text = f"Which player caught the game-winning play in the \"{name}\"?"
             else:
                 q_text = f"Which player is associated with the \"{name}\"?"
-            
-            # Get players from similar era
-            all_players = [p[0] for p in QUARTERBACKS + list(ICONIC_MOMENTS) 
-                          if isinstance(p, tuple) and p[0] != correct]
-            fallback_names = ["Tony Romo", "Peyton Manning", "Kurt Warner", 
-                            "Steve McNair", "Michael Vick", "Brett Favre",
-                            "Roger Craig", "Terrell Davis", "Jerome Bettis"]
-            
-            pool = [n for n in fallback_names if n != correct]
+
+            # Look up correct player's position to build era- and position-appropriate distractors
+            all_players = QUARTERBACKS + RUNNING_BACKS + WIDE_RECEIVERS + TIGHT_ENDS + DEFENSIVE_PLAYERS
+            correct_player_data = next((p for p in all_players if p[0] == correct), None)
+
+            if correct_player_data:
+                pos = correct_player_data[1]
+                era = correct_player_data[3]
+                if pos in ("WR", "TE"):
+                    pos_pool = WIDE_RECEIVERS + TIGHT_ENDS
+                elif pos == "RB":
+                    pos_pool = RUNNING_BACKS
+                elif pos == "QB":
+                    pos_pool = QUARTERBACKS
+                else:
+                    pos_pool = DEFENSIVE_PLAYERS
+                pool = [p[0] for p in pos_pool if p[0] != correct and p[3] == era]
+                if len(pool) < 3:
+                    pool = [p[0] for p in pos_pool if p[0] != correct]
+            else:
+                fallback_names = [
+                    "Tony Romo", "Peyton Manning", "Brett Favre", "Kurt Warner",
+                    "Steve McNair", "Roger Craig", "Terrell Davis", "Jerome Bettis",
+                    "Lynn Swann", "Jerry Rice", "Michael Irvin", "Randy Moss",
+                ]
+                pool = [n for n in fallback_names if n != correct]
+
             random.shuffle(pool)
             distractors = pool[:3]
         else:
             correct = str(moment["year"])
-            q_text = f"In what year did \"{moment['name']}\" occur?"
+            q_text = f"In what season did the \"{moment['name']}\" occur?"
             year = moment["year"]
             wrongs = [year + d for d in random.sample([-2, -1, 1, 2, 3, -3], 3)]
             distractors = [str(w) for w in wrongs]
@@ -215,8 +233,14 @@ class HistoryGenerator(BaseGenerator):
 
         # Build smarter distractor pools by award type — ALL filtered by year relevance
         if "Coach" in award:
-            # Coaches don't have era tags in the same shape; leave as-is for now
-            pool = [c["name"] for c in COACHES if c["name"] != correct]
+            if year_int >= 2019:
+                valid_eras = {"modern", "current"}
+            elif year_int >= 2000:
+                valid_eras = {"modern"}
+            else:
+                valid_eras = {"classic", "modern"}
+            pool = [c["name"] for c in COACHES
+                    if c["name"] != correct and c.get("era", "modern") in valid_eras]
 
         elif award in ["Defensive Player of the Year", "Defensive Rookie of the Year"]:
             pool = [

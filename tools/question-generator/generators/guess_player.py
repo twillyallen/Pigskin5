@@ -22,41 +22,36 @@ class GuessPlayerGenerator(BaseGenerator):
             weights=[0.35, 0.30, 0.25, 0.10],
             k=1
         )[0]
-        
-        is_career = random.random() < 0.5
-        
+
         if position_choice == "QB":
-            q = self._qb_guess(difficulty, is_career)
+            q = self._qb_guess(difficulty)
         elif position_choice == "RB":
-            q = self._rb_guess(difficulty, is_career)
+            q = self._rb_guess(difficulty)
         elif position_choice == "WR":
-            q = self._wr_guess(difficulty, is_career)
+            q = self._wr_guess(difficulty)
         else:
-            q = self._te_guess(difficulty, is_career)
+            q = self._te_guess(difficulty)
         
         q["_type"] = "guess_player"
         q["_difficulty"] = difficulty
         return q
     
-    def _qb_guess(self, difficulty: str, career: bool) -> dict:
+    def _qb_guess(self, difficulty: str) -> dict:
         """Guess the QB from stats."""
         pool = QUARTERBACKS.copy()
-        
+
         if difficulty == "easy":
-            # Only big names
             pool = [p for p in pool if p[2].get("pass_yards", 0) > 50000 or p[2].get("super_bowls_won", 0) >= 2]
         elif difficulty == "hard":
-            # Mid-tier guys
             pool = [p for p in pool if 20000 < p[2].get("pass_yards", 0) < 50000]
-        
+
         if len(pool) < 4:
             pool = QUARTERBACKS[:12]
-        
+
         correct = random.choice(pool)
         name, pos, stats = correct[0], correct[1], correct[2]
-        
+
         # Build stat line
-        label = "All-Time" if career else "Career"
         lines = []
         if "pass_yards" in stats:
             lines.append(f"{stats['pass_yards']:,} Pass Yards")
@@ -90,12 +85,22 @@ class GuessPlayerGenerator(BaseGenerator):
                 lower = correct_yards * 0.50
                 upper = correct_yards * 1.50
                 similar_tier = [
-                    p for p in QUARTERBACKS 
-                    if p[0] != name 
+                    p for p in QUARTERBACKS
+                    if p[0] != name
                     and lower <= p[2].get("pass_yards", 0) <= upper
                 ]
-            
-            # Final fallback: any QB
+
+            # Expand to ±80% but cap upper at 1.8x — prevents all-time greats pairing with journeymen
+            if len(similar_tier) < 3:
+                lower = correct_yards * 0.20
+                upper = correct_yards * 1.80
+                similar_tier = [
+                    p for p in QUARTERBACKS
+                    if p[0] != name
+                    and lower <= p[2].get("pass_yards", 0) <= upper
+                ]
+
+            # Absolute last resort
             if len(similar_tier) < 3:
                 similar_tier = [p for p in QUARTERBACKS if p[0] != name]
         else:
@@ -109,27 +114,26 @@ class GuessPlayerGenerator(BaseGenerator):
         answer_idx = choices.index(name)
         
         return {
-            "question": f"Guess the {label} QB:\n{stat_block}",
+            "question": f"Guess the Career QB:\n{stat_block}",
             "choices": choices,
             "answer": answer_idx,
         }
-    
-    def _rb_guess(self, difficulty: str, career: bool) -> dict:
+
+    def _rb_guess(self, difficulty: str) -> dict:
         """Guess the RB from stats."""
         pool = RUNNING_BACKS.copy()
-        
+
         if difficulty == "easy":
             pool = [p for p in pool if p[2].get("rush_yards", 0) > 10000]
         elif difficulty == "hard":
             pool = [p for p in pool if p[2].get("rush_yards", 0) < 10000]
-        
+
         if len(pool) < 4:
             pool = RUNNING_BACKS[:10]
-        
+
         correct = random.choice(pool)
         name, pos, stats = correct[0], correct[1], correct[2]
-        
-        label = "All-Time" if career else "Career"
+
         lines = []
         if "rush_yards" in stats:
             lines.append(f"{stats['rush_yards']:,} Rush Yards")
@@ -162,27 +166,26 @@ class GuessPlayerGenerator(BaseGenerator):
         answer_idx = choices.index(name)
         
         return {
-            "question": f"Guess the {label} RB:\n{stat_block}",
+            "question": f"Guess the Career RB:\n{stat_block}",
             "choices": choices,
             "answer": answer_idx,
         }
-    
-    def _wr_guess(self, difficulty: str, career: bool) -> dict:
+
+    def _wr_guess(self, difficulty: str) -> dict:
         """Guess the WR from stats."""
         pool = WIDE_RECEIVERS.copy()
-        
+
         if difficulty == "easy":
             pool = [p for p in pool if p[2].get("rec_yards", 0) > 12000]
         elif difficulty == "hard":
             pool = [p for p in pool if 5000 < p[2].get("rec_yards", 0) < 10000]
-        
+
         if len(pool) < 4:
             pool = WIDE_RECEIVERS[:10]
-        
+
         correct = random.choice(pool)
         name, pos, stats = correct[0], correct[1], correct[2]
-        
-        label = "All-Time" if career else "Career"
+
         lines = []
         if "rec_yards" in stats:
             lines.append(f"{stats['rec_yards']:,} Rec. Yards")
@@ -208,18 +211,17 @@ class GuessPlayerGenerator(BaseGenerator):
         answer_idx = choices.index(name)
         
         return {
-            "question": f"Guess the {label} WR:\n{stat_block}",
+            "question": f"Guess the Career WR:\n{stat_block}",
             "choices": choices,
             "answer": answer_idx,
         }
-    
-    def _te_guess(self, difficulty: str, career: bool) -> dict:
+
+    def _te_guess(self, difficulty: str) -> dict:
         """Guess the TE from stats."""
         pool = TIGHT_ENDS.copy()
-        
+
         if len(pool) < 4:
-            # Not enough TEs, supplement with WRs
-            return self._wr_guess(difficulty, career)
+            return self._wr_guess(difficulty)
         
         correct = random.choice(pool)
         name, pos, stats = correct[0], correct[1], correct[2]

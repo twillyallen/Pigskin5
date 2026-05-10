@@ -74,7 +74,7 @@ QUARTERBACKS = [
     ("Carson Wentz", "QB", {"pass_yards": 23626, "pass_tds": 159, "ints": 72, "passer_rating": 89.1, "rush_yards": 1475, "rush_tds": 11}, "current", ["Colts", "Commanders", "Rams", "Chiefs", "Vikings"]),
     ("Jake Plummer", "QB", {"pass_yards": 29253, "pass_tds": 161, "ints": 161, "passer_rating": 74.6, "rush_yards": 2230, "rush_tds": 20, "super_bowls_won": 0}, "modern", ["Cardinals", "Broncos"]),
     ("Marc Bulger", "QB", {"pass_yards": 22821, "pass_tds": 122, "ints": 93, "passer_rating": 84.4}, "modern", []),
-    ("Drew Bledsoe", "QB", {"pass_yards": 22630, "pass_tds": 123, "ints": 104, "passer_rating": 78.5, "rush_yards": 503}, "classic", []),
+    ("Drew Bledsoe", "QB", {"pass_yards": 44611, "pass_tds": 251, "ints": 206, "passer_rating": 77.1}, "modern", ["Patriots", "Bills", "Cowboys"]),
     ("Lamar Jackson", "QB", {"pass_yards": 22608, "pass_tds": 187, "ints": 56, "passer_rating": 102.2, "rush_yards": 6522, "rush_tds": 35, "super_bowls_won": 0, "mvps": 2}, "current", ["Ravens"]),
     ("Brad Johnson", "QB", {"pass_yards": 22601, "pass_tds": 122, "ints": 93, "passer_rating": 81.8}, "classic", []),
     ("Mike Vick", "QB", {"pass_yards": 22464, "pass_tds": 133, "ints": 88, "passer_rating": 80.4, "rush_yards": 6122, "rush_tds": 36}, "modern", []),
@@ -1002,6 +1002,7 @@ FRANCHISES = {
         "joined_nfl": 1920,
         "super_bowls_won": 0,
         "super_bowl_appearances": 1,
+        "cities_count": 3,
         "previous_names": ["Chicago Cardinals", "St. Louis Cardinals", "Phoenix Cardinals"],
         "previous_cities": ["Chicago", "St. Louis", "Phoenix"],
         "moved_to_arizona": 1988,
@@ -1292,6 +1293,7 @@ FRANCHISES = {
     "Los Angeles Rams": {
         "founded": 1936,
         "super_bowls_won": 2,
+        "cities_count": 3,
         "previous_cities": ["Cleveland", "Los Angeles", "St. Louis", "Los Angeles"],
         "all_time_pass_leader": "Jim Everett",
         "all_time_rush_leader": "Steven Jackson",
@@ -2116,7 +2118,8 @@ FAKE_NAME_PARTS = {
         "Malcontavious", "Zebrion", "Quavondre", "Ja'Vontavious", "Traequan", "Ezekiel",
         "Fredrick", "Zohnathan", "Zackson", "La'Quarine", "La'Jender", "Bender", "La'Zekiel",
         "Adolfo", "Tennison", "Jermissy", "Jermaine", "Danny", "George", "Marcus", "Markson",
-        "Peter", "La'Dain", "Sofia", "Johnson", "Lil'Jordan", "Piggy",
+        "Peter", "La'Dain", "Sofia", "Johnson", "Lil'Jordan", "Piggy", "Ruke", "Trey'vor", "Funchy",
+        "Devon", "Ladel", 
     ],
     "last": [
         "McNeail", "Willowbrook", "Quartermaine", "St. Germaine", "Feathers",
@@ -2157,17 +2160,17 @@ ICONIC_MOMENTS = [
 # ═══════════════════════════════════════════════════════════════
 
 COACHES = [
-    {"name": "Vince Lombardi", "teams": ["Packers", "Washington"], "super_bowls": 2, "win_pct": 0.738},
-    {"name": "John Madden", "teams": ["Raiders"], "super_bowls": 1, "win_pct": 0.759, "min_100_games": True},
-    {"name": "Bill Belichick", "teams": ["Browns", "Patriots"], "super_bowls": 6, "win_pct": 0.656},
-    {"name": "Mike Ditka", "teams": ["Bears", "Saints"], "super_bowls": 1, "famous_quote": None},
-    {"name": "Marv Levy", "teams": ["Chiefs", "Bills"], "super_bowls": 0, "consecutive_sb_losses": 4},
-    {"name": "Mike Tomlin", "teams": ["Steelers"], "super_bowls": 1, "notable": "Tripped kick returner on sideline"},
-    {"name": "Jim Mora", "teams": ["Saints", "Colts"], "famous_quote": "Playoffs?! Don't talk about playoffs!"},
-    {"name": "Dennis Green", "teams": ["Vikings", "Cardinals"], "famous_quote": "They are who we thought they were!"},
-    {"name": "Herm Edwards", "teams": ["Jets", "Chiefs"], "famous_quote": "You play to win the game!"},
-    {"name": "Matt LaFleur", "teams": ["Packers"], "win_pct": 0.720},
-    {"name": "Andy Reid", "teams": ["Eagles", "Chiefs"], "super_bowls": 3, "win_pct": 0.630},
+    {"name": "Vince Lombardi", "teams": ["Packers", "Washington"], "super_bowls": 2, "win_pct": 0.738, "era": "classic"},
+    {"name": "John Madden", "teams": ["Raiders"], "super_bowls": 1, "win_pct": 0.759, "min_100_games": True, "era": "classic"},
+    {"name": "Bill Belichick", "teams": ["Browns", "Patriots"], "super_bowls": 6, "win_pct": 0.656, "era": "modern"},
+    {"name": "Mike Ditka", "teams": ["Bears", "Saints"], "super_bowls": 1, "famous_quote": None, "era": "classic"},
+    {"name": "Marv Levy", "teams": ["Chiefs", "Bills"], "super_bowls": 0, "consecutive_sb_losses": 4, "era": "classic"},
+    {"name": "Mike Tomlin", "teams": ["Steelers"], "super_bowls": 1, "notable": "Tripped kick returner on sideline", "era": "modern"},
+    {"name": "Jim Mora", "teams": ["Saints", "Colts"], "famous_quote": "Playoffs?! Don't talk about playoffs!", "era": "classic"},
+    {"name": "Dennis Green", "teams": ["Vikings", "Cardinals"], "famous_quote": "They are who we thought they were!", "era": "modern"},
+    {"name": "Herm Edwards", "teams": ["Jets", "Chiefs"], "famous_quote": "You play to win the game!", "era": "modern"},
+    {"name": "Matt LaFleur", "teams": ["Packers"], "win_pct": 0.720, "era": "current"},
+    {"name": "Andy Reid", "teams": ["Eagles", "Chiefs"], "super_bowls": 3, "win_pct": 0.630, "era": "modern"},
 ]
 
 

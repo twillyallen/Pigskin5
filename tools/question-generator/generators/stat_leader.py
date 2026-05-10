@@ -29,11 +29,11 @@ class StatLeaderGenerator(BaseGenerator):
 
         # Weight by difficulty
         if difficulty == "easy":
-            weights = [0.25, 0.25, 0.25, 0.05, 0.1, 0.1]
+            weights = [0.25, 0.35, 0.20, 0.05, 0.10, 0.05]
         elif difficulty == "hard":
-            weights = [0.2, 0.15, 0.1, 0.3, 0.15, 0.1]
+            weights = [0.25, 0.25, 0.10, 0.20, 0.15, 0.05]
         else:
-            weights = [0.2, 0.2, 0.2, 0.15, 0.15, 0.1]
+            weights = [0.25, 0.35, 0.15, 0.05, 0.15, 0.05]
 
         gen_func = random.choices(generators, weights=weights, k=1)[0]
         q = gen_func(difficulty)
@@ -51,6 +51,8 @@ class StatLeaderGenerator(BaseGenerator):
             (RUNNING_BACKS, "rush_tds", "Career Rushing TDs"),
             (WIDE_RECEIVERS, "rec_yards", "Career Receiving Yards"),
             (WIDE_RECEIVERS, "rec_tds", "Career Receiving TDs"),
+            (TIGHT_ENDS, "rec_yards", "Career Receiving Yards"),
+            (TIGHT_ENDS, "rec_tds", "Career Receiving TDs"),
         ]
         
         pool, stat_key, stat_label = random.choice(options)
@@ -123,21 +125,35 @@ class StatLeaderGenerator(BaseGenerator):
             era is one of: classic, modern, current
             """
             era = player[3]
-
-            if year_val >= 2016:
+            if year_val >= 2019:
+                return era == "current"
+            elif year_val >= 2016:
                 return era in ["modern", "current"]
             elif year_val >= 2000:
                 return era == "modern"
             else:
                 return era in ["classic", "modern"]
 
-        # Generate distractors from same position group, filtered by year relevance
+        # Players who have led the league in this stat in any season — best distractor candidates
+        same_stat_leaders = {
+            data[stat_key][0]
+            for _, data in SEASON_LEADERS.items()
+            if stat_key in data and isinstance(data[stat_key], tuple)
+        }
+
+        # Generate distractors from same position group, filtered by era and min career stats
         if "pass" in stat_key:
-            pool = [p for p in QUARTERBACKS if p[0] != leader_name and _is_relevant(p, year_int)]
+            pool = [p for p in QUARTERBACKS
+                    if p[0] != leader_name and _is_relevant(p, year_int)
+                    and p[2].get("pass_yards", 0) > 20000]
         elif "rush" in stat_key:
-            pool = [p for p in RUNNING_BACKS if p[0] != leader_name and _is_relevant(p, year_int)]
+            pool = [p for p in RUNNING_BACKS
+                    if p[0] != leader_name and _is_relevant(p, year_int)
+                    and p[2].get("rush_yards", 0) > 4000]
         elif "rec" in stat_key:
-            pool = [p for p in (WIDE_RECEIVERS + TIGHT_ENDS) if p[0] != leader_name and _is_relevant(p, year_int)]
+            pool = [p for p in (WIDE_RECEIVERS + TIGHT_ENDS)
+                    if p[0] != leader_name and _is_relevant(p, year_int)
+                    and p[2].get("rec_yards", 0) > 4000]
         elif "sack" in stat_key or "tackle" in stat_key:
             # Defensive players - keep curated list for now
             defensive_names = [
@@ -188,11 +204,14 @@ class StatLeaderGenerator(BaseGenerator):
         }
         career_key = career_stat_map.get(stat_key, stat_key)
 
-        # Sort by career stat so the most notable players come first, then add some shuffle
-        pool.sort(key=lambda p: p[2].get(career_key, 0), reverse=True)
-        top_pool = pool[:12]
-        random.shuffle(top_pool)
-        distractors = [p[0] for p in top_pool[:3]]
+        # Prefer players who have actually led this stat — put them first, fill from career-stat leaders
+        leader_pool = [p for p in pool if p[0] in same_stat_leaders]
+        non_leader_pool = sorted(
+            [p for p in pool if p[0] not in same_stat_leaders],
+            key=lambda p: p[2].get(career_key, 0), reverse=True
+        )
+        random.shuffle(leader_pool)
+        distractors = [p[0] for p in (leader_pool + non_leader_pool)[:3]]
 
         choices = [leader_name] + distractors
         random.shuffle(choices)
@@ -387,7 +406,9 @@ class StatLeaderGenerator(BaseGenerator):
         }
 
     def _season_head_to_head(self, difficulty: str) -> dict:
-        """Who had more [stat] in [year]: [player A] or [player B]?"""
+        """Who had more [stat]: Player A (yearX) or Player B (yearY)?
+        Both players are actual season leaders — no injured/uncompetitive comparisons.
+        """
         stat_labels = {
             "passing_yards": "passing yards",
             "passing_tds": "passing TDs",
@@ -397,50 +418,54 @@ class StatLeaderGenerator(BaseGenerator):
             "receptions": "receptions",
         }
 
-        candidates = []
+        # Build full list of (stat_key, label, year, player, value)
+        all_leaders = []
         for year, season in SEASON_LEADERS.items():
             for stat_key, label in stat_labels.items():
                 if stat_key in season and isinstance(season[stat_key], tuple):
-                    leader_name, _ = season[stat_key]
-                    candidates.append((year, stat_key, label, leader_name))
+                    player, value = season[stat_key]
+                    all_leaders.append((stat_key, label, year, player, value))
 
-        if not candidates:
+        if len(all_leaders) < 2:
             return self._season_leader(difficulty)
 
-        year, stat_key, label, correct = random.choice(candidates)
-        year_int = int(year)
+        # Try to find two different players who led the same stat in different years
+        for _ in range(30):
+            a = random.choice(all_leaders)
+            stat_key_a, label_a, year_a, player_a, value_a = a
 
-        def _is_relevant(player, year_val: int) -> bool:
-            era = player[3]
-            if year_val >= 2016:
-                return era in ["modern", "current"]
-            elif year_val >= 2000:
-                return era == "modern"
-            else:
-                return era in ["classic", "modern"]
+            same_stat_other = [
+                x for x in all_leaders
+                if x[0] == stat_key_a and x[3] != player_a
+            ]
+            if not same_stat_other:
+                continue
 
-        if "pass" in stat_key:
-            pool = [p[0] for p in QUARTERBACKS if p[0] != correct and _is_relevant(p, year_int)]
-        elif "rush" in stat_key:
-            pool = [p[0] for p in RUNNING_BACKS if p[0] != correct and _is_relevant(p, year_int)]
+            b = random.choice(same_stat_other)
+            _, _, year_b, player_b, value_b = b
+
+            # For hard difficulty, prefer close values (within 20%)
+            if difficulty == "hard":
+                ratio = min(value_a, value_b) / max(value_a, value_b)
+                if ratio < 0.80:
+                    continue
+
+            break
         else:
-            pool = [p[0] for p in (WIDE_RECEIVERS + TIGHT_ENDS) if p[0] != correct and _is_relevant(p, year_int)]
-
-        if not pool:
             return self._season_leader(difficulty)
 
-        random.shuffle(pool)
-        distractor = pool[0]
+        choice_a = f"{player_a} ({year_a})"
+        choice_b = f"{player_b} ({year_b})"
 
         if random.random() < 0.5:
-            choices = [correct, distractor]
-            answer_idx = 0
+            choices = [choice_a, choice_b]
+            answer_idx = 0 if value_a > value_b else 1
         else:
-            choices = [distractor, correct]
-            answer_idx = 1
+            choices = [choice_b, choice_a]
+            answer_idx = 1 if value_a > value_b else 0
 
         return {
-            "question": f"Who had more {label} in {year}: {choices[0]} or {choices[1]}?",
+            "question": f"Who had more {label_a}: {choices[0]} or {choices[1]}?",
             "choices": choices,
             "answer": answer_idx,
         }

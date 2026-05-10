@@ -88,10 +88,14 @@ class OverUnderGenerator(BaseGenerator):
                 offset = random.choice([-2, -3, 2, 3]) + 0.5
         
         line = actual_value + offset
-        
+
         # Ensure line ends in .5 for clean O/U format
         line = round(line) + 0.5 if line % 1 != 0.5 else line
-        
+
+        # Never allow negative lines
+        if line < 0.5:
+            line = 0.5
+
         is_over = actual_value > line
         
         # Format the line value
@@ -149,7 +153,7 @@ class OverUnderGenerator(BaseGenerator):
         for name, data in FRANCHISES.items():
             short = name.split()[-1]
             if "cities_count" in data:
-                options.append((f"The {short}", "been located in O/U", data["cities_count"], "cities"))
+                options.append((f"The {short}", "have been located in O/U", data["cities_count"], "cities"))
             if "nfl_championships" in data and data["nfl_championships"] > 2:
                 options.append((f"The {short}", "have O/U", data["nfl_championships"], "NFL championships (all-time)"))
         

@@ -33,57 +33,30 @@ class FranchiseGenerator(BaseGenerator):
         """Who is the [Team]'s all-time leader in [stat]?"""
 
         stat_options = [
-            ("all_time_pass_leader", "passing yards", "QB", "pass_yards"),
-            ("all_time_rush_leader", "rushing yards", "RB", "rush_yards"),
-            ("all_time_rec_leader", "receiving yards", "REC", "rec_yards"),
+            ("all_time_pass_leader", "passing yards", "pass_leaders"),
+            ("all_time_rush_leader", "rushing yards", "rush_leaders"),
+            ("all_time_rec_leader", "receiving yards", "rec_leaders"),
         ]
 
-        def played_for_team(player, franchise_name):
-            teams = player[4] if len(player) > 4 else []
-            mascot = franchise_name.split()[-1]
-            return any(mascot == t or mascot in t for t in teams)
-
-        # Try multiple times to find a franchise/stat combo with enough valid same-team players
         for _ in range(25):
-            stat_key, stat_label, stat_family, sort_stat = random.choice(stat_options)
+            stat_key, stat_label, leader_list_key = random.choice(stat_options)
 
-            eligible = [(name, data) for name, data in FRANCHISES.items() if stat_key in data]
+            eligible = [
+                (name, data) for name, data in FRANCHISES.items()
+                if stat_key in data and leader_list_key in data
+            ]
             if not eligible:
                 continue
 
             team_name, team_data = random.choice(eligible)
             correct = team_data[stat_key]
 
-            candidate_pool = []
+            # Use the franchise's own ranked leader list — guarantees top performers as distractors
+            leader_list = team_data[leader_list_key]
+            distractors = [entry[0] for entry in leader_list if entry[0] != correct][:3]
 
-            if stat_family == "QB":
-                source_pool = QUARTERBACKS
-            elif stat_family == "RB":
-                source_pool = RUNNING_BACKS
-            else:
-                source_pool = WIDE_RECEIVERS + TIGHT_ENDS
-
-            for p in source_pool:
-                if p[0] == correct:
-                    continue
-                if not played_for_team(p, team_name):
-                    continue
-                candidate_pool.append((p[0], p[2].get(sort_stat, 0)))
-
-            # Need at least 3 distractors from players who actually played for that team
-            unique_seen = set()
-            unique_candidates = []
-            for name, stat_val in candidate_pool:
-                if name not in unique_seen:
-                    unique_seen.add(name)
-                    unique_candidates.append((name, stat_val))
-
-            if len(unique_candidates) < 3:
+            if len(distractors) < 3:
                 continue
-
-            # Sort by stat descending so we get the most notable players first
-            unique_candidates.sort(key=lambda x: x[1], reverse=True)
-            distractors = [name for name, _ in unique_candidates[:3]]
 
             choices = [correct] + distractors
             random.shuffle(choices)
@@ -95,7 +68,6 @@ class FranchiseGenerator(BaseGenerator):
                 "answer": answer_idx,
             }
 
-        # If no clean franchise leader question can be built, fall back to another franchise question type
         return self._franchise_history(difficulty)
 
     # ───────────────────────────────────────────────────────────────
@@ -151,7 +123,7 @@ class FranchiseGenerator(BaseGenerator):
 
         team_name, stadium = random.choice(options)
 
-        other_teams = [name for name, _ in options if name != team_name]
+        other_teams = [name for name, s in options if name != team_name and s != stadium]
         random.shuffle(other_teams)
         distractors = other_teams[:3]
 

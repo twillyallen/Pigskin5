@@ -239,7 +239,10 @@ def main():
                    help="When using --only, also write questions to the output file")
     
     args = parser.parse_args()
-    
+
+    # Set seed BEFORE initializing generators so TrueFalseGenerator's fact bank is deterministic
+    if args.seed is not None:
+        random.seed(args.seed)
 
     # Initialize generators
     generators = {
@@ -283,11 +286,6 @@ def main():
             
             return
 
-
-
-    if args.seed is not None:
-        random.seed(args.seed)
-    
     # Parse start date
     if args.start_date:
         start = datetime.strptime(args.start_date, "%Y-%m-%d")

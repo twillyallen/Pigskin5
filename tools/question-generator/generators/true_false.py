@@ -33,7 +33,7 @@ class TrueFalseGenerator(BaseGenerator):
                 facts.append((f"The {short} have appeared in a Super Bowl.", False))
             
             if data.get("super_bowls_won", 0) > 0:
-                wrong_count = data["super_bowls_won"] + random.choice([1, 2])
+                wrong_count = data["super_bowls_won"] + 1
                 facts.append((f"The {short} have won {wrong_count} Super Bowls.", False))
         
         # Previous names
@@ -68,6 +68,19 @@ class TrueFalseGenerator(BaseGenerator):
             ("The Pittsburgh Steelers have always been called the Pittsburgh Steelers.", False),
             ("Steve Young made his first NFL starts for the Buccaneers.", True),
             ("The first Super Bowl to go into overtime was Patriots vs Falcons.", True),
+            ("Brett Favre was originally drafted by the Atlanta Falcons.", True),
+            ("The Green Bay Packers are the only community-owned, non-profit team in the NFL.", True),
+            ("Dan Marino retired without ever winning a Super Bowl.", True),
+            ("The 1972 Miami Dolphins are the only team to finish an NFL season undefeated.", True),
+            ("Tom Brady was selected in the 6th round of the NFL Draft.", True),
+            ("The Houston Texans have never won a playoff game.", False),
+            ("The Packers won the first two Super Bowls ever played.", True),
+            ("Emmitt Smith holds the NFL record for most career rushing yards.", True),
+            ("Peyton Manning won 3 Super Bowls during his career.", False),
+            ("The San Francisco 49ers have won more Super Bowls than the New England Patriots.", False),
+            ("Barry Sanders retired as the NFL's all-time leading rusher.", False),
+            ("The Detroit Lions have won a Super Bowl.", False),
+            ("Walter Payton never scored a rushing touchdown in a Super Bowl.", True),
         ])
         
         # Player stat facts
