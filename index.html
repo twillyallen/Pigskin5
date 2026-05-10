@@ -286,15 +286,22 @@
   </nav>
 
   <!-- Sunday Header Banner — only shown on Sundays via JS -->
-  <div id="sundayHeaderBannerWrap" style="display:none; text-align:center; width:100%; padding:8px 0;">
-    <ins id="sundayHeaderBannerAd"
-         class="adsbygoogle"
-         style="display:block"
+  <div id="sundayHeaderBannerWrap" style="display:none; text-align:center; width:100%; padding:4px 0; overflow:hidden;">
+    <ins id="sundayBannerDesktopAd"
+         class="adsbygoogle sunday-banner-desktop"
+         style="display:inline-block;width:728px;height:90px;"
          data-ad-client="ca-pub-8430547369793861"
-         data-ad-slot="5560840672"
-         data-ad-format="auto"
-         data-full-width-responsive="true"></ins>
+         data-ad-slot="5560840672"></ins>
+    <ins id="sundayBannerMobileAd"
+         class="adsbygoogle sunday-banner-mobile"
+         style="display:inline-block;width:320px;height:50px;"
+         data-ad-client="ca-pub-8430547369793861"
+         data-ad-slot="5560840672"></ins>
   </div>
+  <style>
+    @media (min-width:728px) { .sunday-banner-mobile { display:none !important; } }
+    @media (max-width:727px) { .sunday-banner-desktop { display:none !important; } }
+  </style>
 
   <main class="app">
     <h1 class="visually-hidden">Pigskin5 – Free Daily NFL Trivia Game</h1>
@@ -673,7 +680,8 @@
       if (isSunday) {
         var bannerWrap = document.getElementById('sundayHeaderBannerWrap');
         if (bannerWrap) bannerWrap.style.display = 'block';
-        pushAd(document.getElementById('sundayHeaderBannerAd'));
+        pushAd(document.getElementById('sundayBannerDesktopAd'));
+        pushAd(document.getElementById('sundayBannerMobileAd'));
       } else {
         pushAd(document.getElementById('popupAdSlot'));
       }
