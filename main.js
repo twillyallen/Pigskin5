@@ -649,99 +649,118 @@ function buildGuestLbRow(rank, entry) {
   return tr;
 }
 
+let _lbRenderGen = 0;
+
 function renderLeaderboard(dateStr, guestEntry = null) {
   if (!leaderboardBody) return;
 
+  const gen = ++_lbRenderGen;
   leaderboardBody.innerHTML = "<tr><td colspan='4'>Loading...</td></tr>";
 
-  fetchLeaderboardJSONP(dateStr)
-    .then(entries => {
-      leaderboardBody.innerHTML = "";
+  // Timeout after 10 s — retry once if the fetch is still pending (connection contention).
+  const retryTimer = setTimeout(() => {
+    if (_lbRenderGen === gen && leaderboardBody &&
+        leaderboardBody.innerHTML.includes("Loading")) {
+      _lbRenderGen++;
+      renderLeaderboard(dateStr, guestEntry);
+    }
+  }, 10000);
 
-      if (!Array.isArray(entries)) {
-        if (guestEntry) leaderboardBody.appendChild(buildGuestLbRow(1, guestEntry));
-        else {
-          const tr = document.createElement("tr");
-          const td = document.createElement("td");
-          td.colSpan = 4;
-          td.textContent = "No scores yet. Be the first!";
-          tr.appendChild(td);
-          leaderboardBody.appendChild(tr);
-        }
-        return;
-      }
+  function applyEntries(entries) {
+    clearTimeout(retryTimer);
+    if (_lbRenderGen !== gen || !leaderboardBody) return;
 
-      const todaysEntries = entries.filter(e => {
-        try {
-          const entryDate = new Date(e.date);
-          const [year, month, day] = dateStr.split('-').map(Number);
-          const targetDate = new Date(year, month - 1, day);
-          return entryDate.toDateString() === targetDate.toDateString();
-        } catch {
-          return e.date === dateStr;
-        }
-      });
+    leaderboardBody.innerHTML = "";
 
-      const rowsToShow = todaysEntries.slice(0, 20);
-
-      if (!rowsToShow.length) {
-        if (guestEntry) leaderboardBody.appendChild(buildGuestLbRow(1, guestEntry));
-        else {
-          const tr = document.createElement("tr");
-          const td = document.createElement("td");
-          td.colSpan = 4;
-          td.textContent = "No scores yet. Be the first!";
-          tr.appendChild(td);
-          leaderboardBody.appendChild(tr);
-        }
-        return;
-      }
-
-      // Merge guest row at the correct rank position
-      const virtualRows = [];
-      let guestPlaced = false;
-      for (const e of rowsToShow) {
-        if (guestEntry && !guestPlaced && (e.points ?? 0) < guestEntry.points) {
-          virtualRows.push({ _guest: true, ...guestEntry });
-          guestPlaced = true;
-        }
-        virtualRows.push(e);
-      }
-      if (guestEntry && !guestPlaced) {
-        virtualRows.push({ _guest: true, ...guestEntry });
-      }
-
-      virtualRows.forEach((e, idx) => {
-        const rank = idx + 1;
-        if (e._guest) {
-          leaderboardBody.appendChild(buildGuestLbRow(rank, e));
-          return;
-        }
-
+    if (!Array.isArray(entries)) {
+      if (guestEntry) leaderboardBody.appendChild(buildGuestLbRow(1, guestEntry));
+      else {
         const tr = document.createElement("tr");
-
-        const rankTd = document.createElement("td");
-        rankTd.textContent = String(rank);
-
-        const nameTd = document.createElement("td");
-        const streak = e.dailyStreak ?? 0;
-        nameTd.appendChild(createTierBadgeElement(streak, e.name, e.points, e.emojiScore, e.username, e.twitterHandle));
-
-        const pointsTd = document.createElement("td");
-        pointsTd.textContent = (e.points ?? 0).toLocaleString();
-
-        const avgTd = document.createElement("td");
-        if (typeof e.avgTime === "number" && !Number.isNaN(e.avgTime)) {
-          avgTd.textContent = `${e.avgTime.toFixed(1)}s`;
-        } else {
-          avgTd.textContent = "-";
-        }
-
-        tr.append(rankTd, nameTd, pointsTd, avgTd);
+        const td = document.createElement("td");
+        td.colSpan = 4;
+        td.textContent = "No scores yet. Be the first!";
+        tr.appendChild(td);
         leaderboardBody.appendChild(tr);
-      });
-    })
+      }
+      return;
+    }
+
+    const todaysEntries = entries.filter(e => {
+      try {
+        const entryDate = new Date(e.date);
+        const [year, month, day] = dateStr.split('-').map(Number);
+        const targetDate = new Date(year, month - 1, day);
+        return entryDate.toDateString() === targetDate.toDateString();
+      } catch {
+        return e.date === dateStr;
+      }
+    });
+
+    const rowsToShow = todaysEntries.slice(0, 20);
+
+    if (!rowsToShow.length) {
+      if (guestEntry) leaderboardBody.appendChild(buildGuestLbRow(1, guestEntry));
+      else {
+        const tr = document.createElement("tr");
+        const td = document.createElement("td");
+        td.colSpan = 4;
+        td.textContent = "No scores yet. Be the first!";
+        tr.appendChild(td);
+        leaderboardBody.appendChild(tr);
+      }
+      return;
+    }
+
+    // Merge guest row at the correct rank position
+    const virtualRows = [];
+    let guestPlaced = false;
+    for (const e of rowsToShow) {
+      if (guestEntry && !guestPlaced && (e.points ?? 0) < guestEntry.points) {
+        virtualRows.push({ _guest: true, ...guestEntry });
+        guestPlaced = true;
+      }
+      virtualRows.push(e);
+    }
+    if (guestEntry && !guestPlaced) {
+      virtualRows.push({ _guest: true, ...guestEntry });
+    }
+
+    virtualRows.forEach((e, idx) => {
+      const rank = idx + 1;
+      if (e._guest) {
+        leaderboardBody.appendChild(buildGuestLbRow(rank, e));
+        return;
+      }
+
+      const tr = document.createElement("tr");
+
+      const rankTd = document.createElement("td");
+      rankTd.textContent = String(rank);
+
+      const nameTd = document.createElement("td");
+      const streak = e.dailyStreak ?? 0;
+      nameTd.appendChild(createTierBadgeElement(streak, e.name, e.points, e.emojiScore, e.username, e.twitterHandle));
+
+      const pointsTd = document.createElement("td");
+      pointsTd.textContent = (e.points ?? 0).toLocaleString();
+
+      const avgTd = document.createElement("td");
+      if (typeof e.avgTime === "number" && !Number.isNaN(e.avgTime)) {
+        avgTd.textContent = `${e.avgTime.toFixed(1)}s`;
+      } else {
+        avgTd.textContent = "-";
+      }
+
+      tr.append(rankTd, nameTd, pointsTd, avgTd);
+      leaderboardBody.appendChild(tr);
+    });
+  }
+
+  fetchLeaderboardJSONP(dateStr)
+    .then(applyEntries)
     .catch(err => {
+      clearTimeout(retryTimer);
+      if (_lbRenderGen !== gen || !leaderboardBody) return;
       console.error("Failed to load leaderboard:", err);
       leaderboardBody.innerHTML = "<tr><td colspan='4'>Error loading leaderboard.</td></tr>";
     });

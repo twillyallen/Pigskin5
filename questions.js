@@ -58,9 +58,9 @@ export const CALENDAR = {
     event: "",
     questions: [
     { question: "Which of these was an ACTUAL NFL player?", choices: ["Ja'Vontavious Goldsworth", "Kayvontez Veneer", "Ovie Mughelli", "Tavarius McAugust"], answer: 2 },
-    { question: "Which team did the Rams defeat in Super Bowl XXXIV?", choices: ["Raiders", "Titans", "Chiefs", "Panthers"], answer: 1 },
+    { question: "Which team did the Rams defeat in Super Bowl XXXIV?", choices: ["Raiders", "Titans", "Chiefs", "Bengals"], answer: 1 },
     { question: "OVER or UNDER: Tony Pollard has O/U 36.5 Career Total TDs.", choices: ["OVER", "UNDER"], answer: 0 },
-    { question: "True or False: The Chiefs have won 6 Super Bowls.", choices: ["True", "False"], answer: 1 },
+    { question: "True or False: The Packers have the most Hall of Famers.", choices: ["True", "False"], answer: 1 },
     { question: "What year was the Giants' first season?", choices: ["1928", "1921", "1925", "1932"], answer: 2 },
     ],
   },
