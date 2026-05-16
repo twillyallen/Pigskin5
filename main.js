@@ -8,6 +8,7 @@ import { getCurrentUser, supabase } from "./modules/supabase-client.js";
 import { NFL_TEAMS } from "./modules/nfl-teams.js";
 import { showTierTooltip } from "./modules/ui-helpers.js";
 import { ACHIEVEMENTS } from "./modules/achievements.js";
+import { STREAK_TIERS } from "./modules/config.js";
 
 
 
@@ -55,15 +56,6 @@ const EVENT_LOGOS = {
   "NFLDraft2026": "logos/Draft2026.png",
 };
 
-const STREAK_TIERS = [
-  { name: "Rookie", minDays: 0, emoji: "🫡", color: "#95a5a6" },
-  { name: "Starter", minDays: 7, emoji: "🏈", color: "#3498db" },
-  { name: "Pro", minDays: 14, emoji: "🔥", color: "#9b59b6" },
-  { name: "All-Pro", minDays: 30, emoji: "⭐", color: "#f39c12" },
-  { name: "Hall of Fame", minDays: 50, emoji: "🏆", color: "#e67e22" },
-  { name: "Legend", minDays: 100, emoji: "👑", color: "#e74c3c" },
-  { name: "Neck Beard", minDays: 150, emoji: "🧌", color: "#457888" },
-];
 
 const BANNED_WORDS = [
   "Nigger", "Cunt", "Hitler", "Faggot", "Fag", "Shit", "Fuck", "Bitch",
