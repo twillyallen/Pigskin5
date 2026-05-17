@@ -651,11 +651,13 @@ function buildGuestLbRow(rank, entry) {
 
 let _lbRenderGen = 0;
 
-function renderLeaderboard(dateStr, guestEntry = null) {
+function renderLeaderboard(dateStr, guestEntry = null, { silent = false } = {}) {
   if (!leaderboardBody) return;
 
   const gen = ++_lbRenderGen;
-  leaderboardBody.innerHTML = "<tr><td colspan='4'>Loading...</td></tr>";
+  if (!silent) {
+    leaderboardBody.innerHTML = "<tr><td colspan='4'>Loading...</td></tr>";
+  }
 
   // Timeout after 10 s — retry once if the fetch is still pending (connection contention).
   const retryTimer = setTimeout(() => {
@@ -781,6 +783,10 @@ async function handleLeaderboardSubmit(evt) {
     if (leaderboardWarningEl) {
       leaderboardWarningEl.textContent = "You've already submitted your score for today.";
     }
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.textContent = "Score Submitted";
+    }
     return;
   }
 
@@ -820,7 +826,7 @@ async function handleLeaderboardSubmit(evt) {
 
   await addLeaderboardEntry(RUN_DATE, entry);
   await refreshStreakCache();
-  renderLeaderboard(RUN_DATE);
+  renderLeaderboard(RUN_DATE, null, { silent: true });
   setSubmittedLeaderboard(RUN_DATE);
 
   if (leaderboardForm) {
