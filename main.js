@@ -824,7 +824,16 @@ async function handleLeaderboardSubmit(evt) {
     createdAt: Date.now()
   };
 
-  await addLeaderboardEntry(RUN_DATE, entry);
+  try {
+    await addLeaderboardEntry(RUN_DATE, entry);
+  } catch {
+    if (submitBtn) {
+      submitBtn.disabled = false;
+      submitBtn.textContent = "Submit Score";
+    }
+    return;
+  }
+
   await refreshStreakCache();
   renderLeaderboard(RUN_DATE, null, { silent: true });
   setSubmittedLeaderboard(RUN_DATE);
