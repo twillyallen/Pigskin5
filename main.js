@@ -8,6 +8,7 @@ import { getCurrentUser, supabase } from "./modules/supabase-client.js";
 import { NFL_TEAMS } from "./modules/nfl-teams.js";
 import { showTierTooltip } from "./modules/ui-helpers.js";
 import { ACHIEVEMENTS } from "./modules/achievements.js";
+import { STREAK_TIERS } from "./modules/config.js";
 
 
 
@@ -55,15 +56,6 @@ const EVENT_LOGOS = {
   "NFLDraft2026": "logos/Draft2026.png",
 };
 
-const STREAK_TIERS = [
-  { name: "Rookie", minDays: 0, emoji: "🫡", color: "#95a5a6" },
-  { name: "Starter", minDays: 7, emoji: "🏈", color: "#3498db" },
-  { name: "Pro", minDays: 14, emoji: "🔥", color: "#9b59b6" },
-  { name: "All-Pro", minDays: 30, emoji: "⭐", color: "#f39c12" },
-  { name: "Hall of Fame", minDays: 50, emoji: "🏆", color: "#e67e22" },
-  { name: "Legend", minDays: 100, emoji: "👑", color: "#e74c3c" },
-  { name: "Neck Beard", minDays: 150, emoji: "🧌", color: "#457888" },
-];
 
 const BANNED_WORDS = [
   "Nigger", "Cunt", "Hitler", "Faggot", "Fag", "Shit", "Fuck", "Bitch",
@@ -657,14 +649,13 @@ function renderLeaderboard(dateStr, guestEntry = null) {
   const gen = ++_lbRenderGen;
   leaderboardBody.innerHTML = "<tr><td colspan='4'>Loading...</td></tr>";
 
-  // Timeout after 10 s — retry once if the fetch is still pending (connection contention).
+  // Retry after 4 s if the fetch is still pending (connection contention after submit).
   const retryTimer = setTimeout(() => {
     if (_lbRenderGen === gen && leaderboardBody &&
         leaderboardBody.innerHTML.includes("Loading")) {
-      _lbRenderGen++;
       renderLeaderboard(dateStr, guestEntry);
     }
-  }, 10000);
+  }, 4000);
 
   function applyEntries(entries) {
     clearTimeout(retryTimer);
@@ -818,8 +809,21 @@ async function handleLeaderboardSubmit(evt) {
     createdAt: Date.now()
   };
 
-  await addLeaderboardEntry(RUN_DATE, entry);
+  try {
+    await addLeaderboardEntry(RUN_DATE, entry);
+  } catch (err) {
+    if (leaderboardWarningEl && !leaderboardWarningEl.textContent) {
+      leaderboardWarningEl.textContent = "Could not submit. Try again.";
+    }
+    const btn = leaderboardForm?.querySelector('button[type="submit"]');
+    if (btn) { btn.disabled = false; btn.textContent = "Submit Score"; }
+    return;
+  }
+
   await refreshStreakCache();
+
+  // Reset tab state so clicking "Daily" re-renders even if already active
+  _lbActiveTab = '';
   renderLeaderboard(RUN_DATE);
   setSubmittedLeaderboard(RUN_DATE);
 
