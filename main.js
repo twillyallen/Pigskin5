@@ -3,7 +3,7 @@
 // ============================================================================
 
 import { CALENDAR } from "./questions.js?v=20260412";
-import { submitEntry, fetchLeaderboard, fetchWeeklyLeaderboard, fetchLastWeekWinner, refreshStreakCache, getCachedDailyStreak, getCachedTDStreak, getTodaysAttempt, getCachedFavoriteTeam, overrideCachedStreaks, checkAchievementsForScore } from "./modules/leaderboard.js";
+import { submitEntry, fetchLeaderboard, fetchWeeklyLeaderboard, fetchLastWeekWinner, refreshStreakCache, getCachedDailyStreak, getCachedTDStreak, getTodaysAttempt, getCachedFavoriteTeam, overrideCachedStreaks, checkAchievementsForScore, upsertGuestResult } from "./modules/leaderboard.js";
 import { getCurrentUser, supabase } from "./modules/supabase-client.js";
 import { NFL_TEAMS } from "./modules/nfl-teams.js";
 import { showTierTooltip } from "./modules/ui-helpers.js";
@@ -1367,15 +1367,30 @@ async function showStartScreen() {
   // Check server for signed-in users first
   const serverAttempt = await getTodaysAttempt(runDate);
   if (serverAttempt) {
-    // Sync to localStorage so the rest of the app stays consistent
     setAttempt(runDate);
-    saveResult(runDate, serverAttempt);
-    renderPersistedResult(runDate, serverAttempt);
+    const localResult = loadResult(runDate);
+    // A blank DB row (no picks) can appear if a trigger ran before the user played as a guest.
+    // In that case, prefer the local result which has the real game data.
+    const serverHasPicks = (serverAttempt.picks?.length ?? 0) > 0;
+    const localHasPicks  = (localResult?.picks?.length ?? 0) > 0;
+    if (!serverHasPicks && localHasPicks) {
+      saveResult(runDate, localResult);
+      renderPersistedResult(runDate, localResult);
+      upsertGuestResult(runDate, localResult).catch(() => {});
+    } else {
+      saveResult(runDate, serverAttempt);
+      renderPersistedResult(runDate, serverAttempt);
+    }
     return;
   }
-  
+
   // Anonymous users or first-time-today-on-this-device
   if (hasAttempt(runDate)) {
+    // User may have played as a guest before signing in — submit their result now
+    const localResult = loadResult(runDate);
+    if (user && localResult?.picks?.length > 0) {
+      upsertGuestResult(runDate, localResult).catch(() => {});
+    }
     showLockedGate(runDate);
     return;
   }

@@ -502,6 +502,47 @@ export async function fetchPlayerStats(username) {
   };
 }
 
+// Upsert a guest result to the server (used when user played anonymously then signed in).
+// Safe to call even if a blank placeholder row already exists — overwrites it.
+export async function upsertGuestResult(dateStr, localResult) {
+  const user = await getCurrentUser();
+  if (!user) return;
+
+  const { data: profile } = await supabase
+    .from("profiles")
+    .select("username")
+    .eq("id", user.id)
+    .maybeSingle();
+
+  const displayName = profile?.username || "Player";
+
+  const emojiScore = (localResult.picks || []).map(p => {
+    const correct = Array.isArray(p.correct) ? p.correct : [p.correct];
+    return correct.includes(p.pick) ? "🟩" : "⬜";
+  }).join("");
+
+  const score = (emojiScore.match(/🟩/g) || []).length;
+
+  const { error } = await supabase
+    .from("quiz_attempts")
+    .upsert({
+      user_id: user.id,
+      quiz_date: dateStr,
+      score,
+      points: localResult.totalPoints || 0,
+      display_name_used: displayName,
+      time_taken_seconds: Math.round(localResult.avgTime || 0),
+      answer_data: {
+        points: localResult.totalPoints,
+        emojiScore,
+        avgTime: localResult.avgTime,
+        picks: localResult.picks,
+      },
+    }, { onConflict: "user_id,quiz_date" });
+
+  if (error) console.warn("upsertGuestResult failed:", error);
+}
+
 // Check if signed-in user has already played today; returns the attempt data or null
 export async function getTodaysAttempt(dateStr) {
   const user = await getCurrentUser();
