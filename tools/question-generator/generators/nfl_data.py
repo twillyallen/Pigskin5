@@ -2106,7 +2106,7 @@ REAL_UNUSUAL_PLAYERS = [
 
 ]
 
-# Fake name components for generating plausible fake NFL names
+# Fake name components for generating fake NFL names
 FAKE_NAME_PARTS = {
     "first": [
         "Tavarius", "Dequavious", "Breshawn", "Kendarious", "Ja'Quan",

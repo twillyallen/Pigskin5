@@ -33,7 +33,19 @@ export async function submitEntry(dateStr, entry) {
 
   if (error) {
     if (error.code === "23505") {
-      return { error: "You've already submitted today." };
+      // Row already exists — treat as success so the UI moves to submitted state
+      return { success: true };
+    }
+    // Verify the row wasn't committed despite the error response (e.g. network drop
+    // after the server committed but before the response arrived)
+    const { data: existing } = await supabase
+      .from("quiz_attempts")
+      .select("id")
+      .eq("user_id", user.id)
+      .eq("quiz_date", dateStr)
+      .maybeSingle();
+    if (existing) {
+      return { success: true };
     }
     console.error("Submit failed:", error);
     return { error: "Could not submit. Try again." };
