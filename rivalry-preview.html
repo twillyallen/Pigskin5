@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rivalry Share Card Preview</title>
+<style>
+  body {
+    background: #111;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 32px;
+    padding: 40px 16px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+  .label {
+    color: rgba(255,255,255,0.4);
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .1em;
+    text-align: center;
+    margin-bottom: 8px;
+  }
+</style>
+</head>
+<body>
+<script>
+function drawCard(canvasId, opts) {
+  const { won, mutualMiss, myName, theirName, myWins, theirWins, tracker } = opts;
+  const canvas = document.getElementById(canvasId);
+  const ctx = canvas.getContext("2d");
+  const W = 800, H = 420;
+
+  const bg = ctx.createLinearGradient(0, 0, W, H);
+  bg.addColorStop(0, "#0f172a");
+  bg.addColorStop(1, "#1e293b");
+  ctx.fillStyle = bg;
+  ctx.fillRect(0, 0, W, H);
+
+  ctx.strokeStyle = "rgba(255,255,255,0.1)";
+  ctx.lineWidth = 2;
+  ctx.roundRect(4, 4, W - 8, H - 8, 20);
+  ctx.stroke();
+
+  ctx.fillStyle = "rgba(255,255,255,0.35)";
+  ctx.font = "700 22px -apple-system, sans-serif";
+  ctx.textAlign = "center";
+  ctx.fillText("PIGSKIN5 RIVALRY", W / 2, 52);
+
+  ctx.strokeStyle = "rgba(255,255,255,0.08)";
+  ctx.lineWidth = 1;
+  ctx.beginPath();
+  ctx.moveTo(60, 70);
+  ctx.lineTo(W - 60, 70);
+  ctx.stroke();
+
+  let headline, headlineColor;
+  if (mutualMiss) {
+    headline = "You failed each other… 💀";
+    headlineColor = "rgba(255,255,255,0.5)";
+  } else if (won) {
+    headline = "🏆 Series Win!";
+    headlineColor = "#22c55e";
+  } else {
+    headline = "Series Over";
+    headlineColor = "#ef4444";
+  }
+  ctx.fillStyle = headlineColor;
+  ctx.font = "900 42px -apple-system, sans-serif";
+  ctx.fillText(headline, W / 2, 130);
+
+  ctx.fillStyle = "#ffffff";
+  ctx.font = "700 26px -apple-system, sans-serif";
+  ctx.fillText(`${myName}  vs  ${theirName}`, W / 2, 186);
+
+  const squareSize = 48, gap = 10;
+  const totalW = tracker.length * squareSize + (tracker.length - 1) * gap;
+  let sx = (W - totalW) / 2;
+  const sy = 212;
+  tracker.forEach(s => {
+    ctx.fillStyle = s === "win" ? "#22c55e" : s === "loss" ? "#ef4444" : "rgba(255,255,255,0.12)";
+    ctx.beginPath();
+    ctx.roundRect(sx, sy, squareSize, squareSize, 8);
+    ctx.fill();
+    sx += squareSize + gap;
+  });
+
+  const scoreColor = mutualMiss ? "rgba(255,255,255,0.5)" : won ? "#22c55e" : "#ef4444";
+  ctx.fillStyle = scoreColor;
+  ctx.font = "900 52px -apple-system, sans-serif";
+  ctx.fillText(`${myWins} – ${theirWins}`, W / 2, 330);
+
+  ctx.fillStyle = "rgba(255,255,255,0.25)";
+  ctx.font = "600 18px -apple-system, sans-serif";
+  ctx.fillText("pigskin5.com", W / 2, 390);
+}
+
+window.onload = () => {
+  drawCard("c1", {
+    won: true, mutualMiss: false,
+    myName: "twillyallen", theirName: "pigskin5admin",
+    myWins: 4, theirWins: 2,
+    tracker: ["win","win","loss","win","loss","win","upcoming"]
+  });
+  drawCard("c2", {
+    won: false, mutualMiss: false,
+    myName: "twillyallen", theirName: "pigskin5admin",
+    myWins: 2, theirWins: 4,
+    tracker: ["loss","win","win","loss","loss","win","loss"]
+  });
+  drawCard("c3", {
+    won: false, mutualMiss: true,
+    myName: "twillyallen", theirName: "pigskin5admin",
+    myWins: 1, theirWins: 1,
+    tracker: ["win","loss","upcoming","upcoming","upcoming","upcoming","upcoming"]
+  });
+};
+</script>
+
+<div class="label">You Won</div>
+<canvas id="c1" width="800" height="420" style="max-width:100%;border-radius:16px;"></canvas>
+
+<div class="label">You Lost</div>
+<canvas id="c2" width="800" height="420" style="max-width:100%;border-radius:16px;"></canvas>
+
+<div class="label">Both Missed</div>
+<canvas id="c3" width="800" height="420" style="max-width:100%;border-radius:16px;"></canvas>
+
+</body>
+</html>

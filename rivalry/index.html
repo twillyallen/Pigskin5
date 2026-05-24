@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <title>Pigskin5 – Rivalry Challenge</title>
+  <meta name="description" content="You've been challenged to a Pigskin5 rivalry! Accept and compete in a Best of 7 NFL trivia series.">
+  <link rel="icon" type="image/png" href="../favicon.png" />
+  <link rel="canonical" href="https://pigskin5.com/rivalry/" />
+
+  <meta property="og:title" content="Pigskin5 – Rivalry Challenge">
+  <meta property="og:description" content="You've been challenged! Accept and compete in a Best of 7 NFL trivia series.">
+  <meta property="og:image" content="https://pigskin5.com/logos/pigskin5-rivalry-share.png">
+  <meta property="og:url" content="https://pigskin5.com/rivalry/">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://pigskin5.com/logos/pigskin5-rivalry-share.png">
+
+  <link rel="stylesheet" href="../style.css" />
+  <script type="module" src="../modules/auth-ui.js"></script>
+
+  <style>
+    /* ── Nav bar (mirrors main index.html inline styles) ── */
+    .site-nav {
+      display: flex;
+      justify-content: center;
+      gap: 6px;
+      flex-wrap: wrap;
+      padding: 8px 16px;
+      background: rgba(0,0,0,0.25);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .site-nav a {
+      color: rgba(255,255,255,0.75);
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-decoration: none;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: 6px;
+      transition: color 0.15s, background 0.15s;
+    }
+    .site-nav a:hover {
+      color: #fff;
+      background: rgba(255,255,255,0.1);
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    #acceptRoot {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 40px 16px 60px;
+    }
+  </style>
+</head>
+<body>
+
+  <aside id="howTo" class="howto" hidden>
+    <h3>How to Play</h3>
+    <ol>
+      <li>Tap "Start" to begin today's quiz.</li>
+      <li>Pick one of the choices before the timer runs out. (15 seconds)</li>
+      <li>See your score and review answers at the end.</li>
+    </ol>
+  </aside>
+
+  <!-- Top nav mirrors main site -->
+  <nav class="site-nav" aria-label="Site navigation">
+    <a href="../index.html">Home</a>
+    <a href="../question-archive.html">Archive</a>
+    <a href="../about.html">About</a>
+    <a href="../contact.html">Contact</a>
+    <button id="helpBtn" class="icon-btn site-nav-help" aria-expanded="false" aria-controls="howTo" title="How to play" style="background:none;border:none;color:rgba(255,255,255,0.75);font-size:0.78rem;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;cursor:pointer;padding:4px 10px;border-radius:6px;transition:color 0.15s,background 0.15s;">How to Play</button>
+    <button id="signInBtn" class="sign-in-btn">Sign in</button>
+  </nav>
+
+  <script>
+    (function () {
+      const helpBtn = document.getElementById("helpBtn");
+      const howTo   = document.getElementById("howTo");
+      helpBtn.addEventListener("click", () => {
+        const hidden = howTo.hidden;
+        howTo.hidden = !hidden;
+        helpBtn.setAttribute("aria-expanded", String(hidden));
+      });
+      document.addEventListener("click", (e) => {
+        if (!helpBtn.contains(e.target) && !howTo.contains(e.target)) {
+          howTo.hidden = true;
+          helpBtn.setAttribute("aria-expanded", "false");
+        }
+      });
+    })();
+  </script>
+
+  <!-- Logo strip -->
+  <div style="text-align:center;padding:24px 0 0;">
+    <a href="../index.html" style="text-decoration:none;">
+      <img src="../logos/pigskin5logo.png" alt="Pigskin5" style="height:180px;object-fit:contain;">
+    </a>
+  </div>
+
+  <!-- Accept / deny UI injected here -->
+  <div id="acceptRoot">
+    <div style="text-align:center;color:rgba(255,255,255,0.45);padding:60px 20px;">
+      Loading challenge…
+    </div>
+  </div>
+
+  <footer class="site-footer" style="margin-top:auto;">
+    <nav class="footer-links-grid" aria-label="Footer navigation">
+      <a href="/">Home</a>
+      <a href="/about.html">About</a>
+      <a href="/privacy.html">Privacy Policy</a>
+      <a href="/terms.html">Terms of Service</a>
+    </nav>
+    <small>&copy; 2026 Pigskin5 – Not affiliated with the NFL</small>
+  </footer>
+
+  <script type="module">
+    import { renderAcceptPage } from "../modules/rivalry-ui.js";
+    import { onAuthChange } from "../modules/supabase-client.js";
+
+    function getChallengeId() {
+      return new URLSearchParams(window.location.search).get("id");
+    }
+
+    const challengeId = getChallengeId();
+
+    if (!challengeId) {
+      document.getElementById("acceptRoot").innerHTML = `
+        <div style="text-align:center;padding:60px 20px;color:rgba(255,255,255,0.5);">
+          <p>No rivalry challenge found.</p>
+          <a href="/" style="color:#60a5fa;font-weight:700;">Go to Pigskin5 →</a>
+        </div>`;
+    } else {
+      // Render immediately; re-render after auth state settles (handles magic-link redirect)
+      renderAcceptPage(challengeId);
+      onAuthChange(() => renderAcceptPage(challengeId));
+    }
+  </script>
+
+</body>
+</html>

@@ -6,7 +6,7 @@ const X_SVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill=
 const TWITTER_HANDLE_RE = /^[A-Za-z0-9_]{1,15}$/;
 import { refreshStreakCache, checkAchievementsNow, getCachedDailyStreak, getCachedFavoriteTeam, fetchPlayerStats } from "./leaderboard.js";
 import { NFL_TEAMS_SORTED, NFL_TEAMS } from "./nfl-teams.js";
-import { ACHIEVEMENTS } from "./achievements.js";
+import { ACHIEVEMENTS, ACHIEVEMENT_CATEGORIES } from "./achievements.js";
 import { showToast } from "./ui-helpers.js";
 import { STREAK_TIERS } from "./config.js";
 
@@ -20,14 +20,17 @@ const emailOptInSection = document.getElementById("emailOptInSection");
 const emailOptInToggle = document.getElementById("emailOptInToggle");
 
 function openModal() {
+  if (!modal) return;
   modal.hidden = false;
-  emailInput.focus();
+  emailInput?.focus();
 }
 function closeModal() {
+  if (!modal) return;
   modal.hidden = true;
-  messageEl.hidden = true;
+  if (messageEl) messageEl.hidden = true;
 }
 function showMessage(text, isError = false) {
+  if (!messageEl) return;
   messageEl.textContent = text;
   messageEl.style.color = isError ? "#e74c3c" : "#2ecc71";
   messageEl.hidden = false;
@@ -222,21 +225,27 @@ function showProfileModal(username) {
   });
   body.appendChild(statsEl);
 
-  // Achievements (locked skeleton), split 10 top / 9 bottom
+  // Achievements (locked skeleton) grouped by category
   const achievementsEl = document.createElement("div");
   achievementsEl.className = "player-card__achievements";
-  const achRow1 = document.createElement("div");
-  achRow1.className = "player-card__achievements-row";
-  const achRow2 = document.createElement("div");
-  achRow2.className = "player-card__achievements-row";
-  ACHIEVEMENTS.forEach((_, i) => {
-    const b = document.createElement("span");
-    b.className = "player-card__badge player-card__badge--locked";
-    b.textContent = "🔒";
-    (i < 10 ? achRow1 : achRow2).appendChild(b);
+  ACHIEVEMENT_CATEGORIES.forEach(cat => {
+    const catEl = document.createElement("div");
+    catEl.className = "player-card__achievement-category";
+    const labelEl = document.createElement("div");
+    labelEl.className = "player-card__achievement-category-label";
+    labelEl.textContent = cat.label;
+    catEl.appendChild(labelEl);
+    const rowEl = document.createElement("div");
+    rowEl.className = "player-card__achievements-row";
+    ACHIEVEMENTS.filter(a => a.category === cat.id).forEach(() => {
+      const b = document.createElement("span");
+      b.className = "player-card__badge player-card__badge--locked";
+      b.textContent = "🔒";
+      rowEl.appendChild(b);
+    });
+    catEl.appendChild(rowEl);
+    achievementsEl.appendChild(catEl);
   });
-  achievementsEl.appendChild(achRow1);
-  achievementsEl.appendChild(achRow2);
   body.appendChild(achievementsEl);
 
   const badgeDescEl = document.createElement("div");

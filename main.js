@@ -7,8 +7,9 @@ import { submitEntry, fetchLeaderboard, fetchWeeklyLeaderboard, fetchLastWeekWin
 import { getCurrentUser, supabase } from "./modules/supabase-client.js";
 import { NFL_TEAMS } from "./modules/nfl-teams.js";
 import { showTierTooltip } from "./modules/ui-helpers.js";
-import { ACHIEVEMENTS } from "./modules/achievements.js";
+import { ACHIEVEMENTS, ACHIEVEMENT_CATEGORIES } from "./modules/achievements.js";
 import { STREAK_TIERS } from "./modules/config.js";
+import { renderRivalryCard, injectStartRivalryButton } from "./modules/rivalry-ui.js?v=20260524";
 
 
 
@@ -1000,11 +1001,14 @@ async function renderPersistedResult(dateStr, persisted) {
       if (btn) { btn.disabled = true; btn.textContent = "Score Submitted"; }
     }
   } else if (user) {
+    const _lbBtn2 = leaderboardForm?.querySelector('button[type="submit"]');
+    if (_lbBtn2) { _lbBtn2.disabled = true; _lbBtn2.textContent = "Loading..."; }
     supabase.from("profiles").select("username").eq("id", user.id).maybeSingle()
       .then(({ data: profile }) => {
         if (playerNameInput && profile?.username && !playerNameInput.value) {
           playerNameInput.value = profile.username;
         }
+        if (_lbBtn2) { _lbBtn2.disabled = false; _lbBtn2.textContent = "Submit Score"; }
       });
   }
 
@@ -1386,9 +1390,10 @@ async function showStartScreen() {
 
   // Anonymous users or first-time-today-on-this-device
   if (hasAttempt(runDate)) {
-    // User may have played as a guest before signing in — submit their result now
     const localResult = loadResult(runDate);
-    if (user && localResult?.picks?.length > 0) {
+    // Only auto-submit if they actually played as a guest (not signed in at play time).
+    // Signed-in users must manually click "Submit Score" to post to the leaderboard.
+    if (user && localResult?.picks?.length > 0 && localResult?.playedAsGuest === true) {
       upsertGuestResult(runDate, localResult).catch(() => {});
     }
     showLockedGate(runDate);
@@ -1447,6 +1452,9 @@ async function showStartScreen() {
   else if (eventName === "ValentinesDay") {
     startHearts();
   }
+
+  // Render rivalry card below the play button (non-blocking)
+  renderRivalryCard(startScreen).catch(() => {});
 
   showSundayWinnerCard();
 }
@@ -1704,37 +1712,42 @@ function showGuestPlayerCard(score, avgTime) {
   // Achievements — First Down unlocked, rest locked
   const achievementsEl = document.createElement("div");
   achievementsEl.className = "player-card__achievements";
-  const achRow1 = document.createElement("div");
-  achRow1.className = "player-card__achievements-row";
-  const achRow2 = document.createElement("div");
-  achRow2.className = "player-card__achievements-row";
   const badgeDescEl = document.createElement("div");
   badgeDescEl.className = "player-card__badge-desc";
 
   let activeBadge = null;
-  ACHIEVEMENTS.forEach((achievement, i) => {
-    const b = document.createElement("span");
-    const unlocked = i === 0;
-    b.className = unlocked
-      ? "player-card__badge"
-      : "player-card__badge player-card__badge--locked";
-    b.textContent = unlocked ? achievement.emoji : "🔒";
-
-    b.addEventListener("click", (e) => {
-      e.stopPropagation();
-      if (activeBadge === b && badgeDescEl.textContent) {
-        badgeDescEl.textContent = "";
-        activeBadge = null;
-        return;
-      }
-      activeBadge = b;
-      const prefix = unlocked ? achievement.emoji : "🔒";
-      badgeDescEl.textContent = `${prefix} ${achievement.name}: ${achievement.desc}`;
+  ACHIEVEMENT_CATEGORIES.forEach(cat => {
+    const catEl = document.createElement("div");
+    catEl.className = "player-card__achievement-category";
+    const labelEl = document.createElement("div");
+    labelEl.className = "player-card__achievement-category-label";
+    labelEl.textContent = cat.label;
+    catEl.appendChild(labelEl);
+    const rowEl = document.createElement("div");
+    rowEl.className = "player-card__achievements-row";
+    ACHIEVEMENTS.filter(a => a.category === cat.id).forEach(achievement => {
+      const unlocked = achievement.id === "first_blood";
+      const b = document.createElement("span");
+      b.className = unlocked
+        ? "player-card__badge"
+        : "player-card__badge player-card__badge--locked";
+      b.textContent = unlocked ? achievement.emoji : "🔒";
+      b.addEventListener("click", (e) => {
+        e.stopPropagation();
+        if (activeBadge === b && badgeDescEl.textContent) {
+          badgeDescEl.textContent = "";
+          activeBadge = null;
+          return;
+        }
+        activeBadge = b;
+        const prefix = unlocked ? achievement.emoji : "🔒";
+        badgeDescEl.textContent = `${prefix} ${achievement.name}: ${achievement.desc}`;
+      });
+      rowEl.appendChild(b);
     });
-    (i < 10 ? achRow1 : achRow2).appendChild(b);
+    catEl.appendChild(rowEl);
+    achievementsEl.appendChild(catEl);
   });
-  achievementsEl.appendChild(achRow1);
-  achievementsEl.appendChild(achRow2);
   body.appendChild(achievementsEl);
   badgeDescEl.textContent = `${ACHIEVEMENTS[0].emoji} ${ACHIEVEMENTS[0].name}: ${ACHIEVEMENTS[0].desc}`;
   body.appendChild(badgeDescEl);
@@ -1871,9 +1884,11 @@ async function showResult() {
   Total points: ${totalPoints.toLocaleString()}
   `;
 
-  saveResult(RUN_DATE, { score, picks, totalTime, avgTime, totalPoints });
-
   const user = await getCurrentUser();
+
+  // Record whether the user was signed in at play time so showStartScreen
+  // knows not to auto-submit scores for accounts that were already logged in.
+  saveResult(RUN_DATE, { score, picks, totalTime, avgTime, totalPoints, playedAsGuest: !user });
 
   // Check achievements immediately on quiz finish so Gunslinger (and others)
   // are awarded even if the user never submits to the leaderboard.
@@ -1931,6 +1946,8 @@ async function showResult() {
         if (btn) { btn.disabled = true; btn.textContent = "Score Submitted"; }
       }
     } else {
+      const _lbBtn = leaderboardForm?.querySelector('button[type="submit"]');
+      if (_lbBtn) { _lbBtn.disabled = true; _lbBtn.textContent = "Loading..."; }
       (async () => {
         const user = await getCurrentUser();
         if (!user) return;
@@ -1942,6 +1959,7 @@ async function showResult() {
         if (playerNameInput && profile?.username) {
           playerNameInput.value = profile.username;
         }
+        if (_lbBtn) { _lbBtn.disabled = false; _lbBtn.textContent = "Submit Score"; }
       })();
     }
   }
@@ -2163,6 +2181,13 @@ if (picks && picks.length > 0) {
     } else {
       resultTop.appendChild(headerWrap);
     }
+  }
+
+  // Inject rivalry card below the leaderboard — runs here so it works for both
+  // fresh plays (showResult) and returning plays (renderPersistedResult).
+  const lbSection = document.getElementById("leaderboard");
+  if (lbSection && !document.getElementById("resultRivalryCard")) {
+    injectStartRivalryButton(lbSection).catch(() => {});
   }
 }
 

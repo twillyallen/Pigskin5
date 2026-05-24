@@ -13,23 +13,30 @@ export async function submitEntry(dateStr, entry) {
   // Score = number of green squares in emojiScore (correct answers, 0-5)
   const score = (entry.emojiScore?.match(/🟩/g) || []).length;
 
-  const { error } = await supabase
-    .from("quiz_attempts")
-    .insert({
-      user_id: user.id,
-      quiz_date: dateStr,
-      score: score,
-      points: entry.points || 0,
-      display_name_used: entry.name,
-      time_taken_seconds: Math.round(entry.avgTime || 0),
-      answer_data: {
-        points: entry.points,
-        emojiScore: entry.emojiScore,
-        dailyStreak: entry.dailyStreak,
-        avgTime: entry.avgTime,
-        picks: entry.picks,
-      },
-    });
+  const payload = {
+    user_id: user.id,
+    quiz_date: dateStr,
+    score: score,
+    points: entry.points || 0,
+    display_name_used: entry.name,
+    time_taken_seconds: Math.round(entry.avgTime || 0),
+    answer_data: {
+      points: entry.points,
+      emojiScore: entry.emojiScore,
+      dailyStreak: entry.dailyStreak,
+      avgTime: entry.avgTime,
+      picks: entry.picks,
+    },
+  };
+
+  let { error } = await supabase.from("quiz_attempts").insert(payload);
+
+  // On transient failure (connection contention from concurrent result-screen requests),
+  // wait for competing requests to clear then retry once before surfacing an error.
+  if (error && error.code !== "23505") {
+    await new Promise(r => setTimeout(r, 1000));
+    ({ error } = await supabase.from("quiz_attempts").insert(payload));
+  }
 
   if (error) {
     if (error.code === "23505") {
@@ -78,20 +85,26 @@ export async function checkAchievementsForScore(score, picks) {
 }
 
 async function checkAndAwardAchievements(userId, score, picks, attemptAlreadyInDb = true, dateStr = null) {
-  const [profileRes, attemptsRes] = await Promise.all([
+  const [profileRes, attemptsRes, rivalriesRes] = await Promise.all([
     supabase
       .from("profiles")
-      .select("current_streak, current_td_streak, total_touchdowns, achievements")
+      .select("current_streak, current_td_streak, total_touchdowns, achievements, rivalries_won, rivalries_challenged")
       .eq("id", userId)
       .maybeSingle(),
     supabase
       .from("quiz_attempts")
       .select("score, quiz_date, points, submitted_at")
       .eq("user_id", userId),
+    supabase
+      .from("rivalries")
+      .select("id, player1_id, player2_id, player1_wins, player2_wins, winner_id, status, rivalry_games(game_date, day_winner)")
+      .or(`player1_id.eq.${userId},player2_id.eq.${userId}`)
+      .in("status", ["complete", "forfeit"]),
   ]);
 
   const { data: profile } = profileRes;
   const { data: attempts } = attemptsRes;
+  const { data: completedRivalries } = rivalriesRes;
   if (!profile || !attempts) return;
 
   const currentStreak = profile.current_streak ?? 0;
@@ -235,6 +248,33 @@ async function checkAndAwardAchievements(userId, score, picks, attemptAlreadyInD
     }
   }
 
+  const rivalriesWon        = profile.rivalries_won ?? 0;
+  const rivalriesChallenged = profile.rivalries_challenged ?? 0;
+  let hasGame7Win = false, hasLeBroning = false, hasSweep = false;
+
+  for (const r of (completedRivalries || [])) {
+    if (r.winner_id !== userId) continue;
+    const iAm1 = r.player1_id === userId;
+    const myW    = iAm1 ? r.player1_wins : r.player2_wins;
+    const theirW = iAm1 ? r.player2_wins : r.player1_wins;
+
+    if (r.status === "complete") {
+      if (myW === 4 && theirW === 3) hasGame7Win = true;
+      if (myW === 4 && theirW === 0) hasSweep = true;
+    }
+
+    if (r.status === "complete" && !hasLeBroning) {
+      const games = (r.rivalry_games || []).sort((a, b) => a.game_date.localeCompare(b.game_date));
+      let mySeries = 0, theirSeries = 0;
+      for (const g of games) {
+        if (g.day_winner === null) continue;
+        if ((iAm1 && g.day_winner === 1) || (!iAm1 && g.day_winner === 2)) mySeries++;
+        else theirSeries++;
+        if (mySeries === 1 && theirSeries === 3) { hasLeBroning = true; break; }
+      }
+    }
+  }
+
   const profileUpdates = { achievements: null };
   if (newTDCount !== storedTDs) profileUpdates.total_touchdowns = newTDCount;
 
@@ -251,6 +291,11 @@ async function checkAndAwardAchievements(userId, score, picks, attemptAlreadyInD
     dailyWins,
     dailyTop3NotFirst,
     weeklyWins,
+    rivalriesWon,
+    rivalriesChallenged,
+    hasGame7Win,
+    hasLeBroning,
+    hasSweep,
   };
 
   const existing = profile.achievements || [];

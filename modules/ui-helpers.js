@@ -1,6 +1,6 @@
 import { fetchPlayerStats } from "./leaderboard.js";
 import { NFL_TEAMS } from "./nfl-teams.js";
-import { ACHIEVEMENTS } from "./achievements.js";
+import { ACHIEVEMENTS, ACHIEVEMENT_CATEGORIES } from "./achievements.js";
 import { STREAK_TIERS } from "./config.js";
 
 const X_SVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="15" height="15" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.748l7.73-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>`;
@@ -146,21 +146,27 @@ export async function showTierTooltip(emoji, tierName, streak, playerName, emoji
     });
     body.appendChild(statsEl);
 
-    // Achievements grid (skeleton — all locked), split 10 top / 9 bottom
+    // Achievements (locked skeleton) grouped by category
     achievementsEl = document.createElement("div");
     achievementsEl.className = "player-card__achievements";
-    const row1 = document.createElement("div");
-    row1.className = "player-card__achievements-row";
-    const row2 = document.createElement("div");
-    row2.className = "player-card__achievements-row";
-    ACHIEVEMENTS.forEach((_, i) => {
-      const b = document.createElement("span");
-      b.className = "player-card__badge player-card__badge--locked";
-      b.textContent = "🔒";
-      (i < 10 ? row1 : row2).appendChild(b);
+    ACHIEVEMENT_CATEGORIES.forEach(cat => {
+      const catEl = document.createElement("div");
+      catEl.className = "player-card__achievement-category";
+      const labelEl = document.createElement("div");
+      labelEl.className = "player-card__achievement-category-label";
+      labelEl.textContent = cat.label;
+      catEl.appendChild(labelEl);
+      const rowEl = document.createElement("div");
+      rowEl.className = "player-card__achievements-row";
+      ACHIEVEMENTS.filter(a => a.category === cat.id).forEach(() => {
+        const b = document.createElement("span");
+        b.className = "player-card__badge player-card__badge--locked";
+        b.textContent = "🔒";
+        rowEl.appendChild(b);
+      });
+      catEl.appendChild(rowEl);
+      achievementsEl.appendChild(catEl);
     });
-    achievementsEl.appendChild(row1);
-    achievementsEl.appendChild(row2);
     body.appendChild(achievementsEl);
 
     // Badge description area (hidden until a badge is tapped)

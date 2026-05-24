@@ -4,7 +4,7 @@ import { supabase } from "./supabase-client.js";
 export async function sendMagicLink(email) {
   const { error } = await supabase.auth.signInWithOtp({
     email,
-    options: { emailRedirectTo: window.location.origin },
+    options: { emailRedirectTo: window.location.origin + window.location.pathname },
   });
   if (error) return { error: error.message };
   return { success: true, message: "Check your email for the link!" };

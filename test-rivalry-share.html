@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rivalry Complete — Preview</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: url('field.jpg') center center / cover no-repeat fixed;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      display: flex; align-items: center; justify-content: center;
+      min-height: 100vh; padding: 20px;
+    }
+
+    /* Darkens the field without touching confetti */
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.52);
+      z-index: 0;
+    }
+
+    #confetti-canvas {
+      position: fixed; inset: 0;
+      pointer-events: none; z-index: 1;
+    }
+
+    .overlay {
+      position: fixed; inset: 0;
+      background: transparent;
+      display: flex; align-items: center; justify-content: center;
+      z-index: 2; padding: 20px;
+    }
+
+    .modal {
+      position: relative; z-index: 3;
+      background: rgba(30,30,30,0.28);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 24px;
+      padding: 40px 28px 32px;
+      text-align: center;
+      width: min(460px, 100%);
+      box-shadow: 0 32px 80px rgba(0,0,0,0.3);
+    }
+
+    .trophy {
+      font-size: 64px;
+      line-height: 1;
+      margin-bottom: 18px;
+      filter: drop-shadow(0 0 20px rgba(250,204,21,0.5));
+      animation: trophy-pop 0.5s cubic-bezier(0.175,0.885,0.32,1.275) both;
+    }
+
+    @keyframes trophy-pop {
+      from { transform: scale(0.3); opacity: 0; }
+      to   { transform: scale(1);   opacity: 1; }
+    }
+
+    .defeats-line {
+      font-size: 22px;
+      font-weight: 900;
+      color: #fff;
+      line-height: 1.35;
+      margin-bottom: 6px;
+      word-break: break-word;
+      animation: fade-up 0.4s 0.15s ease both;
+    }
+
+    .winner-name { color: #22c55e; }
+    .loser-name  { color: #f87171; }
+
+    .score {
+      font-size: 52px;
+      font-weight: 900;
+      color: #22c55e;
+      letter-spacing: 4px;
+      margin: 14px 0;
+      text-shadow: 0 0 30px rgba(34,197,94,0.4);
+      animation: fade-up 0.4s 0.25s ease both;
+    }
+
+    .tracker {
+      font-size: 26px;
+      letter-spacing: 3px;
+      margin-bottom: 32px;
+      animation: fade-up 0.4s 0.35s ease both;
+    }
+
+    @keyframes fade-up {
+      from { opacity: 0; transform: translateY(12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .btn-row {
+      display: flex; gap: 10px; margin-bottom: 10px;
+      animation: fade-up 0.4s 0.45s ease both;
+    }
+
+    .btn {
+      flex: 1; padding: 14px 10px;
+      border-radius: 14px; border: none;
+      font-size: 14px; font-weight: 800;
+      cursor: pointer; transition: opacity 0.15s;
+    }
+    .btn:hover { opacity: 0.85; }
+
+    .btn-share {
+      background: rgba(255,255,255,0.09);
+      border: 1px solid rgba(255,255,255,0.2);
+      color: #fff;
+    }
+
+    .btn-rematch {
+      background: rgba(96,165,250,0.15);
+      border: 1px solid rgba(96,165,250,0.4);
+      color: #60a5fa;
+    }
+
+    .btn-play {
+      display: block; width: 100%;
+      padding: 16px;
+      background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+      color: #fff; font-size: 16px; font-weight: 900;
+      border-radius: 14px; border: none; cursor: pointer;
+      margin-bottom: 12px;
+      animation: fade-up 0.4s 0.5s ease both;
+    }
+
+    .btn-close {
+      background: none; border: none;
+      color: rgba(255,255,255,0.3);
+      font-size: 13px; cursor: pointer;
+      animation: fade-up 0.4s 0.55s ease both;
+    }
+
+    /* Preview toggle */
+    .toggle-bar {
+      position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+      display: flex; gap: 8px; z-index: 10;
+    }
+    .toggle-bar button {
+      padding: 8px 16px; border-radius: 99px;
+      border: 1px solid rgba(255,255,255,0.2);
+      background: rgba(255,255,255,0.08);
+      color: #fff; font-size: 12px; font-weight: 700; cursor: pointer;
+    }
+    .toggle-bar button.active {
+      background: rgba(96,165,250,0.3); border-color: #60a5fa; color: #60a5fa;
+    }
+  </style>
+</head>
+<body>
+
+<canvas id="confetti-canvas"></canvas>
+
+<div class="overlay">
+  <div class="modal" id="modal">
+    <!-- populated by JS -->
+  </div>
+</div>
+
+<div class="toggle-bar">
+  <button onclick="show('win')"  id="t-win"  class="active">I Won</button>
+  <button onclick="show('loss')" id="t-loss">I Lost</button>
+  <button onclick="show('long')" id="t-long">Long Names</button>
+</div>
+
+<script>
+// ── Confetti ──────────────────────────────────────────────
+const confettiCanvas = document.getElementById("confetti-canvas");
+const cx = confettiCanvas.getContext("2d");
+const COLORS = ["#22c55e","#facc15","#3b82f6","#f97316","#fff","#a78bfa"];
+let particles = [];
+
+function resize() {
+  confettiCanvas.width  = window.innerWidth;
+  confettiCanvas.height = window.innerHeight;
+}
+resize();
+window.addEventListener("resize", resize);
+
+function spawnParticle() {
+  return {
+    x:    Math.random() * confettiCanvas.width,
+    y:    -10,
+    w:    6 + Math.random() * 8,
+    h:    10 + Math.random() * 6,
+    color: COLORS[Math.floor(Math.random() * COLORS.length)],
+    speedY: 2 + Math.random() * 3,
+    speedX: (Math.random() - 0.5) * 2,
+    angle: Math.random() * Math.PI * 2,
+    spin:  (Math.random() - 0.5) * 0.15,
+    opacity: 0.8 + Math.random() * 0.2,
+  };
+}
+
+// Start with a burst then trickle
+for (let i = 0; i < 120; i++) {
+  const p = spawnParticle();
+  p.y = Math.random() * confettiCanvas.height * 0.6;  // scattered on load
+  particles.push(p);
+}
+
+function tickConfetti() {
+  cx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
+
+  // Trickle in new particles
+  if (particles.length < 160 && Math.random() < 0.4) particles.push(spawnParticle());
+
+  particles = particles.filter(p => p.y < confettiCanvas.height + 20);
+
+  for (const p of particles) {
+    p.y += p.speedY;
+    p.x += p.speedX;
+    p.angle += p.spin;
+
+    cx.save();
+    cx.translate(p.x, p.y);
+    cx.rotate(p.angle);
+    cx.globalAlpha = p.opacity;
+    cx.fillStyle = p.color;
+    cx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+    cx.restore();
+  }
+
+  requestAnimationFrame(tickConfetti);
+}
+tickConfetti();
+
+// ── Modal Content ────────────────────────────────────────
+const SCENARIOS = {
+  win:  { winner: "TwillDog", loser: "RivalGuy",  wW: 4, lW: 2, tracker: ["win","loss","win","win","win","loss","upcoming"] },
+  loss: { winner: "RivalGuy", loser: "TwillDog",  wW: 4, lW: 2, tracker: ["loss","win","loss","loss","loss","upcoming","upcoming"] },
+  long: { winner: "TouchdownKing99", loser: "NFLTriviaMaster", wW: 4, lW: 3, tracker: ["win","loss","win","loss","win","loss","win"] },
+};
+
+function trackerEmoji(tracker, winnerPov) {
+  // tracker is always stored from player1's pov in the vm; here it's already winner-pov
+  return tracker.map(s => s === "win" ? "🟩" : s === "loss" ? "🟥" : "⬜").join("");
+}
+
+function show(scenario) {
+  document.querySelectorAll(".toggle-bar button").forEach(b => b.classList.remove("active"));
+  document.getElementById(`t-${scenario === "long" ? "long" : scenario}`).classList.add("active");
+
+  const { winner, loser, wW, lW, tracker } = SCENARIOS[scenario];
+
+  document.getElementById("modal").innerHTML = `
+    <div class="trophy">🏆</div>
+    <div class="defeats-line">
+      <span class="winner-name">${winner}</span> defeats <span class="loser-name">${loser}</span>
+    </div>
+    <div class="score">${wW} – ${lW}</div>
+    <div class="tracker">${trackerEmoji(tracker)}</div>
+    <button class="btn-close">Close</button>
+  `;
+}
+
+show("win");
+</script>
+</body>
+</html>

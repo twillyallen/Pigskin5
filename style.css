@@ -1183,8 +1183,22 @@ footer a:visited {
 .player-card__achievements {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 10px;
   margin-bottom: 16px;
+}
+
+.player-card__achievement-category {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.player-card__achievement-category-label {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.3);
 }
 
 .player-card__achievements-row {
