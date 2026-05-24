@@ -29,14 +29,24 @@ export async function createRivalryChallenge() {
   const user = await getCurrentUser();
   if (!user) return { error: "sign_in_required" };
 
-  // Check slot count
-  const { count } = await supabase
-    .from("rivalries")
-    .select("*", { count: "exact", head: true })
-    .eq("status", "active")
-    .or(`player1_id.eq.${user.id},player2_id.eq.${user.id}`);
+  // Count active rivalries + pending outgoing invites together so a user
+  // can't bypass the cap by creating many links before anyone accepts.
+  const now = new Date().toISOString();
+  const [{ count: activeCount }, { count: pendingCount }] = await Promise.all([
+    supabase
+      .from("rivalries")
+      .select("*", { count: "exact", head: true })
+      .eq("status", "active")
+      .or(`player1_id.eq.${user.id},player2_id.eq.${user.id}`),
+    supabase
+      .from("rivalry_challenges")
+      .select("*", { count: "exact", head: true })
+      .eq("challenger_id", user.id)
+      .eq("status", "pending")
+      .gt("expires_at", now),
+  ]);
 
-  if (count >= MAX_ACTIVE_RIVALRIES) return { error: "slots_full" };
+  if ((activeCount + pendingCount) >= MAX_ACTIVE_RIVALRIES) return { error: "slots_full" };
 
   const { data, error } = await supabase
     .from("rivalry_challenges")
