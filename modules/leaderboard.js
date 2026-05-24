@@ -520,7 +520,7 @@ export async function fetchPlayerStats(username) {
 
   const { data: attempts, error: attemptsErr } = await supabase
     .from("quiz_attempts")
-    .select("score")
+    .select("score, quiz_date, points, submitted_at")
     .eq("user_id", profile.id);
 
   if (attemptsErr) return null;
@@ -535,11 +535,36 @@ export async function fetchPlayerStats(username) {
     ? Math.round((totalCorrect / totalPossible) * 100)
     : 0;
 
+  // Compute daily leaderboard wins
+  let dailyLeaderboardWins = 0;
+  const userDates = [...new Set(attempts.map(a => a.quiz_date))];
+  if (userDates.length > 0) {
+    const { data: lbData } = await supabase
+      .from("quiz_attempts")
+      .select("quiz_date, user_id, points, submitted_at")
+      .in("quiz_date", userDates)
+      .limit(5000);
+    if (lbData) {
+      const byDate = {};
+      for (const a of lbData) {
+        if (!byDate[a.quiz_date]) byDate[a.quiz_date] = [];
+        byDate[a.quiz_date].push(a);
+      }
+      for (const date of userDates) {
+        const entries = (byDate[date] || []).sort((a, b) =>
+          b.points !== a.points ? b.points - a.points : new Date(a.submitted_at) - new Date(b.submitted_at)
+        );
+        if (entries.length > 0 && entries[0].user_id === profile.id) dailyLeaderboardWins++;
+      }
+    }
+  }
+
   return {
     totalQuizzes,
     accuracyPct,
     totalPerfect,
     currentStreak,
+    dailyLeaderboardWins,
     memberSince: profile.created_at,
     favoriteTeam: profile.favorite_team || null,
     achievements: profile.achievements || [],

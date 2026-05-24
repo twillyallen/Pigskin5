@@ -131,7 +131,7 @@ export async function showTierTooltip(emoji, tierName, streak, playerName, emoji
     // Stats panel (skeleton)
     statsEl = document.createElement("div");
     statsEl.className = "player-card__stats";
-    [["—", "Quizzes"], ["—", "Accuracy"], ["—", "Touchdown"]].forEach(([val, label]) => {
+    [["—", "Quizzes"], ["—", "Accuracy"], ["—", "Touchdowns"], ["—", "Daily Wins"]].forEach(([val, label]) => {
       const cell = document.createElement("div");
       cell.className = "player-card__stat";
       const v = document.createElement("div");
@@ -190,12 +190,6 @@ export async function showTierTooltip(emoji, tierName, streak, playerName, emoji
     body.appendChild(ptsEl);
   }
 
-  // --- Close hint ---
-  const hintEl = document.createElement("div");
-  hintEl.className = "player-card__close-hint";
-  hintEl.textContent = "Tap outside to close";
-  body.appendChild(hintEl);
-
   card.appendChild(body);
   container.appendChild(card);
   document.body.appendChild(container);
@@ -210,6 +204,14 @@ export async function showTierTooltip(emoji, tierName, streak, playerName, emoji
   container.addEventListener("touchend", removePopup);
   card.addEventListener("click", e => e.stopPropagation());
   card.addEventListener("touchend", e => e.stopPropagation());
+
+  // --- Close button ---
+  const closeBtn = document.createElement("button");
+  closeBtn.className = "player-card__close-btn";
+  closeBtn.textContent = "Close";
+  closeBtn.addEventListener("click", (e) => { e.stopPropagation(); removePopup(); });
+  closeBtn.addEventListener("touchend", (e) => { e.preventDefault(); e.stopPropagation(); removePopup(); });
+  body.appendChild(closeBtn);
 
   // --- Async stats population ---
   if (username) {
@@ -272,11 +274,13 @@ export async function showTierTooltip(emoji, tierName, streak, playerName, emoji
           stats.totalQuizzes.toLocaleString(),
           `${stats.accuracyPct}%`,
           stats.totalPerfect.toLocaleString(),
+          (stats.dailyLeaderboardWins ?? 0).toLocaleString(),
         ];
         const labels = [
           "Quizzes",
           "Accuracy",
           stats.totalPerfect === 1 ? "Touchdown" : "Touchdowns",
+          "Daily Wins",
         ];
         cells.forEach((cell, i) => {
           const v = cell.querySelector(".player-card__stat-value");

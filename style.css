@@ -1143,9 +1143,11 @@ footer a:visited {
 
 .player-card__stats {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 8px;
   margin-bottom: 16px;
+  margin-left: -16px;
+  margin-right: -16px;
 }
 
 .player-card__stat {
@@ -1265,6 +1267,26 @@ footer a:visited {
   font-size: 11px;
   color: rgba(255, 255, 255, 0.35);
   font-style: italic;
+}
+
+.player-card__close-btn {
+  display: block;
+  width: 100%;
+  margin-top: 12px;
+  padding: 10px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 8px;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  text-align: center;
+}
+.player-card__close-btn:hover {
+  background: rgba(255, 255, 255, 0.18);
+  color: white;
 }
 
 /* ---- Twitter / X linking ---- */
@@ -1537,6 +1559,10 @@ footer a:visited {
 @media (max-width: 400px) {
   .player-card__body {
     padding: 18px 16px 14px;
+  }
+  .player-card__stats {
+    margin-left: -12px;
+    margin-right: -12px;
   }
   .player-card__stat-value {
     font-size: 17px;
