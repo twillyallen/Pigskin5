@@ -115,6 +115,18 @@
     </div>
   </div>
 
+  <!-- Auth modal: hidden by default, shown via JS -->
+  <div id="authModal" class="auth-modal" hidden>
+    <div class="auth-modal-content">
+      <button class="auth-close" id="authClose" aria-label="Close">×</button>
+      <h2>Sign in to Pigskin5</h2>
+      <p class="auth-subtitle">Enter your email and we'll send you a sign-in link.<br>New here? Same form.</p>
+      <input type="email" id="authEmail" placeholder="your@email.com" autocomplete="email" />
+      <button id="authSubmit" class="auth-submit-btn">Continue with email</button>
+      <div id="authMessage" class="auth-message" hidden></div>
+    </div>
+  </div>
+
   <footer class="site-footer" style="margin-top:auto;">
     <nav class="footer-links-grid" aria-label="Footer navigation">
       <a href="/">Home</a>
