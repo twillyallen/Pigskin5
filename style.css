@@ -9,9 +9,15 @@
 *{ box-sizing: border-box; }
 [hidden]{ display:none !important; }
 
-html, body{
+html{
   margin:0;
   height:100%;
+  overflow-x: hidden;
+}
+
+body{
+  margin:0;
+  min-height:100%;
   font-family: Arial, Helvetica, sans-serif;
   color:#fff;
 }
@@ -21,7 +27,6 @@ body.no-scroll{ overflow:hidden; }
 /* ---------------- Background ---------------- */
 body{
   position:relative;
-  overflow-x: hidden;
 }
 
 /* Fixed background layer that works on mobile */
