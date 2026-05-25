@@ -79,9 +79,9 @@ export async function checkAchievementsNow() {
 // Gunslinger are checked even if the user never submits to the leaderboard.
 export async function checkAchievementsForScore(score, picks) {
   const user = await getCurrentUser();
-  if (!user) return;
+  if (!user) return [];
   // Pass false — the attempt isn't in quiz_attempts yet at quiz completion
-  checkAndAwardAchievements(user.id, score, picks, false, getRunDateISO()).catch(() => {});
+  return checkAndAwardAchievements(user.id, score, picks, false, getRunDateISO()).catch(() => []);
 }
 
 async function checkAndAwardAchievements(userId, score, picks, attemptAlreadyInDb = true, dateStr = null) {
@@ -308,6 +308,8 @@ async function checkAndAwardAchievements(userId, score, picks, attemptAlreadyInD
   if (Object.keys(update).length > 0) {
     await supabase.from("profiles").update(update).eq("id", userId);
   }
+
+  return newBadges;
 }
 
 // Automatically record a logged-in user's attempt the moment they finish,

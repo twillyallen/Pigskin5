@@ -13,6 +13,7 @@ export const ACHIEVEMENTS = [
     emoji: "🏈",
     name: "First Down",
     desc: "Complete your first quiz",
+    points: 10,
     check: ({ totalQuizzes }) => totalQuizzes >= 1,
   },
   {
@@ -21,6 +22,7 @@ export const ACHIEVEMENTS = [
     emoji: "🟩",
     name: "Touchdown",
     desc: "Score your first 5/5",
+    points: 50,
     check: ({ totalPerfect }) => totalPerfect >= 1,
   },
   {
@@ -29,6 +31,7 @@ export const ACHIEVEMENTS = [
     emoji: "📅",
     name: "Grinder",
     desc: "Play 30 quizzes",
+    points: 100,
     check: ({ totalQuizzes }) => totalQuizzes >= 30,
   },
   {
@@ -37,6 +40,7 @@ export const ACHIEVEMENTS = [
     emoji: "💯",
     name: "Century",
     desc: "Play 100 quizzes",
+    points: 250,
     check: ({ totalQuizzes }) => totalQuizzes >= 100,
   },
   {
@@ -45,6 +49,7 @@ export const ACHIEVEMENTS = [
     emoji: "🫡",
     name: "Field General",
     desc: "Score 5/5 ten times",
+    points: 150,
     check: ({ totalPerfect }) => totalPerfect >= 10,
   },
   {
@@ -53,6 +58,7 @@ export const ACHIEVEMENTS = [
     emoji: "🎖️",
     name: "Franchise QB",
     desc: "Score 5/5 twenty-five times",
+    points: 300,
     check: ({ totalPerfect }) => totalPerfect >= 25,
   },
   {
@@ -61,6 +67,7 @@ export const ACHIEVEMENTS = [
     emoji: "😬",
     name: "Pick Six",
     desc: "Score 0/5",
+    points: 10,
     check: ({ hasPickSix }) => !!hasPickSix,
   },
   {
@@ -69,6 +76,7 @@ export const ACHIEVEMENTS = [
     emoji: "🔫",
     name: "Gunslinger",
     desc: "Answer all 5 correctly in under 2 seconds each",
+    points: 200,
     check: ({ hasGunslinger }) => !!hasGunslinger,
   },
 
@@ -79,6 +87,7 @@ export const ACHIEVEMENTS = [
     emoji: "🔥",
     name: "On Fire",
     desc: "Reach a 7-day streak",
+    points: 75,
     check: ({ currentStreak }) => currentStreak >= 7,
   },
   {
@@ -87,6 +96,7 @@ export const ACHIEVEMENTS = [
     emoji: "👑",
     name: "Triple Crown",
     desc: "Score 5/5 three days in a row",
+    points: 100,
     check: ({ tdStreak }) => tdStreak >= 3,
   },
   {
@@ -95,6 +105,7 @@ export const ACHIEVEMENTS = [
     emoji: "🌟",
     name: "Perfect Season",
     desc: "Score 5/5 seven days in a row",
+    points: 250,
     check: ({ tdStreak }) => tdStreak >= 7,
   },
   {
@@ -103,6 +114,7 @@ export const ACHIEVEMENTS = [
     emoji: "🦾",
     name: "Iron Man",
     desc: "Reach a 30-day streak",
+    points: 500,
     check: ({ currentStreak }) => currentStreak >= 30,
   },
   {
@@ -111,6 +123,7 @@ export const ACHIEVEMENTS = [
     emoji: "📈",
     name: "Comeback Player of the Year",
     desc: "Score 5/5 the day after scoring 2 or less",
+    points: 100,
     check: ({ hasComeback }) => !!hasComeback,
   },
   {
@@ -119,6 +132,7 @@ export const ACHIEVEMENTS = [
     emoji: "💪",
     name: "Unbreakable",
     desc: "Rebuild a 3+ day streak after breaking one of 10+ days",
+    points: 150,
     check: ({ hasUnbreakable }) => !!hasUnbreakable,
   },
 
@@ -129,6 +143,7 @@ export const ACHIEVEMENTS = [
     emoji: "🥇",
     name: "Daily Bread",
     desc: "Win a daily leaderboard for the first time",
+    points: 50,
     check: ({ dailyWins }) => dailyWins >= 1,
   },
   {
@@ -137,6 +152,7 @@ export const ACHIEVEMENTS = [
     emoji: "🐐",
     name: "Brady Mode",
     desc: "Win 7 daily leaderboards",
+    points: 200,
     check: ({ dailyWins }) => dailyWins >= 7,
   },
   {
@@ -145,6 +161,7 @@ export const ACHIEVEMENTS = [
     emoji: "💍",
     name: "Always the Bridesmaid...",
     desc: "Finish 2nd or 3rd on a daily leaderboard 5 different times",
+    points: 75,
     check: ({ dailyTop3NotFirst }) => dailyTop3NotFirst >= 5,
   },
   {
@@ -153,6 +170,7 @@ export const ACHIEVEMENTS = [
     emoji: "🏆",
     name: "Weekly Warrior",
     desc: "Win a weekly leaderboard",
+    points: 150,
     check: ({ weeklyWins }) => weeklyWins >= 1,
   },
   {
@@ -161,6 +179,7 @@ export const ACHIEVEMENTS = [
     emoji: "🏛️",
     name: "Dynasty Talks",
     desc: "Win the weekly leaderboard 3 times",
+    points: 350,
     check: ({ weeklyWins }) => weeklyWins >= 3,
   },
 
@@ -171,6 +190,7 @@ export const ACHIEVEMENTS = [
     emoji: "🗡️",
     name: "I Got Opps",
     desc: "Win your first rivalry series",
+    points: 50,
     check: ({ rivalriesWon }) => (rivalriesWon || 0) >= 1,
   },
   {
@@ -179,6 +199,7 @@ export const ACHIEVEMENTS = [
     emoji: "💀",
     name: "Body Count",
     desc: "Win 5 rivalry series",
+    points: 150,
     check: ({ rivalriesWon }) => (rivalriesWon || 0) >= 5,
   },
   {
@@ -187,6 +208,7 @@ export const ACHIEVEMENTS = [
     emoji: "🛡️",
     name: "Untouchable",
     desc: "Win 10 rivalry series",
+    points: 300,
     check: ({ rivalriesWon }) => (rivalriesWon || 0) >= 10,
   },
   {
@@ -195,6 +217,7 @@ export const ACHIEVEMENTS = [
     emoji: "7️⃣",
     name: "Game 7 Built Diffy",
     desc: "Win a rivalry series in Game 7 (4-3 final)",
+    points: 200,
     check: ({ hasGame7Win }) => !!hasGame7Win,
   },
   {
@@ -203,6 +226,7 @@ export const ACHIEVEMENTS = [
     emoji: "👑",
     name: "LeBroning",
     desc: "Win a rivalry series after being down 1-3",
+    points: 200,
     check: ({ hasLeBroning }) => !!hasLeBroning,
   },
   {
@@ -211,6 +235,7 @@ export const ACHIEVEMENTS = [
     emoji: "💨",
     name: "Want the Smoke",
     desc: "Challenge 10 friends to rivalries",
+    points: 100,
     check: ({ rivalriesChallenged }) => (rivalriesChallenged || 0) >= 10,
   },
   {
@@ -219,6 +244,7 @@ export const ACHIEVEMENTS = [
     emoji: "🧹",
     name: "Sweep",
     desc: "Win a rivalry series 4-0 without any forfeits",
+    points: 150,
     check: ({ hasSweep }) => !!hasSweep,
   },
 ];

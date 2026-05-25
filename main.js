@@ -6,7 +6,7 @@ import { CALENDAR } from "./questions.js?v=20260412";
 import { submitEntry, fetchLeaderboard, fetchWeeklyLeaderboard, fetchLastWeekWinner, refreshStreakCache, getCachedDailyStreak, getCachedTDStreak, getTodaysAttempt, getCachedFavoriteTeam, overrideCachedStreaks, checkAchievementsForScore, upsertGuestResult } from "./modules/leaderboard.js";
 import { getCurrentUser, supabase } from "./modules/supabase-client.js";
 import { NFL_TEAMS } from "./modules/nfl-teams.js";
-import { showTierTooltip } from "./modules/ui-helpers.js";
+import { showTierTooltip, showAchievementToast } from "./modules/ui-helpers.js";
 import { ACHIEVEMENTS, ACHIEVEMENT_CATEGORIES } from "./modules/achievements.js";
 import { STREAK_TIERS } from "./modules/config.js";
 import { renderRivalryCard, injectStartRivalryButton } from "./modules/rivalry-ui.js?v=20260524";
@@ -1893,7 +1893,9 @@ async function showResult() {
 
   // Check achievements immediately on quiz finish so Gunslinger (and others)
   // are awarded even if the user never submits to the leaderboard.
-  if (user) checkAchievementsForScore(score, picks).catch(() => {});
+  if (user) checkAchievementsForScore(score, picks)
+    .then(newBadges => { if (newBadges?.length) showAchievementToast(newBadges); })
+    .catch(() => {});
 
   // Update server-side streak on quiz completion, regardless of leaderboard submission
   if (user) {

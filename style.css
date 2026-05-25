@@ -2110,3 +2110,81 @@ footer a:visited {
   font-style: italic;
   font-size: 0.85rem;
 }
+
+/* ── Achievement unlock toast ── */
+.achievement-toast {
+  position: fixed;
+  bottom: calc(28px + env(safe-area-inset-bottom));
+  left: 50%;
+  transform: translateX(-50%) translateY(120px);
+  opacity: 0;
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: rgba(8, 18, 26, 0.97);
+  border: 1px solid rgba(40, 167, 69, 0.45);
+  border-radius: 14px;
+  padding: 14px 20px;
+  min-width: 270px;
+  max-width: 340px;
+  cursor: pointer;
+  box-shadow: 0 6px 28px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(40, 167, 69, 0.12);
+  transition: transform 0.38s cubic-bezier(0.34, 1.45, 0.64, 1), opacity 0.3s ease;
+  user-select: none;
+}
+
+.achievement-toast.show {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+}
+
+/* slide back down on dismiss (removing .show reverts to the default translateY above) */
+.achievement-toast:not(.show) {
+  transition: transform 0.3s ease-in, opacity 0.3s ease-in;
+}
+
+.achievement-toast__icon {
+  font-size: 2.2rem;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.achievement-toast__body {
+  flex: 1;
+  min-width: 0;
+}
+
+.achievement-toast__label {
+  font-size: 0.6rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: #28a745;
+  font-weight: 700;
+  margin-bottom: 3px;
+}
+
+.achievement-toast__name {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #fff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.achievement-toast__pts {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #28a745;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+@media (max-width: 400px) {
+  .achievement-toast {
+    min-width: 0;
+    width: calc(100vw - 32px);
+    max-width: none;
+  }
+}

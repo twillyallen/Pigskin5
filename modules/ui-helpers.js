@@ -12,6 +12,52 @@ function getTierForStreak(streakDays) {
   return STREAK_TIERS[0];
 }
 
+// Queue and display achievement unlock toasts one at a time after a quiz
+export function showAchievementToast(badgeIds) {
+  const toShow = badgeIds
+    .map(id => ACHIEVEMENTS.find(a => a.id === id))
+    .filter(Boolean);
+  if (!toShow.length) return;
+
+  let index = 0;
+
+  function showNext() {
+    if (index >= toShow.length) return;
+    const achievement = toShow[index++];
+
+    const el = document.createElement("div");
+    el.className = "achievement-toast";
+    el.innerHTML = `
+      <span class="achievement-toast__icon">${achievement.emoji}</span>
+      <div class="achievement-toast__body">
+        <div class="achievement-toast__label">Achievement Unlocked</div>
+        <div class="achievement-toast__name">${achievement.name}</div>
+      </div>
+      <div class="achievement-toast__pts">+${achievement.points} pts</div>
+    `;
+    document.body.appendChild(el);
+
+    requestAnimationFrame(() => el.classList.add("show"));
+
+    const dismiss = () => {
+      el.classList.remove("show");
+      setTimeout(() => {
+        el.remove();
+        setTimeout(showNext, 350);
+      }, 400);
+    };
+
+    el.addEventListener("click", () => {
+      dismiss();
+      window.dispatchEvent(new CustomEvent("pigskin5:open-profile"));
+    }, { once: true });
+    setTimeout(dismiss, 3500);
+  }
+
+  // Small delay so the toast appears after the results UI settles
+  setTimeout(showNext, 800);
+}
+
 // Display a temporary toast notification message
 export function showToast(msg) {
   const t = document.createElement("div");

@@ -19,6 +19,12 @@ const messageEl = document.getElementById("authMessage");
 const emailOptInSection = document.getElementById("emailOptInSection");
 const emailOptInToggle = document.getElementById("emailOptInToggle");
 
+let _signedInUsername = null;
+
+window.addEventListener("pigskin5:open-profile", () => {
+  if (_signedInUsername) showProfileModal(_signedInUsername);
+});
+
 function openModal() {
   if (!modal) return;
   modal.hidden = false;
@@ -103,6 +109,7 @@ onAuthChange(async (user) => {
 });
 
 function updateSignedInButton(username) {
+  _signedInUsername = username;
   signInBtn.textContent = `Hi, ${username} ▾`;
   signInBtn.onclick = () => showProfileModal(username);
 }
@@ -210,7 +217,7 @@ function showProfileModal(username) {
   // Stats panel (skeleton)
   const statsEl = document.createElement("div");
   statsEl.className = "player-card__stats";
-  [["—", "Quizzes"], ["—", "Accuracy"], ["—", "Touchdown"]].forEach(([val, label]) => {
+  [["—", "Quizzes"], ["—", "Accuracy"], ["—", "Touchdowns"], ["—", "Daily Wins"]].forEach(([val, label]) => {
     const cell = document.createElement("div");
     cell.className = "player-card__stat";
     const v = document.createElement("div");
@@ -485,8 +492,9 @@ function showProfileModal(username) {
       stats.totalQuizzes.toLocaleString(),
       `${stats.accuracyPct}%`,
       stats.totalPerfect.toLocaleString(),
+      (stats.dailyLeaderboardWins ?? 0).toLocaleString(),
     ];
-    const labels = ["Quizzes", "Accuracy", stats.totalPerfect === 1 ? "Touchdown" : "Touchdowns"];
+    const labels = ["Quizzes", "Accuracy", stats.totalPerfect === 1 ? "Touchdown" : "Touchdowns", "Daily Wins"];
     cells.forEach((cell, i) => {
       const v = cell.querySelector(".player-card__stat-value");
       const l = cell.querySelector(".player-card__stat-label");
