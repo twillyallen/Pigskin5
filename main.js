@@ -1891,11 +1891,14 @@ async function showResult() {
   // knows not to auto-submit scores for accounts that were already logged in.
   saveResult(RUN_DATE, { score, picks, totalTime, avgTime, totalPoints, playedAsGuest: !user });
 
-  // Check achievements immediately on quiz finish so Gunslinger (and others)
-  // are awarded even if the user never submits to the leaderboard.
-  if (user) checkAchievementsForScore(score, picks)
-    .then(newBadges => { if (newBadges?.length) showAchievementToast(newBadges); })
-    .catch(() => {});
+  // Defer achievement check 4 s so it doesn't contend with the concurrent
+  // streak RPC + leaderboard fetch that fire at quiz completion — that contention
+  // was causing the first leaderboard submit to fail every time.
+  if (user) setTimeout(() => {
+    checkAchievementsForScore(score, picks)
+      .then(newBadges => { if (newBadges?.length) showAchievementToast(newBadges); })
+      .catch(() => {});
+  }, 4000);
 
   // Update server-side streak on quiz completion, regardless of leaderboard submission
   if (user) {
