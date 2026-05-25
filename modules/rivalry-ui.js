@@ -153,10 +153,15 @@ export async function renderRivalryCard(container, inline = false) {
       return `<div style="flex:1;height:5px;border-radius:3px;background:${bg};"></div>`;
     }).join("");
 
+    const waitingOnRival = iPlayed && !theyPlayed;
     const badge = needsPlay
       ? `<span style="display:inline-block;background:#ef4444;color:#fff;font-size:10px;
              font-weight:900;border-radius:99px;padding:1px 7px;margin-left:6px;
              vertical-align:middle;letter-spacing:.02em;">YOUR TURN</span>`
+      : waitingOnRival
+      ? `<span style="display:inline-block;background:rgba(255,255,255,0.12);color:rgba(255,255,255,0.5);font-size:10px;
+             font-weight:700;border-radius:99px;padding:1px 7px;margin-left:6px;
+             vertical-align:middle;letter-spacing:.02em;">Waiting…</span>`
       : "";
 
     rowsHtml += `
@@ -291,7 +296,8 @@ function renderModalList(body, active, history, userId, overlay) {
     const todayGame  = (r.games || []).find(g => g.game_date === today);
     const myScore    = todayGame ? (iAm1 ? todayGame.player1_score : todayGame.player2_score) : null;
     const theirScore = todayGame ? (iAm1 ? todayGame.player2_score : todayGame.player1_score) : null;
-    const needsPlay  = (theirScore !== null && theirScore !== undefined) && (myScore === null || myScore === undefined);
+    const needsPlay      = (theirScore !== null && theirScore !== undefined) && (myScore === null || myScore === undefined);
+    const waitingOnRival = (myScore !== null && myScore !== undefined) && (theirScore === null || theirScore === undefined);
 
     const colorMap = { winning: "#22c55e", tied: "#f59e0b", losing: "#ef4444" };
     const color = colorMap[vm.statusClass] || "#fff";
@@ -299,7 +305,7 @@ function renderModalList(body, active, history, userId, overlay) {
     row.style.cssText = `
       display:flex;justify-content:space-between;align-items:center;
       padding:12px 14px;background:rgba(255,255,255,0.05);border-radius:12px;
-      margin-bottom:8px;cursor:pointer;border:1px solid ${needsPlay ? "rgba(239,68,68,0.5)" : "rgba(255,255,255,0.07)"};`;
+      margin-bottom:8px;cursor:pointer;border:1px solid ${needsPlay ? "rgba(239,68,68,0.5)" : waitingOnRival ? "rgba(96,165,250,0.25)" : "rgba(255,255,255,0.07)"};`;
     row.innerHTML = `
       <div>
         <div style="font-weight:700;font-size:15px;display:flex;align-items:center;gap:7px;">
@@ -310,6 +316,9 @@ function renderModalList(body, active, history, userId, overlay) {
         <div style="font-size:12px;color:rgba(255,255,255,0.45);margin-top:2px;">
           ${trackerToEmoji(vm.tracker)}
         </div>
+        ${waitingOnRival ? `<div style="font-size:11px;color:rgba(96,165,250,0.7);font-weight:700;margin-top:3px;">
+          Waiting on Rival's move…
+        </div>` : ""}
       </div>
       <div style="text-align:right;">
         <div style="font-weight:800;font-size:16px;color:${color};">
