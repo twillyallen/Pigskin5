@@ -224,6 +224,56 @@ export const CALENDAR = {
     { question: "OVER or UNDER: The Lions have O/U 3.5 NFL championships (all-time).", choices: ["OVER", "UNDER"], answer: 0 },
     ],
   },
+    "2026-05-31": { //Sunday
+    event: "",
+    questions: [
+    { question: "OVER or UNDER: Arian Foster has O/U 56.5 Career Rushing TDs.", choices: ["OVER", "UNDER"], answer: 1 },
+    { question: "Which of these was an ACTUAL NFL player?", choices: ["Ja'Vontavious Blackenstein", "Piggy Finn", "Bud Dupree", "Javaris Jamar Javarison-Lamar"], answer: 2 },
+    { question: "Who led the NFL in Receptions in 2020?", choices: ["Davante Adams", "Stefon Diggs", "Travis Kelce", "Darren Waller"], answer: 1 },
+    { question: "True or False: An offensive lineman has caught a TD pass in the Super Bowl.", choices: ["True", "False"], answer: 1 },
+    { question: "Guess the Career QB:\n- 35,989 Pass Yards\n- 243 Pass TDs\n- 92 INTs\n- 98.3 Passer Rating", choices: ["Patrick Mahomes", "Dak Prescott", "Jon Kitna", "Steve Young"], answer: 1 },
+    ],
+  },
+    "2026-06-01": { //Monday
+    event: "",
+    questions: [
+    { question: "Which of these was an ACTUAL NFL player?", choices: ["Dekambrian Bumbleton", "Danny Brightwater", "Ja'Vontavious Feathers", "Ifeanyi Ohalete"], answer: 3 },
+    { question: "Guess the Career WR:\n- 12,291 Rec. Yards\n- 83 Rec. TDs\n- 928 Receptions", choices: ["Larry Fitzgerald", "Davante Adams", "Corey Davis", "Antonio Brown"], answer: 3 },
+    { question: "Which coach led the Washington to a Super Bowl victory?", choices: ["Vince Lombardi", "Don Shula", "Joe Gibbs", "Dennis Green"], answer: 2 },
+    { question: "Who is the Buffalo Bills' all-time leader in rushing yards?", choices: ["O.J. Simpson", "Josh Allen", "Fred Jackson", "Thurman Thomas"], answer: 3 },
+    { question: "OVER or UNDER: The Packers have O/U 12.5 NFL championships (all-time).", choices: ["OVER", "UNDER"], answer: 0 },
+    ],
+  },
+    "2026-06-02": { //Tuesday
+    event: "",
+    questions: [
+    { question: "How many Super Bowls have the Cincinnati Bengals lost?", choices: ["0", "1", "2", "3"], answer: 3 },
+    { question: "OVER or UNDER: The Dolphins have O/U 4.5 Super Bowl appearances all-time.", choices: ["OVER", "UNDER"], answer: 0 },
+    { question: "Which of these was an ACTUAL NFL player?", choices: ["Traequan Ashcastle", "Bismarck Rutherford-Hayes", "Ruke Pennywhistle", "Chop Robinson"], answer: 3 },
+    { question: "True or False: The Houston Texans have never won a Divisional playoff game.", choices: ["True", "False"], answer: 0 },
+    { question: "Who led the NFL in Sacks in 2025?", choices: ["Josh Hines Allen", "Trey Hendrickson", "Myles Garrett", "Lavonte David"], answer: 2 },
+    ],
+  },
+    "2026-06-03": { //Wednesday
+    event: "",
+    questions: [
+    { question: "OVER or UNDER: Anthony Thomas has O/U 31.5 Career Rushing TDs.", choices: ["OVER", "UNDER"], answer: 1 },
+    { question: "Guess the Career RB:\n- 8,172 Rush Yards\n- 86 Rush TDs\n- 4.6 Yards per Carry", choices: ["James Allen", "Priest Holmes", "Kevin Faulk", "Amos Zereoue"], answer: 1 },
+    { question: "How many Super Bowls have the Green Bay Packers won?", choices: ["1", "5", "3", "4"], answer: 3 },
+    { question: "Who led the NFL in Passing TDs in 2009?", choices: ["Drew Brees", "Jake Plummer", "Drew Bledsoe", "Trent Green"], answer: 0 },
+    { question: "Which of these was an ACTUAL NFL player?", choices: ["Fredrick Weinstein", "Trevontay Nickelstein", "Desharious Stonehammer", "Ruke Orhorhoro"], answer: 3 },
+    ],
+  },
+    "2026-06-04": { //Thursday
+    event: "",
+    questions: [
+    { question: "True or False: Tom Brady has won 8 Super Bowls.", choices: ["True", "False"], answer: 1 },
+    { question: "OVER or UNDER: Shannon Sharpe has O/U 63.5 Career Receiving TDs.", choices: ["OVER", "UNDER"], answer: 1 },
+    { question: "Guess the Career QB:\n- 13,028 Pass Yards\n- 78 Pass TDs\n- 48 INTs\n- 86.9 Passer Rating", choices: ["Jason Campbell", "Tyrod Taylor", "Mitchell Trubisky", "David Carr"], answer: 2 },
+    { question: "Who holds the NFL record for most career receiving yards?", choices: ["Anquan Boldin", "Terrell Owens", "Torry Holt", "Jerry Rice"], answer: 3 },
+    { question: "What year did the Rams relocate to Los Angeles?", choices: ["2018", "2021", "2014", "2016"], answer: 3 },
+    ],
+  },  
 
 };
 
