@@ -413,9 +413,14 @@ export function getRivalryViewModel(rivalry, myUserId) {
   });
 
   let statusText, statusClass;
-  if (myWins > theirWins)       { statusText = "You lead";  statusClass = "winning"; }
-  else if (theirWins > myWins)  { statusText = "They lead"; statusClass = "losing"; }
-  else                          { statusText = "Tied";       statusClass = "tied"; }
+  const isOver = rivalry.status === "complete" || rivalry.status === "forfeit";
+  if (isOver) {
+    const iWon = rivalry.winner_id === myUserId;
+    statusText  = iWon ? "You won!" : "You lost";
+    statusClass = iWon ? "winning" : "losing";
+  } else if (myWins > theirWins)      { statusText = "You lead";  statusClass = "winning"; }
+  else if (theirWins > myWins)         { statusText = "They lead"; statusClass = "losing"; }
+  else                                  { statusText = "Tied";       statusClass = "tied"; }
 
   return {
     id: rivalry.id,

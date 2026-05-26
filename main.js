@@ -1900,18 +1900,18 @@ async function showResult() {
       .catch(() => {});
   }, 4000);
 
-  // Update server-side streak on quiz completion, regardless of leaderboard submission
+  // Update server-side streak on quiz completion, regardless of leaderboard submission.
+  // Deferred 6 s so it doesn't contend with the leaderboard submit — same root cause
+  // that forced the achievement check to be deferred.  Users who submit to the leaderboard
+  // have their streak updated immediately by submitEntry; this path covers non-submitters.
   if (user) {
     const didPerfect = score === QUESTIONS.length;
 
-    (async () => {
-      // RPC does proper date-based math server-side — avoids stale localStorage issues
-      // where a cleared local streak would prevent the DB from ever incrementing.
+    setTimeout(() => (async () => {
       const { error: _streakErr2 } = await supabase.rpc("update_streaks_on_submit", { did_perfect: didPerfect, p_user_id: user.id });
       if (_streakErr2) console.error("update_streaks_on_submit failed:", _streakErr2);
       await refreshStreakCache();
 
-      // Update longest_streak based on whatever the RPC set current_streak to
       const { data: profile } = await supabase
         .from("profiles")
         .select("current_streak, longest_streak")
@@ -1923,7 +1923,7 @@ async function showResult() {
       if (newLongest !== (profile.longest_streak ?? 0)) {
         await supabase.from("profiles").update({ longest_streak: newLongest }).eq("id", user.id);
       }
-    })().catch(() => {});
+    })().catch(() => {}), 6000);
   }
 
   const guestDailyEntry  = user ? null : { points: totalPoints, avgTime };
