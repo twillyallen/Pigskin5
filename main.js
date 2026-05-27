@@ -643,6 +643,7 @@ function buildGuestLbRow(rank, entry) {
 }
 
 let _lbRenderGen = 0;
+let _pendingLbFetch = null;
 
 function renderLeaderboard(dateStr, guestEntry = null) {
   if (!leaderboardBody) return;
@@ -748,14 +749,16 @@ function renderLeaderboard(dateStr, guestEntry = null) {
     });
   }
 
-  fetchLeaderboardJSONP(dateStr)
+  _pendingLbFetch = fetchLeaderboardJSONP(dateStr);
+  _pendingLbFetch
     .then(applyEntries)
     .catch(err => {
       clearTimeout(retryTimer);
       if (_lbRenderGen !== gen || !leaderboardBody) return;
       console.error("Failed to load leaderboard:", err);
       leaderboardBody.innerHTML = "<tr><td colspan='4'>Error loading leaderboard.</td></tr>";
-    });
+    })
+    .finally(() => { _pendingLbFetch = null; });
 }
 
 async function handleLeaderboardSubmit(evt) {
@@ -809,6 +812,10 @@ async function handleLeaderboardSubmit(evt) {
     picks: picks, 
     createdAt: Date.now()
   };
+
+  // Wait for any in-flight leaderboard fetch to release its connections before
+  // the INSERT fires — concurrent SELECTs were causing the first submit to fail.
+  if (_pendingLbFetch) await _pendingLbFetch.catch(() => {});
 
   try {
     await addLeaderboardEntry(RUN_DATE, entry);
@@ -1891,14 +1898,11 @@ async function showResult() {
   // knows not to auto-submit scores for accounts that were already logged in.
   saveResult(RUN_DATE, { score, picks, totalTime, avgTime, totalPoints, playedAsGuest: !user });
 
-  // Defer achievement check 4 s so it doesn't contend with the concurrent
-  // streak RPC + leaderboard fetch that fire at quiz completion — that contention
-  // was causing the first leaderboard submit to fail every time.
   if (user) setTimeout(() => {
     checkAchievementsForScore(score, picks)
       .then(newBadges => { if (newBadges?.length) showAchievementToast(newBadges); })
       .catch(() => {});
-  }, 4000);
+  }, 500);
 
   // Update server-side streak on quiz completion, regardless of leaderboard submission.
   // Deferred 6 s so it doesn't contend with the leaderboard submit — same root cause

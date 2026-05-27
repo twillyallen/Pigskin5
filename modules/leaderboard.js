@@ -61,9 +61,9 @@ export async function submitEntry(dateStr, entry) {
   // Update server-side streaks (non-blocking, best-effort)
   supabase.rpc("update_streaks_on_submit", { did_perfect: score === 5, p_user_id: user.id }).catch(() => {});
 
-  // Check and award achievements — deferred 4 s so the post-submission leaderboard
-  // re-fetch can grab HTTP connections before this fires its own parallel queries.
-  setTimeout(() => checkAndAwardAchievements(user.id, score, entry.picks, true, dateStr).catch(() => {}), 4000);
+  // Check and award achievements — deferred so the post-submission leaderboard
+  // re-fetch has time to start before this fires its own parallel queries.
+  setTimeout(() => checkAndAwardAchievements(user.id, score, entry.picks, true, dateStr).catch(() => {}), 2000);
 
   return { success: true };
 }
