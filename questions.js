@@ -273,7 +273,51 @@ export const CALENDAR = {
     { question: "Who holds the NFL record for most career receiving yards?", choices: ["Anquan Boldin", "Terrell Owens", "Torry Holt", "Jerry Rice"], answer: 3 },
     { question: "What year did the Rams relocate to Los Angeles?", choices: ["2018", "2021", "2014", "2016"], answer: 3 },
     ],
-  },  
+  },
+
+    "2026-06-05": { //Friday
+    event: "",
+    questions: [
+    { question: "Which of these was an ACTUAL NFL player?", choices: ["Trevontay Sparksworth", "Kayvontez Drakeford", "Dat Nguyen", "Dekambrian Crumb"], answer: 2 },
+    { question: "OVER or UNDER: Calvin Johnson has O/U 87.5 Career Receiving TDs.", choices: ["OVER", "UNDER"], answer: 1 },
+    { question: "Guess the Career QB:\n- 57,023 Pass Yards\n- 366 Pass TDs\n- 244 INTs\n- 84.1 Passer Rating", choices: ["Eli Manning", "Jay Cutler", "Carson Palmer", "Andy Dalton"], answer: 0 },
+    { question: "True or False: The Seattle Seahawks have won 3 Super Bowls.", choices: ["True", "False"], answer: 1 },
+    { question: "Who led the NFL in sacks in 2001?", choices: ["Kabeer Gbaja-Biamila", "Michael Strahan", "Simeon Rice", "Leonard Little"], answer: 1 },
+    ],
+  },
+
+    "2026-06-06": { //Saturday
+    event: "",
+    questions: [
+    { question: "True or False: Jim Brown never appeared in a Super Bowl.", choices: ["True", "False"], answer: 0 },
+    { question: "Guess the Career WR:\n- 9,924 Rec. Yards\n- 50 Rec. TDs\n- 903 Receptions", choices: ["Julian Edelman", "Wes Welker", "Miles Austin", "Eric Decker"], answer: 1 },
+    { question: "OVER or UNDER: Emmitt Smith has O/U 160.5 Career Rushing TDs.", choices: ["OVER", "UNDER"], answer: 0 },
+    { question: "Which of these was an ACTUAL NFL player?", choices: ["Trenton Mooks", "Quavondre Blackmore", "Deshark Pinnacle", "Sinorice Moss"], answer: 3 },
+    { question: "Which team did the Raiders defeat in Super Bowl XVIII?", choices: ["Cowboys", "Redskins", "Giants", "Vikings"], answer: 1 },
+    ],
+  },
+
+    "2026-06-07": { //Sunday
+    event: "",
+    questions: [
+    { question: "Which team did the Buccaneers defeat in Super Bowl LV?", choices: ["Rams", "49ers", "Chiefs", "Packers"], answer: 2 },
+    { question: "OVER or UNDER: Marcus Allen has O/U 118.5 Career Rushing TDs.", choices: ["OVER", "UNDER"], answer: 0 },
+    { question: "True or False: Dan Marino never won a Super Bowl.", choices: ["True", "False"], answer: 0 },
+    { question: "Guess the Career TE:\n- 9,286 Rec. Yards\n- 92 Rec. TDs\n- 621 Receptions", choices: ["Antonio Gates", "Rob Gronkowski", "Shannon Sharpe", "Tony Gonzalez"], answer: 1 },
+    { question: "What year was the Vikings' first season?", choices: ["1965", "1959", "1961", "1967"], answer: 2 },
+    ],
+  },
+
+    "2026-06-08": { //Monday
+    event: "",
+    questions: [
+    { question: "Which of these was an ACTUAL NFL player?", choices: ["Dekker Cruckton", "Quavontez Brick", "Tashard Choice", "Treqwan Willowbrook"], answer: 2 },
+    { question: "Who won Super Bowl XLVII?", choices: ["49ers", "Ravens", "Seahawks", "Panthers"], answer: 1 },
+    { question: "Guess the Career RB:\n- 13,684 Rush Yards\n- 145 Rush TDs\n- 4.3 Yards per Carry\n- 162 Total TDs", choices: ["Emmitt Smith", "LaDainian Tomlinson", "Barry Sanders", "Frank Gore"], answer: 1 },
+    { question: "True or False: Brett Favre holds the NFL record for most career interceptions thrown.", choices: ["True", "False"], answer: 0 },
+    { question: "OVER or UNDER: The Buffalo Bills have O/U 3.5 Super Bowl losses all-time.", choices: ["OVER", "UNDER"], answer: 0 },
+    ],
+  },
 
 };
 
