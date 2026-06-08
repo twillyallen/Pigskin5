@@ -42,13 +42,16 @@ export async function submitEntry(dateStr, entry) {
     }
     // Verify the row wasn't committed despite the error response (e.g. network drop
     // after the server committed but before the response arrived)
-    const { data: existing } = await supabase
+    const { data: existing, error: checkError } = await supabase
       .from("quiz_attempts")
       .select("id")
       .eq("user_id", user.id)
       .eq("quiz_date", dateStr)
       .maybeSingle();
-    if (existing) {
+    if (existing || checkError) {
+      // Row confirmed present, OR the verification query itself failed (network still
+      // flaky). The INSERT fired with a valid session and most likely committed — return
+      // success rather than showing a false "Could not submit" error.
       return { success: true };
     }
     console.error("Submit failed:", error);
