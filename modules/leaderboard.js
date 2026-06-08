@@ -5,7 +5,11 @@ import { getRunDateISO } from "./date-utils.js";
 
 // Submit a leaderboard entry for the logged-in user
 export async function submitEntry(dateStr, entry) {
-  const user = await getCurrentUser();
+  // getSession() awaits the Supabase client's internal initializePromise, ensuring
+  // the session is restored from localStorage before we attempt the INSERT.
+  // getUser() does not await initialization and can fire with no access token loaded.
+  const { data: { session } } = await supabase.auth.getSession();
+  const user = session?.user ?? null;
   if (!user) {
     return { error: "You need to sign in to post to the leaderboard." };
   }
@@ -30,13 +34,6 @@ export async function submitEntry(dateStr, entry) {
   };
 
   let { error } = await supabase.from("quiz_attempts").insert(payload);
-
-  // On transient failure (connection contention from concurrent result-screen requests),
-  // wait for competing requests to clear then retry once before surfacing an error.
-  if (error && error.code !== "23505") {
-    await new Promise(r => setTimeout(r, 1000));
-    ({ error } = await supabase.from("quiz_attempts").insert(payload));
-  }
 
   if (error) {
     if (error.code === "23505") {
