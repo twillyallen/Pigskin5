@@ -14,6 +14,18 @@ from generators.nfl_data import (
 )
 
 
+# Only elite/high-profile QBs used as distractors for record-level questions.
+# Keeps "Who holds the single-season passing yards record?" from producing
+# Minshew / Henne as answer choices alongside Peyton Manning.
+_RECORD_QB_POOL = [
+    "Tom Brady", "Peyton Manning", "Drew Brees", "Aaron Rodgers",
+    "Patrick Mahomes", "Brett Favre", "Dan Marino", "Philip Rivers",
+    "Joe Montana", "Jameis Winston", "Matthew Stafford",
+    "Ben Roethlisberger", "Andrew Luck", "Cam Newton",
+    "Matt Ryan", "Tony Romo", "Eli Manning",
+]
+
+
 class HistoryGenerator(BaseGenerator):
     
     def generate(self, difficulty: str = "medium") -> dict:
@@ -23,6 +35,10 @@ class HistoryGenerator(BaseGenerator):
             self._draft_question,
             self._award_question,
             self._coach_question,
+            self._single_season_record_who,
+            self._single_season_record_how_many,
+            self._career_leader_who,
+            self._career_stat_how_many,
         ]
         
         gen_func = random.choice(generators)
@@ -342,9 +358,153 @@ class HistoryGenerator(BaseGenerator):
         choices = [correct] + distractors
         random.shuffle(choices)
         answer_idx = choices.index(correct)
-        
+
         return {
             "question": q_text,
+            "choices": choices,
+            "answer": answer_idx,
+        }
+
+    def _single_season_record_who(self, difficulty: str) -> dict:
+        """Who holds the NFL single-season record for [stat]?"""
+        SINGLE_SEASON_DEFS = [
+            ("single_season_pass_yards", "passing yards", QUARTERBACKS),
+            ("single_season_rush_yards", "rushing yards", RUNNING_BACKS),
+            ("single_season_rec_yards", "receiving yards", WIDE_RECEIVERS + TIGHT_ENDS),
+            ("single_season_pass_tds", "passing touchdowns", QUARTERBACKS),
+            ("single_season_rush_tds", "rushing touchdowns", RUNNING_BACKS),
+            ("single_season_points", "points scored", RUNNING_BACKS),
+        ]
+        eligible = [
+            (key, label, pool) for key, label, pool in SINGLE_SEASON_DEFS
+            if key in RECORDS and "player" in RECORDS[key] and "year" in RECORDS[key]
+        ]
+        if not eligible:
+            return self._super_bowl_question(difficulty)
+        key, label, pos_pool = random.choice(eligible)
+        correct = RECORDS[key]["player"]
+        if "pass" in key:
+            pool = [p for p in _RECORD_QB_POOL if p != correct]
+        else:
+            pool = [p[0] for p in pos_pool if p[0] != correct]
+        random.shuffle(pool)
+        distractors = pool[:3]
+        if len(distractors) < 3:
+            extra = [p[0] for p in (QUARTERBACKS + RUNNING_BACKS + WIDE_RECEIVERS + TIGHT_ENDS)
+                     if p[0] != correct and p[0] not in distractors]
+            random.shuffle(extra)
+            distractors += extra[:3 - len(distractors)]
+        choices = [correct] + distractors[:3]
+        random.shuffle(choices)
+        answer_idx = choices.index(correct)
+        return {
+            "question": f"Who holds the NFL single-season record for {label}?",
+            "choices": choices,
+            "answer": answer_idx,
+        }
+
+    def _single_season_record_how_many(self, difficulty: str) -> dict:
+        """How many [stat] did [player] record in their record-setting [year] season?"""
+        SINGLE_SEASON_DEFS = [
+            ("single_season_pass_yards", "passing yards"),
+            ("single_season_rush_yards", "rushing yards"),
+            ("single_season_rec_yards", "receiving yards"),
+            ("single_season_pass_tds", "passing touchdowns"),
+            ("single_season_rush_tds", "rushing touchdowns"),
+            ("single_season_points", "points scored"),
+        ]
+        eligible = [
+            (key, label) for key, label in SINGLE_SEASON_DEFS
+            if key in RECORDS and "player" in RECORDS[key]
+            and "value" in RECORDS[key] and "year" in RECORDS[key]
+        ]
+        if not eligible:
+            return self._super_bowl_question(difficulty)
+        key, label = random.choice(eligible)
+        record = RECORDS[key]
+        player = record["player"]
+        year = record["year"]
+        correct_val = record["value"]
+        delta = max(int(correct_val * 0.10), 10)
+        distractors = self._nearby_numbers(correct_val, count=3,
+                                           min_delta=delta // 2, max_delta=delta, floor=1)
+        correct_str = self._format_number(correct_val)
+        choices = [correct_str] + [self._format_number(d) for d in distractors]
+        random.shuffle(choices)
+        answer_idx = choices.index(correct_str)
+        return {
+            "question": f"How many {label} did {player} record in their record-setting {year} season?",
+            "choices": choices,
+            "answer": answer_idx,
+        }
+
+    def _career_leader_who(self, difficulty: str) -> dict:
+        """Who is the NFL's all-time career leader in [stat]?"""
+        CAREER_DEFS = [
+            ("career_pass_yards", "passing yards", QUARTERBACKS),
+            ("career_rush_yards", "rushing yards", RUNNING_BACKS),
+            ("career_rec_yards", "receiving yards", WIDE_RECEIVERS + TIGHT_ENDS),
+            ("career_pass_tds", "passing touchdowns", QUARTERBACKS),
+            ("career_rush_tds", "rushing touchdowns", RUNNING_BACKS),
+            ("career_total_tds", "total touchdowns", RUNNING_BACKS + WIDE_RECEIVERS + TIGHT_ENDS),
+        ]
+        eligible = [
+            (key, label, pool) for key, label, pool in CAREER_DEFS
+            if key in RECORDS and "player" in RECORDS[key]
+        ]
+        if not eligible:
+            return self._super_bowl_question(difficulty)
+        key, label, pos_pool = random.choice(eligible)
+        correct = RECORDS[key]["player"]
+        if "pass" in key:
+            pool = [p for p in _RECORD_QB_POOL if p != correct]
+        else:
+            pool = [p[0] for p in pos_pool if p[0] != correct]
+        random.shuffle(pool)
+        distractors = pool[:3]
+        if len(distractors) < 3:
+            extra = [p[0] for p in (QUARTERBACKS + RUNNING_BACKS + WIDE_RECEIVERS + TIGHT_ENDS)
+                     if p[0] != correct and p[0] not in distractors]
+            random.shuffle(extra)
+            distractors += extra[:3 - len(distractors)]
+        choices = [correct] + distractors[:3]
+        random.shuffle(choices)
+        answer_idx = choices.index(correct)
+        return {
+            "question": f"Who is the NFL's all-time career leader in {label}?",
+            "choices": choices,
+            "answer": answer_idx,
+        }
+
+    def _career_stat_how_many(self, difficulty: str) -> dict:
+        """How many career [stat] does [player] have (NFL all-time record)?"""
+        CAREER_DEFS = [
+            ("career_pass_yards", "passing yards"),
+            ("career_rush_yards", "rushing yards"),
+            ("career_rec_yards", "receiving yards"),
+            ("career_pass_tds", "passing touchdowns"),
+            ("career_rush_tds", "rushing touchdowns"),
+            ("career_total_tds", "total touchdowns"),
+        ]
+        eligible = [
+            (key, label) for key, label in CAREER_DEFS
+            if key in RECORDS and "player" in RECORDS[key] and "value" in RECORDS[key]
+        ]
+        if not eligible:
+            return self._super_bowl_question(difficulty)
+        key, label = random.choice(eligible)
+        record = RECORDS[key]
+        player = record["player"]
+        correct_val = record["value"]
+        delta = max(int(correct_val * 0.10), 20)
+        distractors = self._nearby_numbers(correct_val, count=3,
+                                           min_delta=delta // 2, max_delta=delta, floor=1)
+        correct_str = self._format_number(correct_val)
+        choices = [correct_str] + [self._format_number(d) for d in distractors]
+        random.shuffle(choices)
+        answer_idx = choices.index(correct_str)
+        return {
+            "question": f"How many career {label} does {player} have (NFL all-time record)?",
             "choices": choices,
             "answer": answer_idx,
         }

@@ -645,7 +645,7 @@ function buildGuestLbRow(rank, entry) {
 let _lbRenderGen = 0;
 
 function renderLeaderboard(dateStr, guestEntry = null) {
-  if (!leaderboardBody) return;
+  if (!leaderboardBody) return Promise.resolve();
 
   const gen = ++_lbRenderGen;
   leaderboardBody.innerHTML = "<tr><td colspan='4'>Loading...</td></tr>";
@@ -748,7 +748,7 @@ function renderLeaderboard(dateStr, guestEntry = null) {
     });
   }
 
-  fetchLeaderboardJSONP(dateStr)
+  return fetchLeaderboardJSONP(dateStr)
     .then(applyEntries)
     .catch(err => {
       clearTimeout(retryTimer);
@@ -992,7 +992,7 @@ async function renderPersistedResult(dateStr, persisted) {
   const guestDailyEntry  = user ? null : { points: pts, avgTime: at };
   const guestWeeklyEntry = user ? null : { totalPoints: pts, daysPlayed: 1 };
 
-  renderLeaderboard(RUN_DATE, guestDailyEntry);
+  const lbReady = renderLeaderboard(RUN_DATE, guestDailyEntry);
   initLeaderboardTabs(guestDailyEntry, guestWeeklyEntry);
 
   if (user && hasSubmittedLeaderboard(RUN_DATE)) {
@@ -1004,13 +1004,15 @@ async function renderPersistedResult(dateStr, persisted) {
   } else if (user) {
     const _lbBtn2 = leaderboardForm?.querySelector('button[type="submit"]');
     if (_lbBtn2) { _lbBtn2.disabled = true; _lbBtn2.textContent = "Loading..."; }
-    supabase.from("profiles").select("username").eq("id", user.id).maybeSingle()
-      .then(({ data: profile }) => {
-        if (playerNameInput && profile?.username && !playerNameInput.value) {
-          playerNameInput.value = profile.username;
-        }
-        if (_lbBtn2) { _lbBtn2.disabled = false; _lbBtn2.textContent = "Submit Score"; }
-      });
+    Promise.all([
+      lbReady,
+      supabase.from("profiles").select("username").eq("id", user.id).maybeSingle(),
+    ]).then(([, { data: profile }]) => {
+      if (playerNameInput && profile?.username && !playerNameInput.value) {
+        playerNameInput.value = profile.username;
+      }
+      if (_lbBtn2) { _lbBtn2.disabled = false; _lbBtn2.textContent = "Submit Score"; }
+    });
   }
 
   if (restartBtn) {
@@ -1929,7 +1931,7 @@ async function showResult() {
   const guestDailyEntry  = user ? null : { points: totalPoints, avgTime };
   const guestWeeklyEntry = user ? null : { totalPoints, daysPlayed: 1 };
 
-  renderLeaderboard(RUN_DATE, guestDailyEntry);
+  const lbReady = renderLeaderboard(RUN_DATE, guestDailyEntry);
 
   const lbForm   = document.getElementById("leaderboardForm");
   const guestLbCta = document.getElementById("guestLeaderboardCta");
@@ -1957,11 +1959,10 @@ async function showResult() {
       (async () => {
         const user = await getCurrentUser();
         if (!user) return;
-        const { data: profile } = await supabase
-          .from("profiles")
-          .select("username")
-          .eq("id", user.id)
-          .maybeSingle();
+        const [, { data: profile }] = await Promise.all([
+          lbReady,
+          supabase.from("profiles").select("username").eq("id", user.id).maybeSingle(),
+        ]);
         if (playerNameInput && profile?.username) {
           playerNameInput.value = profile.username;
         }

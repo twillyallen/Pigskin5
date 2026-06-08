@@ -91,7 +91,38 @@ class TrueFalseGenerator(BaseGenerator):
                 wrong = stats["super_bowls_won"] + 1
                 facts.append((f"{name} has won {wrong} Super Bowls.", False))
                 facts.append((f"{name} has won {stats['super_bowls_won']} Super Bowls.", True))
-        
+
+        # Founded year facts
+        for name, data in FRANCHISES.items():
+            if "founded" in data:
+                year = data["founded"]
+                short = name.split()[-1]
+                poss = short + ("'" if short.endswith("s") else "'s")
+                facts.append((f"{year} was the {poss} first season.", True))
+                delta = random.choice([-4, -3, 3, 4, 5])
+                facts.append((f"{year + delta} was the {poss} first season.", False))
+
+        # Stadium facts
+        teams_with_stadiums = [(n, data["stadium"]) for n, data in FRANCHISES.items() if "stadium" in data]
+        for team_name, correct_stadium in teams_with_stadiums:
+            facts.append((f"The {team_name} play their home games at {correct_stadium}.", True))
+            other_stadiums = [s for n, s in teams_with_stadiums if n != team_name and s != correct_stadium]
+            if other_stadiums:
+                wrong_stadium = random.choice(other_stadiums)
+                facts.append((f"The {team_name} play their home games at {wrong_stadium}.", False))
+
+        # Division facts
+        ALL_DIVISIONS = [
+            "AFC East", "AFC North", "AFC South", "AFC West",
+            "NFC East", "NFC North", "NFC South", "NFC West",
+        ]
+        for name, data in FRANCHISES.items():
+            if "division" in data:
+                correct_div = data["division"]
+                facts.append((f"The {name} play in the {correct_div}.", True))
+                wrong_divs = [d for d in ALL_DIVISIONS if d != correct_div]
+                facts.append((f"The {name} play in the {random.choice(wrong_divs)}.", False))
+
         return facts
     
     def generate(self, difficulty: str = "medium") -> dict:

@@ -318,6 +318,76 @@ export const CALENDAR = {
     { question: "OVER or UNDER: The Buffalo Bills have O/U 3.5 Super Bowl losses all-time.", choices: ["OVER", "UNDER"], answer: 0 },
     ],
   },
+  "2026-06-09": { //Tuesday
+    event: "",
+    questions: [
+    { question: "Which of these was an ACTUAL NFL player?", choices: ["Trevontay Fender", "Tresharius Winterbottom", "Adoree' Jackson", "Desharious Goldsworth"], answer: 2 },
+    { question: "OVER or UNDER: The Broncos have O/U 3.5 Super Bowl victories all-time.", choices: ["OVER", "UNDER"], answer: 1 },
+    { question: "Which NFL team plays their home games at SoFi Stadium?", choices: ["Kansas City Chiefs", "Los Angeles Chargers", "Jacksonville Jaguars", "Cleveland Browns"], answer: 1 },
+    { question: "Guess the Career WR:\n- 7,058 Rec. Yards\n- 43 Rec. TDs\n- 565 Receptions", choices: ["Larry Fitzgerald", "Christian Kirk", "Curtis Samuel", "Allen Robinson"], answer: 3 },
+    { question: "True or False: The Tennessee Titans were originally called the Houston Oilers.", choices: ["True", "False"], answer: 0 },
+    ],
+  },
+    "2026-06-10": { //Wednesday
+    event: "",
+    questions: [
+    { question: "Guess the Career QB:\n- 63,978 Pass Yards\n- 425 Pass TDs\n- 212 INTs\n- 95.0 Passer Rating", choices: ["Matt Ryan", "Philip Rivers", "Eli Manning", "Brett Favre"], answer: 1 },
+    { question: "Which of these was an ACTUAL NFL player?", choices: ["Ruke Beauregard-Jones", "Sequester Grundelplith M.D.", "Tresharius Winterbottom", "Peerless Price"], answer: 3 },
+    { question: "OVER or UNDER: Chad Johnson has O/U 10,960.5 Career Receiving Yards.", choices: ["OVER", "UNDER"], answer: 0 },
+    { question: "Which NFL team plays their home games at Mercedes-Benz Stadium?", choices: ["New York Giants", "Houston Texans", "Arizona Cardinals", "Atlanta Falcons"], answer: 3 },
+    { question: "Which team did the Steelers defeat in Super Bowl XLIII?", choices: ["Cardinals", "Jets", "Rams", "Vikings"], answer: 0 },
+    ],
+  },
+    "2026-06-11": { //Thursday
+    event: "",
+    questions: [
+    { question: "Which of these was an ACTUAL NFL player?", choices: ["Dekambrian Picklesworth", "Plaxico Burress", "La'Dain Crumbleton", "Xmus Jaxon Flaxon-Waxon"], answer: 1 },
+    { question: "Guess the Career TE:\n- 5,295 Rec. Yards\n- 47 Rec. TDs\n- 455 Receptions", choices: ["Visanthe Shiancoe", "Anthony Fasano", "Jerramy Stevens", "Hunter Henry"], answer: 3 },
+    { question: "True or False: 1956 was the Titans' first season.", choices: ["True", "False"], answer: 1 },
+    { question: "Who holds the NFL record for most career receiving TDs by a tight end?", choices: ["Antonio Gates", "Rob Gronkowski", "Zach Ertz", "Mark Andrews"], answer: 0 },
+    { question: "What division do the Houston Texans play in?", choices: ["NFC North", "NFC East", "AFC South", "NFC South"], answer: 2 },
+    ],
+  },
+    "2026-06-12": { //Friday
+    event: "",
+    questions: [
+    { question: "What year did the Cardinals relocate to Arizona?", choices: ["1986", "1992", "1988", "1985"], answer: 2 },
+    { question: "Which TE has more Career Receiving Yards?", choices: ["Zach Ertz", "Greg Olsen", "Heath Miller", "Jimmy Graham"], answer: 1 },
+    { question: "Which coach said the famous quote \"Playoffs?! Don't talk about playoffs!\"?", choices: ["Vince Lombardi", "Mike Ditka", "Matt LaFleur", "Jim Mora"], answer: 3 },
+    { question: "Which of these was an ACTUAL NFL player?", choices: ["Grunthaven Wollstonecraft", "Bud Dupree", "Sofia Hammersmith", "Markson Butterfield"], answer: 1 },
+    { question: "Guess the Career RB:\n- 6,818 Rush Yards\n- 32 Rush TDs\n- 4.8 Yards per Carry", choices: ["Priest Holmes", "Warrick Dunn", "Robert Smith", "Dorsey Levens"], answer: 2 },
+    ],
+  },
+    "2026-06-13": { //Saturday
+    event: "",
+    questions: [
+    { question: "In what season did the \"Butt Fumble\" occur?", choices: ["2013", "2012", "2015", "2011"], answer: 1 },
+    { question: "How many Super Bowls have the Las Vegas Raiders won?", choices: ["3", "4", "2", "6"], answer: 0 },
+    { question: "True or False: 1995 was the Panthers' first season.", choices: ["True", "False"], answer: 0 },
+    { question: "OVER or UNDER: The Raiders have been located in O/U 2.5 cities.", choices: ["OVER", "UNDER"], answer: 0 },
+    { question: "Guess the Career RB:\n- 4.3 Yards per Carry\n- 18,453 Yards from Scrimmage\n- 13,686 Rush Yards\n- 145 Rush TDs", choices: ["Clinton Portis", "Brian Westbrook", "LaDainian Tomlinson", "Correll Buckhalter"], answer: 2 },
+    ],
+  },
+    "2026-06-14": { //Sunday
+    event: "",
+    questions: [
+    { question: "True or False: Brett Favre was originally drafted by the Atlanta Falcons.", choices: ["True", "False"], answer: 0 },
+    { question: "Who holds the NFL single-season record for passing yards?", choices: ["Jameis Winston", "Peyton Manning", "Dan Marino", "Justin Herbert"], answer: 1 },
+    { question: "How many Super Bowls have the San Francisco 49ers won?", choices: ["0", "6", "5", "7"], answer: 2 },
+    { question: "OVER or UNDER: The Bears have O/U 9.5 NFL championships (all-time).", choices: ["OVER", "UNDER"], answer: 1 },
+    { question: "Which of these was an ACTUAL NFL player?", choices: ["Traequan Dandridge", "Sofia Whistleblower", "Rashontez Gaultin", "Booger McFarland"], answer: 3 },
+    ],
+  },
+    "2026-06-15": { //Monday
+    event: "",
+    questions: [
+    { question: "OVER or UNDER: The Chiefs have O/U 4.5 Super Bowl victories all-time.", choices: ["OVER", "UNDER"], answer: 1 },
+    { question: "True or False: The Jaguars have appeared in a Super Bowl.", choices: ["True", "False"], answer: 1 },
+    { question: "Who holds the NFL record for most receiving TDs in a single season?", choices: ["Mike Evans", "Jimmy Graham", "Randy Moss", "Davante Adams"], answer: 2 },
+    { question: "Who is the New England Patriots' all-time leader in passing yards?", choices: ["Drew Bledsoe", "Babe Parilli", "Tom Brady", "Steve Grogan"], answer: 2 },
+    { question: "Guess the Career RB:\n- 2,656 Rush Yards\n- 14 Rush TDs\n- 3.9 Yards per Carry\n- 25 Total TDs", choices: ["Isaiah Crowell", "Nick Chubb", "Rachaad White", "Kareem Hunt"], answer: 2 },
+    ],
+  },
 
 };
 

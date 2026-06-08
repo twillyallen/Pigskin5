@@ -18,6 +18,7 @@ class FranchiseGenerator(BaseGenerator):
             self._which_team,
             self._stadium_question,
             self._relocation_question,
+            self._division_question,
         ]
 
         gen_func = random.choice(generators)
@@ -194,6 +195,32 @@ class FranchiseGenerator(BaseGenerator):
 
         return {
             "question": f"How many Super Bowls have the {team_name} won?",
+            "choices": choices,
+            "answer": answer_idx,
+        }
+
+    def _division_question(self, difficulty: str) -> dict:
+        """What division do the [Team] play in?"""
+        ALL_DIVISIONS = [
+            "AFC East", "AFC North", "AFC South", "AFC West",
+            "NFC East", "NFC North", "NFC South", "NFC West",
+        ]
+        eligible = [(name, data) for name, data in FRANCHISES.items() if "division" in data]
+        if not eligible:
+            return self._franchise_history(difficulty)
+
+        team_name, team_data = random.choice(eligible)
+        correct = team_data["division"]
+
+        distractors = [d for d in ALL_DIVISIONS if d != correct]
+        random.shuffle(distractors)
+
+        choices = [correct] + distractors[:3]
+        random.shuffle(choices)
+        answer_idx = choices.index(correct)
+
+        return {
+            "question": f"What division do the {team_name} play in?",
             "choices": choices,
             "answer": answer_idx,
         }
