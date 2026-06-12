@@ -658,7 +658,9 @@
 
     function initPageAds() {
       var isSunday = new Date().getDay() === 0;
-      var isSignedIn = !!localStorage.getItem('sb-fhjywfejdrjaflvaphhp-auth-token');
+      var isSignedIn = Object.keys(localStorage).some(function(k) {
+        return k.startsWith('sb-') && k.endsWith('-auth-token');
+      });
       if (!isSunday && isSignedIn) {
         pushAd(document.getElementById('popupAdSlot'));
       }
@@ -728,7 +730,9 @@
 
     var isSunday = new Date().getDay() === 0;
 
-    var isSignedIn = !!localStorage.getItem('sb-fhjywfejdrjaflvaphhp-auth-token');
+    var isSignedIn = Object.keys(localStorage).some(function(k) {
+      return k.startsWith('sb-') && k.endsWith('-auth-token');
+    });
 
     if (alreadyPlayed || isMagicLinkReturn || !isSignedIn) {
       closeAdModal();
