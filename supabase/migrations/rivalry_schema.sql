@@ -323,6 +323,9 @@ BEGIN
   FROM rivalry_games
   WHERE rivalry_id = p_rivalry_id AND game_date = p_for_date;
 
+  -- Already settled: do not award a second win
+  IF v_game.day_winner IS NOT NULL THEN RETURN; END IF;
+
   -- Both missed: mutual miss → end series
   IF NOT FOUND OR (v_game.player1_score IS NULL AND v_game.player2_score IS NULL) THEN
     UPDATE rivalries SET status = 'mutual_miss', ended_at = NOW() WHERE id = p_rivalry_id;

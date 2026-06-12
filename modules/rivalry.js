@@ -330,9 +330,9 @@ export async function submitRivalryScore(rivalryId, { score, timeSecs, picks }) 
 
   if (upsertErr) return { error: upsertErr.message };
 
-  // If both players have now played, settle the day
+  // If both players have now played and the day is not yet settled, settle it
   const otherScoreCol = isP1 ? "player2_score" : "player1_score";
-  if (game[otherScoreCol] !== null && game[otherScoreCol] !== undefined) {
+  if (game[otherScoreCol] !== null && game[otherScoreCol] !== undefined && game.day_winner === null) {
     await supabase.rpc("settle_rivalry_day", {
       p_rivalry_id: rivalryId,
       p_for_date: today,
