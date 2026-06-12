@@ -24,6 +24,57 @@ import {
   checkRivalryAchievements,
 } from "./rivalry.js";
 
+// ✏️ TAUNT PRESETS — Add, edit, or remove taunts here freely
+const TAUNT_PRESETS = [
+  "Think you know more about football than me? Prove it.",
+  "I'm living rent-free in your head AND your standings.",
+  "Clock's ticking. My score isn't going to beat itself.",
+  "Even my wrong answers were more confident than you.",
+  "Your rivalry slot is about to become a loss trophy.",
+  "I played. You're up. Don't embarrass yourself",
+  "This rivalry is starting to feel a little one-sided...",
+  "Wanna let me win AGAIN?",
+  "Touch grass or touch the leaderboard — your choice.",
+  "Quit ducking me.",
+  "Now let's see your score 😷",
+  "Took me like 2 minutes. You have no excuse.",
+  "Easy Peasy. Lemon Squeezy. Your move.",
+  "Don't embarrass yourself this time.",
+  "I showed up today. Will you?",
+  "No pressure. (There's pressure)",
+  "This Rivalry won't settle itself.",
+  "Yeahhh just give up now, it's fine.",
+  "Don't blow it...",
+  "Still waiting...",
+
+
+];
+
+function _buildTauntText(scoreStr) {
+  const preset = TAUNT_PRESETS[Math.floor(Math.random() * TAUNT_PRESETS.length)];
+  return `${preset} I scored ${scoreStr} today. Your move: https://pigskin5.com/?modal=rivalries`;
+}
+
+async function _copyTaunt(scoreStr) {
+  const text = _buildTauntText(scoreStr);
+  try {
+    if (navigator.clipboard && window.isSecureContext) {
+      await navigator.clipboard.writeText(text);
+    } else {
+      const ta = document.createElement("textarea");
+      ta.value = text;
+      ta.style.cssText = "position:fixed;opacity:0;";
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand("copy");
+      ta.remove();
+    }
+    showToast("Taunt copied! 🔥");
+  } catch {
+    showToast("Could not copy. Try again.");
+  }
+}
+
 const TIME_LIMIT = 15;
 
 function testModePatchRivalries(rivalries) {
@@ -587,6 +638,14 @@ async function renderRivalryDetail(body, rivalryId, userId, overlay) {
         Play Today's Rivalry Quiz
       </button>` : ""}
 
+    ${isActive && played && (theirTodayScore === null || theirTodayScore === undefined) ? `
+      <button id="rivalryTauntBtn" style="
+          display:block;width:100%;padding:14px;margin-bottom:12px;
+          background:linear-gradient(135deg,#f97316,#ea580c);border:none;
+          border-radius:14px;color:#fff;font-size:16px;font-weight:900;cursor:pointer;">
+        🔥 Taunt Your Rival
+      </button>` : ""}
+
     ${historyHtml}
 
     ${isComplete || isMutualMiss ? `
@@ -620,6 +679,10 @@ async function renderRivalryDetail(body, rivalryId, userId, overlay) {
     overlay.remove();
     document.body.style.overflow = "";
     openRivalryQuiz(rivalryId);
+  });
+
+  body.querySelector("#rivalryTauntBtn")?.addEventListener("click", () => {
+    _copyTaunt(`${myTodayScore}/5`);
   });
 
   body.querySelector("#rivalryForfeitBtn")?.addEventListener("click", () => {
@@ -1025,6 +1088,7 @@ export async function injectStartRivalryButton(anchorEl) {
   if (document.getElementById("rivalryCardResult")) return;
   await renderRivalryCard(anchorEl, true);
 }
+
 
 // ── Rivalry Quiz Overlay ──────────────────────────────────
 
@@ -1566,6 +1630,14 @@ export function openRivalryResults(rivalry, rivalryId, myScore, picks, avgTime, 
           View Rivalry Details
         </button>
 
+        ${!theyPlayed ? `
+        <button id="rqTaunt" style="
+            display:block;width:100%;padding:14px;margin-bottom:12px;
+            background:linear-gradient(135deg,#f97316,#ea580c);border:none;
+            border-radius:14px;color:#fff;font-size:16px;font-weight:900;cursor:pointer;">
+          🔥 Taunt Your Rival
+        </button>` : ""}
+
         <button id="rqClose" style="
             background:none;border:none;color:rgba(255,255,255,0.35);
             font-size:13px;cursor:pointer;padding:8px;">
@@ -1591,6 +1663,10 @@ export function openRivalryResults(rivalry, rivalryId, myScore, picks, avgTime, 
       overlay.remove();
       document.body.style.overflow = "";
       openRivalryModal(rivalryId);
+    });
+
+    overlay.querySelector("#rqTaunt")?.addEventListener("click", () => {
+      _copyTaunt(`${myScore}/5`);
     });
 
     overlay.querySelector("#rqClose")?.addEventListener("click", () => {

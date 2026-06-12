@@ -9,7 +9,7 @@ import { NFL_TEAMS } from "./modules/nfl-teams.js";
 import { showTierTooltip, showAchievementToast } from "./modules/ui-helpers.js";
 import { ACHIEVEMENTS, ACHIEVEMENT_CATEGORIES } from "./modules/achievements.js";
 import { STREAK_TIERS } from "./modules/config.js";
-import { renderRivalryCard, injectStartRivalryButton } from "./modules/rivalry-ui.js?v=20260524";
+import { renderRivalryCard, injectStartRivalryButton, openRivalryModal } from "./modules/rivalry-ui.js?v=20260612";
 
 
 
@@ -2262,6 +2262,11 @@ function init() {
   }
 
   showStartScreen();
+
+  // Deep-link: ?modal=rivalries auto-opens the Rivalries modal (used by taunt links)
+  if (new URLSearchParams(location.search).get("modal") === "rivalries") {
+    openRivalryModal();
+  }
 
   window.scrollTo(0, 0);
 
