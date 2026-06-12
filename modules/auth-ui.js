@@ -88,6 +88,7 @@ emailOptInToggle?.addEventListener("change", async () => {
 
 onAuthChange(async (user) => {
   if (user) {
+    localStorage.setItem('ft5_authed', '1');
     closeModal();
     const profile = await getCurrentProfile();
     initEmailOptIn(profile);
@@ -102,6 +103,7 @@ onAuthChange(async (user) => {
   if (!profile.favorite_team) maybeShowTeamPickerPrompt();
 }
   } else {
+    localStorage.removeItem('ft5_authed');
     signInBtn.textContent = "Sign in";
     signInBtn.onclick = openModal;
     hideEmailOptIn();

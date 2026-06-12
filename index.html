@@ -658,9 +658,7 @@
 
     function initPageAds() {
       var isSunday = new Date().getDay() === 0;
-      var isSignedIn = Object.keys(localStorage).some(function(k) {
-        return k.startsWith('sb-') && k.endsWith('-auth-token');
-      });
+      var isSignedIn = localStorage.getItem('ft5_authed') === '1';
       if (!isSunday) {
         pushAd(document.getElementById('popupAdSlot'));
       }
