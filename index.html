@@ -658,10 +658,13 @@
 
     function initPageAds() {
       var isSunday = new Date().getDay() === 0;
-      if (!isSunday) {
+      var isSignedIn = !!localStorage.getItem('sb-fhjywfejdrjaflvaphhp-auth-token');
+      if (!isSunday && isSignedIn) {
         pushAd(document.getElementById('popupAdSlot'));
       }
-      pushAd(document.getElementById('startScreenSquareAd'));
+      if (isSignedIn) {
+        pushAd(document.getElementById('startScreenSquareAd'));
+      }
       pushAd(document.getElementById('resultsBannerDesktopAd'));
       pushAd(document.getElementById('resultsBannerMobileAd'));
     }
