@@ -1426,6 +1426,7 @@ async function showStartScreen() {
     renderStartLeaderboard(runDate);
     leaderboardSection?.classList.remove("hidden");
     adWrap?.classList.remove("hidden");
+    renderRivalryCard(startScreen).catch(() => {});
   } else {
     if (startBtn) {
       startBtn.disabled = false;
@@ -1434,6 +1435,7 @@ async function showStartScreen() {
     document.getElementById("startScorecard")?.classList.add("hidden");
     leaderboardSection?.classList.add("hidden");
     adWrap?.classList.add("hidden");
+    document.getElementById("rivalryCard")?.remove();
   }
 
   const dayData = CALENDAR[runDate];
@@ -1455,9 +1457,6 @@ async function showStartScreen() {
   else if (eventName === "ValentinesDay") {
     startHearts();
   }
-
-  // Render rivalry card below the play button (non-blocking)
-  renderRivalryCard(startScreen).catch(() => {});
 
   showSundayWinnerCard();
 }

@@ -725,7 +725,9 @@
 
     var isSunday = new Date().getDay() === 0;
 
-    if (alreadyPlayed || isMagicLinkReturn) {
+    var isSignedIn = !!localStorage.getItem('sb-fhjywfejdrjaflvaphhp-auth-token');
+
+    if (alreadyPlayed || isMagicLinkReturn || !isSignedIn) {
       closeAdModal();
       return;
     }
