@@ -661,7 +661,7 @@
       var isSignedIn = Object.keys(localStorage).some(function(k) {
         return k.startsWith('sb-') && k.endsWith('-auth-token');
       });
-      if (!isSunday && isSignedIn) {
+      if (!isSunday) {
         pushAd(document.getElementById('popupAdSlot'));
       }
       if (isSignedIn) {
@@ -730,11 +730,7 @@
 
     var isSunday = new Date().getDay() === 0;
 
-    var isSignedIn = Object.keys(localStorage).some(function(k) {
-      return k.startsWith('sb-') && k.endsWith('-auth-token');
-    });
-
-    if (alreadyPlayed || isMagicLinkReturn || !isSignedIn) {
+    if (alreadyPlayed || isMagicLinkReturn) {
       closeAdModal();
       return;
     }
