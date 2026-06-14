@@ -9,7 +9,7 @@ import { NFL_TEAMS } from "./modules/nfl-teams.js";
 import { showTierTooltip, showAchievementToast } from "./modules/ui-helpers.js";
 import { ACHIEVEMENTS, ACHIEVEMENT_CATEGORIES } from "./modules/achievements.js";
 import { STREAK_TIERS } from "./modules/config.js";
-import { renderRivalryCard, injectStartRivalryButton, openRivalryModal } from "./modules/rivalry-ui.js?v=20260612";
+import { renderRivalryCard, injectStartRivalryButton, openRivalryModal } from "./modules/rivalry-ui.js?v=20260614";
 
 
 
@@ -2266,6 +2266,11 @@ function init() {
   if (new URLSearchParams(location.search).get("modal") === "rivalries") {
     openRivalryModal();
   }
+
+  // Challenge button on another player's card fires this event to open the new-rivalry flow
+  window.addEventListener("pigskin5:start-new-rivalry", () => {
+    openRivalryModal(null, true);
+  });
 
   window.scrollTo(0, 0);
 

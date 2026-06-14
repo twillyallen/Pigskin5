@@ -1,4 +1,5 @@
 import { fetchPlayerStats } from "./leaderboard.js";
+import { createRivalryChallenge, getPendingChallengeWith, isAtRivalryCap } from "./rivalry.js";
 import { NFL_TEAMS } from "./nfl-teams.js";
 import { ACHIEVEMENTS, ACHIEVEMENT_CATEGORIES } from "./achievements.js";
 import { STREAK_TIERS } from "./config.js";
@@ -79,7 +80,7 @@ function formatMemberSince(isoString) {
   return d.toLocaleDateString("en-US", { month: "long", year: "numeric" });
 }
 
-// Custom popup to show tier badge info
+// Custom popup to show tier badge info (other-player view — from leaderboard clicks)
 export async function showTierTooltip(emoji, tierName, streak, playerName, emojiScore, points, username, titleText = null) {
   const existing = document.getElementById("tier-popup-container");
   if (existing) existing.remove();
@@ -125,7 +126,7 @@ export async function showTierTooltip(emoji, tierName, streak, playerName, emoji
   tierEmojiEl.className = "player-card__tier-emoji";
   tierEmojiEl.textContent = emoji;
 
-  const { wrap: linesLeft,  primary: leftPrimary,  secondary: leftSecondary  } = makeSideLines();
+  const { wrap: linesLeft, primary: leftPrimary, secondary: leftSecondary } = makeSideLines();
   const { wrap: linesRight, primary: rightPrimary, secondary: rightSecondary } = makeSideLines();
 
   headerEl.appendChild(linesLeft);
@@ -137,47 +138,57 @@ export async function showTierTooltip(emoji, tierName, streak, playerName, emoji
   const nameEl = document.createElement("div");
   nameEl.className = "player-card__display-name";
   nameEl.textContent = playerName || "Anonymous";
+  body.appendChild(nameEl);
 
   // --- Username ---
-  const usernameEl = document.createElement("div");
-  usernameEl.className = "player-card__username";
-  if (username) usernameEl.textContent = `${username}`;
+  if (username) {
+    const usernameEl = document.createElement("div");
+    usernameEl.className = "player-card__username";
+    usernameEl.textContent = `@${username}`;
+    body.appendChild(usernameEl);
+  }
 
-  // --- Tier + streak ---
+  // --- Twitter row (view-only; populated after async load) ---
+  const twitterRowEl = document.createElement("div");
+  twitterRowEl.className = "player-card__twitter-row";
+  if (username) body.appendChild(twitterRowEl);
+
+  // --- Tier name (large/bold) ---
   const tierRowEl = document.createElement("div");
   tierRowEl.className = "player-card__tier-row";
   tierRowEl.textContent = tierName;
+  body.appendChild(tierRowEl);
 
+  // --- Streak count ---
   const streakEl = document.createElement("div");
   streakEl.className = "player-card__streak";
   streakEl.textContent = `${streak}-day streak`;
-
-  // Twitter row (populated after async stats load; hidden until then)
-  const twitterRowEl = document.createElement("div");
-  twitterRowEl.className = "player-card__twitter-row";
-
-  body.appendChild(nameEl);
-  if (username) {
-    body.appendChild(usernameEl);
-    body.appendChild(twitterRowEl);
-  }
-  body.appendChild(tierRowEl);
   body.appendChild(streakEl);
 
-  // --- Expanded sections (only for signed-in users with username) ---
-  let memberSinceEl, statsEl, achievementsEl, badgeDescEl;
-
+  // --- Member since (populated after async load) ---
+  let memberSinceEl;
   if (username) {
-    // Member since (skeleton)
     memberSinceEl = document.createElement("div");
     memberSinceEl.className = "player-card__member-since";
-    memberSinceEl.textContent = "Member since …";
     body.appendChild(memberSinceEl);
+  }
 
-    // Stats panel (skeleton)
+  // --- Stats + achievements (signed-in players only) ---
+  let statsEl, todayEl, achievementsEl, badgeDescEl, rivalryRecordEl;
+  let targetUserId = null; // set async once stats load; used by the challenge confirmation
+
+  if (username) {
+    // 6-stat skeleton in 3×2 grid
     statsEl = document.createElement("div");
     statsEl.className = "player-card__stats";
-    [["—", "Quizzes"], ["—", "Accuracy"], ["—", "Touchdowns"], ["—", "Daily Wins"]].forEach(([val, label]) => {
+    [
+      ["—", "Quizzes"],
+      ["—", "Touchdowns"],
+      ["—", "Daily Wins"],
+      ["—", "Best Week"],
+      ["—", "Pigskin IQ"],
+      ["—", "Accuracy"],
+    ].forEach(([val, label]) => {
       const cell = document.createElement("div");
       cell.className = "player-card__stat";
       const v = document.createElement("div");
@@ -192,9 +203,25 @@ export async function showTierTooltip(emoji, tierName, streak, playerName, emoji
     });
     body.appendChild(statsEl);
 
-    // Achievements (locked skeleton) grouped by category
+    // --- Today's quiz (shown only if player has played today; populated async) ---
+    todayEl = document.createElement("div");
+    todayEl.className = "player-card__today";
+    todayEl.style.display = "none";
+    body.appendChild(todayEl);
+
+    // --- Achievements toggle (collapsed by default) ---
+    const achToggleEl = document.createElement("div");
+    achToggleEl.className = "player-card__ach-toggle";
+    const achChevron = document.createElement("span");
+    achChevron.className = "player-card__ach-chevron";
+    achChevron.textContent = "▸";
+    achToggleEl.appendChild(document.createTextNode("Achievements "));
+    achToggleEl.appendChild(achChevron);
+    body.appendChild(achToggleEl);
+
+    // Achievements panel (hidden until toggled) — locked skeleton
     achievementsEl = document.createElement("div");
-    achievementsEl.className = "player-card__achievements";
+    achievementsEl.className = "player-card__achievements player-card__achievements--hidden";
     ACHIEVEMENT_CATEGORIES.forEach(cat => {
       const catEl = document.createElement("div");
       catEl.className = "player-card__achievement-category";
@@ -215,59 +242,165 @@ export async function showTierTooltip(emoji, tierName, streak, playerName, emoji
     });
     body.appendChild(achievementsEl);
 
-    // Badge description area (hidden until a badge is tapped)
     badgeDescEl = document.createElement("div");
     badgeDescEl.className = "player-card__badge-desc";
     body.appendChild(badgeDescEl);
+
+    achToggleEl.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const isOpen = !achievementsEl.classList.contains("player-card__achievements--hidden");
+      if (isOpen) {
+        achievementsEl.classList.add("player-card__achievements--hidden");
+        achChevron.classList.remove("player-card__ach-chevron--open");
+        badgeDescEl.innerHTML = "";
+      } else {
+        achievementsEl.classList.remove("player-card__achievements--hidden");
+        achChevron.classList.add("player-card__ach-chevron--open");
+      }
+    });
+
+    // --- Rivalry record row ---
+    const rivalryRowEl = document.createElement("div");
+    rivalryRowEl.className = "player-card__rivalry-row";
+    const rivalryLabel = document.createElement("span");
+    rivalryLabel.className = "player-card__rivalry-label";
+    rivalryLabel.textContent = "RIVALRY RECORD";
+    rivalryRecordEl = document.createElement("span");
+    rivalryRecordEl.className = "player-card__rivalry-record player-card__stat-value--loading";
+    rivalryRecordEl.textContent = "—";
+    rivalryRowEl.appendChild(rivalryLabel);
+    rivalryRowEl.appendChild(rivalryRecordEl);
+    body.appendChild(rivalryRowEl);
+
+    // --- Challenge button (other-player card only) ---
+    const challengeBtn = document.createElement("button");
+    challengeBtn.className = "player-card__challenge-btn";
+    challengeBtn.textContent = "Challenge to Rivalry";
+    challengeBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+
+      const confirmEl = document.createElement("div");
+      confirmEl.className = "player-card__confirm";
+
+      const confirmText = document.createElement("p");
+      confirmText.className = "player-card__confirm-text";
+      confirmText.textContent = `Challenge ${playerName || "this player"} to a rivalry?`;
+
+      const confirmBtns = document.createElement("div");
+      confirmBtns.className = "player-card__confirm-btns";
+
+      const yesBtn = document.createElement("button");
+      yesBtn.className = "player-card__confirm-yes";
+      yesBtn.textContent = "Yes, Challenge!";
+
+      const noBtn = document.createElement("button");
+      noBtn.className = "player-card__confirm-no";
+      noBtn.textContent = "No, Go Back";
+
+      confirmBtns.appendChild(yesBtn);
+      confirmBtns.appendChild(noBtn);
+      confirmEl.appendChild(confirmText);
+      confirmEl.appendChild(confirmBtns);
+
+      challengeBtn.replaceWith(confirmEl);
+
+      yesBtn.addEventListener("click", async (ev) => {
+        ev.stopPropagation();
+        if (targetUserId) {
+          yesBtn.disabled = true;
+          yesBtn.textContent = "Sending…";
+          const { error } = await createRivalryChallenge(targetUserId);
+          if (error) {
+            const msgs = {
+              slots_full:               "Your rivalry slots are full!",
+              already_challenged:        "You already challenged this player — check your Rivalries Box!",
+              incoming_challenge_exists: "This player already challenged you — check your Rivalries Box!",
+            };
+            showToast(msgs[error] || "Error sending challenge.");
+            if (error === "already_challenged" || error === "incoming_challenge_exists") {
+              confirmText.textContent = error === "incoming_challenge_exists"
+                ? "They already challenged you!"
+                : "Challenge already sent!";
+              confirmText.style.color = "rgba(255,255,255,0.5)";
+              confirmBtns.remove();
+              setTimeout(() => removePopup(), 1800);
+            } else {
+              confirmEl.replaceWith(challengeBtn);
+            }
+            return;
+          }
+          confirmText.textContent = "Challenge sent! 🏈";
+          confirmText.style.color = "#22c55e";
+          confirmBtns.remove();
+          setTimeout(() => removePopup(), 1400);
+        } else {
+          removePopup();
+          window.dispatchEvent(new CustomEvent("pigskin5:start-new-rivalry"));
+        }
+      });
+
+      noBtn.addEventListener("click", (ev) => {
+        ev.stopPropagation();
+        confirmEl.replaceWith(challengeBtn);
+      });
+    });
+    body.appendChild(challengeBtn);
   }
-
-  // --- Score row + points ---
-  if (emojiScore) {
-    const scoreEl = document.createElement("div");
-    scoreEl.className = "player-card__score-row";
-    scoreEl.textContent = emojiScore;
-    body.appendChild(scoreEl);
-  }
-
-  if (points !== undefined && points !== null) {
-    const ptsEl = document.createElement("div");
-    ptsEl.className = "player-card__points";
-    ptsEl.textContent = `${Number(points).toLocaleString()} pts`;
-    body.appendChild(ptsEl);
-  }
-
-  card.appendChild(body);
-  container.appendChild(card);
-  document.body.appendChild(container);
-
-  // Only the backdrop (not the card itself) closes the popup
-  const removePopup = () => {
-    container.style.opacity = "0";
-    container.style.transition = "opacity 0.2s";
-    setTimeout(() => container.remove(), 200);
-  };
-  container.addEventListener("click", removePopup);
-  container.addEventListener("touchend", removePopup);
-  card.addEventListener("click", e => e.stopPropagation());
-  card.addEventListener("touchend", e => e.stopPropagation());
 
   // --- Close button ---
   const closeBtn = document.createElement("button");
   closeBtn.className = "player-card__close-btn";
   closeBtn.textContent = "Close";
+  body.appendChild(closeBtn);
+
+  card.appendChild(body);
+  container.appendChild(card);
+  document.body.appendChild(container);
+  document.body.style.overflow = "hidden";
+
+  const removePopup = () => {
+    container.style.opacity = "0";
+    container.style.transition = "opacity 0.2s";
+    setTimeout(() => container.remove(), 200);
+    document.body.style.overflow = "";
+  };
+
+  container.addEventListener("click", removePopup);
+  container.addEventListener("touchend", removePopup);
+  card.addEventListener("click", e => e.stopPropagation());
+  card.addEventListener("touchend", e => e.stopPropagation());
   closeBtn.addEventListener("click", (e) => { e.stopPropagation(); removePopup(); });
   closeBtn.addEventListener("touchend", (e) => { e.preventDefault(); e.stopPropagation(); removePopup(); });
-  body.appendChild(closeBtn);
 
   // --- Async stats population ---
   if (username) {
     (async () => {
       const stats = await fetchPlayerStats(username);
       if (!document.getElementById("tier-popup-container")) return;
-
       if (!stats) return;
 
-      // Team color lines flanking the emoji
+      targetUserId = stats.userId;
+
+      // Lock button if there's already a pending challenge in either direction,
+      // or if the viewer has no open rivalry slots (active + pending >= 5).
+      Promise.all([getPendingChallengeWith(targetUserId), isAtRivalryCap()]).then(
+        ([{ outgoing, incoming }, atCap]) => {
+          if (!challengeBtn.isConnected) return;
+          if (outgoing || incoming) {
+            challengeBtn.textContent = incoming ? "Pending Invite from Them" : "Challenge Sent ✓";
+            challengeBtn.disabled = true;
+            challengeBtn.style.opacity = "0.55";
+            challengeBtn.style.cursor = "default";
+          } else if (atCap) {
+            challengeBtn.textContent = "Rivalry Slots Full";
+            challengeBtn.disabled = true;
+            challengeBtn.style.opacity = "0.55";
+            challengeBtn.style.cursor = "default";
+          }
+        }
+      );
+
+      // Team color side lines
       if (stats.favoriteTeam) {
         const team = NFL_TEAMS.get(stats.favoriteTeam);
         if (team) {
@@ -279,16 +412,20 @@ export async function showTierTooltip(emoji, tierName, streak, playerName, emoji
         }
       }
 
-      // Update streak with authoritative DB value
+      // Update tier emoji, tier name, and streak with authoritative DB values
       if (stats.currentStreak != null) {
         const updatedTier = getTierForStreak(stats.currentStreak);
-        streakEl.textContent = `${stats.currentStreak}-day streak`;
         tierEmojiEl.textContent = updatedTier.emoji;
         tierRowEl.textContent = updatedTier.name;
+        streakEl.textContent = `${stats.currentStreak}-day streak`;
       }
 
-      // Twitter handle
-      if (stats.twitterHandle && twitterRowEl) {
+      // Member since
+      const since = formatMemberSince(stats.memberSince);
+      if (since && memberSinceEl) memberSinceEl.textContent = `Member since ${since}`;
+
+      // Twitter handle (view-only)
+      if (stats.twitterHandle) {
         const xLink = document.createElement("a");
         xLink.href = `https://twitter.com/${stats.twitterHandle}`;
         xLink.target = "_blank";
@@ -296,7 +433,6 @@ export async function showTierTooltip(emoji, tierName, streak, playerName, emoji
         xLink.className = "player-card__twitter-icon";
         xLink.innerHTML = X_SVG;
         xLink.addEventListener("click", e => e.stopPropagation());
-
         const handleLink = document.createElement("a");
         handleLink.href = `https://twitter.com/${stats.twitterHandle}`;
         handleLink.target = "_blank";
@@ -304,29 +440,28 @@ export async function showTierTooltip(emoji, tierName, streak, playerName, emoji
         handleLink.className = "player-card__twitter-handle-link";
         handleLink.textContent = `@${stats.twitterHandle}`;
         handleLink.addEventListener("click", e => e.stopPropagation());
-
         twitterRowEl.appendChild(xLink);
         twitterRowEl.appendChild(handleLink);
       }
 
-      // Member since
-      const since = formatMemberSince(stats.memberSince);
-      if (since && memberSinceEl) memberSinceEl.textContent = `Member since ${since}`;
-
-      // Stats panel
+      // 6 stat boxes
       if (statsEl) {
         const cells = statsEl.querySelectorAll(".player-card__stat");
         const values = [
           stats.totalQuizzes.toLocaleString(),
-          `${stats.accuracyPct}%`,
           stats.totalPerfect.toLocaleString(),
           (stats.dailyLeaderboardWins ?? 0).toLocaleString(),
+          stats.bestWeekPoints > 0 ? stats.bestWeekPoints.toLocaleString() : "—",
+          (stats.pigskinIQ ?? 0).toLocaleString(),
+          `${stats.accuracyPct}%`,
         ];
         const labels = [
           "Quizzes",
-          "Accuracy",
           stats.totalPerfect === 1 ? "Touchdown" : "Touchdowns",
           "Daily Wins",
+          "Best Week",
+          "Pigskin IQ",
+          "Accuracy",
         ];
         cells.forEach((cell, i) => {
           const v = cell.querySelector(".player-card__stat-value");
@@ -337,7 +472,23 @@ export async function showTierTooltip(emoji, tierName, streak, playerName, emoji
         });
       }
 
-      // Achievements
+      // Today's quiz result
+      if (stats.todayEmojiGrid) {
+        todayEl.innerHTML = `
+          <div class="player-card__today-label">TODAY'S QUIZ</div>
+          <div class="player-card__today-grid">${stats.todayEmojiGrid}</div>
+          <div class="player-card__today-score">${stats.todayPoints} pts</div>
+        `;
+        todayEl.style.display = "";
+      }
+
+      // Rivalry record
+      if (rivalryRecordEl) {
+        rivalryRecordEl.textContent = `${stats.rivalryWins ?? 0}–${stats.rivalryLosses ?? 0}`;
+        rivalryRecordEl.classList.remove("player-card__stat-value--loading");
+      }
+
+      // Achievements — unlock earned badges
       if (achievementsEl) {
         const earned = new Set(stats.achievements || []);
         const badges = achievementsEl.querySelectorAll(".player-card__badge");
@@ -354,7 +505,7 @@ export async function showTierTooltip(emoji, tierName, streak, playerName, emoji
 
           const showDesc = (e) => {
             e.stopPropagation();
-            if (activeBadge === b && badgeDescEl.textContent) {
+            if (activeBadge === b && badgeDescEl.innerHTML) {
               badgeDescEl.innerHTML = "";
               activeBadge = null;
               return;

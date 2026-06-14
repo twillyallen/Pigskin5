@@ -42,6 +42,7 @@ export async function submitEntry(dateStr, entry) {
     }
     // Verify the row wasn't committed despite the error response (e.g. network drop
     // after the server committed but before the response arrived)
+    await new Promise(r => setTimeout(r, 500));
     const { data: existing, error: checkError } = await supabase
       .from("quiz_attempts")
       .select("id")
@@ -112,7 +113,6 @@ async function checkAndAwardAchievements(userId, score, picks, attemptAlreadyInD
   const picksArr = picks || [];
   const avgTime = picksArr.length > 0 ? picksArr.reduce((s, p) => s + (p.elapsed ?? 0), 0) / picksArr.length : 15;
   const hasGunslinger = score === 5 && picksArr.every(p => (p.elapsed ?? Infinity) < 2.4);
-  const hasTwoMinuteDrill = score === 5 && avgTime < 4;
   const hasPickSix = score === 0 || attempts.some(a => a.score === 0);
 
   // When called at quiz completion the attempt isn't inserted yet — adjust counts by 1
@@ -514,19 +514,38 @@ export async function hasPlayedToday(dateStr) {
 export async function fetchPlayerStats(username) {
   const { data: profile, error: profileErr } = await supabase
     .from("profiles")
-    .select("id, created_at, favorite_team, achievements, current_streak, current_td_streak, total_touchdowns, twitter_handle")
+    .select("id, created_at, favorite_team, achievements, current_streak, current_td_streak, total_touchdowns, twitter_handle, daily_wins, pigskin_iq, rivalries_won")
     .eq("username", username)
     .maybeSingle();
 
   if (profileErr || !profile) return null;
 
-  const { data: attempts, error: attemptsErr } = await supabase
-    .from("quiz_attempts")
-    .select("score, quiz_date, points, submitted_at")
-    .eq("user_id", profile.id);
+  const now = new Date();
+  const todayStr = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
 
-  if (attemptsErr) return null;
+  const [attemptsRes, rivalryLossRes, todayRes] = await Promise.all([
+    supabase
+      .from("quiz_attempts")
+      .select("score, points, quiz_date")
+      .eq("user_id", profile.id),
+    supabase
+      .from("rivalries")
+      .select("id", { count: "exact", head: true })
+      .or(`player1_id.eq.${profile.id},player2_id.eq.${profile.id}`)
+      .not("winner_id", "is", null)
+      .neq("winner_id", profile.id)
+      .in("status", ["complete", "forfeit"]),
+    supabase
+      .from("quiz_attempts")
+      .select("score, points, answer_data")
+      .eq("user_id", profile.id)
+      .eq("quiz_date", todayStr)
+      .maybeSingle(),
+  ]);
 
+  if (attemptsRes.error) return null;
+
+  const attempts = attemptsRes.data;
   const currentStreak = profile.current_streak ?? 0;
   const totalQuizzes = Math.max(attempts.length, currentStreak);
   const totalPerfect = profile.total_touchdowns ?? 0;
@@ -537,40 +556,36 @@ export async function fetchPlayerStats(username) {
     ? Math.round((totalCorrect / totalPossible) * 100)
     : 0;
 
-  // Compute daily leaderboard wins
-  let dailyLeaderboardWins = 0;
-  const userDates = [...new Set(attempts.map(a => a.quiz_date))];
-  if (userDates.length > 0) {
-    const { data: lbData } = await supabase
-      .from("quiz_attempts")
-      .select("quiz_date, user_id, points, submitted_at")
-      .in("quiz_date", userDates)
-      .limit(5000);
-    if (lbData) {
-      const byDate = {};
-      for (const a of lbData) {
-        if (!byDate[a.quiz_date]) byDate[a.quiz_date] = [];
-        byDate[a.quiz_date].push(a);
-      }
-      for (const date of userDates) {
-        const entries = (byDate[date] || []).sort((a, b) =>
-          b.points !== a.points ? b.points - a.points : new Date(a.submitted_at) - new Date(b.submitted_at)
-        );
-        if (entries.length > 0 && entries[0].user_id === profile.id) dailyLeaderboardWins++;
-      }
-    }
+  // Best single-week points total (Sun–Sat windows)
+  const weekTotals = {};
+  for (const a of attempts) {
+    const d = new Date(a.quiz_date + 'T12:00:00');
+    const sun = new Date(d.getFullYear(), d.getMonth(), d.getDate() - d.getDay());
+    const wk = `${sun.getFullYear()}-${String(sun.getMonth() + 1).padStart(2, '0')}-${String(sun.getDate()).padStart(2, '0')}`;
+    weekTotals[wk] = (weekTotals[wk] || 0) + (a.points || 0);
   }
+  const bestWeekPoints = Object.values(weekTotals).length > 0
+    ? Math.max(...Object.values(weekTotals))
+    : 0;
 
   return {
+    userId: profile.id,
     totalQuizzes,
     accuracyPct,
     totalPerfect,
     currentStreak,
-    dailyLeaderboardWins,
+    dailyLeaderboardWins: profile.daily_wins ?? 0,
+    pigskinIQ: profile.pigskin_iq ?? 0,
     memberSince: profile.created_at,
     favoriteTeam: profile.favorite_team || null,
     achievements: profile.achievements || [],
     twitterHandle: profile.twitter_handle || null,
+    rivalryWins: profile.rivalries_won ?? 0,
+    rivalryLosses: rivalryLossRes.count ?? 0,
+    bestWeekPoints,
+    todayScore: todayRes.data?.score ?? null,
+    todayPoints: todayRes.data?.points ?? null,
+    todayEmojiGrid: todayRes.data?.answer_data?.emojiScore ?? null,
   };
 }
 

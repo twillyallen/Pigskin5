@@ -22,6 +22,8 @@ import {
   getTodayUTC,
   getRivalryQuestionsForDate,
   checkRivalryAchievements,
+  getIncomingChallenges,
+  isAtRivalryCap,
 } from "./rivalry.js";
 
 // ✏️ TAUNT PRESETS — Add, edit, or remove taunts here freely
@@ -137,6 +139,15 @@ function displayName(profile) {
 
 // ── Home Screen Rivalry Card ──────────────────────────────
 
+// Force-remove the home card and re-create it so the badge/border always
+// reflects the latest DB state without any stale-innerHTML race condition.
+function refreshHomeCard() {
+  const card = document.getElementById("rivalryCard");
+  const parent = card?.parentElement;
+  card?.remove();
+  if (parent) renderRivalryCard(parent);
+}
+
 export async function renderRivalryCard(container, inline = false) {
   const user = await getCurrentUser();
   const cardId = inline ? "rivalryCardResult" : "rivalryCard";
@@ -176,7 +187,10 @@ export async function renderRivalryCard(container, inline = false) {
     return;
   }
 
-  const { rivalries: _rivalries } = await getUserRivalries(user.id);
+  const [{ rivalries: _rivalries }, { challenges: incomingChallenges }] = await Promise.all([
+    getUserRivalries(user.id),
+    getIncomingChallenges(user.id),
+  ]);
   const rivalries = testModePatchRivalries(_rivalries);
   const active = rivalries.filter(isDisplayActive);
   const history = rivalries.filter(r => !isDisplayActive(r));
@@ -184,7 +198,7 @@ export async function renderRivalryCard(container, inline = false) {
   const activeCount = active.length;
   const today = getTodayUTC();
 
-  let pendingCount = 0;
+  let pendingCount = incomingChallenges.length;
   let rowsHtml = "";
   for (const r of active) {
     const vm = getRivalryViewModel(r, user.id);
@@ -241,15 +255,19 @@ export async function renderRivalryCard(container, inline = false) {
     : "";
 
   const headerBadge = pendingCount > 0
-    ? `<span style="display:inline-flex;align-items:center;justify-content:center;
+    ? `<span class="rivalry-card__badge" style="display:inline-flex;align-items:center;justify-content:center;
            background:#ef4444;color:#fff;font-size:11px;font-weight:900;
            border-radius:99px;min-width:20px;height:20px;padding:0 6px;margin-left:6px;">
          ${pendingCount}
        </span>`
     : "";
 
+  const cardBorder = pendingCount > 0
+    ? `border:1px solid rgba(239,68,68,0.55);box-shadow:0 0 14px rgba(239,68,68,0.25);`
+    : `border:1px solid rgba(255,255,255,0.12);`;
+
   card.innerHTML = `
-    <div class="rivalry-card-inner" style="background:rgba(0,0,0,0.35);border:1px solid rgba(255,255,255,0.12);border-radius:16px;padding:16px 18px;">
+    <div class="rivalry-card-inner" style="background:rgba(0,0,0,0.35);${cardBorder}border-radius:16px;padding:16px 18px;">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
         <span style="font-weight:800;font-size:15px;display:flex;align-items:center;">Rivalries${headerBadge}</span>
         <span style="font-size:12px;color:rgba(255,255,255,0.45);font-weight:700;">
@@ -300,8 +318,6 @@ export async function openRivalryModal(focusRivalryId = null, startNew = false) 
   const closeModal = () => {
     overlay.remove();
     document.body.style.overflow = "";
-    const card = document.getElementById("rivalryCard");
-    if (card?.parentElement) renderRivalryCard(card.parentElement);
   };
   overlay.addEventListener("click", e => { if (e.target === overlay) closeModal(); });
   modal.querySelector(".auth-close").addEventListener("click", closeModal);
@@ -339,6 +355,87 @@ function renderModalList(body, active, history, userId, overlay) {
   }
 
   body.innerHTML = html;
+
+  // Async: fetch incoming targeted challenges and prepend them at top
+  getIncomingChallenges(userId).then(({ challenges: incoming }) => {
+    if (!incoming.length || !body.isConnected) return;
+
+    const section = document.createElement("div");
+    section.id = "incomingChallengesSection";
+
+    const header = document.createElement("h3");
+    header.style.cssText = `font-size:13px;text-transform:uppercase;letter-spacing:.08em;
+      color:rgba(239,68,68,0.8);margin:0 0 10px;`;
+    header.textContent = "Incoming Challenges";
+    section.appendChild(header);
+
+    incoming.forEach(challenge => {
+      const challengerName = challenge.challenger?.username || "Someone";
+      const row = document.createElement("div");
+      row.style.cssText = `
+        display:flex;justify-content:space-between;align-items:center;
+        padding:12px 14px;background:rgba(239,68,68,0.07);border-radius:12px;
+        margin-bottom:8px;border:1px solid rgba(239,68,68,0.22);`;
+      row.innerHTML = `
+        <div style="font-weight:700;font-size:14px;color:rgba(255,255,255,0.85);">
+          ${challengerName} challenged you!
+        </div>
+        <div style="display:flex;gap:6px;flex-shrink:0;">
+          <button data-accept="${challenge.id}" style="
+            padding:6px 12px;background:rgba(34,197,94,0.15);border:1px solid rgba(34,197,94,0.4);
+            border-radius:8px;color:#22c55e;font-size:13px;font-weight:800;cursor:pointer;">
+            Accept
+          </button>
+          <button data-decline="${challenge.id}" style="
+            padding:6px 12px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);
+            border-radius:8px;color:rgba(255,255,255,0.45);font-size:13px;font-weight:700;cursor:pointer;">
+            Decline
+          </button>
+        </div>`;
+
+      row.querySelector(`[data-accept]`).addEventListener("click", async () => {
+        const btn = row.querySelector(`[data-accept]`);
+        btn.disabled = true;
+        btn.textContent = "Accepting…";
+        const { error } = await acceptChallenge(challenge.id);
+        if (error) {
+          const msgs = {
+            challenger_slots_full: "Challenger's slots are full.",
+            slots_full:            "Your rivalry slots are full.",
+            challenge_expired:     "This challenge expired.",
+            challenge_not_pending: "Challenge no longer available.",
+          };
+          showToast(msgs[error] || "Couldn't accept. Try again.");
+          btn.disabled = false;
+          btn.textContent = "Accept";
+          return;
+        }
+        row.remove();
+        if (!section.querySelector("[data-accept]")) section.remove();
+        const { rivalries: _r } = await getUserRivalries(userId);
+        const r = testModePatchRivalries(_r);
+        renderModalList(body, r.filter(isDisplayActive), r.filter(rv => !isDisplayActive(rv)), userId, overlay);
+        setTimeout(() => refreshHomeCard(), 600);
+      });
+
+      row.querySelector(`[data-decline]`).addEventListener("click", async () => {
+        const declineBtn = row.querySelector(`[data-decline]`);
+        declineBtn.disabled = true;
+        declineBtn.textContent = "Declining…";
+
+        row.remove();
+        if (!section.querySelector("[data-accept]")) section.remove();
+
+        const { error } = await declineChallenge(challenge.id);
+        if (error) showToast("Couldn't save decline — please refresh.");
+        setTimeout(() => refreshHomeCard(), 600);
+      });
+
+      section.appendChild(row);
+    });
+
+    body.prepend(section);
+  });
 
   const today = getTodayUTC();
   for (const r of active) {
@@ -862,8 +959,7 @@ async function confirmForfeit(rivalryId, userId, body, overlay, vm) {
   overlay.remove();
   document.body.style.overflow = "";
   document.querySelector(`.rivalry-row[data-id="${rivalryId}"]`)?.remove();
-  const card = document.getElementById("rivalryCard");
-  if (card?.parentElement) renderRivalryCard(card.parentElement);
+  refreshHomeCard();
 }
 
 async function shareRivalryResult(vm, rivalry, userId) {
@@ -993,11 +1089,13 @@ function showConfirmDialog(message, confirmLabel, cancelLabel) {
 // ── Start New Rivalry ─────────────────────────────────────
 
 async function renderStartNewRivalry(body, userId, overlay) {
-  const { rivalries: _rivalriesSnr } = await getUserRivalries(userId);
+  const [{ rivalries: _rivalriesSnr }, atCap] = await Promise.all([
+    getUserRivalries(userId),
+    isAtRivalryCap(),
+  ]);
   const rivalries = testModePatchRivalries(_rivalriesSnr);
-  const activeCount = rivalries.filter(r => r.status === "active").length;
 
-  if (activeCount >= 5) {
+  if (atCap) {
     body.innerHTML = `
       <p style="text-align:center;color:rgba(255,255,255,0.6);padding:20px 0;">
         Your 5 rivalry slots are full!<br>
@@ -1017,9 +1115,9 @@ async function renderStartNewRivalry(body, userId, overlay) {
     </p>
     <div id="rivalryLinkArea" style="text-align:center;">
       <button id="genRivalryLinkBtn" style="
-          padding:14px 28px;background:linear-gradient(135deg,#3b82f6,#1d4ed8);
-          border:none;border-radius:14px;color:#fff;font-size:16px;
-          font-weight:900;cursor:pointer;">
+          padding:14px 28px;background:rgba(96,165,250,0.15);
+          border:1px solid rgba(96,165,250,0.4);border-radius:14px;
+          color:#60a5fa;font-size:16px;font-weight:800;cursor:pointer;">
         Generate Rivalry Link
       </button>
     </div>`;
@@ -1049,8 +1147,8 @@ async function renderStartNewRivalry(body, userId, overlay) {
       <div style="background:rgba(255,255,255,0.07);border-radius:12px;padding:14px;word-break:break-all;
           font-size:13px;color:rgba(255,255,255,0.8);margin-bottom:12px;">${link}</div>
       <button id="copyRivalryLink" style="
-          padding:12px 28px;background:#22c55e;border:none;border-radius:12px;
-          color:#fff;font-size:15px;font-weight:800;cursor:pointer;margin-bottom:8px;width:100%;">
+          padding:12px 28px;background:rgba(34,197,94,0.15);border:1px solid rgba(34,197,94,0.4);border-radius:12px;
+          color:#22c55e;font-size:15px;font-weight:800;cursor:pointer;margin-bottom:8px;width:100%;">
         Copy Link
       </button>
       <p style="font-size:12px;color:rgba(255,255,255,0.35);margin:6px 0 0;">
@@ -1486,8 +1584,7 @@ export function openRivalryResults(rivalry, rivalryId, myScore, picks, avgTime, 
     if (isSeriesOver) {
       showSeriesEndScreen(overlay, rivalry, vm, user.id, () => {
         document.body.style.overflow = "";
-        const card = document.getElementById("rivalryCard");
-        if (card?.parentElement) renderRivalryCard(card.parentElement);
+        refreshHomeCard();
       });
       if (rivalry.status !== "mutual_miss") {
         checkRivalryAchievements(user.id, rivalry).catch(() => {});
@@ -1673,8 +1770,7 @@ export function openRivalryResults(rivalry, rivalryId, myScore, picks, avgTime, 
       if (onAcceptPage) { window.location.href = "../index.html"; return; }
       overlay.remove();
       document.body.style.overflow = "";
-      const card = document.getElementById("rivalryCard");
-      if (card?.parentElement) renderRivalryCard(card.parentElement);
+      refreshHomeCard();
     });
   });
 

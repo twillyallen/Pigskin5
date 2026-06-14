@@ -155,7 +155,7 @@ function showProfileModal(username) {
   const body = document.createElement("div");
   body.className = "player-card__body";
 
-  // Header: team color lines flanking tier emoji
+  // --- Header: [color line] [tier emoji] [color line] ---
   const headerEl = document.createElement("div");
   headerEl.className = "player-card__header";
 
@@ -175,7 +175,7 @@ function showProfileModal(username) {
   tierEmojiEl.className = "player-card__tier-emoji";
   tierEmojiEl.textContent = tier.emoji;
 
-  const { wrap: linesLeft,  primary: leftPrimary,  secondary: leftSecondary  } = makeSideLines();
+  const { wrap: linesLeft, primary: leftPrimary, secondary: leftSecondary } = makeSideLines();
   const { wrap: linesRight, primary: rightPrimary, secondary: rightSecondary } = makeSideLines();
 
   headerEl.appendChild(linesLeft);
@@ -183,43 +183,51 @@ function showProfileModal(username) {
   headerEl.appendChild(linesRight);
   body.appendChild(headerEl);
 
-  // Identity
+  // --- Display name ---
   const nameEl = document.createElement("div");
   nameEl.className = "player-card__display-name";
   nameEl.textContent = username;
+  body.appendChild(nameEl);
 
+  // --- Username ---
   const usernameEl = document.createElement("div");
   usernameEl.className = "player-card__username";
-  usernameEl.textContent = `${username}`;
+  usernameEl.textContent = `@${username}`;
+  body.appendChild(usernameEl);
 
+  // --- Twitter row (editable; populated after async stats load) ---
+  const twitterRowEl = document.createElement("div");
+  twitterRowEl.className = "player-card__twitter-row";
+  body.appendChild(twitterRowEl);
+
+  // --- Tier name (large/bold) ---
   const tierRowEl = document.createElement("div");
   tierRowEl.className = "player-card__tier-row";
   tierRowEl.textContent = tier.name;
+  body.appendChild(tierRowEl);
 
+  // --- Streak count ---
   const streakEl = document.createElement("div");
   streakEl.className = "player-card__streak";
   streakEl.textContent = `${streak}-day streak`;
-
-  // Twitter row (editable; populated after async stats load)
-  const twitterRowEl = document.createElement("div");
-  twitterRowEl.className = "player-card__twitter-row";
-
-  body.appendChild(nameEl);
-  body.appendChild(usernameEl);
-  body.appendChild(twitterRowEl);
-  body.appendChild(tierRowEl);
   body.appendChild(streakEl);
 
-  // Member since (skeleton)
+  // --- Member since (populated after async load) ---
   const memberSinceEl = document.createElement("div");
   memberSinceEl.className = "player-card__member-since";
-  memberSinceEl.textContent = "Member since …";
   body.appendChild(memberSinceEl);
 
-  // Stats panel (skeleton)
+  // --- 6-stat skeleton in 3×2 grid ---
   const statsEl = document.createElement("div");
   statsEl.className = "player-card__stats";
-  [["—", "Quizzes"], ["—", "Accuracy"], ["—", "Touchdowns"], ["—", "Daily Wins"]].forEach(([val, label]) => {
+  [
+    ["—", "Quizzes"],
+    ["—", "Touchdowns"],
+    ["—", "Daily Wins"],
+    ["—", "Best Week"],
+    ["—", "Pigskin IQ"],
+    ["—", "Accuracy"],
+  ].forEach(([val, label]) => {
     const cell = document.createElement("div");
     cell.className = "player-card__stat";
     const v = document.createElement("div");
@@ -234,9 +242,25 @@ function showProfileModal(username) {
   });
   body.appendChild(statsEl);
 
-  // Achievements (locked skeleton) grouped by category
+  // --- Today's quiz (shown only if player has played today; populated async) ---
+  const todayEl = document.createElement("div");
+  todayEl.className = "player-card__today";
+  todayEl.style.display = "none";
+  body.appendChild(todayEl);
+
+  // --- Achievements toggle (collapsed by default) ---
+  const achToggleEl = document.createElement("div");
+  achToggleEl.className = "player-card__ach-toggle";
+  const achChevron = document.createElement("span");
+  achChevron.className = "player-card__ach-chevron";
+  achChevron.textContent = "▸";
+  achToggleEl.appendChild(document.createTextNode("Achievements "));
+  achToggleEl.appendChild(achChevron);
+  body.appendChild(achToggleEl);
+
+  // Achievements panel (hidden until toggled) — locked skeleton
   const achievementsEl = document.createElement("div");
-  achievementsEl.className = "player-card__achievements";
+  achievementsEl.className = "player-card__achievements player-card__achievements--hidden";
   ACHIEVEMENT_CATEGORIES.forEach(cat => {
     const catEl = document.createElement("div");
     catEl.className = "player-card__achievement-category";
@@ -261,29 +285,34 @@ function showProfileModal(username) {
   badgeDescEl.className = "player-card__badge-desc";
   body.appendChild(badgeDescEl);
 
-  // Favorite team selector
-  const teamLabelEl = document.createElement("div");
-  teamLabelEl.className = "profile-modal__section-label";
-  teamLabelEl.textContent = "Favorite Team";
-
-  const teamSelect = document.createElement("select");
-  teamSelect.className = "profile-modal__team-select";
-
-  const defaultOpt = document.createElement("option");
-  defaultOpt.value = "";
-  defaultOpt.textContent = "— No team —";
-  teamSelect.appendChild(defaultOpt);
-
-  NFL_TEAMS_SORTED.forEach(({ abbr, name }) => {
-    if (abbr === "LIN") return;
-    const opt = document.createElement("option");
-    opt.value = abbr;
-    opt.textContent = name;
-    teamSelect.appendChild(opt);
+  achToggleEl.addEventListener("click", (e) => {
+    e.stopPropagation();
+    const isOpen = !achievementsEl.classList.contains("player-card__achievements--hidden");
+    if (isOpen) {
+      achievementsEl.classList.add("player-card__achievements--hidden");
+      achChevron.classList.remove("player-card__ach-chevron--open");
+      badgeDescEl.innerHTML = "";
+    } else {
+      achievementsEl.classList.remove("player-card__achievements--hidden");
+      achChevron.classList.add("player-card__ach-chevron--open");
+    }
   });
 
+  // --- Rivalry record row ---
+  const rivalryRowEl = document.createElement("div");
+  rivalryRowEl.className = "player-card__rivalry-row";
+  const rivalryLabel = document.createElement("span");
+  rivalryLabel.className = "player-card__rivalry-label";
+  rivalryLabel.textContent = "RIVALRY RECORD";
+  const rivalryRecordEl = document.createElement("span");
+  rivalryRecordEl.className = "player-card__rivalry-record player-card__stat-value--loading";
+  rivalryRecordEl.textContent = "—";
+  rivalryRowEl.appendChild(rivalryLabel);
+  rivalryRowEl.appendChild(rivalryRecordEl);
+  body.appendChild(rivalryRowEl);
+
+  // --- Favorite team selector (own profile only) ---
   const cachedTeam = getCachedFavoriteTeam();
-  if (cachedTeam) teamSelect.value = cachedTeam;
 
   const applyTeamColors = (teamCode) => {
     if (!teamCode) {
@@ -303,6 +332,30 @@ function showProfileModal(username) {
 
   if (cachedTeam) applyTeamColors(cachedTeam);
 
+  const teamLabelEl = document.createElement("div");
+  teamLabelEl.className = "profile-modal__section-label";
+  teamLabelEl.textContent = "Favorite Team";
+  body.appendChild(teamLabelEl);
+
+  const teamSelect = document.createElement("select");
+  teamSelect.className = "profile-modal__team-select";
+
+  const defaultOpt = document.createElement("option");
+  defaultOpt.value = "";
+  defaultOpt.textContent = "— No team —";
+  teamSelect.appendChild(defaultOpt);
+
+  NFL_TEAMS_SORTED.forEach(({ abbr, name }) => {
+    if (abbr === "LIN") return;
+    const opt = document.createElement("option");
+    opt.value = abbr;
+    opt.textContent = name;
+    teamSelect.appendChild(opt);
+  });
+
+  if (cachedTeam) teamSelect.value = cachedTeam;
+  body.appendChild(teamSelect);
+
   let savedTeam = cachedTeam;
   teamSelect.addEventListener("change", async () => {
     const teamValue = teamSelect.value || null;
@@ -321,10 +374,7 @@ function showProfileModal(username) {
     }
   });
 
-  body.appendChild(teamLabelEl);
-  body.appendChild(teamSelect);
-
-  // Sign out
+  // --- Sign out ---
   const signOutBtn = document.createElement("button");
   signOutBtn.className = "profile-modal__signout-btn";
   signOutBtn.textContent = "Sign out";
@@ -334,14 +384,22 @@ function showProfileModal(username) {
   });
   body.appendChild(signOutBtn);
 
+  // --- Close button ---
+  const closeBtn = document.createElement("button");
+  closeBtn.className = "player-card__close-btn";
+  closeBtn.textContent = "Close";
+  body.appendChild(closeBtn);
+
   card.appendChild(body);
   container.appendChild(card);
   document.body.appendChild(container);
+  document.body.style.overflow = "hidden";
 
   const dismiss = () => {
     container.style.opacity = "0";
     container.style.transition = "opacity 0.2s";
     setTimeout(() => container.remove(), 200);
+    document.body.style.overflow = "";
     document.removeEventListener("keydown", onKey);
   };
   const onKey = (e) => { if (e.key === "Escape") dismiss(); };
@@ -349,10 +407,11 @@ function showProfileModal(username) {
   container.addEventListener("touchend", dismiss);
   card.addEventListener("click", e => e.stopPropagation());
   card.addEventListener("touchend", e => e.stopPropagation());
+  closeBtn.addEventListener("click", (e) => { e.stopPropagation(); dismiss(); });
+  closeBtn.addEventListener("touchend", (e) => { e.preventDefault(); e.stopPropagation(); dismiss(); });
   document.addEventListener("keydown", onKey);
 
-
-  // Async stats population
+  // --- Async stats population ---
   (async () => {
     const stats = await fetchPlayerStats(username);
     if (!document.getElementById("profile-modal-container")) return;
@@ -369,13 +428,17 @@ function showProfileModal(username) {
       applyTeamColors(stats.favoriteTeam);
     }
 
-    // Update streak with authoritative DB value
+    // Update tier emoji, tier name, and streak with authoritative DB values
     if (stats.currentStreak != null) {
       const updatedTier = getTierForStreak(stats.currentStreak);
-      streakEl.textContent = `${stats.currentStreak}-day streak`;
       tierEmojiEl.textContent = updatedTier.emoji;
       tierRowEl.textContent = updatedTier.name;
+      streakEl.textContent = `${stats.currentStreak}-day streak`;
     }
+
+    // Member since
+    const since = formatMemberSinceLocal(stats.memberSince);
+    if (since) memberSinceEl.textContent = `Member since ${since}`;
 
     // Twitter section (editable)
     let currentTwitterHandle = stats.twitterHandle || null;
@@ -484,19 +547,24 @@ function showProfileModal(username) {
 
     renderTwitterOwn(currentTwitterHandle);
 
-    // Member since
-    const since = formatMemberSinceLocal(stats.memberSince);
-    if (since) memberSinceEl.textContent = `Member since ${since}`;
-
-    // Stats
+    // 6 stat boxes
     const cells = statsEl.querySelectorAll(".player-card__stat");
     const values = [
       stats.totalQuizzes.toLocaleString(),
-      `${stats.accuracyPct}%`,
       stats.totalPerfect.toLocaleString(),
       (stats.dailyLeaderboardWins ?? 0).toLocaleString(),
+      stats.bestWeekPoints > 0 ? stats.bestWeekPoints.toLocaleString() : "—",
+      (stats.pigskinIQ ?? 0).toLocaleString(),
+      `${stats.accuracyPct}%`,
     ];
-    const labels = ["Quizzes", "Accuracy", stats.totalPerfect === 1 ? "Touchdown" : "Touchdowns", "Daily Wins"];
+    const labels = [
+      "Quizzes",
+      stats.totalPerfect === 1 ? "Touchdown" : "Touchdowns",
+      "Daily Wins",
+      "Best Week",
+      "Pigskin IQ",
+      "Accuracy",
+    ];
     cells.forEach((cell, i) => {
       const v = cell.querySelector(".player-card__stat-value");
       const l = cell.querySelector(".player-card__stat-label");
@@ -505,7 +573,21 @@ function showProfileModal(username) {
       l.textContent = labels[i];
     });
 
-    // Achievements
+    // Today's quiz result
+    if (stats.todayEmojiGrid) {
+      todayEl.innerHTML = `
+        <div class="player-card__today-label">TODAY'S QUIZ</div>
+        <div class="player-card__today-grid">${stats.todayEmojiGrid}</div>
+        <div class="player-card__today-score">${stats.todayPoints} pts</div>
+      `;
+      todayEl.style.display = "";
+    }
+
+    // Rivalry record
+    rivalryRecordEl.textContent = `${stats.rivalryWins ?? 0}–${stats.rivalryLosses ?? 0}`;
+    rivalryRecordEl.classList.remove("player-card__stat-value--loading");
+
+    // Achievements — unlock earned badges
     const earned = new Set(stats.achievements || []);
     const badges = achievementsEl.querySelectorAll(".player-card__badge");
     let activeBadge = null;
@@ -519,14 +601,22 @@ function showProfileModal(username) {
       }
       const showDesc = (e) => {
         e.stopPropagation();
-        if (activeBadge === b && badgeDescEl.textContent) {
-          badgeDescEl.textContent = "";
+        if (activeBadge === b && badgeDescEl.innerHTML) {
+          badgeDescEl.innerHTML = "";
           activeBadge = null;
           return;
         }
         activeBadge = b;
         const prefix = isEarned ? achievement.emoji : "🔒";
-        badgeDescEl.textContent = `${prefix} ${achievement.name}: ${achievement.desc}`;
+        const nameSpan = document.createElement("span");
+        nameSpan.className = "player-card__badge-name";
+        nameSpan.textContent = `${prefix} ${achievement.name}`;
+        const descSpan = document.createElement("span");
+        descSpan.className = "player-card__badge-desc-text";
+        descSpan.textContent = achievement.desc;
+        badgeDescEl.innerHTML = "";
+        badgeDescEl.appendChild(nameSpan);
+        badgeDescEl.appendChild(descSpan);
       };
       b.addEventListener("click", showDesc);
       b.addEventListener("touchend", (e) => { e.preventDefault(); showDesc(e); });

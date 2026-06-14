@@ -25,14 +25,84 @@ export function nextMidnightUTC() {
 
 // ── Challenge / invitation ────────────────────────────────
 
-export async function createRivalryChallenge() {
+// Optimistic client-side tracking — challenge IDs the user declined this session.
+// Filters them from getIncomingChallenges immediately so the badge clears without
+// waiting for the DB write to propagate (or in case the RLS policy is missing).
+const _declinedThisSession = new Set();
+const _acceptedThisSession = new Set();
+
+export async function createRivalryChallenge(challengedUserId = null) {
   const user = await getCurrentUser();
   if (!user) return { error: "sign_in_required" };
 
   // Count active rivalries + pending outgoing invites together so a user
   // can't bypass the cap by creating many links before anyone accepts.
   const now = new Date().toISOString();
-  const [{ count: activeCount }, { count: pendingCount }] = await Promise.all([
+  const queries = [
+    supabase
+      .from("rivalries")
+      .select("*", { count: "exact", head: true })
+      .eq("status", "active")
+      .or(`player1_id.eq.${user.id},player2_id.eq.${user.id}`),
+    supabase
+      .from("rivalry_challenges")
+      .select("*", { count: "exact", head: true })
+      .eq("challenger_id", user.id)
+      .eq("status", "pending")
+      .gt("expires_at", now),
+  ];
+
+  // If targeting a specific player, check both directions for a duplicate pending challenge.
+  if (challengedUserId) {
+    queries.push(
+      // Direction A: current user already challenged this player
+      supabase
+        .from("rivalry_challenges")
+        .select("*", { count: "exact", head: true })
+        .eq("challenger_id", user.id)
+        .eq("challenged_user_id", challengedUserId)
+        .eq("status", "pending")
+        .gt("expires_at", now),
+      // Direction B: this player already challenged the current user
+      supabase
+        .from("rivalry_challenges")
+        .select("*", { count: "exact", head: true })
+        .eq("challenger_id", challengedUserId)
+        .eq("challenged_user_id", user.id)
+        .eq("status", "pending")
+        .gt("expires_at", now)
+    );
+  }
+
+  const results = await Promise.all(queries);
+  const activeCount  = results[0].count ?? 0;
+  const pendingCount = results[1].count ?? 0;
+
+  if ((activeCount + pendingCount) >= MAX_ACTIVE_RIVALRIES) return { error: "slots_full" };
+  if (challengedUserId && (results[2]?.count ?? 0) > 0) return { error: "already_challenged" };
+  if (challengedUserId && (results[3]?.count ?? 0) > 0) return { error: "incoming_challenge_exists" };
+
+  const { data, error } = await supabase
+    .from("rivalry_challenges")
+    .insert({
+      challenger_id: user.id,
+      challenged_user_id: challengedUserId || null,
+      expires_at: nextMidnightUTC(),
+    })
+    .select("id")
+    .single();
+
+  if (error) return { error: error.message };
+  return { challengeId: data.id };
+}
+
+// Returns true when the current user has no open rivalry slots
+// (active rivalries + pending outgoing challenges >= 5).
+export async function isAtRivalryCap() {
+  const user = await getCurrentUser();
+  if (!user) return false;
+  const now = new Date().toISOString();
+  const [{ count: active }, { count: pending }] = await Promise.all([
     supabase
       .from("rivalries")
       .select("*", { count: "exact", head: true })
@@ -45,20 +115,58 @@ export async function createRivalryChallenge() {
       .eq("status", "pending")
       .gt("expires_at", now),
   ]);
+  return (active ?? 0) + (pending ?? 0) >= MAX_ACTIVE_RIVALRIES;
+}
 
-  if ((activeCount + pendingCount) >= MAX_ACTIVE_RIVALRIES) return { error: "slots_full" };
+// Returns { outgoing: bool, incoming: bool } for pending challenges between
+// the current user and targetUserId. Both false means no pending challenge.
+export async function getPendingChallengeWith(targetUserId) {
+  const user = await getCurrentUser();
+  if (!user || !targetUserId) return { outgoing: false, incoming: false };
+  const now = new Date().toISOString();
+  const [{ count: out }, { count: inc }] = await Promise.all([
+    supabase
+      .from("rivalry_challenges")
+      .select("*", { count: "exact", head: true })
+      .eq("challenger_id", user.id)
+      .eq("challenged_user_id", targetUserId)
+      .eq("status", "pending")
+      .gt("expires_at", now),
+    supabase
+      .from("rivalry_challenges")
+      .select("*", { count: "exact", head: true })
+      .eq("challenger_id", targetUserId)
+      .eq("challenged_user_id", user.id)
+      .eq("status", "pending")
+      .gt("expires_at", now),
+  ]);
+  return { outgoing: (out ?? 0) > 0, incoming: (inc ?? 0) > 0 };
+}
 
+export async function getIncomingChallenges(userId) {
+  const now = new Date().toISOString();
   const { data, error } = await supabase
     .from("rivalry_challenges")
-    .insert({
-      challenger_id: user.id,
-      expires_at: nextMidnightUTC(),
-    })
-    .select("id")
-    .single();
+    .select("id, challenger_id, created_at, expires_at")
+    .eq("challenged_user_id", userId)
+    .eq("status", "pending")
+    .gt("expires_at", now)
+    .order("created_at", { ascending: false });
 
-  if (error) return { error: error.message };
-  return { challengeId: data.id };
+  if (error || !data?.length) return { challenges: [] };
+
+  const ids = [...new Set(data.map(c => c.challenger_id))];
+  const { data: profiles } = await supabase
+    .from("profiles")
+    .select("id, username")
+    .in("id", ids);
+
+  const byId = Object.fromEntries((profiles || []).map(p => [p.id, p]));
+  return {
+    challenges: data
+      .filter(c => !_declinedThisSession.has(c.id) && !_acceptedThisSession.has(c.id))
+      .map(c => ({ ...c, challenger: byId[c.challenger_id] || null })),
+  };
 }
 
 export async function getRivalryChallenge(challengeId) {
@@ -86,6 +194,7 @@ export async function getRivalryChallenge(challengeId) {
 }
 
 export async function acceptChallenge(challengeId) {
+  _acceptedThisSession.add(challengeId);
   const user = await getCurrentUser();
   if (!user) return { error: "sign_in_required" };
 
@@ -109,16 +218,21 @@ export async function acceptChallenge(challengeId) {
 }
 
 export async function declineChallenge(challengeId) {
+  // Mark optimistically so the UI clears before the DB round-trip completes.
+  _declinedThisSession.add(challengeId);
+
   const user = await getCurrentUser();
   if (!user) return { error: "sign_in_required" };
 
-  const { error } = await supabase
+  const { data, error } = await supabase
     .from("rivalry_challenges")
     .update({ status: "declined" })
     .eq("id", challengeId)
-    .eq("status", "pending");
+    .eq("status", "pending")
+    .select("id");
 
   if (error) return { error: error.message };
+  if (!data?.length) return { error: "not_updated" };
   return { success: true };
 }
 
