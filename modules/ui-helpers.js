@@ -517,7 +517,7 @@ export async function showTierTooltip(emoji, tierName, streak, playerName, emoji
             nameSpan.textContent = `${prefix} ${achievement.name}`;
             const descSpan = document.createElement("span");
             descSpan.className = "player-card__badge-desc-text";
-            descSpan.textContent = achievement.desc;
+            descSpan.textContent = `${achievement.desc} (+${achievement.points} IQ)`;
             badgeDescEl.innerHTML = "";
             badgeDescEl.appendChild(nameSpan);
             badgeDescEl.appendChild(descSpan);
