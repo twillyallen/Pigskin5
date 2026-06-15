@@ -32,7 +32,7 @@ pigskin5.com/
 │
 ├── index.html                  # Main game page
 ├── main.js                     # Game logic monolith
-├── questions.js                # Active CALENDAR object
+├── questions.js                # Active CALENDAR object (current + upcoming questions)
 ├── style.css                   # All site styling
 │
 ├── modules/                    # Modular JS extractions
@@ -44,8 +44,8 @@ pigskin5.com/
 │   ├── name-validator.js       # Leaderboard name sanitization
 │   └── ui-helpers.js           # Toast notifications, tier badge popup
 │
-├── archive-legacy.js           # Every Question. Ever. (Sep 2025 – early Mar 2026)
-├── archive-static.html         # GENERATED, SEO-friendly static archive page
+├── archive-legacy.js           # Every question ever (Sep 2025 – early Mar 2026)
+├── archive-static.html         # GENERATED — SEO-friendly static archive page
 ├── generate-archive.mjs        # Node script to rebuild archive-static.html
 ├── question-archive.html       # Dynamic JS-based archive viewer
 │
@@ -68,23 +68,22 @@ pigskin5.com/
 ├── sitemap.xml                 # Sitemap for Google
 ├── ads.txt                     # AdSense publisher verification
 │
-└── question-gen/               # Python question generation pipeline
-    ├── generate_questions.py             # CLI entry point
-    ├── generated_questions.js            # ** WHERE NEW QUESTIONS LAND **
-    ├── awards_overlay.json               # Manual awards data (MVPs, SB wins, etc.)
-    ├── nfl_data.py
-    ├── nfl_data_original_recovered.py
-    ├── nfl_data_GENERATED.py             # Core NFL data — ** USE THIS ONE **
-    ├── update_nfl_data.py                # Script to refresh nfl_data.py
-    └── generators/
-        ├── __init__.py         # BaseGenerator ABC + shared utilities
-        ├── stat_leader.py      # "Who led the NFL in X in Y?"
-        ├── true_false.py       # True/False NFL fact questions
-        ├── over_under.py       # "O/U: Player has X.5 career stat"
-        ├── guess_player.py     # "Guess the QB/RB/WR from this stat line"
-        ├── franchise.py        # Franchise history, all-time leaders
-        ├── history.py          # Super Bowls, iconic moments, drafts, awards
-        └── real_player.py      # "Which was an ACTUAL NFL player?"
+└── tools/
+    └── question-generator/     # Python question generation pipeline
+        ├── generate_questions.py         # CLI entry point — run this
+        ├── generated_questions.js        # ** OUTPUT: new questions land here **
+        ├── awards_overlay.json           # Manual awards data (MVPs, SB wins, etc.)
+        ├── update_nfl_data.py            # Script to refresh the data layer
+        └── generators/
+            ├── __init__.py               # BaseGenerator ABC + shared utilities
+            ├── nfl_data.py               # Core NFL data — ** UPDATE THIS EACH SEASON **
+            ├── stat_leader.py            # "Who led the NFL in X in Y?"
+            ├── true_false.py             # True/False NFL fact questions
+            ├── over_under.py             # "O/U: Player has X.5 career stat"
+            ├── guess_player.py           # "Guess the QB/RB/WR from this stat line"
+            ├── franchise.py              # Franchise history, all-time leaders
+            ├── history.py                # Super Bowls, iconic moments, drafts, awards
+            └── real_player.py            # "Which was an ACTUAL NFL player?"
 ```
 
 ---
@@ -100,33 +99,65 @@ pigskin5.com/
 
 ### Generating Questions Automatically
 
-The Python pipeline in `question-gen/` automates bulk question creation.
+The Python pipeline in `tools/question-generator/` automates bulk question creation.
+
+#### Step 1 — Run the generator
+
+Navigate to the tool directory first, then run:
 
 ```powershell
-cd "C:\Users\twill\Desktop\Coding Projects\NFL Trivia\pigskin5\tools\question-generator"; py generate_questions.py --days 21 --start-date 2026-05-10
-
+cd "C:\Users\twill\Desktop\Coding Projects\NFL Trivia\pigskin5\tools\question-generator"
 ```
 
-For specific subsets of questions, use `--only`. Add `--save` to write to `generated_questions.js`; without it, questions only print to the terminal for quick previewing.
+Generate a full batch of days (this is the standard workflow):
 
 ```powershell
-py .\generate_questions.py --only true_false --count 20 --save
-py .\generate_questions.py --only over_under --count 15 --save
-py .\generate_questions.py --only guess_player --count 10 --save
-py .\generate_questions.py --only stat_leader --count 15 --save
-py .\generate_questions.py --only franchise --count 10 --save
-py .\generate_questions.py --only history --count 15 --save
-py .\generate_questions.py --only real_player --count 10 --save
+py generate_questions.py --days 21 --start-date 2026-06-16
 ```
 
-This is NOT a drop-in replacement — review the output and merge entries into the main `questions.js`.
+Replace `--start-date` with the first date you need covered. `--days` controls how many consecutive days are generated. Output is written to `generated_questions.js` in the same folder.
 
-**Review checklist** (also printed in the output file):
+Optional flags:
+- `--enhance` — uses the Anthropic API to rewrite robotic-sounding questions (requires `ANTHROPIC_API_KEY`)
+- `--seed 42` — reproducible output (same seed = same questions every run)
+
+#### Step 2 — Preview a single question type (optional)
+
+Use `--only` to preview questions from one generator without generating a full calendar. Omit `--save` to print to the terminal only; add `--save` to write to `generated_questions.js`:
+
+```powershell
+py generate_questions.py --only true_false --count 20
+py generate_questions.py --only over_under --count 15
+py generate_questions.py --only guess_player --count 10
+py generate_questions.py --only stat_leader --count 15
+py generate_questions.py --only franchise --count 10
+py generate_questions.py --only history --count 15
+py generate_questions.py --only real_player --count 10
+```
+
+#### Step 3 — Review the output
+
+Open `tools/question-generator/generated_questions.js` and check the output before merging. The file prints a review checklist at the top:
 
 - [ ] Spot-check 5 random answers for accuracy
 - [ ] Verify no duplicate questions across days
 - [ ] Check difficulty feels balanced
-- [ ] Merge into the main `questions.js` CALENDAR object
+
+#### Step 4 — Merge into questions.js
+
+Copy the date entries from `generated_questions.js` into the `CALENDAR` object in `questions.js`. The format is identical — paste the new entries after the last existing date, keeping the object alphabetically sorted by date.
+
+This is NOT a drop-in replacement — always review before merging.
+
+#### Step 5 — Rebuild the static archive
+
+Any time `questions.js` changes, regenerate `archive-static.html` so the SEO archive stays in sync:
+
+```powershell
+cd "C:\Users\twill\Desktop\Coding Projects\NFL Trivia\pigskin5"; node generate-archive.mjs
+```
+
+Then deploy both `questions.js` and `archive-static.html` together.
 
 ### Generator Types
 
@@ -144,7 +175,7 @@ Each day gets 5 questions with a rotation system that ensures category variety (
 
 ### NFL Data Layer
 
-All generators pull from `nfl_data_GENERATED.py`, which exports:
+All generators pull from `tools/question-generator/generators/nfl_data.py`, which exports:
 
 - `QUARTERBACKS`, `RUNNING_BACKS`, `WIDE_RECEIVERS`, `TIGHT_ENDS` — player tuples: `(name, position, stats_dict, era, teams_list)`
 - `DEFENSIVE_PLAYERS` — same shape, used for DPOY/DROY distractors
@@ -199,27 +230,41 @@ To reset a **different date** (not today), you need to manually:
 There are two archive systems:
 
 - **`question-archive.html`** — a dynamic JS-powered archive viewer that imports `questions.js` at runtime.
-- **`archive-static.html`** — a pre-rendered static HTML page containing ALL questions with answers visible. This is the SEO-critical version since search engines can crawl all the content.
+- **`archive-static.html`** — a pre-rendered static HTML page with ALL questions and correct answers visible. This is the SEO-critical version since search engines can crawl all the content.
 
 The static archive is built from two data sources:
 
-- `archive-legacy.js` — historical questions from September 2025 through early March 2026 (before `questions.js` existed as the primary source).
-- `questions.js` — current/recent questions.
+- `archive-legacy.js` — historical questions from September 2025 through early March 2026.
+- `questions.js` — current and upcoming questions.
 
-### Regenerating the Archive
+### Regenerating the Static Archive
 
-Whenever you add new questions to `questions.js` or `archive-legacy.js`, regenerate the static archive:
+Run this after any change to `questions.js` or `archive-legacy.js`:
 
-```bash
-node generate-archive.mjs
+```powershell
+cd "C:\Users\twill\Desktop\Coding Projects\NFL Trivia\pigskin5"; node generate-archive.mjs
 ```
 
-This outputs a fresh `archive-static.html` with all questions merged, sorted newest-first, grouped by month, with correct answers marked. Deploy the updated file.
+This outputs a fresh `archive-static.html` with all questions merged, sorted newest-first, grouped by month, with correct answers marked. Deploy the updated file alongside `questions.js`.
 
 **When to regenerate:**
-- After adding a new batch of questions to `questions.js`
+- After merging a new batch of questions into `questions.js`
 - After correcting any question or answer
-- Periodically (weekly or monthly) to keep the archive current
+- After moving old entries from `questions.js` into `archive-legacy.js` (see below)
+
+### Archiving Old Questions (Shrinking questions.js)
+
+`questions.js` is the live file — it only needs to hold current and upcoming dates. Once past dates are no longer needed in the live file, move them to `archive-legacy.js` to keep `questions.js` lean.
+
+**Step by step:**
+
+1. Open `questions.js` and identify the date entries you want to archive (typically anything older than ~3 months).
+2. Cut those date entries out of the `CALENDAR` object in `questions.js`.
+3. Paste them into the `CALENDAR` object in `archive-legacy.js`, keeping the dates in order.
+4. Run `node generate-archive.mjs` to rebuild `archive-static.html` from both files.
+5. Deploy both `questions.js`, `archive-legacy.js`, and `archive-static.html`.
+
+> The static archive reads from both files, so nothing is lost from the archive after the move. The dynamic viewer (`question-archive.html`) only reads `questions.js`, so very old dates will disappear from that view — that's expected.
 
 ---
 
@@ -358,12 +403,12 @@ Pigskin5 is approved for Google AdSense.
 | Task | Steps |
 |---|---|
 | Add questions for next week | Edit `questions.js` → add date entries → deploy |
-| Generate questions in bulk | `cd question-gen && python generate_questions.py --days 14 --start-date YYYY-MM-DD` → review `generated_questions.js` → merge into `questions.js` |
+| Generate questions in bulk | `cd tools/question-generator` → `py generate_questions.py --days 14 --start-date YYYY-MM-DD` → review `generated_questions.js` → merge into `questions.js` |
 | Test a specific date locally | Open `http://127.0.0.1:5500/index.html?date=2025-12-25` in browser |
 | Reset today's attempt (signed-in or anon) | Open browser console → `__devResetToday()` |
-| Update the quiz archive | `node generate-archive.mjs` → deploy `archive-static.html` |
+| Update the quiz archive | `node generate-archive.mjs` (run from `pigskin5/`) → deploy `archive-static.html` |
 | Add a new blog post | Create `blog/your-slug.html` → add entry to `ARTICLES` array in `blog/blog-index.html` → optionally add to `sitemap.xml` |
-| Update awards data | Edit `question-gen/awards_overlay.json` with new season's MVP, OROY, DPOY, etc. |
-| Shrink questions.js | Move older date entries from `questions.js` into `archive-legacy.js` → regenerate archive |
+| Update awards data | Edit `tools/question-generator/awards_overlay.json` with new season's MVP, OROY, DPOY, etc. |
+| Shrink questions.js | Cut old date entries from `questions.js` → paste into `archive-legacy.js` → `node generate-archive.mjs` → deploy all three files |
 | Add an event theme | Set `event: "YourEvent"` on the date in `questions.js` → add `"YourEvent": "logos/yourlogo.png"` to `EVENT_LOGOS` in `main.js` (and `config.js`) → add the logo image to `logos/` |
 | Update the leaderboard API | The endpoint URL is hardcoded in `main.js` as `LEADERBOARD_API_URL` — update there if the Google Apps Script deployment changes |

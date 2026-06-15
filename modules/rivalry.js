@@ -3,7 +3,7 @@
 // All Supabase calls live here; UI lives in rivalry-ui.js.
 
 import { supabase, getCurrentUser } from "./supabase-client.js";
-import { RIVALRY_QUESTIONS } from "../rivalry-questions.js";
+import { RIVALRY_QUESTIONS, RIVALRY_BASE_COUNT } from "../rivalry-questions.js";
 import { computeNewAchievements } from "./achievements.js";
 
 const MAX_ACTIVE_RIVALRIES = 5;
@@ -347,7 +347,8 @@ export async function getTodayRivalryQuestions(rivalryId) {
     }
   }
 
-  const allIndices = Array.from({ length: RIVALRY_QUESTIONS.length }, (_, i) => i);
+  // Only draw from the hand-curated base — never the auto-filtered pool appended at build time.
+  const allIndices = Array.from({ length: RIVALRY_BASE_COUNT }, (_, i) => i);
 
   // Primary pool: exclude all questions this rivalry has used + today's cross-rivalry overlap
   let pool = allIndices.filter(i => !usedByThisRivalry.has(i) && !usedTodayByEitherPlayer.has(i));

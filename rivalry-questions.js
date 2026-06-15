@@ -341,4 +341,7 @@ const _BASE = [
   { question: "OVER or UNDER: The Vikings have O/U 1.5 NFL championships (all-time).", choices: ["OVER", "UNDER"], answer: 1 },
 ];
 
+// RIVALRY_BASE_COUNT marks the boundary between hand-curated questions and the
+// auto-filtered pool. New assignments should never draw past this index.
+export const RIVALRY_BASE_COUNT = _BASE.length;
 export const RIVALRY_QUESTIONS = [..._BASE, ..._buildPool(_BASE, LEGACY, CALENDAR)];

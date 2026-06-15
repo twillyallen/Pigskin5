@@ -15,7 +15,8 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 function loadDataFile(filename) {
   let src = readFileSync(join(__dirname, filename), 'utf8');
   // Remove export const VARNAME = and replace with assignment
-  src = src.replace(/export\s+const\s+\w+\s*=\s*/g, 'globalThis.__data = ');
+  src = src.replace(/export\s+const\s+\w+\s*=\s*/, 'globalThis.__data = ');
+  src = src.replace(/export\s+const\s+\w+[\s\S]*/g, '');
   // Remove single-line comments that might break parsing
   src = src.replace(/\/\/[^\n]*/g, '');
   try {
