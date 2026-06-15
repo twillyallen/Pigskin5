@@ -6,7 +6,7 @@
 
 
 -- ── 1. rivalry_challenges ─────────────────────────────────
--- Tracks pending invite links. Expires at midnight UTC of the creation day.
+-- Tracks pending invite links. Expires 48 hours after creation.
 CREATE TABLE IF NOT EXISTS public.rivalry_challenges (
   id            UUID        PRIMARY KEY DEFAULT gen_random_uuid(),
   challenger_id UUID        NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,

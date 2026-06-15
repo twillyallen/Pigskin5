@@ -16,11 +16,9 @@ export function getTodayUTC() {
   return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
 }
 
-// Next midnight UTC as an ISO timestamp (= challenge expiry)
-export function nextMidnightUTC() {
-  const d = new Date();
-  d.setUTCHours(24, 0, 0, 0);
-  return d.toISOString();
+// 48 hours from now as an ISO timestamp (= challenge expiry)
+export function challengeExpiryTime() {
+  return new Date(Date.now() + 48 * 60 * 60 * 1000).toISOString();
 }
 
 // ── Challenge / invitation ────────────────────────────────
@@ -87,7 +85,7 @@ export async function createRivalryChallenge(challengedUserId = null) {
     .insert({
       challenger_id: user.id,
       challenged_user_id: challengedUserId || null,
-      expires_at: nextMidnightUTC(),
+      expires_at: challengeExpiryTime(),
     })
     .select("id")
     .single();
