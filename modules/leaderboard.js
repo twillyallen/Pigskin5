@@ -109,7 +109,7 @@ async function checkAndAwardAchievements(userId, score, picks, attemptAlreadyInD
   if (!profile || !attempts) return;
 
   const currentStreak = profile.current_streak ?? 0;
-  const tdStreak = profile.current_td_streak ?? 0;
+  const dbTdStreak = profile.current_td_streak ?? 0;
   const picksArr = picks || [];
   const avgTime = picksArr.length > 0 ? picksArr.reduce((s, p) => s + (p.elapsed ?? 0), 0) / picksArr.length : 15;
   const hasGunslinger = score === 5 && picksArr.every(p => (p.elapsed ?? Infinity) < 2.4);
@@ -141,6 +141,24 @@ async function checkAndAwardAchievements(userId, score, picks, attemptAlreadyInD
   function fmtDate(dt) {
     return `${dt.getFullYear()}-${String(dt.getMonth() + 1).padStart(2, '0')}-${String(dt.getDate()).padStart(2, '0')}`;
   }
+
+  // --- TD streak: use historical max from attempts so retroactive award works
+  //     even after a streak has been broken (current_td_streak would be 0 by then)
+  const perfectDates = [...new Set(
+    attempts.filter(a => a.score === 5).map(a => a.quiz_date)
+  )].sort();
+  if (pendingOffset && score === 5 && dateStr && !perfectDates.includes(dateStr)) {
+    perfectDates.push(dateStr);
+    perfectDates.sort();
+  }
+  let maxTdStreak = 0, curTdRun = 0, prevTdDate = null;
+  for (const d of perfectDates) {
+    if (!prevTdDate || daysDiff(prevTdDate, d) !== 1) curTdRun = 1;
+    else curTdRun++;
+    if (curTdRun > maxTdStreak) maxTdStreak = curTdRun;
+    prevTdDate = d;
+  }
+  const tdStreak = Math.max(dbTdStreak, maxTdStreak);
 
   // --- Comeback Player of the Year ---
   // Score 5/5 the day after scoring 2 or less
