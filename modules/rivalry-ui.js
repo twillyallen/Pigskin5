@@ -23,6 +23,8 @@ import {
   getRivalryQuestionsForDate,
   checkRivalryAchievements,
   getIncomingChallenges,
+  getOutgoingChallenges,
+  cancelChallenge,
   isAtRivalryCap,
 } from "./rivalry.js";
 
@@ -157,7 +159,7 @@ export async function renderRivalryCard(container, inline = false) {
     card = document.createElement("div");
     card.id = cardId;
     if (inline) {
-      card.style.cssText = `width:100%;margin-top:16px;cursor:pointer;`;
+      card.style.cssText = `width:100%;margin-top:18px;padding-top:12px;border-top:1px solid rgba(255,255,255,0.18);cursor:pointer;`;
       container.insertAdjacentElement("afterend", card);
     } else {
       card.style.cssText = `max-width:480px;margin:16px auto 0;cursor:pointer;`;
@@ -299,7 +301,8 @@ export async function openRivalryModal(focusRivalryId = null, startNew = false) 
 
   const modal = document.createElement("div");
   modal.style.cssText = `
-    background:#1a1a1a;border-radius:12px;box-shadow:0 20px 60px rgba(0,0,0,0.5);
+    background:rgba(0,0,0,0.85);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
+    border:1px solid rgba(255,255,255,0.3);border-radius:12px;box-shadow:0 8px 24px rgba(0,0,0,0.4);
     width:min(480px,calc(100vw - 40px));margin:auto;padding:32px 24px;
     position:relative;`;
 
@@ -314,10 +317,12 @@ export async function openRivalryModal(focusRivalryId = null, startNew = false) 
   overlay.appendChild(modal);
   document.body.appendChild(overlay);
   document.body.style.overflow = "hidden";
+  document.documentElement.style.overflow = "hidden";
 
   const closeModal = () => {
     overlay.remove();
     document.body.style.overflow = "";
+    document.documentElement.style.overflow = "";
   };
   overlay.addEventListener("click", e => { if (e.target === overlay) closeModal(); });
   modal.querySelector(".auth-close").addEventListener("click", closeModal);
@@ -351,14 +356,74 @@ function renderModalList(body, active, history, userId, overlay) {
              </p>`;
   } else {
     html += `<h3 style="font-size:13px;text-transform:uppercase;letter-spacing:.08em;
-                color:rgba(255,255,255,0.4);margin:0 0 10px;">Active</h3>`;
+                color:rgba(255,255,255,0.4);margin:0 0 10px;">Active <span style="color:rgba(255,255,255,0.25);font-weight:600;">(${active.length}/5)</span></h3>`;
   }
 
   body.innerHTML = html;
 
-  // Async: fetch incoming targeted challenges and prepend them at top
-  getIncomingChallenges(userId).then(({ challenges: incoming }) => {
-    if (!incoming.length || !body.isConnected) return;
+  // Async: fetch incoming + outgoing challenges and render both sections
+  Promise.all([
+    getIncomingChallenges(userId),
+    getOutgoingChallenges(userId),
+  ]).then(([{ challenges: incoming }, { challenges: outgoing }]) => {
+    if (!body.isConnected) return;
+
+    // ── Outgoing (Sent Requests) ──
+    if (outgoing.length) {
+      const outSection = document.createElement("div");
+      outSection.id = "outgoingChallengesSection";
+
+      const outHeader = document.createElement("h3");
+      outHeader.style.cssText = `font-size:13px;text-transform:uppercase;letter-spacing:.08em;
+        color:rgba(255,255,255,0.35);margin:0 0 10px;`;
+      outHeader.innerHTML = `Sent Requests <span style="color:rgba(255,255,255,0.25);font-weight:600;">(${outgoing.length}/5)</span>`;
+      outSection.appendChild(outHeader);
+
+      outgoing.forEach(challenge => {
+        const targetName = challenge.challenged?.username || "Open invite";
+        const row = document.createElement("div");
+        row.style.cssText = `
+          display:flex;justify-content:space-between;align-items:center;
+          padding:10px 14px;background:rgba(255,255,255,0.04);border-radius:12px;
+          margin-bottom:8px;border:1px solid rgba(255,255,255,0.08);`;
+        row.innerHTML = `
+          <div style="font-size:14px;font-weight:700;color:rgba(255,255,255,0.65);">
+            ${targetName}
+            <div style="font-size:11px;color:rgba(255,255,255,0.3);font-weight:500;margin-top:2px;">
+              Awaiting response…
+            </div>
+          </div>
+          <button data-cancel="${challenge.id}" style="
+            padding:6px 12px;background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.25);
+            border-radius:8px;color:rgba(239,68,68,0.7);font-size:12px;font-weight:700;cursor:pointer;">
+            Cancel
+          </button>`;
+
+        row.querySelector(`[data-cancel]`).addEventListener("click", async () => {
+          const btn = row.querySelector(`[data-cancel]`);
+          btn.disabled = true;
+          btn.textContent = "Cancelling…";
+          const { error } = await cancelChallenge(challenge.id);
+          if (error) {
+            showToast("Couldn't cancel. Try again.");
+            btn.disabled = false;
+            btn.textContent = "Cancel";
+            return;
+          }
+          row.remove();
+          if (!outSection.querySelector("[data-cancel]")) outSection.remove();
+          setTimeout(() => refreshHomeCard(), 600);
+        });
+
+        outSection.appendChild(row);
+      });
+
+      const sentinel = body.querySelector("#startNewRivalryBtnModal");
+      body.insertBefore(outSection, sentinel || null);
+    }
+
+    // ── Incoming Challenges ──
+    if (!incoming.length) return;
 
     const section = document.createElement("div");
     section.id = "incomingChallengesSection";
@@ -480,6 +545,7 @@ function renderModalList(body, active, history, userId, overlay) {
 
   // Start new button
   const newBtn = document.createElement("button");
+  newBtn.id = "startNewRivalryBtnModal";
   newBtn.textContent = "+ Start a New Rivalry";
   newBtn.style.cssText = `
     display:block;width:100%;margin-top:12px;padding:14px;
@@ -775,6 +841,7 @@ async function renderRivalryDetail(body, rivalryId, userId, overlay) {
   body.querySelector("#rivalryPlayBtn")?.addEventListener("click", () => {
     overlay.remove();
     document.body.style.overflow = "";
+    document.documentElement.style.overflow = "";
     openRivalryQuiz(rivalryId);
   });
 
@@ -1096,11 +1163,19 @@ async function renderStartNewRivalry(body, userId, overlay) {
   const rivalries = testModePatchRivalries(_rivalriesSnr);
 
   if (atCap) {
+    const activeCount = rivalries.filter(r => r.status === "active").length;
+    const pendingFilling = activeCount < 5;
     body.innerHTML = `
       <p style="text-align:center;color:rgba(255,255,255,0.6);padding:20px 0;">
-        Your 5 rivalry slots are full!<br>
+        ${pendingFilling
+          ? "Your outgoing invites are full! (5/5)"
+          : "All 5 rivalry slots are active!"
+        }<br>
         <span style="font-size:13px;color:rgba(255,255,255,0.4);">
-          Finish or forfeit a rivalry to accept new challenges.
+          ${pendingFilling
+            ? "Cancel a pending invite from the main list to free up a slot."
+            : "Finish or forfeit a series to make room."
+          }
         </span>
       </p>`;
     return;
@@ -1137,7 +1212,7 @@ async function renderStartNewRivalry(body, userId, overlay) {
     if (error) {
       btn.disabled = false;
       btn.textContent = "Generate Rivalry Link";
-      if (error === "slots_full") showToast("Your rivalry slots are full!");
+      if (error === "slots_full") showToast("Rivalry slots full! Cancel a pending invite or finish a series.");
       else showToast("Error creating challenge. Try again.");
       return;
     }
@@ -1584,6 +1659,7 @@ export function openRivalryResults(rivalry, rivalryId, myScore, picks, avgTime, 
     if (isSeriesOver) {
       showSeriesEndScreen(overlay, rivalry, vm, user.id, () => {
         document.body.style.overflow = "";
+    document.documentElement.style.overflow = "";
         refreshHomeCard();
       });
       if (rivalry.status !== "mutual_miss") {
@@ -1594,11 +1670,13 @@ export function openRivalryResults(rivalry, rivalryId, myScore, picks, avgTime, 
 
     const today = getTodayUTC();
     const todayGame = (rivalry.games || []).find(g => g.game_date === today);
-    const theirScore  = iAm1 ? todayGame?.player2_score : todayGame?.player1_score;
-    const theirPicks  = iAm1 ? todayGame?.player2_picks : todayGame?.player1_picks;
-    const dayWinner   = todayGame?.day_winner;
-    const iWonToday   = (iAm1 && dayWinner === 1) || (!iAm1 && dayWinner === 2);
-    const theyPlayed  = theirScore !== null && theirScore !== undefined;
+    const theirScore     = iAm1 ? todayGame?.player2_score : todayGame?.player1_score;
+    const theirPicks     = iAm1 ? todayGame?.player2_picks : todayGame?.player1_picks;
+    const theirTotalTime = iAm1 ? todayGame?.player2_time_secs : todayGame?.player1_time_secs;
+    const dayWinner      = todayGame?.day_winner;
+    const iWonToday      = (iAm1 && dayWinner === 1) || (!iAm1 && dayWinner === 2);
+    const theyPlayed     = theirScore !== null && theirScore !== undefined;
+    const isTied         = theyPlayed && myScore === theirScore;
 
     const mySquares = picks.map(p => {
       const correct = Array.isArray(p.correct) ? p.correct : [p.correct];
@@ -1618,16 +1696,19 @@ export function openRivalryResults(rivalry, rivalryId, myScore, picks, avgTime, 
     const nameStyle = `font-size:12px;font-weight:700;color:rgba(255,255,255,0.5);min-width:52px;text-align:right;`;
     const numStyle = `font-size:13px;font-weight:800;color:rgba(255,255,255,0.9);`;
 
+    const theirAvgTime = theirTotalTime != null ? theirTotalTime / 5 : null;
+    const fmtTime = s => `(${s.toFixed(1)} sec. avg.)`;
+
     const scoreHtml = theyPlayed ? `
       <div style="${scoreRowStyle}margin-bottom:8px;">
         <span style="${nameStyle}">${displayName(vm.me)}</span>
         <span style="font-size:18px;letter-spacing:2px;">${mySquares.join("")}</span>
-        <span style="${numStyle}">${myScore}/5</span>
+        <span style="${numStyle}">${myScore}/5${isTied ? ` <span style="font-size:11px;font-weight:600;color:rgba(255,255,255,0.4);">${fmtTime(avgTime)}</span>` : ""}</span>
       </div>
       <div style="${scoreRowStyle}margin-bottom:12px;">
         <span style="${nameStyle}">${displayName(vm.them)}</span>
         <span style="font-size:18px;letter-spacing:2px;">${theirSquares.join("")}</span>
-        <span style="${numStyle}">${theirScore}/5</span>
+        <span style="${numStyle}">${theirScore}/5${isTied && theirAvgTime != null ? ` <span style="font-size:11px;font-weight:600;color:rgba(255,255,255,0.4);">${fmtTime(theirAvgTime)}</span>` : ""}</span>
       </div>
       <div style="font-size:16px;font-weight:900;color:${winColor};">
         ${iWonToday ? "You win today!" : "They win today"}
@@ -1752,6 +1833,7 @@ export function openRivalryResults(rivalry, rivalryId, myScore, picks, avgTime, 
       if (onAcceptPage) { window.location.href = "../index.html"; return; }
       overlay.remove();
       document.body.style.overflow = "";
+    document.documentElement.style.overflow = "";
       document.getElementById("startBtn")?.click();
     });
 
@@ -1759,6 +1841,7 @@ export function openRivalryResults(rivalry, rivalryId, myScore, picks, avgTime, 
       if (onAcceptPage) { window.location.href = "../index.html"; return; }
       overlay.remove();
       document.body.style.overflow = "";
+    document.documentElement.style.overflow = "";
       openRivalryModal(rivalryId);
     });
 
@@ -1770,6 +1853,7 @@ export function openRivalryResults(rivalry, rivalryId, myScore, picks, avgTime, 
       if (onAcceptPage) { window.location.href = "../index.html"; return; }
       overlay.remove();
       document.body.style.overflow = "";
+    document.documentElement.style.overflow = "";
       refreshHomeCard();
     });
   });

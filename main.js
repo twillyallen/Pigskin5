@@ -2189,11 +2189,11 @@ if (picks && picks.length > 0) {
     }
   }
 
-  // Inject rivalry card below the leaderboard — runs here so it works for both
-  // fresh plays (showResult) and returning plays (renderPersistedResult).
-  const lbSection = document.getElementById("leaderboard");
-  if (lbSection && !document.getElementById("resultRivalryCard")) {
-    injectStartRivalryButton(lbSection).catch(() => {});
+  // Inject rivalry card between question results and leaderboard — runs here
+  // so it works for both fresh plays (showResult) and returning plays (renderPersistedResult).
+  const reviewSection = document.getElementById("review");
+  if (reviewSection && !document.getElementById("resultRivalryCard")) {
+    injectStartRivalryButton(reviewSection).catch(() => {});
   }
 }
 

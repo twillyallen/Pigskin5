@@ -284,7 +284,6 @@ async function checkAndAwardAchievements(userId, score, picks, attemptAlreadyInD
     currentStreak,
     tdStreak,
     hasGunslinger,
-    hasTwoMinuteDrill,
     hasPickSix,
     hasComeback,
     hasUnbreakable,

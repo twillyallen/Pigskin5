@@ -167,6 +167,53 @@ export async function getIncomingChallenges(userId) {
   };
 }
 
+export async function getOutgoingChallenges(userId) {
+  const now = new Date().toISOString();
+  const { data, error } = await supabase
+    .from("rivalry_challenges")
+    .select("id, challenged_user_id, created_at, expires_at")
+    .eq("challenger_id", userId)
+    .eq("status", "pending")
+    .gt("expires_at", now)
+    .order("created_at", { ascending: false });
+
+  if (error || !data?.length) return { challenges: [] };
+
+  const ids = [...new Set(data.map(c => c.challenged_user_id).filter(Boolean))];
+  const profilesById = {};
+  if (ids.length) {
+    const { data: profiles } = await supabase
+      .from("profiles")
+      .select("id, username")
+      .in("id", ids);
+    for (const p of (profiles || [])) profilesById[p.id] = p;
+  }
+
+  return {
+    challenges: data.map(c => ({
+      ...c,
+      challenged: c.challenged_user_id ? (profilesById[c.challenged_user_id] || null) : null,
+    })),
+  };
+}
+
+export async function cancelChallenge(challengeId) {
+  const user = await getCurrentUser();
+  if (!user) return { error: "sign_in_required" };
+
+  const { data, error } = await supabase
+    .from("rivalry_challenges")
+    .update({ status: "declined" })
+    .eq("id", challengeId)
+    .eq("challenger_id", user.id)
+    .eq("status", "pending")
+    .select("id");
+
+  if (error) return { error: error.message };
+  if (!data?.length) return { error: "not_updated" };
+  return { success: true };
+}
+
 export async function getRivalryChallenge(challengeId) {
   const { data, error } = await supabase
     .from("rivalry_challenges")
