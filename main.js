@@ -3,7 +3,7 @@
 // ============================================================================
 
 import { CALENDAR } from "./questions.js?v=20260412";
-import { submitEntry, fetchLeaderboard, fetchWeeklyLeaderboard, fetchLastWeekWinner, refreshStreakCache, getCachedDailyStreak, getCachedTDStreak, getTodaysAttempt, getCachedFavoriteTeam, overrideCachedStreaks, checkAchievementsForScore, upsertGuestResult } from "./modules/leaderboard.js";
+import { submitEntry, fetchLeaderboard, fetchWeeklyLeaderboard, fetchLastWeekPodium, refreshStreakCache, getCachedDailyStreak, getCachedTDStreak, getTodaysAttempt, getCachedFavoriteTeam, overrideCachedStreaks, checkAchievementsForScore, upsertGuestResult } from "./modules/leaderboard.js";
 import { getCurrentUser, supabase } from "./modules/supabase-client.js";
 import { NFL_TEAMS } from "./modules/nfl-teams.js";
 import { showTierTooltip, showAchievementToast } from "./modules/ui-helpers.js";
@@ -1458,34 +1458,88 @@ async function showStartScreen() {
     startHearts();
   }
 
-  showSundayWinnerCard();
+  showSundayPodiumCard();
 }
 
 // ==============================
-// SUNDAY CHAMPION POPUP
+// SUNDAY PODIUM POPUP
 // ==============================
 
-async function showSundayWinnerCard() {
+async function showSundayPodiumCard() {
   if (new Date().getDay() !== 0) return;
   if (sessionStorage.getItem('ft5_sunday_card_shown') === '1') return;
 
-  const winner = await fetchLastWeekWinner();
-  if (!winner) return;
+  const podium = await fetchLastWeekPodium();
+  if (!podium.length) return;
 
   sessionStorage.setItem('ft5_sunday_card_shown', '1');
 
-  const tier = getTierForStreak(winner.daily_streak ?? 0);
-  showTierTooltip(
-    tier.emoji,
-    tier.name,
-    winner.daily_streak ?? 0,
-    winner.display_name,
-    null,
-    winner.total_points,
-    winner.username,
-    '🏆 Congrats to last week\'s leaderboard Champion!'
-  );
+  const existing = document.getElementById('sunday-podium-overlay');
+  if (existing) existing.remove();
+
+  const overlay = document.createElement('div');
+  overlay.id = 'sunday-podium-overlay';
+  overlay.style.cssText = 'position:fixed;top:0;left:0;right:0;bottom:0;z-index:999999;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.7)';
+
+  const card = document.createElement('div');
+  card.className = 'weekly-podium-card';
+
+  const titleEl = document.createElement('div');
+  titleEl.className = 'weekly-podium-title';
+  titleEl.textContent = 'Last Week\'s Top 3';
+  card.appendChild(titleEl);
+
+  const stage = document.createElement('div');
+  stage.className = 'weekly-podium-stage';
+
+  const DOM_ORDER = [1, 0, 2]; // left=2nd, center=1st, right=3rd
+
+  for (const rankIdx of DOM_ORDER) {
+    const player = podium[rankIdx];
+    const finisher = document.createElement('div');
+    finisher.className = `podium-finisher podium-finisher--${rankIdx + 1}`;
+
+    if (player) {
+      const tier = getTierForStreak(player.daily_streak ?? 0);
+      const name = player.display_name || player.username || 'Player';
+
+      finisher.innerHTML = `
+        <div class="podium-finisher__tier">${tier.emoji}</div>
+        <div class="podium-finisher__name">${name}</div>
+        <div class="podium-finisher__points">${Number(player.total_points ?? 0).toLocaleString()} pts</div>
+        <div class="podium-stand podium-stand--${rankIdx + 1}">${rankIdx + 1}</div>
+      `;
+
+      if (player.username) {
+        finisher.classList.add('podium-finisher--clickable');
+        finisher.addEventListener('click', () => {
+          const t = getTierForStreak(player.daily_streak ?? 0);
+          showTierTooltip(t.emoji, t.name, player.daily_streak ?? 0, name, null, player.total_points, player.username);
+        });
+      }
+    } else {
+      finisher.innerHTML = `<div class="podium-stand podium-stand--${rankIdx + 1}">${rankIdx + 1}</div>`;
+    }
+
+    stage.appendChild(finisher);
+  }
+
+  card.appendChild(stage);
+
+  const dismissBtn = document.createElement('button');
+  dismissBtn.className = 'weekly-podium-dismiss';
+  dismissBtn.textContent = 'Awesome!';
+  dismissBtn.addEventListener('click', () => { stopConfetti(); overlay.remove(); });
+  card.appendChild(dismissBtn);
+
+  overlay.addEventListener('click', e => { if (e.target === overlay) { stopConfetti(); overlay.remove(); } });
+  overlay.appendChild(card);
+  document.body.appendChild(overlay);
+  startConfetti();
 }
+
+// Expose for console testing only
+window._showPodium = () => { sessionStorage.removeItem('ft5_sunday_card_shown'); showSundayPodiumCard(); };
 
 // ==============================
 // TAB-OUT / REFRESH PROTECTION

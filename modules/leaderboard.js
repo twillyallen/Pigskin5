@@ -380,14 +380,46 @@ export async function autoRecordAttempt(dateStr, entry) {
   return { wasNew: true, displayName };
 }
 
-// Fetch last week's (Sun–Sat) top scorer — used for Sunday champion popup
-export async function fetchLastWeekWinner() {
-  const { data, error } = await supabase.rpc('get_last_week_leaderboard');
-  if (error) {
-    console.error('fetchLastWeekWinner error:', error);
-    return null;
+// Fetch last week's (Sun–Sat) top 3 scorers — used for Sunday podium popup.
+// Queries quiz_attempts directly so it doesn't depend on a settlement RPC.
+export async function fetchLastWeekPodium() {
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  const dow = today.getDay(); // 0 = Sunday
+  const lastSat = new Date(today);
+  lastSat.setDate(today.getDate() - dow - 1);
+  const lastSun = new Date(lastSat);
+  lastSun.setDate(lastSat.getDate() - 6);
+  const fmt = d => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+
+  const { data, error } = await supabase
+    .from('quiz_attempts')
+    .select('user_id, points, display_name_used, profiles(username, current_streak)')
+    .gte('quiz_date', fmt(lastSun))
+    .lte('quiz_date', fmt(lastSat))
+    .not('user_id', 'is', null);
+
+  if (error || !data) {
+    console.error('fetchLastWeekPodium error:', error);
+    return [];
   }
-  return data?.[0] ?? null;
+
+  const byUser = {};
+  for (const row of data) {
+    if (!byUser[row.user_id]) {
+      byUser[row.user_id] = {
+        display_name: row.profiles?.username || row.display_name_used || 'Player',
+        username: row.profiles?.username || null,
+        daily_streak: row.profiles?.current_streak ?? 0,
+        total_points: 0,
+      };
+    }
+    byUser[row.user_id].total_points += row.points || 0;
+  }
+
+  return Object.values(byUser)
+    .sort((a, b) => b.total_points - a.total_points)
+    .slice(0, 3);
 }
 
 // Fetch weekly leaderboard — sums points Sun–Sat PT per logged-in player

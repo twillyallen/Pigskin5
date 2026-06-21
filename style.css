@@ -2416,3 +2416,121 @@ footer a:visited {
     max-width: none;
   }
 }
+
+/* ---------------- Weekly Podium Popup (Sunday) ---------------- */
+
+.weekly-podium-card {
+  width: min(400px, 94vw);
+  border-radius: 14px;
+  background: rgba(0, 0, 0, 0.9);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
+  animation: popupSlideIn 0.3s ease-out;
+  overflow: hidden;
+  text-align: center;
+}
+
+.weekly-podium-title {
+  background: linear-gradient(135deg, #FFD700, #FFA500);
+  color: #000;
+  font-weight: 800;
+  font-size: 0.85rem;
+  padding: 12px 20px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.weekly-podium-stage {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 6px;
+  padding: 24px 12px 0;
+}
+
+.podium-finisher {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+  min-width: 0;
+}
+
+.podium-finisher--clickable {
+  cursor: pointer;
+}
+
+.podium-finisher--clickable:hover .podium-finisher__name {
+  text-decoration: underline;
+  color: var(--btn-cyan);
+}
+
+.podium-finisher__tier {
+  font-size: 1.1rem;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+.podium-finisher__name {
+  font-weight: 700;
+  font-size: 0.75rem;
+  color: #fff;
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding: 0 4px;
+  margin-bottom: 2px;
+}
+
+.podium-finisher__points {
+  font-size: 0.62rem;
+  color: rgba(255, 255, 255, 0.65);
+  margin-bottom: 8px;
+}
+
+.podium-stand {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  font-weight: 900;
+  color: rgba(0, 0, 0, 0.55);
+  border-radius: 4px 4px 0 0;
+}
+
+.podium-stand--1 {
+  height: 72px;
+  background: linear-gradient(180deg, #FFD700, #D4A800);
+}
+
+.podium-stand--2 {
+  height: 52px;
+  background: linear-gradient(180deg, #D8D8D8, #A8A8A8);
+}
+
+.podium-stand--3 {
+  height: 36px;
+  background: linear-gradient(180deg, #CD8B4A, #9A5E28);
+}
+
+.weekly-podium-dismiss {
+  display: block;
+  margin: 20px auto;
+  padding: 10px 32px;
+  background: var(--btn-cyan);
+  color: #000;
+  border: none;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.weekly-podium-dismiss:hover {
+  background: var(--btn-cyan-hover);
+}
