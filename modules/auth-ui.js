@@ -224,7 +224,7 @@ function showProfileModal(username) {
     ["—", "Quizzes"],
     ["—", "Touchdowns"],
     ["—", "Daily Wins"],
-    ["—", "Best Week"],
+    ["—", "Weekly Wins"],
     ["—", "Pigskin IQ"],
     ["—", "Accuracy"],
   ].forEach(([val, label]) => {
@@ -553,7 +553,7 @@ function showProfileModal(username) {
       stats.totalQuizzes.toLocaleString(),
       stats.totalPerfect.toLocaleString(),
       (stats.dailyLeaderboardWins ?? 0).toLocaleString(),
-      stats.bestWeekPoints > 0 ? stats.bestWeekPoints.toLocaleString() : "—",
+      (stats.weeklyLeaderboardWins ?? 0).toLocaleString(),
       (stats.pigskinIQ ?? 0).toLocaleString(),
       `${stats.accuracyPct}%`,
     ];
@@ -561,7 +561,7 @@ function showProfileModal(username) {
       "Quizzes",
       stats.totalPerfect === 1 ? "Touchdown" : "Touchdowns",
       "Daily Wins",
-      "Best Week",
+      "Weekly Wins",
       "Pigskin IQ",
       "Accuracy",
     ];

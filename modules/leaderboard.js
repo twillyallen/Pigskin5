@@ -563,7 +563,7 @@ export async function hasPlayedToday(dateStr) {
 export async function fetchPlayerStats(username) {
   const { data: profile, error: profileErr } = await supabase
     .from("profiles")
-    .select("id, created_at, favorite_team, achievements, current_streak, current_td_streak, total_touchdowns, twitter_handle, daily_wins, pigskin_iq, rivalries_won")
+    .select("id, created_at, favorite_team, achievements, current_streak, current_td_streak, total_touchdowns, twitter_handle, daily_wins, weekly_wins, pigskin_iq, rivalries_won")
     .eq("username", username)
     .maybeSingle();
 
@@ -624,6 +624,7 @@ export async function fetchPlayerStats(username) {
     totalPerfect,
     currentStreak,
     dailyLeaderboardWins: profile.daily_wins ?? 0,
+    weeklyLeaderboardWins: profile.weekly_wins ?? 0,
     pigskinIQ: profile.pigskin_iq ?? 0,
     memberSince: profile.created_at,
     favoriteTeam: profile.favorite_team || null,
