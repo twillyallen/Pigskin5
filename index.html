@@ -69,6 +69,7 @@
     .site-nav {
       display: flex;
       justify-content: center;
+      align-items: center;
       gap: 6px;
       flex-wrap: wrap;
       padding: 8px 16px;
@@ -661,6 +662,21 @@
       var isSignedIn = localStorage.getItem('ft5_authed') === '1';
       if (!isSunday) {
         pushAd(document.getElementById('popupAdSlot'));
+        var popupSlot = document.getElementById('popupAdSlot');
+        if (popupSlot) {
+          var unfillTimer = setTimeout(function() {
+            observer.disconnect();
+            if (typeof window.closeAdModal === 'function') window.closeAdModal();
+          }, 4000);
+          var observer = new MutationObserver(function() {
+            if (popupSlot.dataset.adStatus === 'unfilled') {
+              observer.disconnect();
+              clearTimeout(unfillTimer);
+              if (typeof window.closeAdModal === 'function') window.closeAdModal();
+            }
+          });
+          observer.observe(popupSlot, { attributes: true, attributeFilter: ['data-ad-status'] });
+        }
       }
       if (isSignedIn) {
         pushAd(document.getElementById('startScreenSquareAd'));
@@ -709,6 +725,7 @@
     document.body.style.position = '';
     document.body.style.width = '';
   }
+  window.closeAdModal = closeAdModal;
 
   document.addEventListener('DOMContentLoaded', function() {
     var closeBtn = document.getElementById('adModalClose');

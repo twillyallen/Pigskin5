@@ -22,7 +22,8 @@ body{
   color:#fff;
 }
 
-body.no-scroll{ overflow:hidden; }
+body.no-scroll,
+html:has(body.no-scroll){ overflow:hidden; }
 
 /* ---------------- Background ---------------- */
 body{
