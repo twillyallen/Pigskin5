@@ -156,7 +156,7 @@ const _BASE = [
 
   // ── Rivalries & Divisions ──
   { question: "The NFC East includes which four teams?", choices: ["Cowboys, Giants, Eagles, Commanders", "Cowboys, Giants, Eagles, Bears", "Cowboys, Giants, Eagles, Saints", "Cowboys, Giants, Eagles, Packers"], answer: 0 },
-  { question: "Which division has been called the toughest in the NFL for multiple years running?", choices: ["NFC North", "AFC West", "AFC East", "NFC West"], answer: 1 },
+  { question: "Which division has been called the toughest in the NFL for multiple years running?", choices: ["NFC North", "AFC West", "AFC East", "NFC West"], answer: 3 },
   { question: "How many teams are in the NFL?", choices: ["28", "30", "32", "34"], answer: 2 },
   { question: "How many teams make the NFL playoffs each season (since 2020)?", choices: ["12", "14", "16", "18"], answer: 1 },
 
