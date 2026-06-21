@@ -3,7 +3,7 @@
 // ============================================================================
 
 import { CALENDAR } from "./questions.js?v=20260412";
-import { submitEntry, fetchLeaderboard, fetchWeeklyLeaderboard, fetchLastWeekPodium, refreshStreakCache, getCachedDailyStreak, getCachedTDStreak, getTodaysAttempt, getCachedFavoriteTeam, overrideCachedStreaks, checkAchievementsForScore, upsertGuestResult } from "./modules/leaderboard.js";
+import { submitEntry, fetchLeaderboard, fetchWeeklyLeaderboard, fetchLastWeekPodium, refreshStreakCache, getCachedDailyStreak, getCachedTDStreak, getTodaysAttempt, hasPlayedToday, getCachedFavoriteTeam, overrideCachedStreaks, checkAchievementsForScore, upsertGuestResult } from "./modules/leaderboard.js";
 import { getCurrentUser, supabase } from "./modules/supabase-client.js";
 import { NFL_TEAMS } from "./modules/nfl-teams.js";
 import { showTierTooltip, showAchievementToast } from "./modules/ui-helpers.js";
@@ -813,12 +813,21 @@ async function handleLeaderboardSubmit(evt) {
   try {
     await addLeaderboardEntry(RUN_DATE, entry);
   } catch (err) {
-    if (leaderboardWarningEl && !leaderboardWarningEl.textContent) {
-      leaderboardWarningEl.textContent = "Could not submit. Try again.";
+    // The INSERT reported an error, but Supabase can commit a row while returning
+    // an error response (e.g. the retry in submitEntry committed it). Do one final
+    // DB lookup before giving up — if the row is already there, treat as success.
+    const alreadyRecorded = await hasPlayedToday(RUN_DATE).catch(() => null);
+    if (alreadyRecorded) {
+      if (leaderboardWarningEl) leaderboardWarningEl.textContent = "";
+      // Fall through to the success path below
+    } else {
+      if (leaderboardWarningEl && !leaderboardWarningEl.textContent) {
+        leaderboardWarningEl.textContent = "Could not submit. Try again.";
+      }
+      const btn = leaderboardForm?.querySelector('button[type="submit"]');
+      if (btn) { btn.disabled = false; btn.textContent = "Submit Score"; }
+      return;
     }
-    const btn = leaderboardForm?.querySelector('button[type="submit"]');
-    if (btn) { btn.disabled = false; btn.textContent = "Submit Score"; }
-    return;
   }
 
   await refreshStreakCache();
@@ -1857,7 +1866,8 @@ async function showResult() {
 
   if (score === QUESTIONS.length) {
     scoreText.textContent = `TOUCHDOWN! You got ${score} / ${QUESTIONS.length}!`;
-    updateTouchdownStreak(RUN_DATE, true);
+    const newTD = updateTouchdownStreak(RUN_DATE, true);
+    overrideCachedStreaks({ td: newTD });
 
     if (typeof confetti === "function") {
       confetti({
@@ -1869,6 +1879,7 @@ async function showResult() {
   } else {
     scoreText.textContent = `You got ${score} / ${QUESTIONS.length} correct.`;
     updateTouchdownStreak(RUN_DATE, false);
+    overrideCachedStreaks({ td: 0 });
   }
 
   reviewEl.innerHTML = "";
@@ -2225,7 +2236,7 @@ if (picks && picks.length > 0) {
 
   const td = document.createElement("div");
   td.className = "pill";
-  td.textContent = `Touchdown Streak: ${localStorage.getItem("tdStreak") || 0}`;
+  td.textContent = `Touchdown Streak: ${getCachedTDStreak()}`;
 
   rightCol.append(daily, td);
 

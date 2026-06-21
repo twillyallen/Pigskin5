@@ -18,6 +18,10 @@
   <script type="module" src="modules/auth-ui.js"></script>
   <script type="module" src="./main.js?v=20260502"></script>
   <script type="module" src="./version-check.js"></script>
+  <script type="module">
+    import { initDailyReminder } from './modules/reminders.js';
+    document.addEventListener('DOMContentLoaded', initDailyReminder);
+  </script>
 
   <style>
     .start-nav-btns {
@@ -771,6 +775,18 @@
 })();
 </script>
 
+
+<!-- Daily Reminder Popup -->
+<div id="reminderModal" class="reminder-modal" style="display:none;">
+  <div id="reminderModalBackdrop" class="reminder-modal__backdrop"></div>
+  <div class="reminder-modal__card">
+    <button id="reminderModalClose" class="reminder-modal__close" aria-label="Close">×</button>
+    <div class="reminder-modal__icon">📣</div>
+    <h2 id="reminderModalTitle" class="reminder-modal__title">Heads Up</h2>
+    <p id="reminderModalBody" class="reminder-modal__body"></p>
+    <button id="reminderModalDismiss" class="reminder-modal__btn">Got it!</button>
+  </div>
+</div>
 
 <!-- Auth modal: hidden by default, shown via JS -->
 <div id="authModal" class="auth-modal" hidden>

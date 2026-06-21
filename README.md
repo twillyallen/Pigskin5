@@ -353,6 +353,43 @@ Use `0.7` for evergreen/reference content, `0.6` for timely/seasonal pieces.
 
 ---
 
+## Daily Reminder Popups
+
+A lightweight popup system lets you broadcast a message to all players when they open the game — handy for game-day alerts, weekly contests, site announcements, etc.
+
+### How to set a reminder
+
+Open `modules/reminders.js` and edit the `REMINDERS` object. Each key is a day of the week (0 = Sunday, 6 = Saturday). Set the value to an object with `title` and `message`, or leave it as `null` for no popup that day.
+
+```js
+export const REMINDERS = {
+  0: null, // Sunday
+  1: null, // Monday
+  2: null, // Tuesday
+  3: null, // Wednesday
+  4: { title: "MNF Tonight! 🏈", message: "Chiefs vs Eagles, 8:20 ET on ESPN. Come back and brag after your pick!" },
+  5: null, // Friday
+  6: null, // Saturday
+};
+```
+
+- `title` is optional — defaults to `"Heads Up"` if omitted.
+- `message` is the body text shown to the player.
+- Deploy `modules/reminders.js` to push the reminder live.
+
+### Behavior
+
+- Shows on page load, on the start screen, before the player starts the quiz.
+- Each visitor sees the reminder **once per day** — dismissed state is stored in `localStorage` under `p5_reminder_YYYY-MM-DD`.
+- Dismissable via the × button, "Got it!" button, or clicking the backdrop.
+- **Sunday:** If the weekly podium card is showing (last week's top 3), the reminder automatically waits until after the player dismisses the podium before appearing. Falls back after 8 seconds if the podium never shows (e.g., no last-week data).
+
+### Clearing a reminder
+
+Set the day back to `null` and deploy. Visitors who already dismissed it today won't see a new one until midnight anyway (new `localStorage` key per date).
+
+---
+
 ## Game Mechanics
 
 **Scoring:** Each correct answer earns points. Faster answers earn more points (speed bonus based on time remaining out of 15 seconds). Total points = sum across all 5 questions.
@@ -411,4 +448,5 @@ Pigskin5 is approved for Google AdSense.
 | Update awards data | Edit `tools/question-generator/awards_overlay.json` with new season's MVP, OROY, DPOY, etc. |
 | Shrink questions.js | Cut old date entries from `questions.js` → paste into `archive-legacy.js` → `node generate-archive.mjs` → deploy all three files |
 | Add an event theme | Set `event: "YourEvent"` on the date in `questions.js` → add `"YourEvent": "logos/yourlogo.png"` to `EVENT_LOGOS` in `main.js` (and `config.js`) → add the logo image to `logos/` |
+| Set a daily reminder popup | Edit `REMINDERS` in `modules/reminders.js` → set day key to `{ title, message }` (or `null` to clear) → deploy |
 | Update the leaderboard API | The endpoint URL is hardcoded in `main.js` as `LEADERBOARD_API_URL` — update there if the Google Apps Script deployment changes |

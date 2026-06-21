@@ -3,6 +3,7 @@ import { createRivalryChallenge, getPendingChallengeWith, isAtRivalryCap } from 
 import { NFL_TEAMS } from "./nfl-teams.js";
 import { ACHIEVEMENTS, ACHIEVEMENT_CATEGORIES } from "./achievements.js";
 import { STREAK_TIERS } from "./config.js";
+import { getCurrentProfile } from "./supabase-client.js";
 
 const X_SVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="15" height="15" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.748l7.73-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>`;
 
@@ -84,6 +85,9 @@ function formatMemberSince(isoString) {
 export async function showTierTooltip(emoji, tierName, streak, playerName, emojiScore, points, username, titleText = null) {
   const existing = document.getElementById("tier-popup-container");
   if (existing) existing.remove();
+
+  // Kick off current-user fetch in parallel with card DOM construction
+  const selfProfilePromise = username ? getCurrentProfile() : Promise.resolve(null);
 
   const container = document.createElement("div");
   container.id = "tier-popup-container";
@@ -174,7 +178,7 @@ export async function showTierTooltip(emoji, tierName, streak, playerName, emoji
   }
 
   // --- Stats + achievements (signed-in players only) ---
-  let statsEl, todayEl, achievementsEl, badgeDescEl, rivalryRecordEl;
+  let statsEl, todayEl, achievementsEl, badgeDescEl, rivalryRecordEl, challengeBtn;
   let targetUserId = null; // set async once stats load; used by the challenge confirmation
 
   if (username) {
@@ -272,8 +276,11 @@ export async function showTierTooltip(emoji, tierName, streak, playerName, emoji
     rivalryRowEl.appendChild(rivalryRecordEl);
     body.appendChild(rivalryRowEl);
 
-    // --- Challenge button (other-player card only) ---
-    const challengeBtn = document.createElement("button");
+    // --- Challenge button (hidden on the viewer's own card) ---
+    const selfProfile = await selfProfilePromise;
+    const isSelf = selfProfile && selfProfile.username === username;
+
+    challengeBtn = document.createElement("button");
     challengeBtn.className = "player-card__challenge-btn";
     challengeBtn.textContent = "Challenge to Rivalry";
     challengeBtn.addEventListener("click", (e) => {
@@ -344,7 +351,7 @@ export async function showTierTooltip(emoji, tierName, streak, playerName, emoji
         confirmEl.replaceWith(challengeBtn);
       });
     });
-    body.appendChild(challengeBtn);
+    if (!isSelf) body.appendChild(challengeBtn);
   }
 
   // --- Close button ---
@@ -385,7 +392,7 @@ export async function showTierTooltip(emoji, tierName, streak, playerName, emoji
       // or if the viewer has no open rivalry slots (active + pending >= 5).
       Promise.all([getPendingChallengeWith(targetUserId), isAtRivalryCap()]).then(
         ([{ outgoing, incoming }, atCap]) => {
-          if (!challengeBtn.isConnected) return;
+          if (!challengeBtn || !challengeBtn.isConnected) return;
           if (outgoing || incoming) {
             challengeBtn.textContent = incoming ? "Pending Invite from Them" : "Challenge Sent ✓";
             challengeBtn.disabled = true;

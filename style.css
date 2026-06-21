@@ -2535,3 +2535,98 @@ footer a:visited {
 .weekly-podium-dismiss:hover {
   background: var(--btn-cyan-hover);
 }
+
+/* Daily Reminder Popup */
+.reminder-modal {
+  position: fixed;
+  inset: 0;
+  align-items: center;
+  justify-content: center;
+  z-index: 10001;
+  padding: 20px;
+  animation: reminderBackdropIn 0.15s ease-out;
+}
+
+.reminder-modal__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
+}
+
+.reminder-modal__card {
+  position: relative;
+  z-index: 1;
+  background: #1a1a1a;
+  color: white;
+  border-radius: 14px;
+  padding: 36px 24px 28px;
+  max-width: 340px;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  animation: reminderCardIn 0.2s ease-out;
+}
+
+.reminder-modal__close {
+  position: absolute;
+  top: 12px;
+  right: 14px;
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 26px;
+  cursor: pointer;
+  line-height: 1;
+  padding: 0;
+  transition: color 0.15s;
+}
+
+.reminder-modal__close:hover {
+  color: #fff;
+}
+
+.reminder-modal__icon {
+  font-size: 2.4rem;
+  margin-bottom: 12px;
+  line-height: 1;
+}
+
+.reminder-modal__title {
+  margin: 0 0 10px;
+  font-size: 1.15rem;
+  font-weight: 700;
+}
+
+.reminder-modal__body {
+  margin: 0 0 22px;
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.82);
+  line-height: 1.55;
+}
+
+.reminder-modal__btn {
+  background: #00b140;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 32px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.reminder-modal__btn:hover {
+  background: #009a38;
+}
+
+@keyframes reminderBackdropIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes reminderCardIn {
+  from { opacity: 0; transform: scale(0.95) translateY(-10px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}

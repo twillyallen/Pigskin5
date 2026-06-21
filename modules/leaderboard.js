@@ -40,22 +40,16 @@ export async function submitEntry(dateStr, entry) {
       // Row already exists — treat as success so the UI moves to submitted state
       return { success: true };
     }
-    // Verify the row wasn't committed despite the error response (e.g. network drop
-    // after the server committed but before the response arrived)
-    await new Promise(r => setTimeout(r, 500));
-    const { data: existing, error: checkError } = await supabase
-      .from("quiz_attempts")
-      .select("id")
-      .eq("user_id", user.id)
-      .eq("quiz_date", dateStr)
-      .maybeSingle();
-    if (existing || checkError) {
-      // Row confirmed present, OR the verification query itself failed (network still
-      // flaky). The INSERT fired with a valid session and most likely committed — return
-      // success rather than showing a false "Could not submit" error.
+    // Transient failure — retry once after a short pause. Covers network blips and
+    // the case where the first INSERT committed but the response was lost (retry
+    // gets 23505, which we also treat as success above).
+    console.warn("First INSERT failed, retrying:", error.code, error.message);
+    await new Promise(r => setTimeout(r, 800));
+    const { error: retryError } = await supabase.from("quiz_attempts").insert(payload);
+    if (!retryError || retryError.code === "23505") {
       return { success: true };
     }
-    console.error("Submit failed:", error);
+    console.error("Submit failed after retry:", retryError);
     return { error: "Could not submit. Try again." };
   }
 
@@ -530,9 +524,8 @@ export function getCachedDailyStreak() {
 }
 
 export function getCachedTDStreak() {
-  const local = parseInt(localStorage.getItem("tdStreak") || "0", 10);
-  if (_cachedTDStreak !== null) return Math.max(_cachedTDStreak, local);
-  return local;
+  if (_cachedTDStreak !== null) return _cachedTDStreak;
+  return parseInt(localStorage.getItem("tdStreak") || "0", 10);
 }
 
 // Call immediately after local streak is computed so the cache doesn't serve
