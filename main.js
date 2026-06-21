@@ -771,8 +771,9 @@ async function handleLeaderboardSubmit(evt) {
   if (hasSubmittedLeaderboard(RUN_DATE) ||
       (leaderboardForm && leaderboardForm.classList.contains("submitted"))) {
     if (leaderboardWarningEl) {
-      leaderboardWarningEl.textContent = "You've already submitted your score for today.";
+      leaderboardWarningEl.textContent = "Score already submitted!";
     }
+    if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = "Score Submitted"; }
     return;
   }
 
