@@ -323,6 +323,7 @@ export async function openRivalryModal(focusRivalryId = null, startNew = false) 
     overlay.remove();
     document.body.style.overflow = "";
     document.documentElement.style.overflow = "";
+    refreshHomeCard();
   };
   overlay.addEventListener("click", e => { if (e.target === overlay) closeModal(); });
   modal.querySelector(".auth-close").addEventListener("click", closeModal);
