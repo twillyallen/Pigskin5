@@ -72,7 +72,7 @@ export function showToast(msg) {
   setTimeout(() => {
     t.classList.remove("show");
     setTimeout(() => t.remove(), 200);
-  }, 1600);
+  }, 3100);
 }
 
 function formatMemberSince(isoString) {
@@ -285,6 +285,14 @@ export async function showTierTooltip(emoji, tierName, streak, playerName, emoji
     challengeBtn.textContent = "Challenge to Rivalry";
     challengeBtn.addEventListener("click", (e) => {
       e.stopPropagation();
+
+      if (!selfProfile) {
+        showToast("You need to be signed in to start a Rivalry!");
+        challengeBtn.disabled = true;
+        challengeBtn.style.opacity = "0.45";
+        challengeBtn.style.cursor = "not-allowed";
+        return;
+      }
 
       const confirmEl = document.createElement("div");
       confirmEl.className = "player-card__confirm";

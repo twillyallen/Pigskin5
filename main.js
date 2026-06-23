@@ -346,9 +346,10 @@ const showTierInfo = () => {
   showTierTooltip(tier.emoji, tier.name, streak, name || "Anonymous", emojiScore || "", points, username);
 };
 
-  tierBadge.addEventListener("click", showTierInfo);
+  tierBadge.addEventListener("click", (e) => { e.stopPropagation(); showTierInfo(); });
   tierBadge.addEventListener("touchend", (e) => {
     e.preventDefault();
+    e.stopPropagation();
     showTierInfo();
   });
 
@@ -437,6 +438,14 @@ function renderStartLeaderboard(dateStr) {
         }
 
         tr.append(rankTd, nameTd, pointsTd, avgTd);
+        if (e.username) {
+          tr.classList.add("lb-row--clickable");
+          tr.addEventListener("click", (evt) => {
+            if (evt.target.closest("a")) return;
+            const tier = getTierForStreak(e.dailyStreak ?? 0);
+            showTierTooltip(tier.emoji, tier.name, e.dailyStreak ?? 0, e.name, e.emojiScore || "", e.points, e.username);
+          });
+        }
         startBody.appendChild(tr);
       });
     })
@@ -572,6 +581,15 @@ async function renderWeeklyLeaderboard(guestEntry = null) {
     daysTd.textContent = `${e.days_played}/7`;
 
     tr.append(rankTd, nameTd, pointsTd, daysTd);
+    if (e.username) {
+      tr.classList.add("lb-row--clickable");
+      tr.addEventListener("click", (evt) => {
+        if (evt.target.closest("a")) return;
+        const tier = getTierForStreak(e.daily_streak ?? 0);
+        const displayName = e.display_name || e.username || "Player";
+        showTierTooltip(tier.emoji, tier.name, e.daily_streak ?? 0, displayName, null, e.total_points, e.username);
+      });
+    }
     leaderboardBody.appendChild(tr);
   });
 }
@@ -744,6 +762,14 @@ function renderLeaderboard(dateStr, guestEntry = null) {
       }
 
       tr.append(rankTd, nameTd, pointsTd, avgTd);
+      if (e.username) {
+        tr.classList.add("lb-row--clickable");
+        tr.addEventListener("click", (evt) => {
+          if (evt.target.closest("a")) return;
+          const tier = getTierForStreak(e.dailyStreak ?? 0);
+          showTierTooltip(tier.emoji, tier.name, e.dailyStreak ?? 0, e.name, e.emojiScore || "", e.points, e.username);
+        });
+      }
       leaderboardBody.appendChild(tr);
     });
   }

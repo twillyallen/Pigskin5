@@ -57,16 +57,78 @@
     body.quiz-active .how-it-works,
     body.quiz-active .about-strip,
     body.quiz-active .site-footer,
-    body.quiz-active #adModal,
     body.quiz-active #startScreenAdWrap,
     body.quiz-active .res-banner-desktop,
     body.quiz-active .res-banner-mobile,
 
     body.results-active .how-it-works,
     body.results-active .about-strip,
-    body.results-active #adModal,
     body.results-active #startScreenAdWrap {
       display: none !important;
+    }
+
+    /* ── Ad Interstitial ── */
+    #adInterstitial {
+      position: fixed;
+      inset: 0;
+      z-index: 9000;
+      background-image: linear-gradient(rgba(0,0,0,0.78), rgba(0,0,0,0.78)), url('./field.jpg');
+      background-size: cover;
+      background-position: center;
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+    #adInterstitial .interstitial-label {
+      margin: 0 0 14px;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: rgba(255,255,255,0.3);
+    }
+    #adInterstitial .interstitial-ad-wrap {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border: 2px dashed rgba(255, 255, 255, 0.22);
+      border-radius: 6px;
+      padding: 4px;
+    }
+    #interstitialCountdown {
+      margin: 22px 0 16px;
+      font-size: 1rem;
+      color: rgba(255,255,255,0.55);
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      min-height: 1.5em;
+    }
+    #interstitialPlayBtn {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      border: 2px solid rgba(255,255,255,0.2);
+      background: rgba(255,255,255,0.1);
+      color: #fff;
+      font-size: 1.8rem;
+      line-height: 1;
+      cursor: not-allowed;
+      opacity: 0.35;
+      margin-top: 28px;
+      transition: opacity 0.3s ease, background 0.3s ease, transform 0.15s ease;
+    }
+    #interstitialPlayBtn:not(:disabled) {
+      cursor: pointer;
+      opacity: 1;
+      background: rgba(255,255,255,0.22);
+      border-color: rgba(255,255,255,0.5);
+    }
+    #interstitialPlayBtn:not(:disabled):hover {
+      background: rgba(255,255,255,0.35);
+      transform: scale(1.08);
     }
 
     /* ── Visible top nav ── */
@@ -548,15 +610,11 @@
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
 
   <!-- Cookie Consent Banner -->
-   
-  <!-- Ad Popup Modal -->
-<!-- Ad Popup Modal -->
-<div id="adModal" class="auth-modal" style="display:flex;">
-  <div id="adModalBackdrop" style="position:absolute; inset:0;"></div>
-  <div class="auth-modal-content" style="max-width:340px; padding:40px 16px 20px; text-align:center; position:relative; z-index:1;">
-    <button id="adModalClose" class="auth-close" aria-label="Close">×</button>
-    <p style="margin:0 0 10px; font-size:10px; text-transform:uppercase; letter-spacing:0.12em; color:rgba(255,255,255,0.35);">Advertisement</p>
-    <div style="display:flex; justify-content:center; min-height:250px; align-items:center;">
+
+  <!-- Ad Interstitial (shown after START click, before quiz begins) -->
+  <div id="adInterstitial">
+    <p class="interstitial-label">Advertisement</p>
+    <div class="interstitial-ad-wrap">
       <ins id="popupAdSlot"
            class="adsbygoogle"
            style="display:inline-block; width:250px; height:250px;"
@@ -564,8 +622,9 @@
            data-ad-slot="3343356628"
            data-ad-format="rectangle"></ins>
     </div>
+    <div id="interstitialCountdown">Skip in <span id="countdownNum">3</span>...</div>
+    <button id="interstitialPlayBtn" disabled aria-label="Continue to quiz">&#9654;</button>
   </div>
-</div>
 
     <div id="cookie-consent-banner" style="display: none; position: fixed; bottom: 20px; right: 20px; max-width: 400px; background-color: rgba(44, 62, 80, 0.95); color: white; padding: 20px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.3); z-index: 9999; font-family: Arial, sans-serif;">
     <p style="margin: 0 0 15px 0; font-size: 13px; line-height: 1.5;">
@@ -613,9 +672,7 @@
       window.location.href = 'cookies.html';
     };
 
-    // Delay banner until ad modal closes (or 8s fallback)
-    window._showCookieBannerWhenReady = showCookieBanner;
-    window._cookieBannerFallback = setTimeout(showCookieBanner, 8000);
+    setTimeout(showCookieBanner, 2000);
   })();
   </script>
   <script>
@@ -662,26 +719,7 @@
     }
 
     function initPageAds() {
-      var isSunday = new Date().getDay() === 0;
       var isSignedIn = localStorage.getItem('ft5_authed') === '1';
-      if (!isSunday) {
-        pushAd(document.getElementById('popupAdSlot'));
-        var popupSlot = document.getElementById('popupAdSlot');
-        if (popupSlot) {
-          var unfillTimer = setTimeout(function() {
-            observer.disconnect();
-            if (typeof window.closeAdModal === 'function') window.closeAdModal();
-          }, 4000);
-          var observer = new MutationObserver(function() {
-            if (popupSlot.dataset.adStatus === 'unfilled') {
-              observer.disconnect();
-              clearTimeout(unfillTimer);
-              if (typeof window.closeAdModal === 'function') window.closeAdModal();
-            }
-          });
-          observer.observe(popupSlot, { attributes: true, attributeFilter: ['data-ad-status'] });
-        }
-      }
       if (isSignedIn) {
         pushAd(document.getElementById('startScreenSquareAd'));
       }
@@ -715,61 +753,108 @@
 
   <script>
 (function() {
-  function closeAdModal() {
-    clearTimeout(window._cookieBannerFallback);
-    if (typeof window._showCookieBannerWhenReady === 'function') {
-      window._showCookieBannerWhenReady();
+  var COUNTDOWN_SECONDS = 0; // set to 3 to re-enable the countdown
+
+  var _skipInterstitial = false;
+  var _countdownTimer = null;
+  var _adPushed = false;
+
+  function getTodayISO() {
+    var d = new Date();
+    return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+  }
+
+  function pushInterstitialAd() {
+    if (_adPushed) return;
+    var slot = document.getElementById('popupAdSlot');
+    if (!slot) return;
+    _adPushed = true;
+
+    function tryPush() {
+      if (typeof window.adsbygoogle !== 'undefined') {
+        try {
+          (window.adsbygoogle = window.adsbygoogle || []).push({});
+          slot.dataset.adInitialized = '1';
+        } catch(e) {}
+      } else {
+        setTimeout(tryPush, 150);
+      }
+    }
+    tryPush();
+  }
+
+  function showInterstitial() {
+    var el = document.getElementById('adInterstitial');
+    if (!el) return;
+    el.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+    pushInterstitialAd();
+    startCountdown();
+  }
+
+  function dismissInterstitial() {
+    var el = document.getElementById('adInterstitial');
+    if (el) el.style.display = 'none';
+    document.body.style.overflow = '';
+    clearInterval(_countdownTimer);
+  }
+
+  function startCountdown() {
+    var countdownEl = document.getElementById('interstitialCountdown');
+    var playBtn = document.getElementById('interstitialPlayBtn');
+
+    if (COUNTDOWN_SECONDS === 0) {
+      if (countdownEl) countdownEl.style.display = 'none';
+      if (playBtn) playBtn.disabled = false;
+      return;
     }
 
-    var m = document.getElementById('adModal');
-    if (!m) return;
+    var numEl = document.getElementById('countdownNum');
+    var count = COUNTDOWN_SECONDS;
+    if (numEl) numEl.textContent = count;
+    if (countdownEl) countdownEl.style.display = '';
+    if (playBtn) playBtn.disabled = true;
 
-    m.style.display = 'none';
-    document.body.style.overflow = '';
-    document.body.style.position = '';
-    document.body.style.width = '';
+    clearInterval(_countdownTimer);
+    _countdownTimer = setInterval(function() {
+      count--;
+      if (count > 0) {
+        var n = document.getElementById('countdownNum');
+        if (n) n.textContent = count;
+      } else {
+        clearInterval(_countdownTimer);
+        var cd = document.getElementById('interstitialCountdown');
+        if (cd) cd.textContent = 'Ready!';
+        var btn = document.getElementById('interstitialPlayBtn');
+        if (btn) btn.disabled = false;
+      }
+    }, 1000);
   }
-  window.closeAdModal = closeAdModal;
 
   document.addEventListener('DOMContentLoaded', function() {
-    var closeBtn = document.getElementById('adModalClose');
-    if (closeBtn) closeBtn.addEventListener('click', closeAdModal);
+    var startBtn = document.getElementById('startBtn');
+    var playBtn  = document.getElementById('interstitialPlayBtn');
 
-    var backdrop = document.getElementById('adModalBackdrop');
-    if (backdrop) backdrop.addEventListener('click', closeAdModal);
+    if (startBtn) {
+      startBtn.addEventListener('click', function(e) {
+        if (_skipInterstitial) {
+          _skipInterstitial = false;
+          return;
+        }
+        var alreadyPlayed = localStorage.getItem('ft5_attempt_' + getTodayISO()) === '1';
+        if (alreadyPlayed) return;
 
-    var alreadyPlayed = localStorage.getItem('ft5_attempt_' + (function() {
-      var d = new Date();
-      return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
-    })()) === '1';
-
-    var isMagicLinkReturn = window.location.hash.includes('access_token')
-                         || window.location.hash.includes('type=magiclink')
-                         || window.location.hash.includes('error=');
-
-    var isSunday = new Date().getDay() === 0;
-
-    if (alreadyPlayed || isMagicLinkReturn) {
-      closeAdModal();
-      return;
+        e.stopImmediatePropagation();
+        showInterstitial();
+      }, true); // capture phase — runs before main.js listeners
     }
 
-    // On Sundays, skip the ad popup — main.js shows the champion card instead
-    if (isSunday) {
-      var m = document.getElementById('adModal');
-      if (m) m.style.display = 'none';
-      document.body.style.overflow = '';
-      document.body.style.position = '';
-      document.body.style.width = '';
-      return;
-    }
-
-    var modal = document.getElementById('adModal');
-    if (modal) {
-      modal.style.display = 'flex';
-      document.body.style.overflow = 'hidden';
-      document.body.style.position = 'fixed';
-      document.body.style.width = '100%';
+    if (playBtn) {
+      playBtn.addEventListener('click', function() {
+        dismissInterstitial();
+        _skipInterstitial = true;
+        document.getElementById('startBtn').click();
+      });
     }
   });
 })();

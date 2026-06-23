@@ -421,6 +421,23 @@ Set the day back to `null` and deploy. Visitors who already dismissed it today w
 
 Pigskin5 is approved for Google AdSense.
 
+### Ad Interstitial
+
+After a player presses **START**, a full-screen interstitial ad plays before the quiz begins. The ad reuses slot `3343356628` (250×250 rectangle).
+
+**Countdown behavior** is controlled by a single constant at the top of the interstitial script block in `index.html`:
+
+```js
+var COUNTDOWN_SECONDS = 0; // set to 3 to re-enable the countdown
+```
+
+| Value | Behavior |
+|---|---|
+| `0` | ▶ button is immediately active — player can skip instantly |
+| `3` | 3-second countdown before the ▶ button unlocks |
+
+To enforce the countdown (when your playerbase grows), find this line in the inline `<script>` block near the bottom of `index.html` and change `0` to `3`.
+
 ---
 
 ## SEO & Infrastructure
@@ -449,4 +466,5 @@ Pigskin5 is approved for Google AdSense.
 | Shrink questions.js | Cut old date entries from `questions.js` → paste into `archive-legacy.js` → `node generate-archive.mjs` → deploy all three files |
 | Add an event theme | Set `event: "YourEvent"` on the date in `questions.js` → add `"YourEvent": "logos/yourlogo.png"` to `EVENT_LOGOS` in `main.js` (and `config.js`) → add the logo image to `logos/` |
 | Set a daily reminder popup | Edit `REMINDERS` in `modules/reminders.js` → set day key to `{ title, message }` (or `null` to clear) → deploy |
+| Enable interstitial countdown | In `index.html`, find `var COUNTDOWN_SECONDS = 0` in the interstitial script → change to `3` |
 | Update the leaderboard API | The endpoint URL is hardcoded in `main.js` as `LEADERBOARD_API_URL` — update there if the Google Apps Script deployment changes |

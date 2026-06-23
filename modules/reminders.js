@@ -1,6 +1,9 @@
+import { getCurrentUser } from './supabase-client.js';
+
 // Daily reminder popup — edit REMINDERS to set messages per day of week.
 // 0=Sunday, 1=Monday, 2=Tuesday, 3=Wednesday, 4=Thursday, 5=Friday, 6=Saturday
 // Set any day to null (or omit) to show no popup that day.
+// These only fire for signed-in players; guests see the sign-in nudge instead.
 //
 // Example entry:
 //   3: { title: "MNF Tonight!", message: "Chiefs vs Eagles kicks off at 8:20 ET on ESPN. Come back and brag after your pick!" }
@@ -78,7 +81,21 @@ if (typeof window !== 'undefined') {
   };
 }
 
-export function initDailyReminder() {
+const GUEST_REMINDER = {
+  title: "Don't forget to Sign In!",
+  message: "Create a free account to track your Daily Streak, earn achievements, and challenge Rivals!",
+};
+
+export async function initDailyReminder() {
+  const user = await getCurrentUser();
+
+  if (!user) {
+    const storageKey = `p5_guest_reminder_${getTodayKey()}`;
+    if (localStorage.getItem(storageKey)) return;
+    showReminderPopup(GUEST_REMINDER, storageKey);
+    return;
+  }
+
   const reminder = REMINDERS[new Date().getDay()];
   if (!reminder) return;
 
