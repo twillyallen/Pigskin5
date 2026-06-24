@@ -712,10 +712,7 @@
     }
 
     function initPageAds() {
-      var isSignedIn = localStorage.getItem('ft5_authed') === '1';
-      if (isSignedIn) {
-        pushAd(document.getElementById('startScreenSquareAd'));
-      }
+      pushAd(document.getElementById('startScreenSquareAd'));
       pushAd(document.getElementById('resultsBannerDesktopAd'));
       pushAd(document.getElementById('resultsBannerMobileAd'));
     }
@@ -768,17 +765,13 @@
     ins.className = 'adsbygoogle';
     ins.style.cssText = 'display:inline-block;width:300px;height:250px;';
     ins.setAttribute('data-ad-client', 'ca-pub-8430547369793861');
-    ins.setAttribute('data-ad-slot', '2057016496'); // TEST: swap back to 3343356628 after confirming
+    ins.setAttribute('data-ad-slot', '3343356628');
     wrap.appendChild(ins);
-    ins.getBoundingClientRect(); // Force synchronous reflow so AdSense reads correct width.
+    ins.getBoundingClientRect();
 
-    console.log('[interstitial] offsetWidth:', ins.offsetWidth, 'pushing ad...');
     try {
       (window.adsbygoogle = window.adsbygoogle || []).push({});
-    } catch(e) { console.warn('[interstitial] Ad push failed:', e); }
-    setTimeout(function() {
-      console.log('[interstitial] 2s check — adsbygoogle-status:', ins.dataset.adsbygoogleStatus, '| ad-status:', ins.dataset.adStatus, '| display:', ins.style.display);
-    }, 2000);
+    } catch(e) { console.warn('Ad push failed:', e); }
   }
 
   function showInterstitial() {
