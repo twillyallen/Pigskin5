@@ -95,7 +95,7 @@ const _BASE = [
   { question: "Who holds the NFL single-season record for most sacks?", choices: ["Lawrence Taylor", "Michael Strahan", "Reggie White", "Myles Garrett"], answer: 3 },
   { question: "Who holds the NFL record for most career interceptions?", choices: ["Ed Reed", "Ronnie Lott", "Dick 'Night Train' Lane", "Paul Krause"], answer: 3 },
   { question: "Which QB threw for the most yards in a single game (regular season)?", choices: ["Drew Brees", "Norm Van Brocklin", "Philip Rivers", "Nick Foles"], answer: 1 },
-  { question: "Who holds the NFL record for most career rushing touchdowns?", choices: ["Emmitt Smith", "LaDainian Tomlinson", "Marcus Allen", "Jim Brown"], answer: 1 },
+  { question: "Who holds the NFL record for most career rushing touchdowns?", choices: ["Emmitt Smith", "LaDainian Tomlinson", "Marcus Allen", "Jim Brown"], answer: 0 },
   { question: "Who holds the NFL single-season record for most rushing touchdowns?", choices: ["Shaun Alexander", "LaDainian Tomlinson", "Emmitt Smith", "Priest Holmes"], answer: 1 },
 
   // ── Draft History ──
