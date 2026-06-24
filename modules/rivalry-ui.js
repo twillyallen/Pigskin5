@@ -1698,7 +1698,7 @@ export function openRivalryResults(rivalry, rivalryId, myScore, picks, avgTime, 
     const numStyle = `font-size:13px;font-weight:800;color:rgba(255,255,255,0.9);`;
 
     const theirAvgTime = theirTotalTime != null ? theirTotalTime / 5 : null;
-    const fmtTime = s => `(${s.toFixed(1)} sec. avg.)`;
+    const fmtTime = s => `(${s.toFixed(1)}s avg)`;
 
     const scoreHtml = theyPlayed ? `
       <div style="${scoreRowStyle}margin-bottom:8px;">
