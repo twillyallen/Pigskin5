@@ -614,13 +614,7 @@
   <!-- Ad Interstitial (shown after START click, before quiz begins) -->
   <div id="adInterstitial">
     <p class="interstitial-label">Advertisement</p>
-    <div class="interstitial-ad-wrap">
-      <ins id="popupAdSlot"
-           class="adsbygoogle"
-           style="display:inline-block; width:250px; height:250px;"
-           data-ad-client="ca-pub-8430547369793861"
-           data-ad-slot="3343356628"
-           data-ad-format="rectangle"></ins>
+    <div class="interstitial-ad-wrap" id="interstitialAdWrap">
     </div>
     <div id="interstitialCountdown">Skip in <span id="countdownNum">3</span>...</div>
     <button id="interstitialPlayBtn" disabled aria-label="Continue to quiz">&#9654;</button>
@@ -766,15 +760,26 @@
 
   function pushInterstitialAd() {
     if (_adPushed) return;
-    var slot = document.getElementById('popupAdSlot');
-    if (!slot) return;
+    var wrap = document.getElementById('interstitialAdWrap');
+    if (!wrap) return;
     _adPushed = true;
+
+    // Inject fresh ins element so it's always the next unprocessed slot in DOM
+    // order — avoids the push() mismatch when initPageAds pushes fewer than
+    // the number of ins.adsbygoogle elements preceding this slot in the DOM.
+    var ins = document.createElement('ins');
+    ins.id = 'popupAdSlot';
+    ins.className = 'adsbygoogle';
+    ins.style.cssText = 'display:inline-block; width:250px; height:250px;';
+    ins.setAttribute('data-ad-client', 'ca-pub-8430547369793861');
+    ins.setAttribute('data-ad-slot', '3343356628');
+    ins.setAttribute('data-ad-format', 'rectangle');
+    wrap.appendChild(ins);
 
     function tryPush() {
       if (typeof window.adsbygoogle !== 'undefined') {
         try {
           (window.adsbygoogle = window.adsbygoogle || []).push({});
-          slot.dataset.adInitialized = '1';
         } catch(e) {}
       } else {
         setTimeout(tryPush, 150);
