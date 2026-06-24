@@ -766,15 +766,17 @@
     // Inject a fresh <ins> so AdSense doesn't see a pre-processed hidden slot.
     var ins = document.createElement('ins');
     ins.className = 'adsbygoogle';
-    ins.style.cssText = 'display:inline-block;width:250px;height:250px;';
+    ins.style.cssText = 'display:inline-block;width:300px;height:250px;';
     ins.setAttribute('data-ad-client', 'ca-pub-8430547369793861');
     ins.setAttribute('data-ad-slot', '3343356628');
     wrap.appendChild(ins);
-    void ins.offsetWidth; // Force synchronous reflow so AdSense reads correct width.
+    ins.getBoundingClientRect(); // Force synchronous reflow so AdSense reads correct width.
 
+    console.log('[interstitial] offsetWidth:', ins.offsetWidth, 'pushing ad...');
     try {
       (window.adsbygoogle = window.adsbygoogle || []).push({});
-    } catch(e) { console.warn('Ad push failed:', e); }
+      console.log('[interstitial] push complete, status:', ins.dataset.adsbygoogleStatus);
+    } catch(e) { console.warn('[interstitial] Ad push failed:', e); }
   }
 
   function showInterstitial() {
