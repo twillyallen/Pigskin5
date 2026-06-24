@@ -770,13 +770,11 @@
     ins.setAttribute('data-ad-client', 'ca-pub-8430547369793861');
     ins.setAttribute('data-ad-slot', '3343356628');
     wrap.appendChild(ins);
+    void ins.offsetWidth; // Force synchronous reflow so AdSense reads correct width.
 
-    // Defer one frame so the browser finishes layout before AdSense measures width.
-    requestAnimationFrame(function() {
-      try {
-        (window.adsbygoogle = window.adsbygoogle || []).push({});
-      } catch(e) { console.warn('Ad push failed:', e); }
-    });
+    try {
+      (window.adsbygoogle = window.adsbygoogle || []).push({});
+    } catch(e) { console.warn('Ad push failed:', e); }
   }
 
   function showInterstitial() {
