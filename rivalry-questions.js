@@ -73,7 +73,7 @@ const _BASE = [
   // ── Super Bowls ──
   { question: "Which team won Super Bowl I?", choices: ["Kansas City Chiefs", "Green Bay Packers", "Dallas Cowboys", "Oakland Raiders"], answer: 1 },
   { question: "Who has won the most Super Bowls as a head coach?", choices: ["Bill Belichick", "Chuck Noll", "Joe Gibbs", "Don Shula"], answer: 0 },
-  { question: "Which franchise has won the most Super Bowls all-time?", choices: ["Dallas Cowboys", "San Francisco 49ers", "New England Patriots", "Pittsburgh Steelers"], answer: 3 },
+  { question: "Which franchise has won the most Super Bowls all-time?", choices: ["Dallas Cowboys", "San Francisco 49ers", "New England Patriots", "Pittsburgh Steelers"], answer: [2, 3] },
   { question: "Which QB won Super Bowl MVP honors in back-to-back years?", choices: ["Tom Brady", "Bart Starr", "Terry Bradshaw", "Joe Montana"], answer: 1 },
   { question: "What is the largest margin of victory in Super Bowl history?", choices: ["35 points", "45 points", "43 points", "36 points"], answer: 2 },
   { question: "Which team lost four consecutive Super Bowls?", choices: ["Minnesota Vikings", "Buffalo Bills", "Denver Broncos", "Miami Dolphins"], answer: 1 },
@@ -121,7 +121,6 @@ const _BASE = [
   { question: "Who is the only player to win the NFL MVP award in five different seasons?", choices: ["Tom Brady", "Brett Favre", "Peyton Manning", "Aaron Rodgers"], answer: 2 },
   { question: "Who won the first Heisman Trophy awarded to a player who would later win a Super Bowl?", choices: ["Roger Staubach", "Chuck Bednarik", "O.J. Simpson", "Earl Campbell"], answer: 0 },
   { question: "Which defensive player won the NFL MVP award in 1986?", choices: ["Mike Singletary", "Reggie White", "Lawrence Taylor", "Ronnie Lott"], answer: 2 },
-  { question: "Who is the only player to win Rookie of the Year in both offense and defense in the same year? (Trick question — select what's closest to true)", choices: ["Peyton Manning", "Lawrence Taylor", "Barry Sanders", "Eric Dickerson"], answer: 1 },
   { question: "Which wide receiver holds the record for most consecutive 1,000-yard receiving seasons?", choices: ["Jerry Rice", "Marvin Harrison", "Larry Fitzgerald", "Tim Brown"], answer: 0 },
   { question: "Who was the first player selected to 14 Pro Bowls?", choices: ["Jerry Rice", "Tom Brady", "Peyton Manning", "Bruce Matthews"], answer: 3 },
   { question: "Barry Sanders retired at age 31 with how many career rushing yards?", choices: ["14,234", "15,269", "16,112", "17,022"], answer: 1 },
@@ -133,7 +132,7 @@ const _BASE = [
   { question: "Who caught 'The Catch' in the 1981 NFC Championship Game?", choices: ["Jerry Rice", "Dwight Clark", "Fred Dean", "Charlie Young"], answer: 1 },
   { question: "What happened in the 1982 Super Bowl 'The Catch' by Dwight Clark's 49ers that season?", choices: ["Beat the Bengals 26-21", "Beat the Cowboys 31-17", "Beat the Raiders 38-9", "Beat the Cowboys 28-27"], answer: 0 },
   { question: "Which game featured 'The Music City Miracle'?", choices: ["2000 Wild Card: Titans vs Bills", "2001 Wild Card: Steelers vs Ravens", "1999 Divisional: Cowboys vs Vikings", "2001 Wild Card: Packers vs Seahawks"], answer: 0 },
-  { question: "Who threw the 'Hail Mary' TD pass to Roger Staubach to beat the Vikings in 1975?", choices: ["Craig Morton", "Danny White", "Roger Staubach", "Clint Longley"], answer: 2 },
+  { question: "Who threw the 'Hail Mary' TD pass to beat the Vikings in 1975?", choices: ["Craig Morton", "Danny White", "Roger Staubach", "Clint Longley"], answer: 2 },
 
   // ── Positions & Rules ──
   { question: "How many points is a safety worth in the NFL?", choices: ["1", "2", "3", "6"], answer: 1 },
@@ -177,7 +176,7 @@ const _BASE = [
   { question: "Deacon Jones is credited with coining which football term?", choices: ["Blitz", "Sack", "Red zone", "Cover 2"], answer: 1 },
   { question: "Who holds the NFL record for most career interceptions by a safety?", choices: ["Ed Reed", "Ronnie Lott", "Paul Krause", "Dick LeBeau"], answer: 2 },
   { question: "Mean Joe Greene played for which team his entire career?", choices: ["Cleveland Browns", "Pittsburgh Steelers", "Dallas Cowboys", "Oakland Raiders"], answer: 1 },
-  { question: "Which cornerback is known for 'No stats on the stat sheet' and is widely considered the best corner ever?", choices: ["Deion Sanders", "Darrelle Revis", "Mel Blount", "Rod Woodson"], answer: 0 },
+  { question: "Which cornerback is known for 'No stats on the stat sheet'?", choices: ["Deion Sanders", "Darrelle Revis", "Mel Blount", "Rod Woodson"], answer: 0 },
 
   // ── Kickers & Special Teams ──
   { question: "Who scored the most points in NFL history?", choices: ["Adam Vinatieri", "Morten Andersen", "Gary Anderson", "Jason Hanson"], answer: 1 },
@@ -188,10 +187,8 @@ const _BASE = [
   { question: "What do the letters 'AFC' stand for in NFL conference names?", choices: ["American Football Collective", "American Football Conference", "Athletic Football Conference", "American Federation Conference"], answer: 1 },
   { question: "In what year did the AFL and NFL officially merge?", choices: ["1966", "1968", "1970", "1972"], answer: 2 },
   { question: "Which team plays in the NFC South?", choices: ["Atlanta Falcons", "Baltimore Ravens", "Cincinnati Bengals", "Cleveland Browns"], answer: 0 },
-  { question: "The Green Bay Packers are unique among NFL franchises because they are what?", choices: ["The oldest franchise", "The only publicly owned franchise", "The only team in a city under 200K people", "All of the above"], answer: 3 },
   { question: "What is the official length of an NFL game (four quarters)?", choices: ["48 minutes", "60 minutes", "64 minutes", "70 minutes"], answer: 1 },
   { question: "Before the NFL Draft existed, how were players assigned to teams?", choices: ["Free agent signings only", "A territorial draft by region", "Teams bid for players in an open auction", "Assigned by the league commissioner"], answer: 1 },
-  { question: "Which team has gone the longest without winning a Super Bowl?", choices: ["Cleveland Browns", "Jacksonville Jaguars", "Detroit Lions", "Arizona Cardinals"], answer: 0 },
   { question: "What year was the first NFL Draft held?", choices: ["1930", "1933", "1936", "1940"], answer: 2 },
   { question: "Who was the first overall pick in the first NFL Draft in 1936?", choices: ["Sid Luckman", "Jay Berwanger", "Sammy Baugh", "Don Hutson"], answer: 1 },
   { question: "How many players are on the field for each team during an NFL game?", choices: ["10", "11", "12", "13"], answer: 1 },
