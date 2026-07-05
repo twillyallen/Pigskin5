@@ -13,7 +13,50 @@ from generators.nfl_data import (
 
 
 class OverUnderGenerator(BaseGenerator):
-    
+
+    def _get_rounding_unit(self, value: int) -> int:
+        if value >= 50_000:
+            return 2_500
+        elif value >= 10_000:
+            return 500
+        elif value >= 1_000:
+            return 100
+        elif value >= 100:
+            return 10
+        elif value >= 20:
+            return 5
+        else:
+            return 1
+
+    def _make_nice_line(self, actual: int, difficulty: str):
+        if actual < 15:
+            if difficulty == "hard":
+                offset = random.choice([-0.5, 0.5, -1.5, 1.5])
+            elif difficulty == "easy":
+                offset = random.choice([-2.5, -1.5]) if actual > 2 else random.choice([-0.5, 0.5])
+            else:
+                offset = random.choice([-0.5, 0.5])
+            return max(actual + offset, 0.5)
+
+        unit = self._get_rounding_unit(actual)
+        base = round(actual / unit) * unit
+
+        if difficulty == "hard":
+            distances = [1]
+        elif difficulty == "easy":
+            distances = [3, 4, 5]
+        else:
+            distances = [1, 2]
+
+        distance = random.choice(distances)
+        direction = random.choice([-1, 1])
+        line = base + direction * distance * unit
+
+        if line == actual:
+            line = base + (-direction) * distance * unit
+
+        return max(line, unit)
+
     def generate(self, difficulty: str = "medium") -> dict:
         generators = [
             self._player_career_stat,
@@ -66,44 +109,17 @@ class OverUnderGenerator(BaseGenerator):
                 options.append((name, "Career Receiving TDs", stats["rec_tds"]))
         
         player_name, stat_label, actual_value = random.choice(options)
-        
-        # Set the line so the answer isn't always obvious
-        # Difficulty affects how close the line is to actual
-        if difficulty == "hard":
-            # Line very close to actual — tough call
-            offset = random.choice([-0.5, 0.5, -1.5, 1.5])
-        elif difficulty == "easy":
-            # Line far from actual — obvious answer
-            if actual_value > 100:
-                offset = random.choice([-20, -30, 20, 30]) + 0.5
-            else:
-                offset = random.choice([-5, -8, 5, 8]) + 0.5
-        else:
-            # Medium
-            if actual_value > 1000:
-                offset = random.choice([-50, -100, 50, 100]) + 0.5
-            elif actual_value > 100:
-                offset = random.choice([-10, -15, 10, 15]) + 0.5
-            else:
-                offset = random.choice([-2, -3, 2, 3]) + 0.5
-        
-        line = actual_value + offset
 
-        # Ensure line ends in .5 for clean O/U format
-        line = round(line) + 0.5 if line % 1 != 0.5 else line
-
-        # Never allow negative lines
-        if line < 0.5:
-            line = 0.5
-
+        line = self._make_nice_line(actual_value, difficulty)
         is_over = actual_value > line
-        
-        # Format the line value
-        if line > 999:
-            line_str = f"{line:,.1f}"
+
+        if isinstance(line, float):
+            line_str = str(line)
+        elif line >= 1_000:
+            line_str = f"{line:,}"
         else:
-            line_str = f"{line}"
-        
+            line_str = str(line)
+
         return {
             "question": f"OVER or UNDER: {player_name} has O/U {line_str} {stat_label}.",
             "choices": ["OVER", "UNDER"],

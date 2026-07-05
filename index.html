@@ -130,6 +130,22 @@
       background: rgba(255,255,255,0.35);
       transform: scale(1.08);
     }
+    #interstitialTimerBar {
+      width: 220px;
+      height: 3px;
+      background: rgba(255,255,255,0.15);
+      border-radius: 2px;
+      margin: 0 0 4px;
+      overflow: hidden;
+    }
+    #interstitialTimerFill {
+      height: 100%;
+      width: 100%;
+      background: rgba(255,255,255,0.7);
+      border-radius: 2px;
+      transform-origin: left;
+      transition: none;
+    }
 
     /* ── Visible top nav ── */
     .site-nav {
@@ -615,6 +631,7 @@
   <div id="adInterstitial">
     <p class="interstitial-label">Advertisement</p>
     <div class="interstitial-ad-wrap" id="interstitialAdWrap"></div>
+    <div id="interstitialTimerBar"><div id="interstitialTimerFill"></div></div>
     <div id="interstitialCountdown">Skip in <span id="countdownNum">3</span>...</div>
     <button id="interstitialPlayBtn" disabled aria-label="Continue to quiz">&#9654;</button>
   </div>
@@ -743,7 +760,7 @@
 
   <script>
 (function() {
-  var COUNTDOWN_SECONDS = 0; // set to 3 to re-enable the countdown
+  var COUNTDOWN_SECONDS = 3;
 
   var _skipInterstitial = false;
   var _countdownTimer = null;
@@ -793,10 +810,12 @@
   function startCountdown() {
     var countdownEl = document.getElementById('interstitialCountdown');
     var playBtn = document.getElementById('interstitialPlayBtn');
+    var timerFill = document.getElementById('interstitialTimerFill');
 
     if (COUNTDOWN_SECONDS === 0) {
       if (countdownEl) countdownEl.style.display = 'none';
       if (playBtn) playBtn.disabled = false;
+      if (timerFill) timerFill.style.transform = 'scaleX(0)';
       return;
     }
 
@@ -805,6 +824,22 @@
     if (numEl) numEl.textContent = count;
     if (countdownEl) countdownEl.style.display = '';
     if (playBtn) playBtn.disabled = true;
+    if (timerFill) timerFill.style.transform = 'scaleX(1)';
+
+    var startTime = null;
+    var totalMs = COUNTDOWN_SECONDS * 1000;
+
+    function animateBar(ts) {
+      if (!startTime) startTime = ts;
+      var elapsed = ts - startTime;
+      var remaining = Math.max(0, 1 - elapsed / totalMs);
+      var fill = document.getElementById('interstitialTimerFill');
+      if (fill) fill.style.transform = 'scaleX(' + remaining + ')';
+      if (elapsed < totalMs) {
+        requestAnimationFrame(animateBar);
+      }
+    }
+    requestAnimationFrame(animateBar);
 
     clearInterval(_countdownTimer);
     _countdownTimer = setInterval(function() {
