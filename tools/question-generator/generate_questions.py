@@ -30,10 +30,16 @@ from generators.guess_player import GuessPlayerGenerator
 from generators.franchise import FranchiseGenerator
 from generators.history import HistoryGenerator
 from generators.real_player import RealPlayerGenerator
+from generators.evergreen import EvergreenGenerator
 
 # ─── CONFIG ──────────────────────────────────────────────────────────────────
 
 QUESTIONS_PER_DAY = 5
+
+# Chance, per day, that one of the 5 slots is swapped for a hand-picked
+# evergreen question instead of an auto-generated one. Kept separate from
+# CATEGORY_POOL so it stays a rare mix-in rather than a peer category.
+EVERGREEN_CHANCE = 0.15
 DIFFICULTY_DISTRIBUTION = {
     "easy": 1,    # 1 easy per day
     "medium": 3,  # 3 medium per day
@@ -104,7 +110,12 @@ def generate_day(date: datetime, day_index: int, generators: dict, used_question
     """Generate one day's worth of questions."""
     categories = get_daily_categories(day_index)
     difficulties = assign_difficulties(QUESTIONS_PER_DAY)
-    
+
+    # Every now and then, swap one slot for a hand-picked evergreen question.
+    if random.random() < EVERGREEN_CHANCE:
+        slot = random.randrange(len(categories))
+        categories[slot] = "evergreen"
+
     questions = []
     for cat, diff in zip(categories, difficulties):
         gen = generators[cat]
@@ -230,8 +241,9 @@ def main():
     parser.add_argument("--seed", type=int, default=None,
                        help="Random seed for reproducibility")
     parser.add_argument("--only", type=str, default=None,
-                   choices=["stat_leader", "true_false", "over_under", 
-                            "guess_player", "franchise", "history", "real_player"],
+                   choices=["stat_leader", "true_false", "over_under",
+                            "guess_player", "franchise", "history", "real_player",
+                            "evergreen"],
                    help="Generate only this question type (ignores day structure)")
     parser.add_argument("--count", type=int, default=10,
                    help="When using --only, how many questions to generate")
@@ -253,7 +265,8 @@ def main():
         "franchise": FranchiseGenerator(),
         "history": HistoryGenerator(),
         "real_player": RealPlayerGenerator(),
-    }    
+        "evergreen": EvergreenGenerator(),
+    }
     if args.only:
             gen = generators[args.only]
             print(f"🎯 Generating {args.count} {args.only} questions only")
