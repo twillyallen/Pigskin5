@@ -218,7 +218,7 @@ export const CALENDAR = {
     event: "",
     questions: [
     { question: "OVER or UNDER: The Jets have O/U 1.5 Super Bowl victories all-time.", choices: ["OVER", "UNDER"], answer: 1 },
-    { question: "Which franchise originally drafted Bo Jackson?", choices: ["Jets", "Buccaneers", "49ers", "Steelers"], answer: 1 },
+    { question: "Which franchise originally drafted Bo Jackson?", choices: ["Jets", "Buccaneers", "Raiders", "Steelers"], answer: 1 },
     { question: "Which of these was an ACTUAL NFL player?", choices: ["Zecharion Wainwright III", "George Johnson", "Bud Dupree", "Desharious Bumbleton"], answer: 2 },
     { question: "What year did the Cardinals relocate to Arizona?", choices: ["1988", "1991", "1992", "1986"], answer: 0 },
     { question: "Guess the Career RB:\n- 2,471 Rush Yards\n- 24 Rush TDs\n- 4.0 Yards per Carry\n- 24 Total TDs", choices: ["Jerious Norwood", "Reuben Droughns", "Chris Wells", "Pierre Thomas"], answer: 2 },
