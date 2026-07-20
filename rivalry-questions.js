@@ -104,7 +104,7 @@ const _BASE = [
   { question: "Tom Brady was selected in which round of the 2000 NFL Draft?", choices: ["3rd round", "4th round", "5th round", "6th round"], answer: 3 },
   { question: "Who was the #1 overall pick in the 2012 NFL Draft?", choices: ["Andrew Luck", "Robert Griffin III", "Trent Richardson", "Ryan Tannehill"], answer: 0 },
   { question: "Who was the #1 overall pick in the 2004 NFL Draft?", choices: ["Philip Rivers", "Eli Manning", "Larry Fitzgerald", "Ben Roethlisberger"], answer: 1 },
-  { question: "In which round was Jerry Rice drafted by the San Francisco 49ers?", choices: ["1st round", "2nd round", "3rd round", "1st round — 16th overall"], answer: 3 },
+  { question: "In which round was Jerry Rice drafted by the San Francisco 49ers?", choices: ["1st round", "2nd round", "3rd round", "Undrafted"], answer: 0 },
 
   // ── Franchise History ──
   { question: "Which team plays home games at Lambeau Field?", choices: ["Minnesota Vikings", "Chicago Bears", "Green Bay Packers", "Detroit Lions"], answer: 2 },
@@ -138,7 +138,7 @@ const _BASE = [
   { question: "How many points is a safety worth in the NFL?", choices: ["1", "2", "3", "6"], answer: 1 },
   { question: "In the NFL, how many yards must a team gain to earn a new set of downs?", choices: ["5 yards", "10 yards", "15 yards", "20 yards"], answer: 1 },
   { question: "What is the width of an NFL goal post (distance between the uprights)?", choices: ["18 feet 6 inches", "20 feet", "23 feet 4 inches", "24 feet"], answer: 0 },
-  { question: "How long is an NFL field goal attempt from the line of scrimmage for a 50-yard field goal?", choices: ["50 yards from the LOS", "It's measured from behind the LOS + 7 yards", "Exactly 50 yards", "53 yards from the kicker"], answer: 1 },
+  
 
   // ── Hall of Fame ──
   { question: "Where is the Pro Football Hall of Fame located?", choices: ["Cleveland, Ohio", "Pittsburgh, Pennsylvania", "Canton, Ohio", "Indianapolis, Indiana"], answer: 2 },
@@ -180,7 +180,7 @@ const _BASE = [
 
   // ── Kickers & Special Teams ──
   { question: "Who scored the most points in NFL history?", choices: ["Adam Vinatieri", "Morten Andersen", "Gary Anderson", "Jason Hanson"], answer: 1 },
-  { question: "What is the longest field goal ever kicked in an NFL regular season game?", choices: ["63 yards", "64 yards", "66 yards", "67 yards"], answer: 2 },
+  { question: "What is the longest field goal ever kicked in an NFL regular season game?", choices: ["63 yards", "64 yards", "66 yards", "68 yards"], answer: 3 },
   { question: "Who holds the record for most consecutive extra points made?", choices: ["Adam Vinatieri", "Stephen Gostkowski", "Blair Walsh", "Jason Elam"], answer: 1 },
 
   // ── Miscellaneous / Trivia ──
