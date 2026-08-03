@@ -2134,27 +2134,76 @@ if (picks && picks.length > 0) {
       "\nThink you can go 5 for 5?",
       "\nI am BUILT DIFFERENT. Your turn.",
       "\nFlawless victory. Try me.",
-      "\nProve you know ball too."
+      "\nProve you know ball too.",
+      "\nI AM THE GREATEST!",
+      "\nI am the GOAT. Your turn.",
+      "\nI am the GOAT. Your turn. 🐐",
+      "\nI am the GOAT. Your turn. 🏈",
+      "\nI am the GOAT. Your turn. 🏆",
+      "\nYou cannot stop me 😈",
+      "\nUndefeated. Come at me.",
+      "\nPerfect score. You're not built for this.",
+      "\n5/5. Different breed.",
+      "\nNo weaknesses. Try to find one.",
+      "\nElite tier only. You in?",
+      "\nRan the table. Your move.",
+      "\nNo notes. Literally none.",
+      "\nCasuals need not apply.",
+      "\nThis is what knowing ball looks like.",
+      "\nBeat this. I'll wait.",
+
     ];
     const CTA_GOOD = [  // 3–4 correct
       "\nThink you know ball?",
       "\nProve you're not a casual.",
       "\nNFL brain check 🧠",
-      "\nCan you beat my score?"
+      "\nCan you beat my score?",
+      "\nI need backup… you try.",
+      "\nHumbling. Your turn though.",
+      "\nDon't let me suffer alone...",
+      "\nSurely you can beat this...",
+      "\nI've had better days...",
+      "\nNobody's perfect. :(",
+      "\nHighly doubt you can beat this.",
+      "\nSo close to perfect. Do better.",
+      "\nRespectable. Can you top it?",
+      "\nSmall mistake away from flawless.",
+      "\nSolid, not special. You got special?",
+      "\nAlmost had it. Your turn.",
+      "\nNot bad. Not great either.",
+      "\nMid-tier legend status. Challenge accepted?",
     ];
     const CTA_MID = [  // 1–2 correct
       "\nI need backup… you try.",
       "\nHumbling. Your turn though.",
       "\nDon't let me suffer alone...",
       "\nSurely you can beat this...",
-      "\nLow bar. Go clear it."
+      "\nLow bar. Go clear it.",
+      "\nYikes... I'm sure you can do better.",
+      "\nI need a friend to make me feel better.",
+      "\nI need a friend to make me feel better. Your turn.",
+      "\nRough one. Redeem me.",
+      "\nI need a win. Give me one.",
+      "\nEmbarrassing, honestly. Fix this.",
+      "\nBarely passing. Do better than me.",
+      "\nThat hurt to watch. Your turn.",
+      "\nNot my proudest moment. Help.",
+
     ];
     const CTA_ZERO = [
       "\nI do NOT know ball 🤦",
       "\nDown bad. Historically bad.",
       "\n0 for 5. I'm cooked 💀",
       "\nProof I should stop talking football.",
-      "\nRock bottom looks like this."
+      "\nRock bottom looks like this.",
+      "\nGoose egg. Send help.",
+      "\nI have never watched football, apparently.",
+      "\nThis is a cry for help.",
+      "\nBanned from talking ball for a week.",
+      "\nWorst I've ever seen..",
+      "\nI need to sit down.",
+      "\nUnwatchable performance. Your turn to embarrass yourself.",
+
     ];
 
     const pickRandom = (arr) => arr[Math.floor(Math.random() * arr.length)];

@@ -2,7 +2,14 @@
   "permissions": {
     "allow": [
       "PowerShell(Get-Command gh -ErrorAction SilentlyContinue)",
-      "PowerShell(git -C \"C:\\\\Users\\\\twill\\\\Desktop\\\\Coding Projects\\\\NFL Trivia\\\\pigskin5\" remote get-url origin 2>$null)"
+      "PowerShell(git -C \"C:\\\\Users\\\\twill\\\\Desktop\\\\Coding Projects\\\\NFL Trivia\\\\pigskin5\" remote get-url origin 2>$null)",
+      "Bash(python -c ' *)",
+      "Bash(py -c ' *)",
+      "Bash(py generate_questions.py --days 14 --start-date 2026-08-10 --seed 42 --output /tmp_test_output.js)",
+      "Bash(PYTHONIOENCODING=utf-8 py generate_questions.py --days 14 --start-date 2026-08-10 --seed 42 --output test_output.js)",
+      "Bash(PYTHONIOENCODING=utf-8 py generate_questions.py --days 60 --start-date 2026-08-10 --seed 7 --output test_output2.js)",
+      "Bash(py \"C:\\\\Users\\\\twill\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\c--Users-twill-Desktop-Coding-Projects-NFL-Trivia-pigskin5\\\\6a68e52c-c940-47ac-8c85-fb0da8f7a92f\\\\scratchpad\\\\check_dupes.py\" test_output2.js)",
+      "Bash(py \"C:\\\\Users\\\\twill\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\c--Users-twill-Desktop-Coding-Projects-NFL-Trivia-pigskin5\\\\6a68e52c-c940-47ac-8c85-fb0da8f7a92f\\\\scratchpad\\\\check_dupes.py\" questions.js)"
     ]
   }
 }
