@@ -358,7 +358,7 @@ export const CALENDAR = {
     event: "",
     questions: [
     { question: "True or False: 1967 was the Saints' first season.", choices: ["True", "False"], answer: 0 },
-    { question: "OVER or UNDER: The Seahawks have O/U 1.5 Super Bowl victories all-time.", choices: ["OVER", "UNDER"], answer: 1 },
+    { question: "OVER or UNDER: The Seahawks have O/U 1.5 Super Bowl victories all-time.", choices: ["OVER", "UNDER"], answer: 0 },
     { question: "How many career rushing touchdowns does Emmitt Smith have (NFL all-time record)?", choices: ["144", "175", "164", "181"], answer: 2 },
     { question: "Which of these was an ACTUAL NFL player?", choices: ["Trevontay Beauregard-Jones", "Ladel Thundergood", "Rashontez Allen-Finn", "Ovie Mughelli"], answer: 3 },
     { question: "Who led the NFL in Receiving Yards in 2018?", choices: ["Tyreek Hill", "Brandon Lloyd", "Julio Jones", "Stefon Diggs"], answer: 2 },
