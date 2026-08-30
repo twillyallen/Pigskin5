@@ -610,7 +610,7 @@ export const CALENDAR = {
     { question: "True or False: The San Francisco 49ers play their home games at Empower Field at Mile High.", choices: ["True", "False"], answer: 1 },
     { question: "In what season did the \"The Tackle\" occur?", choices: ["1999", "2000", "1997", "2002"], answer: 0 },
     { question: "Which of these was an ACTUAL NFL player?", choices: ["Adolfo Hartfordshire", "Trevontay Junior", "La'Quarine Quarterstein", "Jamari Thrash"], answer: 3 },
-    { question: "Guess the Career TE:\n- 3,301 Rec. Yards\n- 18 Rec. TDs\n- 286 Receptions", choices: ["Coby Fleener", "Delanie Walker", "Shannon Sharpe", "Zach Miller"], answer: 2 },
+    { question: "Guess the Career TE:\n- 10,060 Rec. Yards\n- 62 Rec. TDs\n- 815 Receptions", choices: ["Coby Fleener", "Delanie Walker", "Shannon Sharpe", "Zach Miller"], answer: 2 },
     { question: "OVER or UNDER: The Titans have O/U 0.5 Super Bowl victories all-time.", choices: ["OVER", "UNDER"], answer: 1 },
     ],
   },
