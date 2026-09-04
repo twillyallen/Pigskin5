@@ -684,6 +684,26 @@ export const CALENDAR = {
     { question: "Which TE has more Career Receiving Yards?", choices: ["Jimmy Graham", "Antonio Gates", "Vernon Davis", "Rob Gronkowski"], answer: 1 },
     ],
   },
+    "2026-09-07": { //Monday
+    event: "",
+    questions: [
+    { question: "Who had more receiving yards: Antonio Brown (2017) or Calvin Johnson (2012)?", choices: ["Antonio Brown (2017)", "Calvin Johnson (2012)"], answer: 1 },
+    { question: "Which of these was an ACTUAL NFL player?", choices: ["Desharious McNeail", "Taco Charlton", "Hingle McCringleberry", "Tresharius Junior"], answer: 1 },
+    { question: "True or False: The Jaguars made the AFC Championship Game in both the 1996 and 1999 seasons.", choices: ["True", "False"], answer: 0 },
+    { question: "Guess the Career QB:\n- 89,216 Pass Yards\n- 649 Pass TDs\n- 212 INTs\n- 97.2 Passer Rating", choices: ["Aaron Rodgers", "Peyton Manning", "Matthew Stafford", "Tom Brady"], answer: 3 },
+    { question: "Who is the NFL's all-time career leader in passing touchdowns?", choices: ["Tom Brady", "Jameis Winston", "Brett Favre", "Ben Roethlisberger"], answer: 0 },
+    ],
+  },
+    "2026-09-08": { //Tuesday
+    event: "",
+    questions: [
+    { question: "Who won Super Bowl XXXVIII?", choices: ["Falcons", "Saints", "Patriots", "Rams"], answer: 2 },
+    { question: "True or False: Tom Brady has more division titles than the entire Jets franchise has in the Super Bowl era.", choices: ["True", "False"], answer: 0 },
+    { question: "OVER or UNDER: The Vikings have O/U 0.5 Super Bowl victories all-time.", choices: ["OVER", "UNDER"], answer: 1 },
+    { question: "Guess the Career TE:\n- 2,694 Rec. Yards\n- 27 Rec. TDs\n- 229 Receptions", choices: ["Kyle Pitts", "Juwan Johnson", "Dawson Knox", "Evan Engram"], answer: 2 },
+    { question: "How many Super Bowls have the Miami Dolphins won?", choices: ["2", "1", "4", "0"], answer: 0 },
+    ],
+  },
 };
 
 
