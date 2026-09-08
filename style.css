@@ -199,6 +199,12 @@ body.quiz-active .progress-bar {
 
 
 /* ---------------- Start Screen ---------------- */
+.logo-confetti-canvas {
+  position: absolute;
+  pointer-events: none;
+  z-index: 5;
+}
+
 .title-logo {
   width: 87%;           
   max-width: 350px;

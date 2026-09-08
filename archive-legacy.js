@@ -2801,4 +2801,624 @@ export const LEGACY = {
     { question: "Guess the Career WR:\n- 5,519 Rec. Yards\n- 27 Rec. TDs\n- 406 Receptions", choices: ["DeSean Jackson", "Courtland Sutton", "Deebo Samuel Sr.", "Travis Benjamin"], answer: 2 },
     ],
   },
+      "2026-07-01": { //Wednesday
+    event: "",
+    questions: [
+    { question: "OVER or UNDER: John Elway has O/U 236.5 Career Interceptions Thrown.", choices: ["OVER", "UNDER"], answer: 1 },
+    { question: "True or False: 1933 was the Steelers' first season.", choices: ["True", "False"], answer: 0 },
+    { question: "Which of these was an ACTUAL NFL player?", choices: ["George Stanford", "La'Jender McNeail", "Jaqwellius Hammersmith", "DJ Glaze"], answer: 3 },
+    { question: "Which TE has more Career Receiving Yards?", choices: ["George Kittle", "Tony Gonzalez", "Travis Kelce", "Rob Gronkowski"], answer: 1 },
+    { question: "Who is the NFL's all-time career leader in rushing touchdowns?", choices: ["Kyren Williams", "Emmitt Smith", "Kevin Smith", "Marshall Faulk"], answer: 1 },
+    ],
+  },
+    "2026-07-02": { //Thursday
+    event: "",
+    questions: [
+    { question: "How many Super Bowls have the Pittsburgh Steelers won?", choices: ["6", "5", "9", "7"], answer: 0 },
+    { question: "Guess the Career RB:\n- 4,923 Rush Yards\n- 29 Rush TDs\n- 6,357 Yards from Scrimmage\n- 33 Total TDs", choices: ["Marlon Mack", "Devin Singletary", "C.J. Spiller", "Marshawn Lynch"], answer: 1 },
+    { question: "OVER or UNDER: The Broncos have O/U 3.5 Super Bowl victories all-time.", choices: ["OVER", "UNDER"], answer: 1 },
+    { question: "Which of these was an ACTUAL NFL player?", choices: ["Jaiveon Johnsonville", "La'Zekiel Blackenstein", "Tutan Reyes", "Shakiraquan T.G.I.F. Carter"], answer: 2 },
+    { question: "True or False: Patrick Mahomes has won 4 Super Bowls.", choices: ["True", "False"], answer: 1 },
+    ],
+  },
+    "2026-07-03": { //Friday
+    event: "",
+    questions: [
+    { question: "Who led the NFL in Passing Yards in 2000?", choices: ["Drew Bledsoe", "Trent Green", "Jake Plummer", "Peyton Manning"], answer: 3 },
+    { question: "Guess the Career QB:\n- 27,989 Pass Yards\n- 212 Pass TDs\n- 210 INTs\n- 70.9 Passer Rating", choices: ["Terry Bradshaw", "Jon Kitna", "Jameis Winston", "Dak Prescott"], answer: 0 },
+    { question: "OVER or UNDER: The Titans have O/U 0.5 Super Bowl victories all-time.", choices: ["OVER", "UNDER"], answer: 1 },
+    { question: "Who won Defensive Rookie of the Year in 2013?", choices: ["Ziggy Ansah", "Dion Jordan", "Sheldon Richardson", "Dee Milliner"], answer: 2 },
+    { question: "Which of these was an ACTUAL NFL player?", choices: ["Plaxico Burress", "Jaqwellius Bonecastle", "Brayquan Fettergun II", "Piggy Goldsworth"], answer: 0 },
+    ],
+  },
+    "2026-07-04": { //Saturday
+    event: "",
+    questions: [
+    { question: "OVER or UNDER: Alvin Kamara has O/U 84.5 Career Total TDs.", choices: ["OVER", "UNDER"], answer: 0 },
+    { question: "Who led the NFL in Rushing Yards in 2019?", choices: ["Christian McCaffrey", "Ezekiel Elliott", "Derrick Henry", "Saquon Barkley"], answer: 2 },
+    { question: "True or False: The Tampa Bay Buccaneers once lost 26 straight games.", choices: ["True", "False"], answer: 0 },
+    { question: "What division do the Dallas Cowboys play in?", choices: ["AFC North", "NFC East", "NFC North", "NFC South"], answer: 1 },
+    { question: "Which of these was an ACTUAL NFL player?", choices: ["Wonderful Monds", "Jermaine Allen-Finn", "La'Dain Hammersmith", "Montravius Stormy-Jones"], answer: 0 },
+    ],
+  },
+    "2026-07-05": { //Sunday
+    event: "",
+    questions: [
+    { question: "OVER or UNDER: The 49ers have O/U 4.5 Super Bowl victories all-time.", choices: ["OVER", "UNDER"], answer: 0 },
+    { question: "How many career total touchdowns does Jerry Rice have (NFL all-time record)?", choices: ["228", "208", "189", "225"], answer: 1 },
+    { question: "True or False: The Buffalo Bills play their home games at Highmark Stadium.", choices: ["True", "False"], answer: 0 },
+    { question: "Guess the Career RB:\n- 2,558 Rush Yards\n- 14 Rush TDs\n- 4.1 Yards per Carry", choices: ["Sony Michel", "J.K. Dobbins", "D'Onta Foreman", "Rico Dowdle"], answer: 2 },
+    { question: "Which of these was an ACTUAL NFL player?", choices: ["Jaiveon Beauregard-Jones", "Ifeanyi Ohalete", "Ja'Quan Bumbleton", "La'Dain Van Der Berg"], answer: 1 },
+    ],
+  },
+    "2026-07-06": { //Monday
+    event: "",
+    questions: [
+    { question: "What division do the Buffalo Bills play in?", choices: ["NFC East", "AFC East", "NFC South", "AFC North"], answer: 1 },
+    { question: "OVER or UNDER: The Ravens have O/U 2.5 Super Bowl victories all-time.", choices: ["OVER", "UNDER"], answer: 1 },
+    { question: "Who led the NFL in Rushing TDs in 2011?", choices: ["LaDainian Tomlinson", "LeSean McCoy", "Clinton Portis", "Shaun Alexander"], answer: 1 },
+    { question: "Guess the Career QB:\n- 89,216 Pass Yards\n- 649 Pass TDs\n- 212 INTs\n- 97.2 Passer Rating", choices: ["Ben Roethlisberger", "Tom Brady", "Aaron Rodgers", "Philip Rivers"], answer: 1 },
+    { question: "True or False: The Atlanta Falcons play their home games at Allegiant Stadium.", choices: ["True", "False"], answer: 1 },
+    ],
+  },
+    "2026-07-07": { //Tuesday
+    event: "",
+    questions: [
+    { question: "Who won Super Bowl XXXI?", choices: ["Cowboys", "Colts", "49ers", "Packers"], answer: 3 },
+    { question: "Guess the Career TE:\n- 2,033 Rec. Yards\n- 22 Rec. TDs\n- 150 Receptions", choices: ["Kevin Boss", "Brent Celek", "Martellus Bennett", "Eric Johnson"], answer: 0 },
+    { question: "True or False: The Ravens have won 3 Super Bowls.", choices: ["True", "False"], answer: 1 },
+    { question: "Which TE has more Career Receiving TDs?", choices: ["Jason Witten", "Tony Gonzalez", "Mark Andrews", "Zach Ertz"], answer: 1 },
+    { question: "OVER or UNDER: The Jaguars have O/U 0.5 Super Bowl victories all-time.", choices: ["OVER", "UNDER"], answer: 1 },
+    ],
+  },
+    "2026-07-08": { //Wednesday
+    event: "",
+    questions: [
+    { question: "Which of these was an ACTUAL NFL player?", choices: ["Traequan Goldsworth", "Mecole Hardman", "Kayvontez Tomlin", "Jaqwellius Feathers"], answer: 1 },
+    { question: "Which NFL team plays their home games at Lucas Oil Stadium?", choices: ["Chicago Bears", "Indianapolis Colts", "Minnesota Vikings", "New York Giants"], answer: 1 },
+    { question: "Who won Defensive Rookie of the Year in 2017?", choices: ["Joey Bosa", "Marshon Lattimore", "Charles Woodson", "Justin Smith"], answer: 1 },
+    { question: "Guess the Career QB:\n- 22,601 Pass Yards\n- 122 Pass TDs\n- 93 INTs\n- 81.8 Passer Rating", choices: ["Joe Burrow", "Brad Johnson", "Sam Bradford", "Kyler Murray"], answer: 1 },
+    { question: "OVER or UNDER: Ameer Abdullah has O/U 2,200 Career Rushing Yards.", choices: ["OVER", "UNDER"], answer: 1 },
+    ],
+  },
+    "2026-07-09": { //Thursday
+    event: "",
+    questions: [
+    { question: "How many Super Bowls have the Philadelphia Eagles won?", choices: ["1", "6", "2", "4"], answer: 2 },
+    { question: "Guess the Career RB:\n- 3,027 Rush Yards\n- 16 Rush TDs\n- 4.6 Yards per Carry", choices: ["Michael Bennett", "Maurice Jones-Drew", "Julius Jones", "Garrison Hearst"], answer: 3 },
+    { question: "True or False: The Washington Commanders were originally called the Boston Braves.", choices: ["True", "False"], answer: 0 },
+    { question: "Which of these was an ACTUAL NFL player?", choices: ["Adolfo Winterbottom", "Devon Van Der Berg", "Breshawn Fender", "Captain Munnerlyn"], answer: 3 },
+    { question: "Which RB has more Career Rushing TDs?", choices: ["Jim Brown", "Shaun Alexander", "Barry Sanders", "Walter Payton"], answer: 3 },
+    ],
+  },
+    "2026-07-10": { //Friday
+    event: "",
+    questions: [
+    { question: "Which coach said the famous quote \"You play to win the game!\"?", choices: ["Mike Ditka", "Mike Tomlin", "Herm Edwards", "Marv Levy"], answer: 2 },
+    { question: "Which of these was an ACTUAL NFL player?", choices: ["Ja'Quan Goldsworth", "Funchy Hammersmith", "Qwan'tez Stiggers", "Quandarious Willowbrook"], answer: 2 },
+    { question: "Guess the Career QB:\n- 35,132 Pass Yards\n- 227 Pass TDs\n- 160 INTs\n- 85.3 Passer Rating", choices: ["Jeff Garcia", "Patrick Mahomes", "Matt Schaub", "Jay Cutler"], answer: 3 },
+    { question: "Who holds the NFL record for most career rushing yards?", choices: ["Steven Jackson", "Edgerrin James", "Adrian Peterson", "Emmitt Smith"], answer: 3 },
+    { question: "True or False: 1960 was the Cowboys' first season.", choices: ["True", "False"], answer: 0 },
+    ],
+  },
+    "2026-07-11": { //Saturday
+    event: "",
+    questions: [
+    { question: "Who is the Minnesota Vikings' all-time leader in passing yards?", choices: ["Daunte Culpepper", "Kirk Cousins", "Tommy Kramer", "Fran Tarkenton"], answer: 3 },
+    { question: "True or False: The New Orleans Saints play in the NFC South.", choices: ["True", "False"], answer: 0 },
+    { question: "Who holds the NFL record for most career passing yards?", choices: ["Peyton Manning", "Matthew Stafford", "Tom Brady", "Eli Manning"], answer: 2 },
+    { question: "OVER or UNDER: The Patriots have O/U 4.5 Super Bowl victories all-time.", choices: ["OVER", "UNDER"], answer: 0 },
+    { question: "Which of these was an ACTUAL NFL player?", choices: ["Tavontay McNeail", "Zohnathan Gaultin", "D'Markus Willowbrook", "Ickey Woods"], answer: 3 },
+    ],
+  },
+    "2026-07-12": { //Sunday
+    event: "",
+    questions: [
+    { question: "Which of these was an ACTUAL NFL player?", choices: ["Zebrion Ashcastle", "Ravioli Buccatini Sr.", "Divine Deablo", "Mergatroyd Skullbuster"], answer: 2 },
+    { question: "OVER or UNDER: The Lions have O/U 0.5 Super Bowl victories all-time.", choices: ["OVER", "UNDER"], answer: 1 },
+    { question: "Which player is associated with the \"Philly Special\"?", choices: ["Jay Cutler", "Philip Rivers", "Marcus Mariota", "Nick Foles"], answer: 3 },
+    { question: "What year did the Colts relocate to Indianapolis?", choices: ["1990", "1987", "1984", "1989"], answer: 2 },
+    { question: "True or False: 1960 was the Chiefs' first season.", choices: ["True", "False"], answer: 0 },
+    ],
+  },
+    "2026-07-13": { //Monday
+    event: "",
+    questions: [
+    { question: "Guess the Career QB:\n- 20,431 Pass Yards\n- 123 Pass TDs\n- 82 INTs\n- 86.5 Passer Rating", choices: ["Tua Tagovailoa", "Sam Darnold", "Daniel Jones", "Marcus Mariota"], answer: 1 },
+    { question: "Which of these was an ACTUAL NFL player?", choices: ["Brayquan Martin III", "Throckmorton Sketchington", "Luiji Vilain", "Jermissy Whistleblower"], answer: 2 },
+    { question: "OVER or UNDER: The Lions have O/U 4.5 NFL championships (all-time).", choices: ["OVER", "UNDER"], answer: 1 },
+    { question: "Who won Comeback Player of the Year in 2022?", choices: ["Michael Pittman", "A.J. Green", "Felix Jones", "Geno Smith"], answer: 3 },
+    { question: "What division do the Detroit Lions play in?", choices: ["AFC East", "NFC North", "AFC West", "AFC North"], answer: 1 },
+    ],
+  },
+    "2026-07-14": { //Tuesday
+    event: "",
+    questions: [
+    { question: "True or False: The Raiders have won 4 Super Bowls.", choices: ["True", "False"], answer: 1 },
+    { question: "Which TE has more Career Receiving Yards?", choices: ["Greg Olsen", "Vernon Davis", "George Kittle", "Rob Gronkowski"], answer: 3 },
+    { question: "Guess the Career RB:\n- 5,521 Yards from Scrimmage\n- 41 Total TDs\n- 4.4 Yards per Carry\n- 3,866 Rush Yards", choices: ["Frank Gore", "Todd Gurley", "Tevin Coleman", "Kenyan Drake"], answer: 3 },
+    { question: "What division do the Green Bay Packers play in?", choices: ["NFC West", "AFC East", "AFC North", "NFC North"], answer: 3 },
+    { question: "OVER or UNDER: Kenyan Drake has O/U 4,100 Career Rushing Yards.", choices: ["OVER", "UNDER"], answer: 1 },
+    ],
+  },
+    "2026-07-15": { //Wednesday
+    event: "",
+    questions: [
+    { question: "Who is the NFL's all-time career leader in receiving yards?", choices: ["Jerry Rice", "DK Metcalf", "Anquan Boldin", "Robbie Chosen"], answer: 0 },
+    { question: "OVER or UNDER: The Rams have O/U 2.5 Super Bowl victories all-time.", choices: ["OVER", "UNDER"], answer: 1 },
+    { question: "What year was the Falcons' first season?", choices: ["1959", "1961", "1968", "1965"], answer: 3 },
+    { question: "Which of these was an ACTUAL NFL player?", choices: ["Ki-Jana Carter", "Tresharius Pennywhistle", "Ruke Ashcastle", "Jermissy Stormbreaker"], answer: 0 },
+    { question: "Guess the Career RB:\n- 4.1 Yards per Carry\n- 25 Total TDs\n- 5,241 Yards from Scrimmage\n- 23 Rush TDs", choices: ["Rashad Jennings", "David Johnson", "Jordan Mason", "Josh Jacobs"], answer: 0 },
+    ],
+  },
+    "2026-07-16": { //Thursday
+    event: "",
+    questions: [
+    { question: "True or False: Ray Lewis won Super Bowl MVP with ZERO sacks in that game.", choices: ["True", "False"], answer: 0 },
+    { question: "OVER or UNDER: The Cardinals have been located in O/U 2.5 cities.", choices: ["OVER", "UNDER"], answer: 0 },
+    { question: "Guess the Career WR:\n- 4,858 Rec. Yards\n- 37 Rec. TDs\n- 389 Receptions", choices: ["Nelson Agholor", "Jakobi Meyers", "Michael Gallup", "Kendrick Bourne"], answer: 0 },
+    { question: "Which of these was an ACTUAL NFL player?", choices: ["Grunthaven Wollstonecraft", "Bazzel Adderley", "Devon Johnsonville", "Jaqwellius Boonclap"], answer: 1 },
+    { question: "Who is the Houston Texans' all-time leader in rushing yards?", choices: ["Alfred Blue", "Arian Foster", "Lamar Miller", "Domanick Williams"], answer: 1 },
+    ],
+  },
+    "2026-07-17": { //Friday
+    event: "",
+    questions: [
+    { question: "Which of these was an ACTUAL NFL player?", choices: ["J.J. Jansen", "Ladel Whistleblower", "Ja'Vontavious Van Der Berg", "Lil'Jordan Fender"], answer: 0 },
+    { question: "Who led the NFL in Passing Yards in 2016?", choices: ["Tom Brady", "Drew Brees", "Matt Schaub", "Patrick Mahomes"], answer: 1 },
+    { question: "Guess the Career WR:\n- 3,079 Rec. Yards\n- 15 Rec. TDs\n- 262 Receptions", choices: ["Ted Ginn", "Jarvis Landry", "Andre Roberts", "Nico Collins"], answer: 2 },
+    { question: "Which coach said the famous quote \"They are who we thought they were!\"?", choices: ["Andy Reid", "Dennis Green", "John Madden", "Bill Belichick"], answer: 1 },
+    { question: "OVER or UNDER: The Cardinals have been located in O/U 3.5 cities.", choices: ["OVER", "UNDER"], answer: 1 },
+    ],
+  },
+    "2026-07-18": { //Saturday
+    event: "",
+    questions: [
+    { question: "OVER or UNDER: The Vikings have O/U 0.5 Super Bowl victories all-time.", choices: ["OVER", "UNDER"], answer: 1 },
+    { question: "Who is the Denver Broncos' all-time leader in rushing yards?", choices: ["Floyd Little", "Sammy Winder", "Terrell Davis", "Otis Armstrong"], answer: 2 },
+    { question: "Which of these was an ACTUAL NFL player?", choices: ["Jermaine Crumbleton", "Lavonte David", "Brayquan Tomlin", "Treshon Fender"], answer: 1 },
+    { question: "Who led the NFL in Rushing TDs in 2017?", choices: ["Jonathan Taylor", "Todd Gurley", "LeGarrette Blount", "Adrian Peterson"], answer: 1 },
+    { question: "True or False: The Arizona Cardinals play in the NFC West.", choices: ["True", "False"], answer: 0 },
+    ],
+  },
+    "2026-07-19": { //Sunday
+    event: "",
+    questions: [
+    { question: "Which of these was an ACTUAL NFL player?", choices: ["Jermaine Brightwater", "Brayquan Finnenbaum", "Divine Deablo", "Zayvarious Picklesmith"], answer: 2 },
+    { question: "Guess the Career WR:\n- 5,699 Rec. Yards\n- 30 Rec. TDs\n- 373 Receptions", choices: ["Bryant Johnson", "Travis Taylor", "Antonio Bryant", "Chad Johnson"], answer: 2 },
+    { question: "Who won Super Bowl I?", choices: ["Packers", "Panthers", "Bills", "Bengals"], answer: 0 },
+    { question: "OVER or UNDER: Damien Harris has O/U 40 Career Total TDs.", choices: ["OVER", "UNDER"], answer: 1 },
+    { question: "True or False: 1898 was the Cardinals' first season.", choices: ["True", "False"], answer: 0 },
+    ],
+  },
+    "2026-07-20": { //Monday
+    event: "",
+    questions: [
+    { question: "Guess the Career QB:\n- 13,028 Pass Yards\n- 78 Pass TDs\n- 48 INTs\n- 86.9 Passer Rating", choices: ["Brock Purdy", "Jimmy Garoppolo", "Mitchell Trubisky", "Jay Fiedler"], answer: 2 },
+    { question: "How many Super Bowls have the San Francisco 49ers won?", choices: ["5", "4", "3", "8"], answer: 0 },
+    { question: "Which of these was an ACTUAL NFL player?", choices: ["Montravius Fettergun II", "Velociraptor Malone", "Brayquan Tomlin", "Ziggy Ansah"], answer: 3 },
+    { question: "How many single season rec yards did Calvin Johnson record?", choices: ["1,969", "1,964", "1,953", "1,978"], answer: 1 },
+    { question: "True or False: The Broncos have won 4 Super Bowls.", choices: ["True", "False"], answer: 1 },
+    ],
+  },
+    "2026-07-21": { //Tuesday
+    event: "",
+    questions: [
+    { question: "Guess the Career WR:\n- 6,563 Rec. Yards\n- 49 Rec. TDs\n- 493 Receptions", choices: ["Doug Baldwin", "Eric Decker", "Jamison Crowder", "Allen Robinson"], answer: 0 },
+    { question: "True or False: Steve Young made his first NFL starts for the Buccaneers.", choices: ["True", "False"], answer: 0 },
+    { question: "How many Super Bowls have the Los Angeles Rams won?", choices: ["2", "5", "4", "6"], answer: 0 },
+    { question: "OVER or UNDER: Martellus Bennett has O/U 50 Career Receiving TDs.", choices: ["OVER", "UNDER"], answer: 1 },
+    { question: "Which of these was an ACTUAL NFL player?", choices: ["Grunthaven Wollstonecraft", "Devon Johnsonville", "Markson Van Der Berg", "Fair Hooker"], answer: 3 },
+    ],
+  },
+    "2026-07-22": { //Wednesday
+    event: "",
+    questions: [
+    { question: "OVER or UNDER: The Jets have O/U 1.5 Super Bowl victories all-time.", choices: ["OVER", "UNDER"], answer: 1 },
+    { question: "Which franchise originally drafted Bo Jackson?", choices: ["Jets", "Buccaneers", "Raiders", "Steelers"], answer: 1 },
+    { question: "Which of these was an ACTUAL NFL player?", choices: ["Zecharion Wainwright III", "George Johnson", "Bud Dupree", "Desharious Bumbleton"], answer: 2 },
+    { question: "What year did the Cardinals relocate to Arizona?", choices: ["1988", "1991", "1992", "1986"], answer: 0 },
+    { question: "Guess the Career RB:\n- 2,471 Rush Yards\n- 24 Rush TDs\n- 4.0 Yards per Carry\n- 24 Total TDs", choices: ["Jerious Norwood", "Reuben Droughns", "Chris Wells", "Pierre Thomas"], answer: 2 },
+    ],
+  },
+    "2026-07-23": { //Thursday
+    event: "",
+    questions: [
+    { question: "Which of these was an ACTUAL NFL player?", choices: ["Pig Prather", "Shaqavian Butterfield", "Ja'Quan Goldsworth", "Funchy Weinstein"], answer: 0 },
+    { question: "How many Super Bowls have the Jacksonville Jaguars won?", choices: ["0", "6", "3", "1"], answer: 0 },
+    { question: "Which QB has more Career Passing TDs?", choices: ["Matt Ryan", "Tom Brady", "Drew Brees", "Philip Rivers"], answer: 1 },
+    { question: "OVER or UNDER: The 49ers have O/U 5.5 Super Bowl victories all-time.", choices: ["OVER", "UNDER"], answer: 1 },
+    { question: "True or False: The Denver Broncos play their home games at Empower Field at Mile High.", choices: ["True", "False"], answer: 0 },
+    ],
+  },
+    "2026-07-24": { //Friday
+    event: "",
+    questions: [
+    { question: "True or False: 1963 was the Cowboys' first season.", choices: ["True", "False"], answer: 1 },
+    { question: "Guess the Career RB:\n- 91 Total TDs\n- 12,254 Rush Yards\n- 80 Rush TDs\n- 4.0 Yards per Carry", choices: ["Dorsey Levens", "Eddie George", "Edgerrin James", "Ricky Williams"], answer: 2 },
+    { question: "Which of these was an ACTUAL NFL player?", choices: ["Devontarius Johnsonville", "Equanimeous St. Brown", "La'Zekiel Winterbottom", "Jermissy Stormbreaker"], answer: 1 },
+    { question: "How many single season points did LaDainian Tomlinson record?", choices: ["189", "192", "171", "186"], answer: 3 },
+    { question: "Who is the Tampa Bay Buccaneers' all-time leader in receiving yards?", choices: ["Chris Godwin", "Kevin House", "Mike Evans", "Mark Carrier"], answer: 2 },
+    ],
+  },
+    "2026-07-25": { //Saturday
+    event: "",
+    questions: [
+    { question: "Who led the NFL in Passing TDs in 2003?", choices: ["Drew Bledsoe", "Jake Plummer", "Brett Favre", "Trent Green"], answer: 2 },
+    { question: "True or False: The Indianapolis Colts play in the AFC South.", choices: ["True", "False"], answer: 0 },
+    { question: "OVER or UNDER: Jay Ajayi has O/U 2,700 Career Rushing Yards.", choices: ["OVER", "UNDER"], answer: 1 },
+    { question: "Which of these was an ACTUAL NFL player?", choices: ["Mossis Madu", "Johnson Bumbleton", "Adolfo Winterbottom", "Quandavious Bumbershoot"], answer: 0 },
+    { question: "Who is the Cincinnati Bengals' all-time leader in rushing yards?", choices: ["Corey Dillon", "James Brooks", "Joe Mixon", "Rudi Johnson"], answer: 0 },
+    ],
+  },
+    "2026-07-26": { //Sunday
+    event: "",
+    questions: [
+    { question: "Who holds the NFL single-season record for rushing touchdowns?", choices: ["LaDainian Tomlinson", "Clinton Portis", "Ricky Watters", "Marion Barber"], answer: 0 },
+    { question: "True or False: The Chicago Bears were originally called the Decatur Staleys.", choices: ["True", "False"], answer: 0 },
+    { question: "Who holds the NFL record for most rushing yards in a single season?", choices: ["Eric Dickerson", "Marcus Allen", "O.J. Simpson", "Adrian Peterson"], answer: 0 },
+    { question: "Guess the Career WR:\n- 6,030 Rec. Yards\n- 36 Rec. TDs\n- 389 Receptions", choices: ["Laveranues Coles", "Bryant Johnson", "Santonio Holmes", "Bernard Berrian"], answer: 2 },
+    { question: "Which of these was an ACTUAL NFL player?", choices: ["Taco Charlton", "Adolfo Winterbottom", "Lil'Jordan Fender", "A.A. Ron Balakay"], answer: 0 },
+    ],
+  },
+    "2026-07-27": { //Monday
+    event: "",
+    questions: [
+    { question: "OVER or UNDER: The Steelers have O/U 6.5 Super Bowl victories all-time.", choices: ["OVER", "UNDER"], answer: 1 },
+    { question: "How many Super Bowls have the Green Bay Packers won?", choices: ["5", "4", "7", "1"], answer: 1 },
+    { question: "Guess the Career WR:\n- 6,822 Rec. Yards\n- 36 Rec. TDs\n- 620 Receptions", choices: ["Drake London", "Julian Edelman", "Travis Benjamin", "Chris Godwin Jr."], answer: 1 },
+    { question: "Which coach led the Steelers to a Super Bowl victory?", choices: ["Jim Mora", "Mike Tomlin", "Mike Ditka", "Herm Edwards"], answer: 1 },
+    { question: "Which of these was an ACTUAL NFL player?", choices: ["Jermaine Quarterstein", "Funchy Hammersmith", "Shaqavian St. Germaine", "Quez Watkins"], answer: 3 },
+    ],
+  },
+      "2026-07-28": { //Tuesday
+    event: "",
+    questions: [
+    { question: "Which quarterback led the Jaguars to the AFC Championship Game during their second season in 1996?", choices: ["Stan Humphries", "Mark Brunell", "Gus Frerotte", "Blake Bortles"], answer: 1 },
+    { question: "Which NFL team plays their home games at SoFi Stadium?", choices: ["Philadelphia Eagles", "Los Angeles Chargers", "Miami Dolphins", "Minnesota Vikings"], answer: 1 },
+    { question: "Who had more rushing yards: Josh Jacobs (2022) or Jamal Lewis (2003)?", choices: ["Josh Jacobs (2022)", "Jamal Lewis (2003)"], answer: 1 },
+    { question: "Guess the Career WR:\n- 3,452 Rec. Yards\n- 29 Rec. TDs\n- 267 Receptions", choices: ["Bill Schroeder", "Cris Carter", "Isaac Bruce", "Hines Ward"], answer: 1 },
+    { question: "OVER or UNDER: The Raiders have been located in O/U 2.5 cities.", choices: ["OVER", "UNDER"], answer: 0 },
+    ],
+  },
+    "2026-07-29": { //Wednesday
+    event: "",
+    questions: [
+    { question: "OVER or UNDER: Brian Finneran has O/U 18 Career Receiving TDs.", choices: ["OVER", "UNDER"], answer: 0 },
+    { question: "Guess the Career TE:\n- 2,258 Rec. Yards\n- 14 Rec. TDs\n- 178 Receptions", choices: ["Benjamin Watson", "Lance Kendricks", "Wesley Walls", "Gary Barnidge"], answer: 3 },
+    { question: "Who led the NFL in Rushing Yards in 2004?", choices: ["Curtis Martin", "LaDainian Tomlinson", "Maurice Jones-Drew", "Jamal Lewis"], answer: 0 },
+    { question: "Which of these was an ACTUAL NFL player?", choices: ["Jakorious Feathers", "Peerless Price", "Jaqwellius Wainwright III", "Ventravian St. Germaine"], answer: 1 },
+    { question: "Which coach led the Steelers to a Super Bowl victory?", choices: ["Andy Reid", "Marv Levy", "Matt LaFleur", "Mike Tomlin"], answer: 3 },
+    ],
+  },
+    "2026-07-30": { //Thursday
+    event: "",
+    questions: [
+    { question: "Which NFL team plays their home games at Nissan Stadium?", choices: ["New Orleans Saints", "Green Bay Packers", "Tennessee Titans", "Seattle Seahawks"], answer: 2 },
+    { question: "OVER or UNDER: Travis Henry has O/U 50 Career Rushing TDs.", choices: ["OVER", "UNDER"], answer: 1 },
+    { question: "Who won Defensive Player of the Year in 2009?", choices: ["Luke Kuechly", "Jared Allen", "Ed Reed", "Charles Woodson"], answer: 3 },
+    { question: "Which of these was an ACTUAL NFL player?", choices: ["Dequavious Junior", "George Nickelstein", "Aeneas Williams", "J'Dinkalage Morgoone"], answer: 2 },
+    { question: "Which wide receiver earned the nickname “Ochocinco”?", choices: ["Chad Johnson", "Greg Camarillo", "Tee Higgins", "Wesley Welker"], answer: 0 },
+    ],
+  },
+    "2026-07-31": { //Friday
+    event: "",
+    questions: [
+    { question: "Which of these was an ACTUAL NFL player?", choices: ["Zebrion Henrich", "Jaiveon Fettergun II", "Dee Virgin", "La'Zekiel Dandridge"], answer: 2 },
+    { question: "True or False: The Pittsburgh Steelers were originally called the Pittsburgh Pirates.", choices: ["True", "False"], answer: 0 },
+    { question: "Who is the Philadelphia Eagles' all-time leader in rushing yards?", choices: ["LeSean McCoy", "Steve Van Buren", "Wilbert Montgomery", "Brian Westbrook"], answer: 0 },
+    { question: "How many career receiving touchdowns does Vernon Davis have?", choices: ["80", "70", "68", "63"], answer: 3 },
+    { question: "Guess the Career RB:\n- 3,834 Rush Yards\n- 36 Rush TDs\n- 4.6 Yards per Carry\n- 44 Total TDs", choices: ["Jamaal Charles", "Damien Harris", "Melvin Gordon", "Kyren Williams"], answer: 3 },
+    ],
+  },
+    "2026-08-01": { //Saturday
+    event: "",
+    questions: [
+    { question: "True or False: 1956 was the Colts' first season.", choices: ["True", "False"], answer: 1 },
+    { question: "Guess the Career RB:\n- 4.0 Yards per Carry\n- 68 Rush TDs\n- 71 Total TDs\n- 10,586 Rush Yards", choices: ["Thomas Jones", "Ronnie Brown", "Chris Wells", "BenJarvus Green-Ellis"], answer: 0 },
+    { question: "Which NFL team plays their home games at Hard Rock Stadium?", choices: ["Kansas City Chiefs", "San Francisco 49ers", "Denver Broncos", "Miami Dolphins"], answer: 3 },
+    { question: "OVER or UNDER: Robbie Chosen has O/U 4,900 Career Receiving Yards.", choices: ["OVER", "UNDER"], answer: 0 },
+    { question: "Who had more receptions: Pierre Garcon (2013) or Michael Thomas (2019)?", choices: ["Pierre Garcon (2013)", "Michael Thomas (2019)"], answer: 1 },
+    ],
+  },
+    "2026-08-02": { //Sunday
+    event: "",
+    questions: [
+    { question: "Who won Coach of the Year in 2012?", choices: ["Herm Edwards", "Bruce Arians", "Andy Reid", "Dennis Green"], answer: 1 },
+    { question: "Which of these was an ACTUAL NFL player?", choices: ["Barkevious Mingo", "La'Vondrius Blackenstein", "Javorius Fantloose", "Dequavious Junior"], answer: 0 },
+    { question: "True or False: The Patriots have won 7 Super Bowls.", choices: ["True", "False"], answer: 1 },
+    { question: "Who led the NFL in Rushing Yards in 2014?", choices: ["LaDainian Tomlinson", "DeMarco Murray", "Jamal Lewis", "Shaun Alexander"], answer: 1 },
+    { question: "Guess the Career RB:\n- 61 Total TDs\n- 6,204 Rush Yards\n- 4.3 Yards per Carry\n- 55 Rush TDs", choices: ["Fred Jackson", "Larry Johnson", "Derrick Ward", "BenJarvus Green-Ellis"], answer: 1 },
+    ],
+  },
+    "2026-08-03": { //Monday
+    event: "",
+    questions: [
+    { question: "OVER or UNDER: The Raiders have been located in O/U 3.5 cities.", choices: ["OVER", "UNDER"], answer: 1 },
+    { question: "What division do the New York Giants play in?", choices: ["NFC East", "AFC South", "AFC North", "NFC North"], answer: 0 },
+    { question: "Which of these was an ACTUAL NFL player?", choices: ["Jermissy Marcus", "Israel Idonije", "Ladel St. Germaine", "Tennison Finnenbaum"], answer: 1 },
+    { question: "Guess the Career QB:\n- 13,028 Pass Yards\n- 78 Pass TDs\n- 48 INTs\n- 86.9 Passer Rating", choices: ["Mitchell Trubisky", "Elvis Grbac", "Colin Kaepernick", "Jay Fiedler"], answer: 0 },
+    { question: "True or False: Steve Young made his first NFL starts for the Buccaneers.", choices: ["True", "False"], answer: 0 },
+    ],
+  },
+    "2026-08-04": { //Tuesday
+    event: "",
+    questions: [
+    { question: "True or False: The Washington Commanders were originally called the Boston Braves.", choices: ["True", "False"], answer: 0 },
+    { question: "Which of these was an ACTUAL NFL player?", choices: ["Ruke Butterfield", "Quandavious Bumbershoot", "Ravioli Buccatini Sr.", "Dick Butkus"], answer: 3 },
+    { question: "How many Super Bowls have the Denver Broncos won?", choices: ["0", "4", "3", "2"], answer: 2 },
+    { question: "How many career receiving yards does Jerry Rice have (NFL all-time record)?", choices: ["22,895", "24,802", "21,021", "24,740"], answer: 0 },
+    { question: "Guess the Career QB:\n- 15,357 Pass Yards\n- 86 Pass TDs\n- 89 INTs\n- 73.3 Passer Rating", choices: ["Brian Griese", "Jason Campbell", "Mark Sanchez", "Teddy Bridgewater"], answer: 2 },
+    ],
+  },
+    "2026-08-05": { //Wednesday
+    event: "",
+    questions: [
+    { question: "True or False: 1967 was the Saints' first season.", choices: ["True", "False"], answer: 0 },
+    { question: "OVER or UNDER: The Seahawks have O/U 1.5 Super Bowl victories all-time.", choices: ["OVER", "UNDER"], answer: 0 },
+    { question: "How many career rushing touchdowns does Emmitt Smith have (NFL all-time record)?", choices: ["144", "175", "164", "181"], answer: 2 },
+    { question: "Which of these was an ACTUAL NFL player?", choices: ["Trevontay Beauregard-Jones", "Ladel Thundergood", "Rashontez Allen-Finn", "Ovie Mughelli"], answer: 3 },
+    { question: "Who led the NFL in Receiving Yards in 2018?", choices: ["Tyreek Hill", "Brandon Lloyd", "Julio Jones", "Stefon Diggs"], answer: 2 },
+    ],
+  },
+    "2026-08-06": { //Thursday
+    event: "",
+    questions: [
+    { question: "OVER or UNDER: Kevin Walter has O/U 20 Career Receiving TDs.", choices: ["OVER", "UNDER"], answer: 0 },
+    { question: "Which of these was an ACTUAL NFL player?", choices: ["DJ Glaze", "Sofia Butterfield", "Tyroil Smoochie-Wallace", "Kendarious Martin III"], answer: 0 },
+    { question: "True or False: The Minnesota Vikings play their home games at U.S. Bank Stadium.", choices: ["True", "False"], answer: 0 },
+    { question: "Which WR has more Career Receiving Yards?", choices: ["Torry Holt", "Larry Fitzgerald", "Steve Smith", "Randy Moss"], answer: 1 },
+    { question: "How many Super Bowls have the Green Bay Packers won?", choices: ["0", "1", "7", "4"], answer: 3 },
+    ],
+  },
+    "2026-08-07": { //Friday
+    event: "",
+    questions: [
+    { question: "Who won Super Bowl XXV?", choices: ["Falcons", "Giants", "Rams", "Buccaneers"], answer: 1 },
+    { question: "Who had more rushing TDs: LaDainian Tomlinson (2006) or Raheem Mostert (2023)?", choices: ["LaDainian Tomlinson (2006)", "Raheem Mostert (2023)"], answer: 0 },
+    { question: "True or False: The Indianapolis Colts play their home games at Lucas Oil Stadium.", choices: ["True", "False"], answer: 0 },
+    { question: "Guess the Career RB:\n- 3,102 Rush Yards\n- 24 Rush TDs\n- 4.2 Yards per Carry\n- 24 Total TDs", choices: ["Stevan Ridley", "Dalvin Cook", "Duke Johnson", "D'Andre Swift"], answer: 0 },
+    { question: "Which of these was an ACTUAL NFL player?", choices: ["Ja'Quan Blackenstein", "Trey'vor Bumbleton", "Ifeanyi Ohalete", "Treshon Fantloose"], answer: 2 },
+    ],
+  },
+    "2026-08-08": { //Saturday
+    event: "",
+    questions: [
+    { question: "Who led the NFL in Rushing TDs in 2006?", choices: ["LaDainian Tomlinson", "Steven Jackson", "Shaun Alexander", "Clinton Portis"], answer: 0 },
+    { question: "True or False: The Texans have reached a conference championship game.", choices: ["True", "False"], answer: 1 },
+    { question: "Who is the NFL's all-time career leader in receiving yards?", choices: ["DJ Chark", "Josh Reynolds", "Jerry Rice", "Wes Welker"], answer: 2 },
+    { question: "OVER or UNDER: Kevin Jones has O/U 3,400 Career Rushing Yards.", choices: ["OVER", "UNDER"], answer: 1 },
+    { question: "Which of these was an ACTUAL NFL player?", choices: ["Traequan Drakesworth", "La'Vondrius Tomlin", "Ja'Vontavious Blackenstein", "Rashaan Salaam"], answer: 3 },
+    ],
+  },
+    "2026-08-09": { //Sunday
+    event: "",
+    questions: [
+    { question: "Which coach said the famous quote \"You play to win the game!\"?", choices: ["Bill Belichick", "Mike Ditka", "Herm Edwards", "Jim Mora"], answer: 2 },
+    { question: "True or False: The Buccaneers were originally placed in the AFC West.", choices: ["True", "False"], answer: 0 },
+    { question: "OVER or UNDER: The Packers have O/U 12.5 NFL championships (all-time).", choices: ["OVER", "UNDER"], answer: 0 },
+    { question: "How many career passing touchdowns does Andy Dalton have?", choices: ["265", "278", "254", "229"], answer: 2 },
+    { question: "Which of these was an ACTUAL NFL player?", choices: ["Tutan Reyes", "Kendarious Butterfield", "Trevontay Dunder", "Javorius Weinstein"], answer: 0 },
+    ],
+  },
+    "2026-08-10": { //Monday
+    event: "",
+    questions: [
+    { question: "What division do the Philadelphia Eagles play in?", choices: ["AFC North", "NFC East", "NFC South", "NFC North"], answer: 1 },
+    { question: "Guess the Career RB:\n- 3,798 Rush Yards\n- 32 Total TDs\n- 5,136 Yards from Scrimmage\n- 4.2 Yards per Carry", choices: ["Alexander Mattison", "James Starks", "Marlon Mack", "Travis Etienne"], answer: 3 },
+    { question: "OVER or UNDER: Eli Manning has O/U 55,000 Career Passing Yards.", choices: ["OVER", "UNDER"], answer: 0 },
+    { question: "How many career passing yards does Tom Brady have (NFL all-time record)?", choices: ["83,836", "96,073", "89,228", "81,681"], answer: 2 },
+    { question: "True or False: The Green Bay Packers play in the NFC North.", choices: ["True", "False"], answer: 0 },
+    ],
+  },
+    "2026-08-11": { //Tuesday
+    event: "",
+    questions: [
+    { question: "True or False: The Ravens have won 3 Super Bowls.", choices: ["True", "False"], answer: 1 },
+    { question: "Which franchise originally drafted David Carr?", choices: ["Jets", "Seahawks", "Packers", "Texans"], answer: 3 },
+    { question: "Which of these was an ACTUAL NFL player?", choices: ["D'Onta Foreman", "A.A. Ron Balakay", "Kendarious Butterfield", "Quandarious Wainwright III"], answer: 0 },
+    { question: "OVER or UNDER: The Lions have O/U 3.5 NFL championships (all-time).", choices: ["OVER", "UNDER"], answer: 0 },
+    { question: "Guess the Career RB:\n- 7,234 Rush Yards\n- 60 Rush TDs\n- 62 Total TDs\n- 8,331 Yards from Scrimmage", choices: ["Stephen Davis", "Lamar Smith", "Corey Dillon", "Warrick Dunn"], answer: 0 },
+    ],
+  },
+    "2026-08-12": { //Wednesday
+    event: "",
+    questions: [
+    { question: "Guess the Career TE:\n- 13,002 Rec. Yards\n- 82 Rec. TDs\n- 1,080 Receptions", choices: ["Desmond Clark", "Zach Ertz", "Travis Kelce", "Hunter Henry"], answer: 2 },
+    { question: "What year did the Chargers relocate to Los Angeles?", choices: ["2023", "2013", "2015", "2017"], answer: 3 },
+    { question: "True or False: The San Francisco 49ers play in the NFC North.", choices: ["True", "False"], answer: 1 },
+    { question: "OVER or UNDER: Greg Jennings has O/U 90 Career Receiving TDs.", choices: ["OVER", "UNDER"], answer: 1 },
+    { question: "Who won Super Bowl XXXIX?", choices: ["Raiders", "Buccaneers", "Patriots", "Chiefs"], answer: 2 },
+    ],
+  },
+    "2026-08-13": { //Thursday
+    event: "",
+    questions: [
+    { question: "What year was the Bengals' first season?", choices: ["1975", "1962", "1971", "1968"], answer: 3 },
+    { question: "Who had more rushing yards: Ezekiel Elliott (2016) or Adrian Peterson (2015)?", choices: ["Ezekiel Elliott (2016)", "Adrian Peterson (2015)"], answer: 0 },
+    { question: "Which of these was an ACTUAL NFL player?", choices: ["Xmus Jaxon Flaxon-Waxon", "Devontarius Fettergun II", "Ziggy Ansah", "Shaqavian Stonehammer"], answer: 2 },
+    { question: "Who won Coach of the Year in 2023?", choices: ["Matt LaFleur", "Mike Tomlin", "Kevin Stefanski", "Herm Edwards"], answer: 2 },
+    { question: "Guess the Career QB:\n- 19,449 Pass Yards\n- 103 Pass TDs\n- 61 INTs\n- 84.5 Passer Rating", choices: ["Lamar Jackson", "Blake Bortles", "Sam Bradford", "Trevor Lawrence"], answer: 2 },
+    ],
+  },
+    "2026-08-14": { //Friday
+    event: "",
+    questions: [
+    { question: "Which player is associated with the \"The Tackle\"?", choices: ["Randy Moss", "Lynn Swann", "Steve McNair", "Kevin Dyson"], answer: 3 },
+    { question: "Who led the NFL in Passing Yards in 2012?", choices: ["Drew Brees", "Drew Bledsoe", "Jake Plummer", "Trent Green"], answer: 0 },
+    { question: "What division do the San Francisco 49ers play in?", choices: ["NFC East", "NFC West", "NFC South", "AFC West"], answer: 1 },
+    { question: "Guess the Career QB:\n- 44,611 Pass Yards\n- 251 Pass TDs\n- 206 INTs\n- 77.1 Passer Rating", choices: ["Donovan McNabb", "Drew Bledsoe", "Troy Aikman", "Kurt Warner"], answer: 1 },
+    { question: "OVER or UNDER: The Browns have O/U 3.5 NFL championships (all-time).", choices: ["OVER", "UNDER"], answer: 0 },
+    ],
+  },
+    "2026-08-15": { //Saturday
+    event: "",
+    questions: [
+    { question: "True or False: Johnny Manziel started more than 10 career NFL games.", choices: ["True", "False"], answer: 1 },
+    { question: "Who led the NFL in Rushing Yards in 2025?", choices: ["Jonathan Taylor", "Adrian Peterson", "LeSean McCoy", "James Cook"], answer: 3 },
+    { question: "Which team did the Cowboys defeat in Super Bowl XXVIII?", choices: ["Steelers", "Bills", "49ers", "Panthers"], answer: 1 },
+    { question: "OVER or UNDER: The Ravens have O/U 2.5 Super Bowl victories all-time.", choices: ["OVER", "UNDER"], answer: 1 },
+    { question: "Who is the Atlanta Falcons' all-time leader in passing yards?", choices: ["Chris Chandler", "Matt Ryan", "Chris Miller", "Steve Bartkowski"], answer: 1 },
+    ],
+  },
+    "2026-08-16": { //Sunday
+    event: "",
+    questions: [
+    { question: "OVER or UNDER: Josh McCown has O/U 85 Career Interceptions Thrown.", choices: ["OVER", "UNDER"], answer: 1 },
+    { question: "Which of these was an ACTUAL NFL player?", choices: ["Treshon Dunder", "Peter Finnenbaum", "Zayvarious Picklesmith", "T.J. Houshmandzadeh"], answer: 3 },
+    { question: "How many career receiving touchdowns does Jimmy Graham have?", choices: ["79", "89", "118", "100"], answer: 1 },
+    { question: "True or False: The Giants play their Home Games in the state of New York.", choices: ["True", "False"], answer: 1 },
+    { question: "Who is the NFL's all-time career leader in total touchdowns?", choices: ["Randy McMichael", "Felix Jones", "Priest Holmes", "Jerry Rice"], answer: 3 },
+    ],
+  },
+    "2026-08-17": { //Monday
+    event: "",
+    questions: [
+    { question: "Which of these was an ACTUAL NFL player?", choices: ["Javaris Jamar Javarison-Lamar", "Shy Tuttle", "Scoobius Threadgill", "Kendarious Hammersmith"], answer: 1 },
+    { question: "OVER or UNDER: The Lions have O/U 4.5 NFL championships (all-time).", choices: ["OVER", "UNDER"], answer: 1 },
+    { question: "Guess the Career RB:\n- 66 Rush TDs\n- 12,615 Yards from Scrimmage\n- 10,009 Rush Yards\n- 74 Total TDs", choices: ["Ricky Williams", "Duce Staley", "Walter Payton", "Mike Alstott"], answer: 0 },
+    { question: "What year was the Seahawks' first season?", choices: ["1976", "1979", "1981", "1983"], answer: 0 },
+    { question: "Who holds the NFL single-season record for receiving yards?", choices: ["Bernard Berrian", "Zach Miller", "Calvin Johnson", "Michael Crabtree"], answer: 2 },
+    ],
+  },
+      "2026-08-18": { //Tuesday
+    event: "",
+    questions: [
+    { question: "Who had more receiving yards: Stefon Diggs (2020) or T.Y. Hilton (2016)?", choices: ["Stefon Diggs (2020)", "T.Y. Hilton (2016)"], answer: 0 },
+    { question: "What division do the Pittsburgh Steelers play in?", choices: ["AFC East", "NFC West", "AFC North", "AFC South"], answer: 2 },
+    { question: "True or False: 1928 was the Giants' first season.", choices: ["True", "False"], answer: 1 },
+    { question: "Which player ate a W?", choices: ["Blake Bortles", "Richard Sherman", "Jameis Winston", "Jamaal Williams"], answer: 2 },
+    { question: "Guess the Career QB:\n- 12,741 Pass Yards\n- 67 Pass TDs\n- 50 INTs\n- 86.9 Passer Rating", choices: ["Mac Jones", "Josh Freeman", "Mark Sanchez", "Joey Harrington"], answer: 0 },
+    ],
+  },
+    "2026-08-19": { //Wednesday
+    event: "",
+    questions: [
+    { question: "OVER or UNDER: Reggie Wayne has O/U 85 Career Receiving TDs.", choices: ["OVER", "UNDER"], answer: 1 },
+    { question: "Who won Super Bowl I?", choices: ["Cowboys", "Seahawks", "Packers", "Raiders"], answer: 2 },
+    { question: "Guess the Career RB:\n- 2,054 Rush Yards\n- 9 Rush TDs\n- 4.0 Yards per Carry", choices: ["Danny Woodhead", "Doug Martin", "Ameer Abdullah", "Cordarrelle Patterson"], answer: 2 },
+    { question: "Which of these was an ACTUAL NFL player?", choices: ["Trevontay Junior", "Bismarck Rutherford-Hayes", "Chop Robinson", "Devon McNeail"], answer: 2 },
+    { question: "True or False: The Baltimore Ravens play in the NFC South.", choices: ["True", "False"], answer: 1 },
+    ],
+  },
+    "2026-08-20": { //Thursday
+    event: "",
+    questions: [
+    { question: "Which of these was an ACTUAL NFL player?", choices: ["Torque Lewith", "Ezekiel Wainwright III", "Trey'vor Junior", "Amen Ogbongbemiga"], answer: 3 },
+    { question: "What is the name of the Ravens’ mascot inspired by a famous poet?", choices: ["Poe", "Spooky Bird", "Ray Ray the Raven", "Special Ed"], answer: 0 },
+    { question: "Which coach led the Steelers to a Super Bowl victory?", choices: ["Andy Reid", "Mike Tomlin", "Dennis Green", "Vince Lombardi"], answer: 1 },
+    { question: "Which NFL team plays their home games at Soldier Field?", choices: ["Baltimore Ravens", "Chicago Bears", "Indianapolis Colts", "Kansas City Chiefs"], answer: 1 },
+    { question: "OVER or UNDER: The Rams have been located in O/U 3.5 cities.", choices: ["OVER", "UNDER"], answer: 1 },
+    ],
+  },
+    "2026-08-21": { //Friday
+    event: "",
+    questions: [
+    { question: "Who had more passing TDs: Drew Brees (2012) or Tom Brady (2007)?", choices: ["Drew Brees (2012)", "Tom Brady (2007)"], answer: 1 },
+    { question: "Guess the Career RB:\n- 2,238 Rush Yards\n- 15 Rush TDs\n- 4.3 Yards per Carry\n- 32 Total TDs", choices: ["Jeff Wilson", "Jamaal Williams", "Darren McFadden", "Danny Woodhead"], answer: 3 },
+    { question: "Which team did the Packers defeat in Super Bowl XXXI?", choices: ["Patriots", "Buccaneers", "Saints", "Bills"], answer: 0 },
+    { question: "OVER or UNDER: The Colts have O/U 1.5 Super Bowl victories all-time.", choices: ["OVER", "UNDER"], answer: 0 },
+    { question: "True or False: The Packers have won 5 Super Bowls.", choices: ["True", "False"], answer: 1 },
+    ],
+  },
+    "2026-08-22": { //Saturday
+    event: "",
+    questions: [
+    { question: "Guess the Career TE:\n- 2,277 Rec. Yards\n- 10 Rec. TDs\n- 206 Receptions", choices: ["Jordan Akins", "Greg Olsen", "Cade Otton", "George Kittle"], answer: 0 },
+    { question: "OVER or UNDER: James Jones has O/U 60 Career Receiving TDs.", choices: ["OVER", "UNDER"], answer: 1 },
+    { question: "Who holds the NFL record for most career rushing yards?", choices: ["Frank Gore", "Steven Jackson", "Emmitt Smith", "Walter Payton"], answer: 2 },
+    { question: "True or False: The Carolina Panthers play their home games at Bank of America Stadium.", choices: ["True", "False"], answer: 0 },
+    { question: "What year did the Rams relocate to Los Angeles?", choices: ["2013", "2016", "2018", "2020"], answer: 1 },
+    ],
+  },
+    "2026-08-23": { //Sunday
+    event: "",
+    questions: [
+    { question: "Who is the Detroit Lions' all-time leader in receiving yards?", choices: ["Calvin Johnson", "Johnnie Morton", "Amon-Ra St. Brown", "Herman Moore"], answer: 0 },
+    { question: "Which Hall of Famer was nicknamed \"The Minister of Defense\"?", choices: ["Reggie White", "Michael Strahan", "Mean Joe Greene", "Lawrence Taylor"], answer: 0 },
+    { question: "Who had more rushing TDs: Derrick Henry (2019) or Shaun Alexander (2001)?", choices: ["Derrick Henry (2019)", "Shaun Alexander (2001)"], answer: 0 },
+    { question: "Which of these was an ACTUAL NFL player?", choices: ["Trevontay Pennywhistle", "Jammie Jammie-Jammie", "Jermaine Fender", "Israel Idonije"], answer: 3 },
+    { question: "In what season did the \"Fail Mary\" occur?", choices: ["2014", "2013", "2012", "2011"], answer: 2 },
+    ],
+  },
+    "2026-08-24": { //Monday
+    event: "",
+    questions: [
+    { question: "Guess the Career WR:\n- 3,311 Rec. Yards\n- 16 Rec. TDs\n- 256 Receptions", choices: ["DeSean Jackson", "Kendrick Bourne", "Devin Hester", "DK Metcalf"], answer: 2 },
+    { question: "True or False: The Packers won the first two Super Bowls ever played.", choices: ["True", "False"], answer: 0 },
+    { question: "What year was the Lions' first season?", choices: ["1930", "1928", "1924", "1933"], answer: 0 },
+    { question: "Which of these was an ACTUAL NFL player?", choices: ["Quantrell Thundergood", "Craphonso Thorpe", "Ravioli Buccatini Sr.", "Lil'Jordan Henrich"], answer: 1 },
+    { question: "How many receptions did Trey McBride have in 2025?", choices: ["131", "133", "126", "114"], answer: 2 },
+    ],
+  },
+    "2026-08-25": { //Tuesday
+    event: "",
+    questions: [
+    { question: "True or False: The Chicago Bears play their home games at Soldier Field.", choices: ["True", "False"], answer: 0 },
+    { question: "Guess the Career QB:\n- 22,821 Pass Yards\n- 122 Pass TDs\n- 93 INTs\n- 84.4 Passer Rating", choices: ["Marc Bulger", "Trent Green", "Matt Cassel", "Lamar Jackson"], answer: 0 },
+    { question: "Which NFL team plays their home games at Levi's Stadium?", choices: ["Buffalo Bills", "San Francisco 49ers", "Las Vegas Raiders", "Houston Texans"], answer: 1 },
+    { question: "Who had more receptions: Torry Holt (2003) or Tony Gonzalez (2004)?", choices: ["Torry Holt (2003)", "Tony Gonzalez (2004)"], answer: 0 },
+    { question: "Which coach said the famous quote \"They are who we thought they were!\"?", choices: ["Mike Ditka", "Andy Reid", "Dennis Green", "Vince Lombardi"], answer: 2 },
+    ],
+  },
+    "2026-08-26": { //Wednesday
+    event: "",
+    questions: [
+    { question: "How many Super Bowls have the Tennessee Titans won?", choices: ["2", "1", "0", "6"], answer: 2 },
+    { question: "OVER or UNDER: The Cardinals have been located in O/U 3.5 cities.", choices: ["OVER", "UNDER"], answer: 1 },
+    { question: "Which of these was an ACTUAL NFL player?", choices: ["Ozmatazz Buckshank", "Dick Butkus", "Ruke Johnson", "Trevontay Junior"], answer: 1 },
+    { question: "Which team did the Broncos defeat in Super Bowl XXXIII?", choices: ["Buccaneers", "Falcons", "Dolphins", "Redskins"], answer: 1 },
+    { question: "True or False: The Tennessee Titans were originally called the Houston Oilers.", choices: ["True", "False"], answer: 0 },
+    ],
+  },
+    "2026-08-27": { //Thursday
+    event: "",
+    questions: [
+    { question: "Which of these was an ACTUAL NFL player?", choices: ["Tennison Butterfield", "J'Dinkalage Morgoone", "HaHa Clinton-Dix", "D'Glester Hardunkichud"], answer: 2 },
+    { question: "True or False: Terry Bradshaw has won 5 Super Bowls.", choices: ["True", "False"], answer: 1 },
+    { question: "Who was the head coach during Pittsburgh’s dynasty years of the 1970s?", choices: ["Bill Walsh", "Joe Gibbs", "Don Shula", "Chuck Noll"], answer: 3 },
+    { question: "Which coach said the famous quote \"They are who we thought they were!\"?", choices: ["Dennis Green", "Matt LaFleur", "John Madden", "Jim Mora"], answer: 0 },
+    { question: "Guess the Career RB:\n- 37 Rush TDs\n- 3.9 Yards per Carry\n- 39 Total TDs\n- 4,236 Rush Yards", choices: ["Rashard Mendenhall", "Cedric Benson", "Deuce McAllister", "Ryan Grant"], answer: 0 },
+    ],
+  },
+    "2026-08-28": { //Friday
+    event: "",
+    questions: [
+    { question: "True or False: The Houston Texans play their home games at NRG Stadium.", choices: ["True", "False"], answer: 0 },
+    { question: "OVER or UNDER: The Browns have O/U 4.5 NFL championships (all-time).", choices: ["OVER", "UNDER"], answer: 1 },
+    { question: "Who led the NFL in Rushing TDs in 2010?", choices: ["Clinton Portis", "Shaun Alexander", "Arian Foster", "LaDainian Tomlinson"], answer: 2 },
+    { question: "Guess the Career WR:\n- 7,634 Rec. Yards\n- 41 Rec. TDs\n- 598 Receptions", choices: ["Don Hutson", "Terrell Owens", "Muhsin Muhammad", "Keyshawn Johnson"], answer: 3 },
+    { question: "How many passing yards did Peyton Manning record in their record-setting 2013 season?", choices: ["4,978", "5,057", "5,477", "5,929"], answer: 2 },
+    ],
+  },
+    "2026-08-29": { //Saturday
+    event: "",
+    questions: [
+    { question: "True or False: Brett Favre was originally drafted by the Atlanta Falcons.", choices: ["True", "False"], answer: 0 },
+    { question: "Who holds the NFL record for most passing TDs in a single season?", choices: ["Andy Dalton", "Kurt Warner", "Peyton Manning", "Drew Brees"], answer: 2 },
+    { question: "Guess the Career RB:\n- 3,057 Rush Yards\n- 22 Rush TDs\n- 5.6 Yards per Carry\n- 35 Total TDs", choices: ["De'Von Achane", "David Johnson", "Antonio Gibson", "Jamaal Charles"], answer: 0 },
+    { question: "OVER or UNDER: The Commanders have O/U 0.5 Super Bowl victories all-time.", choices: ["OVER", "UNDER"], answer: 0 },
+    { question: "Who is the Kansas City Chiefs' all-time leader in rushing yards?", choices: ["Christian Okoye", "Jamaal Charles", "Larry Johnson", "Priest Holmes"], answer: 1 },
+    ],
+  },
+    "2026-08-30": { //Sunday
+    event: "",
+    questions: [
+    { question: "True or False: The San Francisco 49ers play their home games at Empower Field at Mile High.", choices: ["True", "False"], answer: 1 },
+    { question: "In what season did the \"The Tackle\" occur?", choices: ["1999", "2000", "1997", "2002"], answer: 0 },
+    { question: "Which of these was an ACTUAL NFL player?", choices: ["Adolfo Hartfordshire", "Trevontay Junior", "La'Quarine Quarterstein", "Jamari Thrash"], answer: 3 },
+    { question: "Guess the Career TE:\n- 10,060 Rec. Yards\n- 62 Rec. TDs\n- 815 Receptions", choices: ["Coby Fleener", "Delanie Walker", "Shannon Sharpe", "Zach Miller"], answer: 2 },
+    { question: "OVER or UNDER: The Titans have O/U 0.5 Super Bowl victories all-time.", choices: ["OVER", "UNDER"], answer: 1 },
+    ],
+  },
+    "2026-08-31": { //Monday
+    event: "",
+    questions: [
+    { question: "Which of these was an ACTUAL NFL player?", choices: ["Ventravian Martin III", "Quandavious Bumbershoot", "Shaqavian Hammersmith", "Ndamukong Suh"], answer: 3 },
+    { question: "Who had more passing yards: Matthew Stafford (2025) or Drew Brees (2014)?", choices: ["Matthew Stafford (2025)", "Drew Brees (2014)"], answer: 0 },
+    { question: "Guess the Career WR:\n- 14,345 Rec. Yards\n- 82 Rec. TDs\n- 1,070 Receptions", choices: ["Marques Colston", "Calvin Johnson", "Reggie Wayne", "Roddy White"], answer: 2 },
+    { question: "What year did the Raiders relocate to Las Vegas?", choices: ["2020", "2015", "2026", "2023"], answer: 0 },
+    { question: "True or False: Joe Montana has won 5 Super Bowls.", choices: ["True", "False"], answer: 1 },
+    ],
+  },
 };

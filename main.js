@@ -55,6 +55,7 @@ const EVENT_LOGOS = {
   "SUPERBOWL": "logos/SUPERBOWL.png",
   "ValentinesDay": "logos/ValentinesDay.png",
   "NFLDraft2026": "logos/Draft2026.png",
+  "2026Kickoff": "logos/2026Kickoff.png",
 };
 
 
@@ -87,6 +88,9 @@ let leaderboardForm, playerNameInput, leaderboardWarningEl, leaderboardBody;
 let snowInterval = null;
 let heartsInterval = null;
 let confettiInterval = null;
+let logoConfettiCanvas = null;
+let logoConfettiFn = null;
+let logoConfettiResizeBound = false;
 
 // ==============================
 // UTILITY FUNCTIONS
@@ -1194,6 +1198,66 @@ function stopHearts() {
   hearts.forEach(heart => heart.remove());
 }
 
+// Generous headroom above the logo so the upward arc of a burst (angle
+// 60/120, default startVelocity) never reaches the canvas's top edge and
+// gets clipped there.
+const LOGO_CONFETTI_PAD_TOP = 280;
+const LOGO_CONFETTI_PAD_SIDE = 40;
+const LOGO_CONFETTI_PAD_BOTTOM = 260;
+
+function positionLogoConfettiCanvas() {
+  const logo = document.querySelector('.title-logo');
+  if (!logo || !logoConfettiCanvas) return;
+
+  const w = logo.offsetWidth + LOGO_CONFETTI_PAD_SIDE * 2;
+  const h = logo.offsetHeight + LOGO_CONFETTI_PAD_TOP + LOGO_CONFETTI_PAD_BOTTOM;
+
+  logoConfettiCanvas.style.left = `${logo.offsetLeft - LOGO_CONFETTI_PAD_SIDE}px`;
+  logoConfettiCanvas.style.top = `${logo.offsetTop - LOGO_CONFETTI_PAD_TOP}px`;
+  logoConfettiCanvas.style.width = `${w}px`;
+  logoConfettiCanvas.style.height = `${h}px`;
+  // Set the pixel buffer directly (rather than relying on the library's
+  // resize:true polling) so origin fractions map to the box we just laid
+  // out, with no stretch/timing mismatch on the very first burst.
+  logoConfettiCanvas.width = w;
+  logoConfettiCanvas.height = h;
+}
+
+function getLogoConfettiOriginY() {
+  const logo = document.querySelector('.title-logo');
+  if (!logo) return 0.5;
+  const totalHeight = LOGO_CONFETTI_PAD_TOP + logo.offsetHeight + LOGO_CONFETTI_PAD_BOTTOM;
+  // Anchor around the middle of the logo, not its top edge, so the burst
+  // sits lower against the artwork instead of floating above it.
+  return (LOGO_CONFETTI_PAD_TOP + logo.offsetHeight * 0.5) / totalHeight;
+}
+
+function getLogoConfetti() {
+  const logo = document.querySelector('.title-logo');
+  const overlay = logo?.parentElement;
+  if (!logo || !overlay) return null;
+
+  if (getComputedStyle(overlay).position === 'static') {
+    overlay.style.position = 'relative';
+  }
+
+  if (!logoConfettiCanvas || !overlay.contains(logoConfettiCanvas)) {
+    logoConfettiCanvas = document.createElement('canvas');
+    logoConfettiCanvas.className = 'logo-confetti-canvas';
+    overlay.appendChild(logoConfettiCanvas);
+    logoConfettiFn = confetti.create(logoConfettiCanvas, { resize: false, useWorker: true });
+  }
+
+  positionLogoConfettiCanvas();
+
+  if (!logoConfettiResizeBound) {
+    window.addEventListener('resize', positionLogoConfettiCanvas);
+    logoConfettiResizeBound = true;
+  }
+
+  return logoConfettiFn;
+}
+
 function startConfetti() {
   stopConfetti();
 
@@ -1202,20 +1266,25 @@ function startConfetti() {
     return;
   }
 
+  const shootConfetti = getLogoConfetti();
+  if (!shootConfetti) return;
+
+  const originY = getLogoConfettiOriginY();
+
   function burst() {
-    confetti({
+    shootConfetti({
       particleCount: 7,
       angle: 60,
       spread: 55,
-      origin: { x: 0, y: 0.6 },
+      origin: { x: 0, y: originY },
       colors: ['#FFD700', '#FF6B6B', '#4ECDC4', '#45B7D1', '#FFA07A']
     });
 
-    confetti({
+    shootConfetti({
       particleCount: 7,
       angle: 120,
       spread: 55,
-      origin: { x: 1, y: 0.6 },
+      origin: { x: 1, y: originY },
       colors: ['#98D8C8', '#F7DC6F', '#BB8FCE', '#FFD700', '#FF6B6B']
     });
   }
@@ -1488,6 +1557,9 @@ async function showStartScreen() {
     startConfetti();
   }
   else if (eventName === "SUPERBOWL") {
+    startConfetti();
+  }
+  else if (eventName === "2026Kickoff") {
     startConfetti();
   }
   else if (eventName === "ValentinesDay") {
