@@ -413,7 +413,7 @@ Set the day back to `null` and deploy. Visitors who already dismissed it today w
 
 **Session Recovery:** If a player refreshes the page or switches tabs mid-quiz, `sessionStorage` tracks the in-progress state. On return, the game detects the interrupted session and calls `forfeitAndFinish()` to close out the attempt (remaining questions are marked wrong).
 
-**Event Theming:** The `event` field on a date entry triggers a themed logo and optional visual effects (snow for Christmas, hearts for Valentine's Day, confetti for celebrations). Event logos are mapped in the `EVENT_LOGOS` config object.
+**Event Theming:** The `event` field on a date entry triggers a themed logo and optional visual effects (snow for Christmas, hearts for Valentine's Day, confetti for celebrations, sandstorm for the Australia Edition). Event logos are mapped in the `EVENT_LOGOS` config object.
 
 ---
 
@@ -464,7 +464,7 @@ To enforce the countdown (when your playerbase grows), find this line in the inl
 | Add a new blog post | Create `blog/your-slug.html` → add entry to `ARTICLES` array in `blog/blog-index.html` → optionally add to `sitemap.xml` |
 | Update awards data | Edit `tools/question-generator/awards_overlay.json` with new season's MVP, OROY, DPOY, etc. |
 | Shrink questions.js | Cut old date entries from `questions.js` → paste into `archive-legacy.js` → `node generate-archive.mjs` → deploy all three files |
-| Add an event theme | Set `event: "YourEvent"` on the date in `questions.js` → add `"YourEvent": "logos/yourlogo.png"` to `EVENT_LOGOS` in `main.js` (and `config.js`) → add the logo image to `logos/` |
+| Add an event theme | Set `event: "YourEvent"` on the date in `questions.js` → add `"YourEvent": "logos/yourlogo.png"` to `EVENT_LOGOS` in `modules/config.js` → add the logo image to `logos/` |
 | Set a daily reminder popup | Edit `REMINDERS` in `modules/reminders.js` → set day key to `{ title, message }` (or `null` to clear) → deploy |
 | Enable interstitial countdown | In `index.html`, find `var COUNTDOWN_SECONDS = 0` in the interstitial script → change to `3` |
 | Update the leaderboard API | The endpoint URL is hardcoded in `main.js` as `LEADERBOARD_API_URL` — update there if the Google Apps Script deployment changes |

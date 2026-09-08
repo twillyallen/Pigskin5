@@ -45,7 +45,7 @@ export const EVENT_LOGOS = {
     "ValentinesDay": "logos/ValentinesDay.png",
     "NFLDraft2026": "logos/Draft2026.png",
     "2026Kickoff": "logos/2026Kickoff.png",
-  // ... etc
+    "AustraliaEdition": "logos/AustraliaEdition.png",
 };
 
 // Streak tiers

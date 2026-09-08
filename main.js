@@ -8,7 +8,7 @@ import { getCurrentUser, supabase } from "./modules/supabase-client.js";
 import { NFL_TEAMS } from "./modules/nfl-teams.js";
 import { showTierTooltip, showAchievementToast } from "./modules/ui-helpers.js";
 import { ACHIEVEMENTS, ACHIEVEMENT_CATEGORIES } from "./modules/achievements.js";
-import { STREAK_TIERS } from "./modules/config.js";
+import { STREAK_TIERS, EVENT_LOGOS } from "./modules/config.js";
 import { renderRivalryCard, injectStartRivalryButton, openRivalryModal } from "./modules/rivalry-ui.js?v=20260614";
 
 
@@ -29,35 +29,6 @@ const KEY_SESSION_Q_WALL_START = "ps5_session_q_wall_start";
 
 const PROD_HOSTS = ["twillyallen.github.io", "pigskin5.com"];
 const LEADERBOARD_API_URL = "https://script.google.com/macros/s/AKfycbzLIkEvrtXNYc0zgtvpMYqma8YngyvMfmhfr2k2-xC6_po-rC5unN2KxLbqnJo4JraLwA/exec";
-
-const EVENT_LOGOS = {
-  "college": "logos/pigskin5collegelogo.png",
-  "Thanksgiving": "logos/pigskin5thanksgiving.png",
-  "Christmas": "logos/pigskin5christmaslogo.png",
-  "NYE": "logos/pigskin5NYElogo.png",
-  "2025Wrapped": "logos/2025Wrapped.png",
-  "RamsPanthers": "logos/RamsPanthers.png",
-  "BillsJaguars": "logos/BillsJaguars.png",
-  "49ersEagles": "logos/49ersEagles.png",
-  "PackersBears": "logos/PackersBears.png",
-  "ChargersPatriots": "logos/ChargersPatriots.png",
-  "SteelersTexans": "logos/SteelersTexans.png",
-  "49ersSeahawks": "logos/49ersSeahawks.png",
-  "BillsBroncos": "logos/BillsBroncos.png",
-  "TexansPatriots": "logos/TexansPatriots.png",
-  "RamsBears": "logos/RamsBears.png",
-  "PatriotsBroncos": "logos/PatriotsBroncos.png",
-  "RamsSeahawks": "logos/RamsSeahawks.png",
-  "SuperBowlWeek": "logos/SuperBowlWeek.png",
-  "PatriotsEdition": "logos/PatriotsEdition.png",
-  "SeahawksEdition": "logos/SeahawksEdition.png",
-  "NFLHonorsEdition": "logos/NFLHonorsEdition.png",
-  "SUPERBOWL": "logos/SUPERBOWL.png",
-  "ValentinesDay": "logos/ValentinesDay.png",
-  "NFLDraft2026": "logos/Draft2026.png",
-  "2026Kickoff": "logos/2026Kickoff.png",
-};
-
 
 const BANNED_WORDS = [
   "Nigger", "Cunt", "Hitler", "Faggot", "Fag", "Shit", "Fuck", "Bitch",
@@ -91,6 +62,9 @@ let confettiInterval = null;
 let logoConfettiCanvas = null;
 let logoConfettiFn = null;
 let logoConfettiResizeBound = false;
+let sandstormInterval = null;
+let sandstormContainer = null;
+let sandstormResizeBound = false;
 
 // ==============================
 // UTILITY FUNCTIONS
@@ -1303,6 +1277,106 @@ function stopConfetti() {
   }
 }
 
+// Sized like the logo confetti canvas so the dust stays hugged to the logo
+// rather than blowing across the whole start screen.
+const SANDSTORM_PAD_SIDE = 60;
+const SANDSTORM_PAD_VERT = 40;
+
+function positionSandstormContainer() {
+  const logo = document.querySelector('.title-logo');
+  if (!logo || !sandstormContainer) return;
+
+  const w = logo.offsetWidth + SANDSTORM_PAD_SIDE * 2;
+  const h = logo.offsetHeight + SANDSTORM_PAD_VERT * 2;
+
+  sandstormContainer.style.left = `${logo.offsetLeft - SANDSTORM_PAD_SIDE}px`;
+  sandstormContainer.style.top = `${logo.offsetTop - SANDSTORM_PAD_VERT}px`;
+  sandstormContainer.style.width = `${w}px`;
+  sandstormContainer.style.height = `${h}px`;
+}
+
+function getSandstormContainer() {
+  const logo = document.querySelector('.title-logo');
+  const overlay = logo?.parentElement;
+  if (!logo || !overlay) return null;
+
+  if (getComputedStyle(overlay).position === 'static') {
+    overlay.style.position = 'relative';
+  }
+
+  if (!sandstormContainer || !overlay.contains(sandstormContainer)) {
+    sandstormContainer = document.createElement('div');
+    sandstormContainer.className = 'sandstorm-container';
+    overlay.appendChild(sandstormContainer);
+  }
+
+  positionSandstormContainer();
+
+  // The logo src swaps per event, so on a cold load offsetHeight can still
+  // be 0 here — reposition once it actually finishes loading.
+  if (!logo.complete) {
+    logo.addEventListener('load', positionSandstormContainer, { once: true });
+  }
+
+  if (!sandstormResizeBound) {
+    window.addEventListener('resize', positionSandstormContainer);
+    sandstormResizeBound = true;
+  }
+
+  return sandstormContainer;
+}
+
+function createSandParticle(container) {
+  const particle = document.createElement("div");
+  particle.className = "sand-particle";
+
+  particle.style.top = Math.random() * 100 + "%";
+
+  const length = 16 + Math.random() * 34;
+  particle.style.width = length + "px";
+  particle.style.height = (2 + Math.random() * 3) + "px";
+
+  const duration = 1.4 + Math.random() * 1.3;
+  particle.style.animationDuration = duration + "s";
+
+  particle.style.setProperty('--travel', (container.offsetWidth + 80) + 'px');
+
+  const drift = -15 + Math.random() * 30;
+  particle.style.setProperty('--drift', drift + 'px');
+
+  container.appendChild(particle);
+
+  setTimeout(() => particle.remove(), (duration + 0.2) * 1000);
+}
+
+function startSandstorm() {
+  stopSandstorm();
+
+  const container = getSandstormContainer();
+  if (!container) return;
+
+  container.classList.add('sandstorm-haze');
+
+  for (let i = 0; i < 22; i++) {
+    setTimeout(() => createSandParticle(container), i * 70);
+  }
+
+  sandstormInterval = setInterval(() => {
+    createSandParticle(container);
+  }, 140);
+}
+
+function stopSandstorm() {
+  if (sandstormInterval) {
+    clearInterval(sandstormInterval);
+    sandstormInterval = null;
+  }
+  if (sandstormContainer) {
+    sandstormContainer.classList.remove('sandstorm-haze');
+    sandstormContainer.innerHTML = "";
+  }
+}
+
 function setLogoForDay() {
   const titleLogo = document.querySelector('.title-logo');
   console.log('setLogoForDay called!', titleLogo);
@@ -1549,6 +1623,7 @@ async function showStartScreen() {
   stopSnow();
   stopConfetti();
   stopHearts();
+  stopSandstorm();
 
   if (eventName === "Christmas") {
     startSnow();
@@ -1564,6 +1639,9 @@ async function showStartScreen() {
   }
   else if (eventName === "ValentinesDay") {
     startHearts();
+  }
+  else if (eventName === "AustraliaEdition") {
+    startSandstorm();
   }
 
   showSundayPodiumCard();
@@ -1749,6 +1827,7 @@ function _onBeforeUnload() {
 function startGame() {
   stopSnow();
   stopConfetti();
+  stopSandstorm();
 
   document.body.classList.remove("start-page");
   document.body.classList.remove("no-scroll");

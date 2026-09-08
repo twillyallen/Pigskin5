@@ -83,7 +83,7 @@ export const CALENDAR = {
     ],
   },
 
-      "2026-09-09": { //Wednesday
+    "2026-09-09": { //Wednesday
     event: "2026Kickoff",
     questions: [
     { question: "Before the Patriots, who was the first football team to represent the Boston area?", choices: ["The Boston Redskins", "The Boston Bulldogs", "The Boston Football Team", "The New England Muskets"], answer: 1 },
@@ -91,6 +91,16 @@ export const CALENDAR = {
     { question: "What division were the Seahawks ORIGINALLY a part of in their inaugural season (1976)?", choices: ["NFC Central", "AFC West", "AFC North", "NFC West"], answer: 3 },
     { question: "Which player won Super Bowl MVP in Super Bowl XLIX (Seahawks vs Patriots)?", choices: ["Sam Darnold", "Tom Brady", "Kenneth Walker", "Jaxon Smith-Njigba"], answer: 1 },
     { question: "Who holds the record for most TD Passes in the NFL Kickoff Game?", choices: ["Tom Brady", "Ryan Fitzpatrick", "Peyton Manning", "Patrick Mahomes"], answer: 2 },
+    ],
+  },
+    "2026-09-10": { //Thursday
+    event: "AustraliaEdition",
+    questions: [
+    { question: "What stadium is hosting the first-ever NFL regular season game in Australia?", choices: ["Melbourne Rectangular Stadium", "Kangaroo Jack Memorial Stadium", "Sydney Football Stadium", "Melbourne Cricket Ground"], answer: 3 },
+    { question: "Which 49ers/Rams player had more rushing yards last season?", choices: ["Kyren Williams", "Christian McCaffrey", "Mac Jones", "Blake Corrum"], answer: 1 },
+    { question: "Who leads the all-time series dating back to 1950?", choices: ["49ers", "Rams"], answer: 0 },
+    { question: "Who was the first Australian-born player to play in and win a Super Bowl?", choices: ["Michael Dickson", "Ben Graham", "Jordan Mailata", "Mitch Wishnowsky"], answer: 2 },
+    { question: "Who was the last 49ers player to win NFL MVP?", choices: ["Joe Montana (1989)", "Steve Young (1994)", "Jerry Rice (1995)", "Steve Young (1996)"], answer: 1 },
     ],
   },
 
