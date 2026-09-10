@@ -104,6 +104,27 @@ export const CALENDAR = {
     ],
   },
 
+    "2026-09-11": { //Friday
+    event: "",
+    questions: [
+    { question: "Who led the NFL in Receptions in 2012?", choices: ["Wes Welker", "T.J. Houshmandzadeh", "Calvin Johnson", "Roddy White"], answer: 2 },
+    { question: "True or False: 1898 was the Cardinals' first season.", choices: ["True", "False"], answer: 0 },
+    { question: "Which NFL team plays their home games at MetLife Stadium?", choices: ["New York Jets", "New England Patriots", "Philadelphia Eagles", "Seattle Seahawks"], answer: 0 },
+    { question: "Guess the Career RB:\n- 7,626 Rush Yards\n- 4.9 Yards per Carry\n- 10,309 Yards from Scrimmage\n- 73 Total TDs", choices: ["Alvin Kamara", "David Montgomery", "Duke Johnson", "Aaron Jones"], answer: 3 },
+    { question: "OVER or UNDER: The Rams have been located in O/U 2.5 cities.", choices: ["OVER", "UNDER"], answer: 0 },
+    ],
+  },
+    "2026-09-12": { //Saturday
+    event: "",
+    questions: [
+    { question: "Which quarterback led the Jaguars to the AFC Championship Game during their second season in 1996?", choices: ["Stan Humphries", "Mark Brunell", "Gus Frerotte", "Blake Bortles"], answer: 1 },
+    { question: "OVER or UNDER: C.J. Stroud has O/U 10,000 Career Passing Yards.", choices: ["OVER", "UNDER"], answer: 0 },
+    { question: "Who is the Chicago Bears' all-time leader in rushing yards?", choices: ["Rick Casares", "Walter Payton", "Neal Anderson", "Matt Forte"], answer: 1 },
+    { question: "Guess the Career QB:\n- 25,466 Pass Yards\n- 136 Pass TDs\n- 91 INTs\n- 89.5 Passer Rating", choices: ["Justin Herbert", "Deshaun Watson", "Matt Schaub", "Marc Bulger"], answer: 2 },
+    { question: "How many career rushing touchdowns does Emmitt Smith have?", choices: ["151", "180", "164", "176"], answer: 2 },
+    ],
+  },
+
 };
 
 

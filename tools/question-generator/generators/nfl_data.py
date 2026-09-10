@@ -1429,7 +1429,7 @@ FRANCHISES = {
     },
     "Philadelphia Eagles": {
         "founded": 1933,
-        "super_bowls_won": 1,
+        "super_bowls_won": 2,
         "fan_threw_snowballs_at_santa": True,
         "all_time_pass_leader": "Donovan McNabb",
         "all_time_rush_leader": "LeSean McCoy",
