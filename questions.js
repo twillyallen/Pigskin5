@@ -124,6 +124,27 @@ export const CALENDAR = {
     { question: "How many career rushing touchdowns does Emmitt Smith have?", choices: ["151", "180", "164", "176"], answer: 2 },
     ],
   },
+    "2026-09-13": { //Sunday
+    event: "",
+    questions: [
+    { question: "How many NFL teams did Ryan Fitzpatrick play for? ", choices: ["8", "9", "11", "12"], answer: 1 },
+    { question: "Which QB had the most rushing touchdowns in 2025? ", choices: ["Jalen Hurts", "Trevor Lawrence", "Jaxson Dart", "Josh Allen"], answer: 3 },
+    { question: "Since 2000, how many Week 1 Wins do the Cleveland Browns have? ", choices: ["3", "4", "6", "7"], answer: 0 },
+    { question: "Which NFL team has gone the longest without a playoff win? ", choices: ["Las Vegas Raiders", "New York Jets", "Miami Dolphins", "Carolina Panthers"], answer: 2 },
+    { question: "Which team has the longest active Week 1 losing streak? ", choices: ["Tennessee Titans", "Carolina Panthers", "Cleveland Browns", "Indianapolis Colts"], answer: 0 },
+    ],
+  },
+
+      "2026-09-14": { //Monday
+    event: "BroncosChiefsHater",
+    questions: [
+    { question: "How many straight games did the Broncos lose to the Chiefs from 2015-2023? ", choices: ["13", "15", "16", "19"], answer: 2 },
+    { question: "What was Peyton Manning's record against the Chiefs as a Bronco? ", choices: ["5-3", "6-2", "7-1", "8-0"], answer: 3 },
+    { question: "Which team has intercepted Patrick Mahomes the most?", choices: ["Chargers", "Patriots", "Bills", "Broncos"], answer: 3 },
+    { question: "How many 100-yard receiving games does Travis Kelce have against Denver? ", choices: ["6", "8", "9", "10"], answer: 0 },
+    { question: "What is the most amount of points the Chiefs have ever scored vs the Broncos?", choices: ["42", "45", "49", "59"], answer: 3 },
+    ],
+  },
 
 };
 
