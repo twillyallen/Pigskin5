@@ -112,7 +112,7 @@ const _BASE = [
   { question: "What year did the Houston Texans play their first NFL game?", choices: ["1999", "2000", "2002", "2004"], answer: 2 },
   { question: "The Dallas Cowboys are nicknamed what?", choices: ["America's Team", "The Lone Stars", "The Blue Stars", "The Silver Stars"], answer: 0 },
   { question: "Which city did the Baltimore Ravens move from in 1996?", choices: ["Philadelphia", "Cleveland", "St. Louis", "Oakland"], answer: 1 },
-  { question: "Which team has the all-time record for most wins in NFL regular season history?", choices: ["Chicago Bears", "Green Bay Packers", "New England Patriots", "Dallas Cowboys"], answer: 0 },
+  { question: "Which team has the all-time record for most wins in NFL regular season history?", choices: ["Chicago Bears", "Green Bay Packers", "New England Patriots", "Dallas Cowboys"], answer: 1 },
   { question: "Which AFC team relocated to Las Vegas in 2020?", choices: ["San Diego Chargers", "Oakland Raiders", "St. Louis Rams", "San Francisco 49ers"], answer: 1 },
   { question: "The New England Patriots play their home games at which stadium?", choices: ["Foxboro Stadium", "Gillette Stadium", "Patriot Place", "Sullivan Stadium"], answer: 1 },
   { question: "Which NFC team has the nickname 'The 12th Man' for their fans?", choices: ["Carolina Panthers", "New Orleans Saints", "Seattle Seahawks", "Atlanta Falcons"], answer: 2 },

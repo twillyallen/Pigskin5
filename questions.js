@@ -145,7 +145,57 @@ export const CALENDAR = {
     { question: "What is the most amount of points the Chiefs have ever scored vs the Broncos?", choices: ["42", "45", "49", "59"], answer: 3 },
     ],
   },
+    "2026-09-15": { //Tuesday
+    event: "",
+    questions: [
+    { question: "Which of these was an ACTUAL NFL player?", choices: ["Bresharius Van Der Berg", "Isaiahh Loudermilk", "Sofia Marcus", "Markson Dunder"], answer: 1 },
+    { question: "How many career total touchdowns does Jerry Rice have?", choices: ["227", "221", "191", "208"], answer: 3 },
+    { question: "Guess the Career RB:\n- 10,424 Rush Yards\n- 94 Total TDs\n- 12,638 Yards from Scrimmage\n- 4.2 Yards per Carry", choices: ["Alfred Morris", "T.J. Yeldon", "Marshawn Lynch", "Matt Breida"], answer: 2 },
+    { question: "Which TE has more Career Receiving TDs?", choices: ["Zach Ertz", "Greg Olsen", "Rob Gronkowski", "Mark Andrews"], answer: 2 },
+    { question: "True or False: 1938 was the Eagles' first season.", choices: ["True", "False"], answer: 1 },
+    ],
+  },
+    "2026-09-16": { //Wednesday
+    event: "",
+    questions: [
+    { question: "Which coach led the Saints to a Super Bowl victory?", choices: ["Vince Lombardi", "Andy Reid", "Jim Mora", "Mike Ditka"], answer: 3 },
+    { question: "OVER or UNDER: The Bengals have O/U 0.5 Super Bowl victories all-time.", choices: ["OVER", "UNDER"], answer: 1 },
+    { question: "Guess the Career RB:\n- 2,054 Rush Yards\n- 9 Rush TDs\n- 4.0 Yards per Carry", choices: ["James Conner", "Ameer Abdullah", "Mike Tolbert", "Sony Michel"], answer: 1 },
+    { question: "Which TE has more Career Receiving TDs?", choices: ["Zach Ertz", "Mark Andrews", "Travis Kelce", "Tony Gonzalez"], answer: 3 },
+    { question: "True or False: The San Francisco 49ers play their home games at Levi's Stadium.", choices: ["True", "False"], answer: 0 },
+    ],
+  },
+    "2026-09-17": { //Thursday
+    event: "BillsLionsTNF",
+    questions: [
+    { question: "Who leads the NFL in rushing yards?", choices: ["James Cook III", "Josh Allen", "Derrick Henry", "Jahmyr Gibbs"], answer: 3 },
+    { question: "Which QB led the Bills to 4 straight Super Bowl losses?", choices: ["Warren Moon", "Josh Allen", "Jim Kelly", "Doug Flutie"], answer: 2 },
+    { question: "Since 2022, which QB leads the NFL in Passing Yards?", choices: ["Jordan Love", "Jared Goff", "Josh Allen", "Justin Herbert"], answer: 1 },
+    { question: "True or False: If you are 31 Years Old, you have seen the Lions or the Bills play in a Super Bowl.", choices: ["True", "False"], answer: 1 },
+    { question: "What is Josh Allen's Career Record on Thursday?", choices: ["0-7", "2-7", "4-4", "8-1"], answer: 3 },
+    ],
+  },
 
+    "2026-09-18": { //Friday
+    event: "",
+    questions: [
+    { question: "Which of these was an ACTUAL NFL player?", choices: ["Montravius Bumbleton", "Lavonte David", "Peter Quarterstein", "Danny Marcus"], answer: 1 },
+    { question: "How many Super Bowls have the Cleveland Browns won?", choices: ["6", "0", "1", "2"], answer: 1 },
+    { question: "OVER or UNDER: The Packers have O/U 4.5 Super Bowl victories all-time.", choices: ["OVER", "UNDER"], answer: 1 },
+    { question: "Who led the NFL in Rushing Yards in 2020?", choices: ["Ezekiel Elliott", "Derrick Henry", "James Cook", "Josh Jacobs"], answer: 1 },
+    { question: "Guess the Career RB:\n- 4.3 Yards per Carry\n- 13,686 Rush Yards\n- 162 Total TDs\n- 18,453 Yards from Scrimmage", choices: ["LaDainian Tomlinson", "Trent Richardson", "Thomas Jones", "Chris Wells"], answer: 0 },
+    ],
+  },
+    "2026-09-19": { //Saturday
+    event: "",
+    questions: [
+    { question: "Guess the Career QB:\n- 17,649 Pass Yards\n- 103 Pass TDs\n- 75 INTs\n- 80.6 Passer Rating", choices: ["Marc Bulger", "Blake Bortles", "Trevor Lawrence", "Jimmy Garoppolo"], answer: 1 },
+    { question: "Who is the Cleveland Browns' all-time leader in passing yards?", choices: ["Baker Mayfield", "Otto Graham", "Brian Sipe", "Bernie Kosar"], answer: 2 },
+    { question: "Which Quarterback famously guaranteed a Super Bowl win, and won?", choices: ["Ken Stabler", "Bobby Layne", "Joe Namath", "Roger Staubach"], answer: 2 },
+    { question: "OVER or UNDER: Maurice Jones-Drew has O/U 90 Career Rushing TDs.", choices: ["OVER", "UNDER"], answer: 1 },
+    { question: "In what season did the \"Philly Special\" occur?", choices: ["2017", "2019", "2016", "2018"], answer: 0 },
+    ],
+  },
 };
 
 

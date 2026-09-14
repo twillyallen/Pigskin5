@@ -47,6 +47,7 @@ export const EVENT_LOGOS = {
     "2026Kickoff": "logos/2026Kickoff.png",
     "AustraliaEdition": "logos/AustraliaEdition.png",
     "BroncosChiefsHater": "logos/BroncosChiefsHater.png",
+    "BillsLionsTNF": "logos/BillsLionsTNF.png",
 };
 
 // Streak tiers
