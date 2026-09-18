@@ -158,7 +158,7 @@ export const CALENDAR = {
     "2026-09-16": { //Wednesday
     event: "",
     questions: [
-    { question: "Which coach led the Saints to a Super Bowl victory?", choices: ["Vince Lombardi", "Andy Reid", "Jim Mora", "Mike Ditka"], answer: 3 },
+    { question: "Which coach led the Saints to a Super Bowl victory?", choices: ["Vince Lombardi", "Andy Reid", "Jim Mora", "Sean Payton"], answer: 3 },
     { question: "OVER or UNDER: The Bengals have O/U 0.5 Super Bowl victories all-time.", choices: ["OVER", "UNDER"], answer: 1 },
     { question: "Guess the Career RB:\n- 2,054 Rush Yards\n- 9 Rush TDs\n- 4.0 Yards per Carry", choices: ["James Conner", "Ameer Abdullah", "Mike Tolbert", "Sony Michel"], answer: 1 },
     { question: "Which TE has more Career Receiving TDs?", choices: ["Zach Ertz", "Mark Andrews", "Travis Kelce", "Tony Gonzalez"], answer: 3 },
