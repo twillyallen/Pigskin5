@@ -48,6 +48,7 @@ export const EVENT_LOGOS = {
     "AustraliaEdition": "logos/AustraliaEdition.png",
     "BroncosChiefsHater": "logos/BroncosChiefsHater.png",
     "BillsLionsTNF": "logos/BillsLionsTNF.png",
+    "GiantsRamsMNF": "logos/GiantsRamsMNF.png",
 };
 
 // Streak tiers

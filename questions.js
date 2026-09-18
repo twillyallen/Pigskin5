@@ -196,6 +196,26 @@ export const CALENDAR = {
     { question: "In what season did the \"Philly Special\" occur?", choices: ["2017", "2019", "2016", "2018"], answer: 0 },
     ],
   },
+    "2026-09-20": { //Sunday
+    event: "",
+    questions: [
+    { question: "Guess the Week 1 WR:\n - 138 Yards\n - 2 TDs\n - 8 Receptions", choices: ["Christian Watson", "Chris Olave", "Jalen Coker", "Zay Flowers"], answer: 2 },
+    { question: "How many receiving yards did Ja'Marr Chase have in Cincinnati's Week 1 win?", choices: ["143", "121", "97", "12"], answer: 3 },
+    { question: "Bears scored 59 Week 1. When was the last time they scored at least that many?", choices: ["1980", "2006", "2018", "2025"], answer: 0 },
+    { question: "What was Tampa Bay’s inaugural 1976 season record?", choices: ["6-7", "2-12", "0-14", "13-1"], answer: 2 },
+    { question: "Which NFL team plays their home games at Lincoln Financial Field?", choices: ["Philadelphia Eagles", "Baltimore Ravens", "Las Vegas Raiders", "Cleveland Browns"], answer: 0 },
+    ],
+  },
+    "2026-09-21": { //Monday
+    event: "GiantsRamsMNF",
+    questions: [
+    { question: "Which team scored the fewest points in Week 1?", choices: ["Chargers", "Patriots", "Rams", "Browns"], answer: 2 },
+    { question: "Which player has the most receiving yards?", choices: ["Malik Nabers", "Puka Nacua", "Davante Adams", "Isaiah Likely"], answer: 3 },
+    { question: "When was the last time the Giants beat the Rams?", choices: ["1997", "2016", "2021", "2023"], answer: 1 },
+    { question: "True or False: Neither the Giants nor the Rams recorded a sack in the 2026 Season.", choices: ["True", "False"], answer: 0 },
+    { question: "True or False: The first Rams vs. Giants game predates the corn dog.", choices: ["True", "False"], answer: 0 },
+    ],
+  },
 };
 
 
