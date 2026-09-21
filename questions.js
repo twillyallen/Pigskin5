@@ -216,6 +216,56 @@ export const CALENDAR = {
     { question: "True or False: The first Rams vs. Giants game predates the corn dog.", choices: ["True", "False"], answer: 0 },
     ],
   },
+      "2026-09-22": { //Tuesday
+    event: "",
+    questions: [
+    { question: "Who led the NFL in Rushing TDs in 2001?", choices: ["Steven Jackson", "Shaun Alexander", "LaDainian Tomlinson", "Clinton Portis"], answer: 1 },
+    { question: "What division do the New York Jets play in?", choices: ["AFC East", "NFC West", "AFC South", "AFC North"], answer: 0 },
+    { question: "Through 2 weeks, which team leads the league in Total Yards?", choices: ["Panthers", "Bills", "Ravens", "Jets"], answer: 0 },
+    { question: "Guess the Career WR:\n- 12,351 Rec. Yards\n- 83 Rec. TDs\n- 970 Receptions", choices: ["Marquise Brown", "Brandon Marshall", "Danny Amendola", "Ja'Marr Chase"], answer: 1 },
+    { question: "Which RB has more Career Rushing TDs?", choices: ["Shaun Alexander", "Barry Sanders", "Marshawn Lynch", "Eric Dickerson"], answer: 0 },
+    ],
+  },
+    "2026-09-23": { //Wednesday
+    event: "",
+    questions: [
+    { question: "Which QB has the most Rushing Yards this season?", choices: ["Jaxson Dart", "Jayden Daniels", "Caleb Williams", "Josh Allen"], answer: 2 },
+    { question: "Guess the Career WR:\n- 4,898 Rec. Yards\n- 31 Rec. TDs\n- 440 Receptions", choices: ["Jamison Crowder", "Terry McLaurin", "CeeDee Lamb", "Amari Cooper"], answer: 0 },
+    { question: "Who holds the NFL record for most passing TDs in a single season?", choices: ["Aaron Rodgers", "Peyton Manning", "Drew Brees", "Josh Allen"], answer: 1 },
+    { question: "How many Super Bowls have the San Francisco 49ers won?", choices: ["8", "4", "7", "5"], answer: 3 },
+    { question: "Who leads the league in sacks?", choices: ["TJ Watt", "Aidan Hutchinson", "Greg Rousseau", "Dallas Turner"], answer: 2 },
+    ],
+  },
+    "2026-09-24": { //Thursday
+    event: "PackersFalconsTNF",
+    questions: [
+    { question: "How many times have the Falcons made it to the Red Zone in 2026?", choices: ["0", "3", "5", "8"], answer: 0 },
+    { question: "Guess the 2026 Wide Receiver:\n- 188 Rec. Yards\n- 3 Rec. TDs\n- 10 Receptions", choices: ["Christian Watson", "Jahan Dotson", "Drake London", "Bo Melton"], answer: 0 },
+    { question: "When was the last time the Falcons won at Lambeau Field?", choices: ["1966", "1995", "2008", "2020"], answer: 2 },
+    { question: "Where was Brett Favre drafted?", choices: ["NY Jets", "Green Bay Packers", "Cincinnati Bengals", "Atlanta Falcons"], answer: 3 },
+    { question: "Which former Falcon caught a TD for Green Bay in Super Bowl XXXI?", choices: ["Julio Jones", "Andre Rison", "Kurt Benkert", "Eric Metcalf"], answer: 1 },
+    ],
+  },
+    "2026-09-25": { //Friday
+    event: "",
+    questions: [
+    { question: "Guess the Career QB:\n- 64,578 Pass Yards\n- 423 Pass TDs\n- 196 INTs\n- 92.4 Passer Rating", choices: ["Drew Brees", "Ben Roethlisberger", "Dan Marino", "Matthew Stafford"], answer: 3 },
+    { question: "Which QB has more Career Passing TDs?", choices: ["Drew Brees", "Matthew Stafford", "Matt Ryan", "Ben Roethlisberger"], answer: 0 },
+    { question: "What year did the Colts relocate to Indianapolis?", choices: ["1984", "1980", "1979", "1978"], answer: 0 },
+    { question: "OVER or UNDER: Brian Hartline has O/U 13.5 Career Receiving TDs.", choices: ["OVER", "UNDER"], answer: 0 },
+    { question: "Which of these was an ACTUAL NFL player?", choices: ["Montravius Hartfordshire", "Ladel Whistleblower", "Taco Charlton", "Torque Lewith"], answer: 2 },
+    ],
+  },
+    "2026-09-26": { //Saturday
+    event: "",
+    questions: [
+    { question: "Guess the Career TE:\n- 13,046 Rec. Yards\n- 74 Rec. TDs\n- 1,228 Receptions", choices: ["Jason Witten", "Bo Scaife", "Hunter Henry", "Dennis Pitta"], answer: 0 },
+    { question: "Which of these was an ACTUAL NFL player?", choices: ["Malcontavious Whistleblower", "Takkarist McKinley", "Traequan Weinstein", "Shaqavian Hartfordshire"], answer: 1 },
+    { question: "OVER or UNDER: The Browns have O/U 4.5 NFL championships (all-time).", choices: ["OVER", "UNDER"], answer: 1 },
+    { question: "True or False: 1976 was the Buccaneers' first season.", choices: ["True", "False"], answer: 0 },
+    { question: "What division do the New England Patriots play in?", choices: ["NFC North", "AFC East", "AFC South", "NFC West"], answer: 1 },
+    ],
+  },
 };
 
 
