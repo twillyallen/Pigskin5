@@ -221,7 +221,7 @@ export const CALENDAR = {
     questions: [
     { question: "Who led the NFL in Rushing TDs in 2001?", choices: ["Steven Jackson", "Shaun Alexander", "LaDainian Tomlinson", "Clinton Portis"], answer: 1 },
     { question: "What division do the New York Jets play in?", choices: ["AFC East", "NFC West", "AFC South", "AFC North"], answer: 0 },
-    { question: "Through 2 weeks, which team leads the league in Total Yards?", choices: ["Panthers", "Bills", "Ravens", "Jets"], answer: 0 },
+    { question: "Through 2 weeks, which team leads the league in Total Yards?", choices: ["Panthers", "Bills", "Chiefs", "Jets"], answer: 2 },
     { question: "Guess the Career WR:\n- 12,351 Rec. Yards\n- 83 Rec. TDs\n- 970 Receptions", choices: ["Marquise Brown", "Brandon Marshall", "Danny Amendola", "Ja'Marr Chase"], answer: 1 },
     { question: "Which RB has more Career Rushing TDs?", choices: ["Shaun Alexander", "Barry Sanders", "Marshawn Lynch", "Eric Dickerson"], answer: 0 },
     ],
