@@ -266,6 +266,16 @@ export const CALENDAR = {
     { question: "What division do the New England Patriots play in?", choices: ["NFC North", "AFC East", "AFC South", "NFC West"], answer: 1 },
     ],
   },
+      "2026-09-27": { //Sunday
+    event: "",
+    questions: [
+    { question: "Which team has gained the LEAST amount of offensive yards this season?", choices: ["Minnesota Vikings", "Tennessee Titans", "Arizona Cardinals", "Denver Broncos"], answer: 0 },
+    { question: "How many Field Goals have the Los Angeles Chargers made this season?", choices: ["0", "4", "7", "11"], answer: 0 },
+    { question: "Who was the first QB to throw for 5,000 yards in a season?", choices: ["Peyton Manning", "John Elway", "Dan Marino", "Bart Starr"], answer: 2 },
+    { question: "OVER or UNDER: The Panthers have O/U 1.5 Super Bowl appearances all-time.", choices: ["OVER", "UNDER"], answer: 0 },
+    { question: "Which RB has lost the most fumbles in 2026?", choices: ["Kyren Williams", "Ameer Abdullah", "Omarion Hampton", "D'Andre Swift"], answer: 2 },
+    ],
+  },
 };
 
 

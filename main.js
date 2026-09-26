@@ -1824,6 +1824,29 @@ function _onBeforeUnload() {
   saveSessionState();
 }
 
+const KEY_NOQUIZ_RELOAD_SHA = "ps5_noquiz_reload_sha";
+
+// If the deployed build has moved on since this page loaded (e.g. a new
+// quiz was just published), reload once to pick it up instead of leaving
+// the player stuck on a stale "no quiz" screen.
+async function checkForFreshQuiz() {
+  try {
+    const res = await fetch("/version.json?t=" + Date.now(), { cache: "no-store" });
+    if (!res.ok) return;
+    const data = await res.json();
+    const sha = data.sha ?? data.version ?? null;
+    if (!sha) return;
+
+    const lastTriedSha = sessionStorage.getItem(KEY_NOQUIZ_RELOAD_SHA);
+    if (sha !== lastTriedSha) {
+      sessionStorage.setItem(KEY_NOQUIZ_RELOAD_SHA, sha);
+      window.location.reload();
+    }
+  } catch {
+    // Ignore — the manual Refresh button still works.
+  }
+}
+
 function startGame() {
   stopSnow();
   stopConfetti();
@@ -1858,8 +1881,10 @@ function startGame() {
     resultSec.classList.remove("hidden");
     headerEl?.classList.add("hidden");
     if (timerEl) timerEl.style.display = "none";
-    scoreText.textContent = `No quiz scheduled for ${RUN_DATE}.`;
-    reviewEl.innerHTML = `<div class="rev"><div class="q">Add a set for ${RUN_DATE} in questions.js</div></div>`;
+    scoreText.textContent = `Having trouble loading today's quiz.`;
+    reviewEl.innerHTML = `<div class="rev"><div class="q">This can happen right after a new quiz is published. Refresh the page to check for the update.</div><button id="refreshQuizBtn" class="btn" style="margin-top:12px;">Refresh</button></div>`;
+    document.getElementById("refreshQuizBtn")?.addEventListener("click", () => window.location.reload());
+    checkForFreshQuiz();
     return;
   }
 
