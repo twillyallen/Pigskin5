@@ -10,6 +10,7 @@ import { showTierTooltip, showAchievementToast } from "./modules/ui-helpers.js";
 import { ACHIEVEMENTS, ACHIEVEMENT_CATEGORIES } from "./modules/achievements.js";
 import { STREAK_TIERS, EVENT_LOGOS } from "./modules/config.js";
 import { renderRivalryCard, injectStartRivalryButton, openRivalryModal } from "./modules/rivalry-ui.js?v=20260614";
+import { trackEvent } from "./modules/analytics.js";
 
 
 
@@ -1897,6 +1898,14 @@ function startGame() {
   setAttempt(RUN_DATE);
   computeAndSaveStreak(RUN_DATE);
 
+  const dayEvent = CALENDAR[RUN_DATE]?.event;
+  trackEvent("quiz_start", {
+    quiz_date: RUN_DATE,
+    question_count: QUESTIONS.length,
+    authenticated: localStorage.getItem("ft5_authed") === "1",
+    ...(dayEvent ? { event_name: dayEvent } : {}),
+  });
+
   renderQuestion();
 
   // Refresh / close: update session picks so recovery has latest data
@@ -2159,6 +2168,17 @@ async function showResult() {
   // Record whether the user was signed in at play time so showStartScreen
   // knows not to auto-submit scores for accounts that were already logged in.
   saveResult(RUN_DATE, { score, picks, totalTime, avgTime, totalPoints, playedAsGuest: !user });
+
+  trackEvent("quiz_complete", {
+    quiz_date: RUN_DATE,
+    score,
+    question_count: QUESTIONS.length,
+    points: totalPoints,
+    avg_time: Number(avgTime.toFixed(1)),
+    perfect_game: score === QUESTIONS.length,
+    daily_streak: getCachedDailyStreak(),
+    touchdown_streak: Number(getCachedTDStreak()),
+  });
 
   // Defer achievement check 4 s so it doesn't contend with the concurrent
   // streak RPC + leaderboard fetch that fire at quiz completion — that contention
@@ -2430,6 +2450,20 @@ if (picks && picks.length > 0) {
       cta_used: cta
     };
 
+    // GA4 recommended "share" event — fired once for the actual completed
+    // share action (not the button tap). method distinguishes the OS share
+    // sheet from the plain clipboard copy so the two aren't conflated.
+    const gaShareParams = {
+      content_type: "quiz_result",
+      item_id: RUN_DATE,
+      score,
+      points: totalPoints,
+      avg_time: Number(latestAvgTime.toFixed(1)),
+      daily_streak: dailyStreak,
+      touchdown_streak: Number(tdStreak),
+      perfect_game: score === QUESTIONS.length,
+    };
+
     try {
       if (navigator.clipboard && window.isSecureContext) {
         await navigator.clipboard.writeText(shareText);
@@ -2452,15 +2486,27 @@ if (picks && picks.length > 0) {
         gtag("event", "share_copied", shareData);
       }
 
+      // No native share sheet on this device/browser — the clipboard copy
+      // IS the completed share, so fire "share" here instead of waiting on
+      // a promise that will never resolve. When navigator.share exists, the
+      // "share" event fires from its own success handler below instead, so
+      // exactly one "share" event is ever sent per click.
+      if (!navigator.share) {
+        trackEvent("share", { ...gaShareParams, method: "clipboard" });
+      }
+
       if (navigator.share) {
         navigator.share({ text: shareText })
           .then(() => {
             if (typeof gtag === "function") {
               gtag("event", "share_native", { ...shareData, share_method: "native" });
             }
+            // Web Share sheet completed — this is the real share action.
+            trackEvent("share", { ...gaShareParams, method: "web_share" });
           })
           .catch(() => {
-            /* User cancelled native share dialog — still copied */
+            /* User cancelled native share dialog — still copied, but a
+               cancelled share sheet is not a completed share. */
             if (typeof gtag === "function") {
               gtag("event", "share_native_dismissed", shareData);
             }

@@ -9,6 +9,7 @@ import { NFL_TEAMS_SORTED, NFL_TEAMS } from "./nfl-teams.js";
 import { ACHIEVEMENTS, ACHIEVEMENT_CATEGORIES } from "./achievements.js";
 import { showToast } from "./ui-helpers.js";
 import { STREAK_TIERS } from "./config.js";
+import { trackEvent } from "./analytics.js";
 
 const modal = document.getElementById("authModal");
 const closeBtn = document.getElementById("authClose");
@@ -86,7 +87,11 @@ emailOptInToggle?.addEventListener("change", async () => {
   }
 });
 
-onAuthChange(async (user) => {
+// `event` is Supabase's auth event string ("INITIAL_SESSION", "SIGNED_IN",
+// "TOKEN_REFRESHED", ...). Only "SIGNED_IN" represents an actual sign-in —
+// "INITIAL_SESSION" fires on every page load/refresh for an already-authed
+// user and must never be counted as a login.
+onAuthChange(async (user, event) => {
   if (user) {
     localStorage.setItem('ft5_authed', '1');
     closeModal();
@@ -101,6 +106,11 @@ onAuthChange(async (user) => {
   await refreshStreakCache();
   checkAchievementsNow().catch(() => {});
   if (!profile.favorite_team) maybeShowTeamPickerPrompt();
+  // Existing user (already has a username) genuinely authenticating —
+  // sign_up (fired on onboarding completion) covers brand-new accounts.
+  if (event === "SIGNED_IN") {
+    trackEvent("login", { method: "magic_link" });
+  }
 }
   } else {
     localStorage.removeItem('ft5_authed');
@@ -722,6 +732,9 @@ function showOnboardingPrompt() {
 
     panel.remove();
     updateSignedInButton(username);
+    // Onboarding just finished for the first time — this is the real
+    // "new account created" moment, regardless of which auth event led here.
+    trackEvent("sign_up", { method: "magic_link" });
     await refreshStreakCache();
       checkAchievementsNow().catch(() => {});
   };

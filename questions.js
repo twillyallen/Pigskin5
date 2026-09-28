@@ -276,7 +276,7 @@ export const CALENDAR = {
     { question: "Which RB has lost the most fumbles in 2026?", choices: ["Kyren Williams", "Ameer Abdullah", "Omarion Hampton", "D'Andre Swift"], answer: 2 },
     ],
   },
-      "2026-09-28": { //Monday
+    "2026-09-28": { //Monday
     event: "BearsEaglesMNF",
     questions: [
     { question: "Which Bears kicker was responsible for the Double Doink against the Eagles?", choices: ["Robbie Gould", "Cairos Santos", "Blair Walsh", "Cody Parkey"], answer: 3 },
@@ -284,6 +284,46 @@ export const CALENDAR = {
     { question: "Which Bears Super Bowl-winning quarterback later played for the Eagles?", choices: ["Jim Harbaugh", "Jay Cutler", "Rex Grossman", "Jim McMahon"], answer: 3 },
     { question: "What was the result of the first-ever Bears vs. Eagles game?", choices: ["Eagles Win", "Bears Win", "Tie", "Cancelled Mid-Game"], answer: 2 },
     { question: "Who has more rush TDs this season?", choices: ["Jalen Hurts", "D'Andre Swift", "Caleb Williams", "Tank Bigsby"], answer: 1 },
+    ],
+  },
+    "2026-09-29": { //Tuesday
+    event: "",
+    questions: [
+    { question: "Who has thrown the most Interceptions this season?", choices: ["Drake Maye", "Justin Herbert", "Bo Nix", "Matthew Stafford"], answer: 0 },
+    { question: "Which coach said the famous quote \"Playoffs?! Don't talk about playoffs!\"?", choices: ["Jim Mora", "Andy Reid", "Marv Levy", "Dennis Green"], answer: 0 },
+    { question: "Which player leads the league in Sacks?", choices: ["Will Anderson Jr", "Greg Rousseau", "Mason Graham", "TJ Watt"], answer: 1 },
+    { question: "Which of these was an ACTUAL NFL player?", choices: ["La'Zekiel Thundergood", "Bender Fettergun II", "Ki-Jana Carter", "Treqwan Bonecastle"], answer: 2 },
+    { question: "Which NFL team plays their home games at Highmark Stadium?", choices: ["Dallas Cowboys", "Buffalo Bills", "New York Jets", "Los Angeles Rams"], answer: 1 },
+    ],
+  },
+    "2026-09-30": { //Wednesday
+    event: "",
+    questions: [
+    { question: "Who leads the league in dropped passes?", choices: ["Justin Jefferson", "Tucker Kraft", "Jameson Williams", "Ashton Jeanty"], answer: 1 },
+    { question: "Which kicker has the longest FG this season (60 yards)?", choices: ["Trey Smack", "Brandon Aubrey", "Matt Gay", "Chase McLaughlin"], answer: 1 },
+    { question: "Which of these was an ACTUAL NFL player?", choices: ["Deontarius Drakesworth", "Danny Allen-Finn", "I'Tavius Mathers", "Trevontay Hammersmith"], answer: 2 },
+    { question: "True or False: The Texans have reached a conference championship game.", "choices": ["True", "False"], "answer": 0},
+    { question: "True or False: The Cards franchise is older than the state of Arizona.", choices: ["True", "False"], answer: 0 },
+    ],
+  },
+    "2026-10-01": { //Thursday
+    event: "SteelersBrownsTNF",
+    questions: [
+    { question: "True or False: Aaron Rodgers is UNDEFEATED against the Browns?", choices: ["True", "False"], answer: 1 },
+    { question: "Who has more Passing Touchdowns this season?", choices: ["Aaron Rodgers", "Deshaun Watson"], answer: 1 },
+    { question: "Which team has won a playoff game more recently?", choices: ["Steelers", "Browns"], answer: 1 },
+    { question: "Which Steelers running back was nicknamed “The Bus”?", choices: ["Mike Alstott", "Jerome Bettis", "Earl Campbell", "Franco Harris"], answer: 1 },
+    { question: "What quarterback led the Browns to multiple championship appearances in the 1950s?", "choices": ["Norm Van Brocklin", "Jonny Unitas", "Otto Graham", "Sonny Jurgensen"], "answer": 2},
+    ],
+  },
+    "2026-10-02": { //Friday
+    event: "SteelersBrownsTNF",
+    questions: [
+    { question: "True or False: Aaron Rodgers is UNDEFEATED against the Browns?", choices: ["True", "False"], answer: 1 },
+    { question: "Who has more Passing Touchdowns this season?", choices: ["Aaron Rodgers", "Deshaun Watson"], answer: 1 },
+    { question: "Which team has won a playoff game more recently?", choices: ["Steelers", "Browns"], answer: 1 },
+    { question: "Which Steelers running back was nicknamed “The Bus”?", choices: ["Mike Alstott", "Jerome Bettis", "Earl Campbell", "Franco Harris"], answer: 1 },
+    { question: "What quarterback led the Browns to multiple championship appearances in the 1950s?", "choices": ["Norm Van Brocklin", "Jonny Unitas", "Otto Graham", "Sonny Jurgensen"], "answer": 2},
     ],
   },
 };
