@@ -276,6 +276,16 @@ export const CALENDAR = {
     { question: "Which RB has lost the most fumbles in 2026?", choices: ["Kyren Williams", "Ameer Abdullah", "Omarion Hampton", "D'Andre Swift"], answer: 2 },
     ],
   },
+      "2026-09-28": { //Monday
+    event: "BearsEaglesMNF",
+    questions: [
+    { question: "Which Bears kicker was responsible for the Double Doink against the Eagles?", choices: ["Robbie Gould", "Cairos Santos", "Blair Walsh", "Cody Parkey"], answer: 3 },
+    { question: "Which Eagles RB rushed for 1,000 yards before joining the Bears?", choices: ["LeSean McCoy", "D'Andre Swift", "Miles Sanders", "Jordan Howard"], answer: 1 },
+    { question: "Which Bears Super Bowl-winning quarterback later played for the Eagles?", choices: ["Jim Harbaugh", "Jay Cutler", "Rex Grossman", "Jim McMahon"], answer: 3 },
+    { question: "What was the result of the first-ever Bears vs. Eagles game?", choices: ["Eagles Win", "Bears Win", "Tie", "Cancelled Mid-Game"], answer: 2 },
+    { question: "Who has more rush TDs this season?", choices: ["Jalen Hurts", "D'Andre Swift", "Caleb Williams", "Tank Bigsby"], answer: 1 },
+    ],
+  },
 };
 
 
