@@ -302,7 +302,7 @@ export const CALENDAR = {
     { question: "Who leads the league in dropped passes?", choices: ["Justin Jefferson", "Tucker Kraft", "Jameson Williams", "Ashton Jeanty"], answer: 1 },
     { question: "Which kicker has the longest FG this season (60 yards)?", choices: ["Trey Smack", "Brandon Aubrey", "Matt Gay", "Chase McLaughlin"], answer: 1 },
     { question: "Which of these was an ACTUAL NFL player?", choices: ["Deontarius Drakesworth", "Danny Allen-Finn", "I'Tavius Mathers", "Trevontay Hammersmith"], answer: 2 },
-    { question: "True or False: The Texans have reached a conference championship game.", "choices": ["True", "False"], "answer": 0},
+    { question: "True or False: The Texans have reached a conference championship game.", "choices": ["True", "False"], "answer": 1},
     { question: "True or False: The Cards franchise is older than the state of Arizona.", choices: ["True", "False"], answer: 0 },
     ],
   },
