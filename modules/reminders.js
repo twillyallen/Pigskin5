@@ -10,8 +10,8 @@ import { getCurrentUser } from './supabase-client.js';
 export const REMINDERS = {
   0: null, // Sunday
   1: {title: "Challenge your Rivals!", message: "Click a Player Card, or send a link!\nProve you know more ball!"}, // Monday
-  2: null, // Tuesday
-  3: {title: "Achievements!", message: "Click on your profile to view your achievements!"}, // Wednesday
+  2: {title: "Achievements!", message: "Click on your profile to view your achievements!"}, // Tuesday
+  3: {title: "Share your score!", message: "Press share. Show off your ball knowledge!"}, // Wednesday
   4: null, // Thursday
   5: null, // Friday
   6: null, // Saturday
