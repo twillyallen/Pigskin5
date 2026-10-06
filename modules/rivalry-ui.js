@@ -659,15 +659,24 @@ async function renderRivalryDetail(body, rivalryId, userId, overlay) {
     }).join("");
   }
 
-  function scoreRow(name, emoji, score) {
+  function scoreRow(name, emoji, score, totalTime = null) {
     return `
       <div style="display:flex;align-items:center;gap:8px;margin-bottom:5px;">
         <span style="font-size:12px;font-weight:600;color:rgba(255,255,255,0.45);
             min-width:56px;text-align:right;white-space:nowrap;overflow:hidden;
             text-overflow:ellipsis;">${name}</span>
         <span style="font-size:16px;letter-spacing:1px;">${emoji || "—"}</span>
-        <span style="font-size:13px;font-weight:800;">${score}/5</span>
+        <span style="font-size:13px;font-weight:800;">${score}/5${tieTimeHtml(totalTime)}</span>
       </div>`;
+  }
+
+  // Returns [myTime, theirTime] when both played and tied, else [null, null]
+  function tieTimes(g) {
+    if (!g || g.player1_score == null || g.player2_score == null) return [null, null];
+    if (g.player1_score !== g.player2_score) return [null, null];
+    return iAm1
+      ? [g.player1_time_secs, g.player2_time_secs]
+      : [g.player2_time_secs, g.player1_time_secs];
   }
 
   let todayHtml = "";
@@ -677,13 +686,14 @@ async function renderRivalryDetail(body, rivalryId, userId, overlay) {
     if (theirTodayScore !== null && theirTodayScore !== undefined) {
       const dayWinner = todayGame?.day_winner;
       const iWonToday = (iAm1 && dayWinner === 1) || (!iAm1 && dayWinner === 2);
+      const [myTieTime, theirTieTime] = tieTimes(todayGame);
       todayHtml = `
         <div id="rivalryTodayCard" style="background:rgba(255,255,255,0.06);border-radius:12px;padding:12px 14px;margin-bottom:16px;cursor:pointer;transition:background 0.15s;"
             onmouseover="this.style.background='rgba(255,255,255,0.1)'" onmouseout="this.style.background='rgba(255,255,255,0.06)'">
           <div style="font-size:12px;color:rgba(255,255,255,0.4);font-weight:700;
               text-transform:uppercase;letter-spacing:.07em;margin-bottom:8px;">Today</div>
-          ${scoreRow(displayName(vm.me), myEmoji, myTodayScore)}
-          ${scoreRow(displayName(vm.them), theirEmoji, theirTodayScore)}
+          ${scoreRow(displayName(vm.me), myEmoji, myTodayScore, myTieTime)}
+          ${scoreRow(displayName(vm.them), theirEmoji, theirTodayScore, theirTieTime)}
           <div style="font-size:13px;font-weight:800;margin-top:4px;
               color:${iWonToday ? "#22c55e" : "#ef4444"};">
             ${iWonToday ? "You win today!" : "They win today"}
@@ -720,6 +730,7 @@ async function renderRivalryDetail(body, rivalryId, userId, overlay) {
         const iWon       = (iAm1 && dw === 1) || (!iAm1 && dw === 2);
         const winColor   = iWon ? "#22c55e" : "#ef4444";
         const dateLabel  = new Date(g.game_date + "T12:00:00").toLocaleDateString(undefined, { month:"short", day:"numeric" });
+        const [myTieTime, theirTieTime] = tieTimes(g);
         return `
           <div class="rivalryDayCard" data-game-date="${g.game_date}"
               style="background:rgba(255,255,255,0.04);border-radius:10px;
@@ -736,8 +747,8 @@ async function renderRivalryDetail(body, rivalryId, userId, overlay) {
                 ${iWon ? "You won" : "You lost"}
               </span>` : ""}
             </div>
-            ${myScore !== null ? scoreRow(displayName(vm.me), myEmoji, myScore) : ""}
-            ${theirScore !== null ? scoreRow(displayName(vm.them), theirEmoji, theirScore) : ""}
+            ${myScore !== null ? scoreRow(displayName(vm.me), myEmoji, myScore, myTieTime) : ""}
+            ${theirScore !== null ? scoreRow(displayName(vm.them), theirEmoji, theirScore, theirTieTime) : ""}
           </div>`;
       }).join("")}
     </div>` : "";
@@ -884,6 +895,13 @@ async function renderRivalryDetail(body, rivalryId, userId, overlay) {
   }
 }
 
+// Tiebreaker label: total quiz time (secs) → "(x.x sec. avg.)". Empty when no time.
+function tieTimeHtml(totalSecs) {
+  if (totalSecs === null || totalSecs === undefined) return "";
+  const avg = Number(totalSecs) / 5;
+  return ` <span style="font-size:11px;font-weight:600;color:rgba(255,255,255,0.4);">(${avg.toFixed(1)} sec. avg.)</span>`;
+}
+
 async function renderDayResult(body, rivalry, rivalryId, vm, date, overlay, userId) {
   const iAm1 = vm.iAm1;
   const game  = (rivalry.games || []).find(g => g.game_date === date);
@@ -894,9 +912,11 @@ async function renderDayResult(body, rivalry, rivalryId, vm, date, overlay, user
   const myPicks    = iAm1 ? game.player1_picks     : game.player2_picks;
   const theirPicks = iAm1 ? game.player2_picks     : game.player1_picks;
   const myTime     = iAm1 ? game.player1_time_secs : game.player2_time_secs;
+  const theirTime  = iAm1 ? game.player2_time_secs : game.player1_time_secs;
   const dw         = game.day_winner;
   const iWon       = (iAm1 && dw === 1) || (!iAm1 && dw === 2);
   const theyPlayed = theirScore !== null && theirScore !== undefined;
+  const isTied     = theyPlayed && myScore === theirScore;
 
   let questions = await getRivalryQuestionsForDate(rivalryId, date);
   // Fallback: UTC-stored date may be one day ahead of the corrected local date
@@ -928,12 +948,12 @@ async function renderDayResult(body, rivalry, rivalryId, vm, date, overlay, user
     <div style="${scoreRowStyle}margin-bottom:8px;">
       <span style="${nameStyle}">${displayName(vm.me)}</span>
       <span style="font-size:18px;letter-spacing:2px;">${mySquares.join("")}</span>
-      <span style="${numStyle}">${myScore}/5</span>
+      <span style="${numStyle}">${myScore}/5${isTied ? tieTimeHtml(myTime) : ""}</span>
     </div>
     <div style="${scoreRowStyle}margin-bottom:12px;">
       <span style="${nameStyle}">${displayName(vm.them)}</span>
       <span style="font-size:18px;letter-spacing:2px;">${theirSquares.join("")}</span>
-      <span style="${numStyle}">${theirScore}/5</span>
+      <span style="${numStyle}">${theirScore}/5${isTied ? tieTimeHtml(theirTime) : ""}</span>
     </div>
     <div style="font-size:16px;font-weight:900;color:${winColor};">
       ${iWon ? "You won this day" : "They won this day"}

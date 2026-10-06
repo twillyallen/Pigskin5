@@ -597,19 +597,15 @@ export function getRivalryViewModel(rivalry, myUserId) {
   };
 }
 
+// Only settled days fill slots. Unsettled rows (e.g. a day only one player
+// played that never got settled) are skipped so they can't block later days.
 function buildTracker(games, iAm1) {
   const slots = Array(7).fill("upcoming");
-  let gameIdx = 0;
-  for (let i = 0; i < 7 && gameIdx < games.length; i++) {
-    const g = games[gameIdx];
-    if (g.day_winner === null || g.day_winner === undefined) {
-      slots[i] = "upcoming";
-    } else {
-      const iWon = iAm1 ? g.day_winner === 1 : g.day_winner === 2;
-      slots[i] = iWon ? "win" : "loss";
-      gameIdx++;
-    }
-  }
+  const settled = games.filter(g => g.day_winner === 1 || g.day_winner === 2);
+  settled.slice(0, 7).forEach((g, i) => {
+    const iWon = iAm1 ? g.day_winner === 1 : g.day_winner === 2;
+    slots[i] = iWon ? "win" : "loss";
+  });
   return slots;
 }
 
