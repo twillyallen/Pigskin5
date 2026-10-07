@@ -136,11 +136,71 @@ export const CALENDAR = {
     "2026-10-06": { //Tuesday
     event: "",
     questions: [
-    { question: "Which player invented the famous \"Lambeau Leap\"?", "choices": ["Leroy Butler", "Brett Favre", "Antonio Freeman", "Reggie White"], "answer": 0},
+    { question: "Which player invented the famous \"Lambeau Leap\"?", choices: ["Leroy Butler", "Brett Favre", "Antonio Freeman", "Reggie White"], "answer": 0},
     { question: "Which of these was an ACTUAL NFL player?", choices: ["Grunthaven Wollstonecraft", "Leotrimarvydaquantalius Washington", "Divine Deablo", "Zackson Hammersmith"], answer: 2 },
     { question: "Which WR has more Career Receiving Yards?", choices: ["Larry Fitzgerald", "Julio Jones", "Steve Smith", "Davante Adams"], answer: 0 },
-    { question: "Which player threw the “Philly Special” touchdown in Super Bowl LII?", "choices": ["Alshon Jeffrey", "Zach Ertz", "Nelson Agholor", "Trey Burton"], "answer": 3},
-    { question: "True or False: Brett Favre threw more interceptions than touchdowns in his career.", "choices": ["True", "False"], "answer": 1},
+    { question: "Which player threw the “Philly Special” touchdown in Super Bowl LII?", choices: ["Alshon Jeffrey", "Zach Ertz", "Nelson Agholor", "Trey Burton"], "answer": 3},
+    { question: "True or False: Brett Favre threw more interceptions than touchdowns in his career.", choices: ["True", "False"], "answer": 1},
+    ],
+  },
+    "2026-10-07": { //Wednesday
+    event: "",
+    questions: [
+    { question: "Which team has the highest scoring offense?", choices: ["Carolina Panthers", "Buffalo Bills", "Detroit Lions", "Dallas Cowboys"], "answer": 1},
+    { question: "Who was the Chiefs\’ legendary coach that led them to their first Super Bowl title in 1970?", choices: ["Chuck Noll", "Lamar Hunt", "Hank Stram", "Vince Lombardi"], "answer": 2},
+    { question: "Which kicker has the longest Field Goal this season?", choices: ["Brandon Aubrey", "Trey Smack", "Chad Ryland", "Tyler Loop"], answer: 3 },
+    { question: "How many career rushing yards does Emmitt Smith have (NFL all-time record)?", choices: ["18,355", "19,787", "17,074", "19,276"], answer: 0 },
+    { question: "Which of these was an ACTUAL NFL player?", choices: ["Rock Ya-Sin", "Trey'vor Fantloose", "Deontarius Stonehammer", "Treshon Finnenbaum"], answer: 0 },
+    ],
+  },
+    "2026-10-08": { //Thursday
+    event: "BuccaneersCowboysTNF",
+    questions: [
+    { question: "Who was the QB for Tampa Bay when the Cowboys last beat them in the Playoffs?", choices: ["Ryan Fitzpatrick", "Vinny Testaverde", "Baker Mayfield", "Tom Brady"], "answer": 3},
+    { question: "Which team leads the All-Time series?", choices: ["Dallas Cowboys", "Tampa Bay Buccaneers"], "answer": 0},
+    { question: "True or False: The Buccaneers have won 2 Super Bowls since Dallas has made it back to an NFC Championship Game", choices: ["True", "False"], answer: 0 },
+    { question: "Which kicker has made more Field Goals in the 2026 Season?", choices: ["Chase McLaughlin", "Brandon Aubrey"], answer: 0 },
+    { question: "How many consecutive extra points did Cowboys K Brett Maher miss against Tampa Bay in the 2022 playoffs?", choices: ["3", "4", "5", "6"], answer: 1 },
+    ],
+  },
+    "2026-10-09": { //Friday
+    event: "",
+    questions: [
+    { question: "How many games have the Vikings won in 2026 without scoring a TD on Offense?", choices: ["0", "1", "2", "3"], "answer": 2},
+    { question: "True or False:\nThe Jets recorded more Interceptions in Week 4 than they did in the entire 2025 Season?", choices: ["True", "False"], "answer": 0},
+    { question: "Which NFL team plays their home games at Allegiant Stadium?", choices: ["Denver Broncos", "Las Vegas Raiders", "Arizona Cardinals", "Kansas City Chiefs"], answer: 1 },
+    { question: "Who caught the game-winning touchdown known as “The Hail Mary” from Roger Staubach?", choices: ["Michael Irvin", "Billy Joe DuPree", "Golden Richards", "Drew Pearson"], "answer": 3},
+    { question: "Who leads the league in Passer Rating (min. 50 Attempts)", choices: ["Brock Purdy", "Trevor Lawrence", "Lamar Jackson", "Geno Smith"], answer: 0 },
+    ],
+  },
+    "2026-10-10": { //Saturday
+    event: "",
+    questions: [
+    { question: "Which of these was an ACTUAL NFL player?", choices: ["Ifeanyi Ohalete", "Devontarius Junior", "Javaris Jamar Javarison-Lamar", "Benedictus Thundergoose"], answer: 0 },
+    { question: "Who was the head coach during the Bills’ four consecutive Super Bowl appearances in the 1990s?", choices: ["George Seifert", "Mike Holmgren", "Marv Levy", "Bill Parcells"], "answer": 2},
+    { question: "How long was Deonte Banks' game-ending pick-six in Week 4 against Arizona?", choices: ["90", "93", "96", "98"], answer: 3 },
+    { question: "Who leads the league in Tackles in 2026?", choices: ["Fred Warner", "Alex Singleton", "Earnest Jones IV", "Nick Bolton"], "answer": 1},
+    { question: "Which TE has more Career Receiving Yards?", choices: ["Tony Gonzalez", "Jason Witten", "Antonio Gates", "Travis Kelce"], answer: 0 },
+    ],
+  },
+    "2026-10-11": { //Sunday
+    event: "",
+    questions: [
+    { question: "The Bears are Road-Favorites in Green Bay for the first time since:", choices: ["1937", "2006", "2010", "2018"], answer: 1 },
+    { question: "OVER or UNDER: The Texans and Titans have O/U 0.5 Wins COMBINED.", choices: ["OVER", "UNDER"], "answer": 1},
+    { question: "Which of these was an ACTUAL NFL player?", choices: ["Montravius Hartfordshire", "Ladel Whistleblower", "Taco Charlton", "Torque Lewith"], answer: 2 },
+    { question: "True or False: Tom Brady has more playoff wins than any franchise.", choices: ["True", "False"], "answer": 1},
+    { question: "Which Punter leads the league in Average Yards per Punt?", choices: ["Corey Bojorquez", "Daniel Whelan", "Matt Araiza", "Jordan Stout"], answer: 2 },
+    ],
+  },
+    "2026-10-12": { //Monday
+    event: "BillsRamsMNF",
+    questions: [
+    { question: "How many total touchdowns did Josh Allen account for in the Bills' loss to the Rams in 2024?", choices: ["6", "7", "8", "9"], answer: 0 },
+    { question: "Which QB has more Passing Yards in 2026?", choices: ["Josh Allen", "Matthew Stafford"], "answer": 1},
+    { question: "Who has the All-Time Record for most Rushing Yards in a season?", choices: ["Marshall Faulk", "OJ Simpson", "Eric Dickerson", "James Cook"], answer: 2 },
+    { question: "What was the score when Buffalo spoiled the Rams’ 2022 banner night?", choices: ["Bills 17 - Rams 16", "Bills 54 - Rams 51", "Bills 31 - Rams 10", "Bills 35 - Rams 27"], "answer": 2},
+    { question: "Which team has more Super Bowl Losses?", choices: ["Rams", "Bills"], answer: 1 },
     ],
   },
 };

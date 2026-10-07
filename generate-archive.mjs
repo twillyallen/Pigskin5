@@ -55,6 +55,13 @@ for (const [date, val] of Object.entries(CALENDAR)) {
   if (norm && norm.questions.length > 0) ALL[date] = norm;
 }
 
+// Drop future dates so upcoming quizzes aren't spoiled (local date, YYYY-MM-DD)
+const now = new Date();
+const TODAY = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+for (const date of Object.keys(ALL)) {
+  if (date > TODAY) delete ALL[date];
+}
+
 // Sort dates descending (newest first)
 const sortedDates = Object.keys(ALL).sort((a, b) => b.localeCompare(a));
 
