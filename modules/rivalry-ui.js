@@ -572,7 +572,7 @@ function renderModalList(body, active, history, userId, overlay) {
       const endLabel = r.status === "mutual_miss"
         ? "You failed each other..."
         : r.status === "forfeit"
-          ? (won ? `Won — ${displayName(vm.them)} forfeited` : `${displayName(vm.them)} wins by forfeit`)
+          ? (won ? "Won by forfeit" : `${displayName(vm.them)} wins by forfeit`)
           : (won ? "You won" : "You Lost");
       const row = document.createElement("div");
       row.style.cssText = `
@@ -661,12 +661,14 @@ async function renderRivalryDetail(body, rivalryId, userId, overlay) {
 
   function scoreRow(name, emoji, score, totalTime = null) {
     return `
-      <div style="display:flex;align-items:center;gap:8px;margin-bottom:5px;">
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:8px;">
         <span style="font-size:12px;font-weight:600;color:rgba(255,255,255,0.45);
-            min-width:56px;text-align:right;white-space:nowrap;overflow:hidden;
+            min-width:0;flex:1 1 auto;text-align:left;white-space:nowrap;overflow:hidden;
             text-overflow:ellipsis;">${name}</span>
-        <span style="font-size:16px;letter-spacing:1px;">${emoji || "—"}</span>
-        <span style="font-size:13px;font-weight:800;">${score}/5${tieTimeHtml(totalTime)}</span>
+        <div style="display:flex;flex-direction:column;align-items:flex-end;flex:0 0 auto;">
+          <span style="font-size:16px;letter-spacing:1px;white-space:nowrap;line-height:1.2;">${emoji || "—"}</span>
+          <span style="font-size:13px;font-weight:800;white-space:nowrap;margin-top:2px;">${score}/5${tieTimeHtml(totalTime)}</span>
+        </div>
       </div>`;
   }
 
@@ -731,6 +733,19 @@ async function renderRivalryDetail(body, rivalryId, userId, overlay) {
         const winColor   = iWon ? "#22c55e" : "#ef4444";
         const dateLabel  = new Date(g.game_date + "T12:00:00").toLocaleDateString(undefined, { month:"short", day:"numeric" });
         const [myTieTime, theirTieTime] = tieTimes(g);
+        // One player played, the other didn't. Day 1 is a no contest (no winner);
+        // any later day is settled as a forfeit by the player who missed.
+        const oneMissed  = (myScore == null) !== (theirScore == null);
+        const noContest  = oneMissed && (dw === null || dw === undefined);
+        const forfeited  = oneMissed && !noContest;
+        const missedRow  = name => `
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:8px;">
+            <span style="font-size:12px;font-weight:600;color:rgba(255,255,255,0.45);
+                min-width:0;flex:1 1 auto;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${name}</span>
+            <span style="font-size:12px;font-weight:700;font-style:italic;white-space:nowrap;
+                color:${forfeited ? "rgba(239,68,68,0.85)" : "rgba(255,255,255,0.35)"};">
+              ${forfeited ? "Forfeited" : "Didn't play"}</span>
+          </div>`;
         return `
           <div class="rivalryDayCard" data-game-date="${g.game_date}"
               style="background:rgba(255,255,255,0.04);border-radius:10px;
@@ -745,12 +760,15 @@ async function renderRivalryDetail(body, rivalryId, userId, overlay) {
               ${dw !== null && dw !== undefined ? `
               <span style="font-size:11px;font-weight:800;color:${winColor};">
                 ${iWon ? "You won" : "You lost"}
+              </span>` : noContest ? `
+              <span style="font-size:11px;font-weight:800;color:rgba(255,255,255,0.4);">
+                No contest
               </span>` : ""}
             </div>
-            ${myScore !== null ? scoreRow(displayName(vm.me), myEmoji, myScore, myTieTime) : ""}
-            ${theirScore !== null ? scoreRow(displayName(vm.them), theirEmoji, theirScore, theirTieTime) : ""}
+            ${myScore != null ? scoreRow(displayName(vm.me), myEmoji, myScore, myTieTime) : oneMissed ? missedRow(displayName(vm.me)) : ""}
+            ${theirScore != null ? scoreRow(displayName(vm.them), theirEmoji, theirScore, theirTieTime) : oneMissed ? missedRow(displayName(vm.them)) : ""}
           </div>`;
-      }).join("")}
+      }).reverse().join("")}
     </div>` : "";
 
   const colorMap = { winning: "#22c55e", tied: "#f59e0b", losing: "#ef4444" };
@@ -769,7 +787,7 @@ async function renderRivalryDetail(body, rivalryId, userId, overlay) {
     const won = rivalry.winner_id === userId;
     const isForfeit = rivalry.status === "forfeit";
     const headline = isForfeit
-      ? (won ? "🏆 You won — opponent forfeited" : "You forfeited this series")
+      ? (won ? "🏆 You won by forfeit" : "You lost by forfeit")
       : (won ? "🏆 You won the series!" : "Series over... You choked, bro.");
     statusBanner = `<div style="background:${won ? "rgba(34,197,94,0.15)" : "rgba(239,68,68,0.12)"};border-radius:12px;padding:14px;text-align:center;margin-bottom:16px;">
       <div style="font-size:20px;font-weight:900;color:${won ? "#22c55e" : "#ef4444"};">
