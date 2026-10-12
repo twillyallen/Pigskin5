@@ -2192,17 +2192,17 @@ ICONIC_MOMENTS = [
 # ═══════════════════════════════════════════════════════════════
 
 COACHES = [
-    {"name": "Vince Lombardi", "teams": ["Packers", "Washington"], "super_bowls": 2, "win_pct": 0.738, "era": "classic"},
-    {"name": "John Madden", "teams": ["Raiders"], "super_bowls": 1, "win_pct": 0.759, "min_100_games": True, "era": "classic"},
-    {"name": "Bill Belichick", "teams": ["Browns", "Patriots"], "super_bowls": 6, "win_pct": 0.656, "era": "modern"},
-    {"name": "Mike Ditka", "teams": ["Bears", "Saints"], "super_bowls": 1, "famous_quote": None, "era": "classic"},
+    {"name": "Vince Lombardi", "teams": ["Packers", "Washington"], "sb_team": "Packers", "super_bowls": 2, "win_pct": 0.738, "era": "classic"},
+    {"name": "John Madden", "teams": ["Raiders"], "sb_team": "Raiders", "super_bowls": 1, "win_pct": 0.759, "min_100_games": True, "era": "classic"},
+    {"name": "Bill Belichick", "teams": ["Browns", "Patriots"], "sb_team": "Patriots", "super_bowls": 6, "win_pct": 0.656, "era": "modern"},
+    {"name": "Mike Ditka", "teams": ["Bears", "Saints"], "sb_team": "Bears", "super_bowls": 1, "famous_quote": None, "era": "classic"},
     {"name": "Marv Levy", "teams": ["Chiefs", "Bills"], "super_bowls": 0, "consecutive_sb_losses": 4, "era": "classic"},
-    {"name": "Mike Tomlin", "teams": ["Steelers"], "super_bowls": 1, "notable": "Tripped kick returner on sideline", "era": "modern"},
+    {"name": "Mike Tomlin", "teams": ["Steelers"], "sb_team": "Steelers", "super_bowls": 1, "notable": "Tripped kick returner on sideline", "era": "modern"},
     {"name": "Jim Mora", "teams": ["Saints", "Colts"], "famous_quote": "Playoffs?! Don't talk about playoffs!", "era": "classic"},
     {"name": "Dennis Green", "teams": ["Vikings", "Cardinals"], "famous_quote": "They are who we thought they were!", "era": "modern"},
     {"name": "Herm Edwards", "teams": ["Jets", "Chiefs"], "famous_quote": "You play to win the game!", "era": "modern"},
     {"name": "Matt LaFleur", "teams": ["Packers"], "win_pct": 0.720, "era": "current"},
-    {"name": "Andy Reid", "teams": ["Eagles", "Chiefs"], "super_bowls": 3, "win_pct": 0.630, "era": "modern"},
+    {"name": "Andy Reid", "teams": ["Eagles", "Chiefs"], "sb_team": "Chiefs", "super_bowls": 3, "win_pct": 0.630, "era": "modern"},
 ]
 
 
@@ -2236,7 +2236,7 @@ RECORDS = {
     "single_season_rec_yards": {"player": "Calvin Johnson", "value": 1964, "year": 2012, "team": "Lions"},
     "single_season_points": {"player": "LaDainian Tomlinson", "value": 186, "year": 2006, "team": "Chargers"},
     "single_game_rush_yards": {"player": "Adrian Peterson", "value": 296, "year": 2007, "team": "Vikings"},
-    "career_pass_yards": {"player": "Tom Brady", "value": 89228},
+    "career_pass_yards": {"player": "Tom Brady", "value": 89214},
     "career_pass_tds": {"player": "Tom Brady", "value": 649},
     "career_rush_yards": {"player": "Emmitt Smith", "value": 18355},
     "career_rush_tds": {"player": "Emmitt Smith", "value": 164},

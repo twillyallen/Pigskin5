@@ -348,7 +348,7 @@ class HistoryGenerator(BaseGenerator):
             if coach.get("consecutive_sb_losses"):
                 q_text = f"Which head coach lost {coach['consecutive_sb_losses']} straight Super Bowls?"
             else:
-                team = coach["teams"][-1] if coach["teams"] else "his team"
+                team = coach.get("sb_team") or (coach["teams"][-1] if coach["teams"] else "his team")
                 q_text = f"Which coach led the {team} to a Super Bowl victory?"
             
             other_coaches = [c["name"] for c in COACHES if c["name"] != correct]

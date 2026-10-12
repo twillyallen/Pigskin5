@@ -203,6 +203,46 @@ export const CALENDAR = {
     { question: "Which team has more Super Bowl Losses?", choices: ["Rams", "Bills"], answer: 1 },
     ],
   },
+    "2026-10-13": { //Tuesday
+    event: "",
+    questions: [
+    { question: "Which QB was drafted #1 overall in 2007?", choices: ["Matthew Stafford", "Matt Ryan", "JaMarcus Russell", "Alex Smith"], "answer": 2},
+    { question: "Which RB has more Career Rushing Yards?", choices: ["Steven Jackson", "Barry Sanders", "Frank Gore", "Derrick Henry"], answer: 2 },
+    { question: "How many Interceptions has Jared Goff thrown in 2026?", choices: ["0", "3", "5", "7"], answer: 0 },
+    { question: "Which player has the most Special Team Return TDs in 2026?", choices: ["Myles Price", "Ameer Abdullah", "Sky Moore", "KaVontae Turpin"], "answer": 0},
+    { question: "How many rushing yards did Eric Dickerson record in their record-setting 1984 season?", choices: ["2,299", "2,269", "1,943", "2,105"], answer: 3 },
+    ],
+  },
+    "2026-10-14": { //Wednesday
+    event: "",
+    questions: [
+    { question: "True or False: Deshaun Watson has taken the most sacks this season", choices: ["True", "False"], answer: 0 },
+    { question: "Which of these was an ACTUAL NFL player?", choices: ["Kyu Blu Kelly", "Ja'Vontavious St. Germaine", "Kool Johnsonville", "Shaqavian Fant'le'"], answer: 0 },
+    { question: "Which player caught the “Immaculate Reception”?", choices: ["Rocky Bleier", "John Stallworth", "Lynn Swann", "Franco Harris"], "answer": 3},
+    { question: "Which RB has more Career Rushing Yards?", choices: ["Edgerrin James", "Adrian Peterson", "LaDainian Tomlinson", "Walter Payton"], answer: 3 },
+    { question: "Which kicker has made the most Extra Points this season?", choices: ["Tyler Bass", "Tyler Loop", "Brandon Aubrey", "Jake Bates"], answer: 3 },
+    ],
+  },
+    "2026-10-15": { //Thursday
+    event: "BroncosSeahawksTNF",
+    questions: [
+    { question: "Who Snapped the ball past Peyton Manning's face on the first play in Super Bowl XLVIII", choices: ["Ryan Harris", "Matt Paradis", "Manny Ramirez", "Chris Kuper"], answer: 2 },
+    { question: "Which QB has more Pass Touchdowns this season?", choices: ["Drew Lock", "Bo Nix", "Jarrett Stidham", "Sam Darnold"], "answer": 3 },
+    { question: "Which Seahawks defender was named Super Bowl XLVIII MVP?", choices: ["Richard Sherman", "Malcolm Smith", "Bobby Wagner", "Earl Thomas"], answer: 1 },
+    { question: "Over/Under:\nThe Seahawks have O/U 1.5 Postseason wins over the Broncos", choices: ["Over", "Under"], "answer": 0},
+    { question: "Which team did Bo Nix face in his first NFL regular-season start?", choices: ["San Diego Chargers", "Los Angeles Rams", "Seattle Seahawks", "Pittsburgh Steelers"], answer: 2 },
+    ],
+  },
+    "2026-10-16": { //Friday
+    event: "",
+    questions: [
+    { question: "Who was the head coach during Pittsburgh’s dynasty years of the 1970s?", choices: ["Bill Walsh", "Joe Gibbs", "Don Shula", "Chuck Noll"], "answer": 3},
+    { question: "Which of these was an ACTUAL NFL player?", choices: ["Ja'Quan Quartermaine", "Frank Crum", "Bresharius Johnson", "Jaqwellius Goldsworth"], answer: 1 },
+    { question: "True or False: The Chiefs have won 5 Super Bowls.", choices: ["True", "False"], answer: 1 },
+    { question: "Over/Under:\nDrake Maye has O/U 6.5 Interceptions this season", choices: ["Over", "Under"], "answer": 0},
+    { question: "Who has more tackles this season?", choices: ["Evan Williams", "Nakobe Dean", "Jordyn Brooks", "Akeem Davis-Gaither"], answer: 0 },
+    ],
+  },
 };
 
 
