@@ -55,6 +55,7 @@ export const EVENT_LOGOS = {
     "FalconsSaintsMNF" : "logos/FalconsSaintsMNF.png",
     "BuccaneersCowboysTNF": "logos/BuccaneersCowboysTNF.png",
     "BillsRamsMNF": "logos/BillsRamsMNF.png",
+    "BroncosSeahawksTNF": "logos/BroncosSeahawksTNF.png",
 };
 
 // Streak tiers
