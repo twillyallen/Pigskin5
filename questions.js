@@ -243,6 +243,56 @@ export const CALENDAR = {
     { question: "Who has more tackles this season?", choices: ["Evan Williams", "Nakobe Dean", "Jordyn Brooks", "Akeem Davis-Gaither"], answer: 0 },
     ],
   },
+    "2026-10-17": { //Saturday
+    event: "",
+    questions: [
+    { question: "Who was the Chargers’ Quarterback during the “Air Coryell” era?", choices: ["Doug Flutie", "Stan Humphries", "Dan Fouts", "Philip Rivers"], answer: 2 },
+    { question: "Guess the Career QB:\n- 67,508 Pass Yards\n- 537 Pass TDs\n- 127 INTs\n- 101.9 Passer Rating", choices: ["Peyton Manning", "Drew Brees", "Dan Marino", "Aaron Rodgers"], answer: 3 },
+    { question: "Which of these was an ACTUAL NFL player?", choices: ["Javorius Blackenstein", "Aeneas Williams", "Rashontez Quartermaine", "Hingle McCringleberry"], answer: 1 },
+    { question: "Which QB leads the league in rushing yards?", choices: ["Jalen Hurts", "Malik Willis", "Josh Allen", "Deshaun Watson"], "answer": 2 },
+    { question: "What year did the Houston Oilers officially become the Tennessee Titans?", choices: ["1997", "1999", "1996", "1995"], "answer": 1},
+    ],
+  },
+    "2026-10-18": { //Sunday
+    event: "",
+    questions: [
+    { question: "Which RB has the most Yards After Catch this season?", choices: ["Jaylen Warren", "Jahmyr Gibbs", "Ashton Jeanty", "Bijan Robinson"], "answer": 0 },
+    { question: "What was the name of the Lineman who got an ass full of Mark Sanchez in “The Butt Fumble”?", choices: ["Brandon Moore", "D’Brickshaw Ferguson", "Nick Mangold", "Austin Howard"], "answer": 0},
+    { question: "True or False: A TE has led the league in receiving yards.", choices: ["True", "False"], answer: 1 },
+    { question: "Guess the WR this season:\n- 330 Receiving Yards\n- 20.6 Yards per Catch (Leads NFL)\n- 3 Receiving TDs", choices: ["Jaxon Smith-Njigba", "Denzel Boston", "Jaylin Noel", "Matthew Golden"], answer: 1 },
+    { question: "Which player ate a W?", choices: ["Blake Bortles", "Richard Sherman", "Jameis Winston", "Jamaal Williams"], "answer": 2},
+    ],
+  },
+    "2026-10-19": { //Monday
+    event: "49ersCommandersMNF",
+    questions: [
+    { question: "Which team won the 1983 NFC Championship Game", choices: ["Washington Redskins", "San Francisco"], "answer": 0 },
+    { question: "Which Washington quarterback was MVP of Super Bowl XXII after throwing four TDs in one quarter?", choices: ["Jay Schroeder", "Doug Williams", "Joe Theismann", "Mark Rypien"], answer: 1 },
+    { question: "Over/Under 1,150.5: Brock Purdy's passing yards through Week 5?", choices: ["Over", "Under"], answer: 0 },
+    { question: "Who has more receiving yards this season?", choices: ["Terry McLaurin", "George Kittle", "Mike Evans", "Stefon Diggs"], "answer": 2 },
+    { question: "How many Interceptions has Jayden Daniels thrown this season?", choices: ["0", "4", "5", "7"], answer: 0 },
+    ],
+  },
+    "2026-10-20": { //Tuesday
+    event: "",
+    questions: [
+    { question: "OVER or UNDER: The Broncos have O/U 4.5 Super Bowl losses all-time.", choices: ["OVER", "UNDER"], answer: 0 },
+    { question: "Which of these was an ACTUAL NFL player?", choices: ["Dick Butkus", "Kayvontez Picklesworth", "Jaqwellius Gaultin", "Tennison Dunder"], answer: 0 },
+    { question: "Which player became the first in Panthers history to record 1,000 rushing and 1,000 receiving yards in the same season?", choices: ["Stephen Davis", "Christian McCaffrey", "Steve Smith Sr.", "DeAngelo Williams"], "answer": 1},
+    { question: "Which Running Back won NFL MVP in 2006?", choices: ["LaDainian Tomlinson", "Edgerrin James", "Jamal Lewis", "Shaun Alexander"], answer: 0 },
+    { question: "Guess the Career QB:\n- 27,989 Pass Yards\n- 212 Pass TDs\n- 210 INTs\n- 70.9 Passer Rating", choices: ["Terry Bradshaw", "Alex Smith", "Carson Wentz", "Baker Mayfield"], answer: 0 },
+    ],
+  },
+    "2026-10-21": { //Wednesday
+    event: "",
+    questions: [
+    { question: "", choices: ["Bill Walsh", "Joe Gibbs", "Don Shula", "Chuck Noll"], "answer": 3},
+    { question: "", choices: ["Ja'Quan Quartermaine", "Frank Crum", "Bresharius Johnson", "Jaqwellius Goldsworth"], answer: 1 },
+    { question: "", choices: ["True", "False"], answer: 1 },
+    { question: "", choices: ["Over", "Under"], "answer": 0},
+    { question: "", choices: ["Evan Williams", "Nakobe Dean", "Jordyn Brooks", "Akeem Davis-Gaither"], answer: 0 },
+    ],
+  },
 };
 
 
