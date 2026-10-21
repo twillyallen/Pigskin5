@@ -293,6 +293,16 @@ export const CALENDAR = {
     { question: "", choices: ["Evan Williams", "Nakobe Dean", "Jordyn Brooks", "Akeem Davis-Gaither"], answer: 0 },
     ],
   },
+   "2026-04-15": { //Wednesday
+    event: "",
+    questions: [
+    { question: "Who holds the NFL record for most rushing yards in a single season?", choices: ["Jonathan Taylor", "Felix Jones", "OJ Simpson", "Eric Dickerson"], answer: 3 },
+    { question: "Guess the Career TE:\n- 11,841 Rec. Yards\n- 116 Rec. TDs\n- 955 Receptions", choices: ["Jason Witten", "Antonio Gates", "Rob Gronkowski", "Frank Wycheck"], answer: 1 },
+    { question: "Who won Defensive Player of the Year in 2009?", choices: ["Darrelle Revis", "Jared Allen", "Charles Woodson", "James Harrison"], answer: 2 },
+    { question: "OVER or UNDER: The Ravens have O/U 1.5 Super Bowl victories all-time.", choices: ["OVER", "UNDER"], answer: 0 },
+    { question: "Which team was originally called the Boston Braves.", choices: ["Washington Commanders", "NY Giants", "New England Patriots", "Buffalo Bills"], answer: 0 },
+    ],
+  },
 };
 
 
