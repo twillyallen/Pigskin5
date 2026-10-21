@@ -283,7 +283,6 @@ export const CALENDAR = {
     { question: "Guess the Career QB:\n- 27,989 Pass Yards\n- 212 Pass TDs\n- 210 INTs\n- 70.9 Passer Rating", choices: ["Terry Bradshaw", "Alex Smith", "Carson Wentz", "Baker Mayfield"], answer: 0 },
     ],
   },
-
    "2026-10-21": { //Wednesday
     event: "",
     questions: [
@@ -292,6 +291,116 @@ export const CALENDAR = {
     { question: "Who won Defensive Player of the Year in 2009?", choices: ["Darrelle Revis", "Jared Allen", "Charles Woodson", "James Harrison"], answer: 2 },
     { question: "OVER or UNDER: The Ravens have O/U 1.5 Super Bowl victories all-time.", choices: ["OVER", "UNDER"], answer: 0 },
     { question: "Which team was originally called the Boston Braves.", choices: ["Washington Commanders", "NY Giants", "New England Patriots", "Buffalo Bills"], answer: 0 },
+    ],
+  },
+   "2026-10-22": { //Thursday
+    event: "PatriotsBearsTNF",
+    questions: [
+    { question: "True or False: Drake Maye and Caleb Williams were the 1st and 2nd Overall picks in the 2024 Draft.", choices: ["True", "False"], answer: 1 },
+    { question: "Which Patriots player scored their only TD in the Patriots vs Bears Super Bowl?", choices: ["Stanley Morgan", "Lin Dawson", "Irving Fryar", "Cedcric Jones"], answer: 2 },
+    { question: "Which player has more Receiving Yards in 2026?", choices: ["AJ Brown", "Rome Odunze", "Romeo Doubs", "Luther Burden"], answer: 2 },
+    { question: "Who was the Super Bowl MVP of Super Bowl XX?", choices: ["William \"The Refrigerator\" Perry", "Richard Dent", "Jim McMahon", "Walter Payton"], answer: 1 },
+    { question: "Who was the Legendary Bears head coach during their 1985 Super Bowl Championship?", choices: ["Bill Walsh", "Tom Landry", "Mike Ditka", "Don Shula"], answer: 2 },
+    ],
+  },
+   "2026-10-23": { //Friday
+    event: "",
+    questions: [
+    { question: "True or False: The Saints existed for more than 30 seasons before winning their first playoff game.", choices: ["True", "False"], answer: 0 },
+    { question: "Who leads the NFL in sacks?", choices: ["Chase Young", "Greg Rousseau", "Will Anderson Jr.", "T.J. Watt"], answer: 2 },
+    { question: "OVER or UNDER: Mike Evans has O/U 13,500 Career Scrimmage Yds.", choices: ["OVER", "UNDER"], answer: 1 },
+    { question: "Who won Offensive Rookie of the Year in 2009?", choices: ["DeShaun Foster", "Chad Johnson", "Scott Chandler", "Percy Harvin"], answer: 3 },
+    { question: "Which of these was an ACTUAL NFL player?", choices: ["Smoke Monday", "Zebrion Crankshaw", "Velociraptor Malone", "Rashontez Gaultin"], answer: 0 },
+    ],
+  },
+     "2026-10-24": { //Saturday
+    event: "",
+    questions: [
+    { question: "Which player was famous for the quote, “Ice up, son”?", choices: ["Brandon Marshall", "Jalen Ramsey", "Steve Smith Sr.", "Chad “Ochocinco” Johnson"], answer: 2 },
+    { question: "Which of these was an ACTUAL NFL player?", choices: ["Benedictus Fluttergoose", "Treqwan Tomlin", "Bub Means", "Sonja Scrowl"], answer: 2 },
+    { question: "Who won Super Bowl XXXVI?", choices: ["Patriots", "Buccaneers", "Giants", "Colts"], answer: 0 },
+    { question: "What year was the Bills' first season?", choices: ["1960", "1963", "1954", "1956"], answer: 0 },
+    { question: "Who leads the NFL in Punts this season?", choices: ["Braden Mann (Eagles)", "Jeremy Crawshaw (Broncos)", "Corey Bojorquez (Browns)", "Tress Way (Commanders)"], answer: 0 },
+    ],
+  },
+     "2026-10-25": { //Sunday
+    event: "",
+    questions: [
+    { question: "How many teams did Ryan Fitzpatrick play for?", choices: ["11", "10", "9", "7"], answer: 2 },
+    { question: "Which Vikings kicker infamously missed a potential game-winning field goal in the 1998 NFC Championship?", choices: ["Billy Cundiff", "Scott Norwood", "Gary Anderson", "Pete Stoyanovich"], answer: 2 },
+    { question: "Which QB has dealt with the most drops in 2026?", choices: ["Justin Herbert", "Drake Maye", "Matthew Stafford", "Jordan Love"], answer: 3 },
+    { question: "Which of these was an ACTUAL NFL player?", choices: ["Jermissy Drake", "Ki-Jana Carter", "Breshawn Fraul-Kipp", "Turnt Jackson"], answer: 1 },
+    { question: "Guess the 2026 RB:\n460 Rush Yards\n258 Receiving Yards\n2 Total TDs", choices: ["Bijan Robinson", "Jaylen Warren", "Bucky Irving", "Bhayshul Tuten"], answer: 1 },
+    ],
+  },
+     "2026-10-26": { //Monday
+    event: "CowboysEaglesMNF",
+    questions: [
+    { question: "What year did the Eagles and Cowboys first play each other?", choices: ["1954", "1958", "1960", "1967"], answer: 2 },
+    { question: "Who was the Cowboys' head coach when Dallas won its first Super Bowl?", choices: ["Jerry Jones", "Jimmy Johnson", "Bill Parcels", "Tom Landry"], answer: 3 },
+    { question: "Which team won the first Postseason meeting between these teams?", choices: ["Eagles", "Cowboys"], answer: 0 },
+    { question: "Over/Under:\nEmmitt Smith rushed for O/U 200 yards against Philadelphia on Halloween 1993.", choices: ["Over", "Under"], answer: 0 },
+    { question: "Who won the first-ever Eagles–Cowboys meeting in 1960?", choices: ["Philadelphia Eagles", "Dallas Cowboys"], answer: 0 },
+    ],
+  },
+     "2026-10-27": { //Tuesday
+    event: "",
+    questions: [
+    { question: "Guess the Career WR:\n- 13,113 Rec. Yards\n- 121 Rec. TDs\n- 1,047 Receptions", choices: ["Calvin Johnson", "Terry McLaurin", "Davante Adams", "Doug Baldwin"], answer: 2 },
+    { question: "True or False: The Arizona Cardinals play in the AFC West.", choices: ["True", "False"], answer: 1 },
+    { question: "Who holds the NFL record for most receiving TDs in a single season?", choices: ["Rob Gronkowski", "Randy Moss", "Terrell Owens", "Calvin Johnson"], answer: 1 },
+    { question: "Which of these was an ACTUAL NFL player?", choices: ["Jamari Thrash", "Bresharius Ash", "Markson Willowbrook", "Danny Dickinson"], answer: 0 },
+    { question: "OVER or UNDER: John Elway has O/U 2.5 Super Bowl Victories.", choices: ["OVER", "UNDER"], answer: 1 },
+    ],
+  },
+     "2026-10-28": { //Wednesday
+    event: "",
+    questions: [
+    { question: "", choices: ["", "", "", ""], answer: 3 },
+    { question: "", choices: ["", "", "", ""], answer: 1 },
+    { question: "", choices: ["", "", "", ""], answer: 2 },
+    { question: "", choices: ["", ""], answer: 0 },
+    { question: "", choices: ["", "", "", ""], answer: 0 },
+    ],
+  },
+     "2026-10-29": { //Thursday
+    event: "",
+    questions: [
+    { question: "", choices: ["", "", "", ""], answer: 3 },
+    { question: "", choices: ["", "", "", ""], answer: 1 },
+    { question: "", choices: ["", "", "", ""], answer: 2 },
+    { question: "", choices: ["", ""], answer: 0 },
+    { question: "", choices: ["", "", "", ""], answer: 0 },
+    ],
+  },
+     "2026-10-30": { //Friday
+    event: "",
+    questions: [
+    { question: "", choices: ["", "", "", ""], answer: 3 },
+    { question: "", choices: ["", "", "", ""], answer: 1 },
+    { question: "", choices: ["", "", "", ""], answer: 2 },
+    { question: "", choices: ["", ""], answer: 0 },
+    { question: "", choices: ["", "", "", ""], answer: 0 },
+    ],
+  },
+     "2026-10-31": { //Saturday
+    event: "",
+    questions: [
+    { question: "", choices: ["", "", "", ""], answer: 3 },
+    { question: "", choices: ["", "", "", ""], answer: 1 },
+    { question: "", choices: ["", "", "", ""], answer: 2 },
+    { question: "", choices: ["", ""], answer: 0 },
+    { question: "", choices: ["", "", "", ""], answer: 0 },
+    ],
+  },
+     "2026-11-01": { //Sunday
+    event: "",
+    questions: [
+    { question: "", choices: ["", "", "", ""], answer: 3 },
+    { question: "", choices: ["", "", "", ""], answer: 1 },
+    { question: "", choices: ["", "", "", ""], answer: 2 },
+    { question: "", choices: ["", ""], answer: 0 },
+    { question: "", choices: ["", "", "", ""], answer: 0 },
     ],
   },
 };

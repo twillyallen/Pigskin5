@@ -1,0 +1,138 @@
+// 15 questions of each type, generated 2026-10-21 (not dated - review before merging into questions.js)
+questions: [
+// ==================== stat_leader ====================
+    { question: "Who holds the NFL record for most career passing yards?", choices: ["Tom Brady", "Dan Marino", "John Elway", "Philip Rivers"], answer: 0 },
+    { question: "Which QB has more Career Passing Yards?", choices: ["Ben Roethlisberger", "Dan Marino", "Matthew Stafford", "Philip Rivers"], answer: 2 },
+    { question: "Which QB has more Career Passing TDs?", choices: ["Matt Ryan", "Matthew Stafford", "Philip Rivers", "Ben Roethlisberger"], answer: 2 },
+    { question: "Who led the NFL in Rushing TDs in 2012?", choices: ["LaDainian Tomlinson", "Clinton Portis", "Arian Foster", "Shaun Alexander"], answer: 2 },
+    { question: "Who holds the NFL record for most rushing yards in a single season?", choices: ["Earl Campbell", "Eric Dickerson", "Barry Sanders", "Jamal Lewis"], answer: 1 },
+    { question: "Who had more rushing yards: LeSean McCoy (2013) or Priest Holmes (2001)?", choices: ["LeSean McCoy (2013)", "Priest Holmes (2001)"], answer: 0 },
+    { question: "Who holds the NFL record for most rushing TDs in a single season?", choices: ["Jim Brown", "Adrian Peterson", "LeSean McCoy", "LaDainian Tomlinson"], answer: 3 },
+    { question: "Who led the NFL in Passing TDs in 2014?", choices: ["Trent Green", "Jake Plummer", "Andrew Luck", "Drew Bledsoe"], answer: 2 },
+    { question: "Who holds the NFL record for most receiving TDs in a single season?", choices: ["Tony Gonzalez", "Don Hutson", "Davante Adams", "Randy Moss"], answer: 3 },
+    { question: "Which WR has more Career Receiving Yards?", choices: ["Steve Smith", "Randy Moss", "Julio Jones", "Larry Fitzgerald"], answer: 3 },
+    { question: "Which QB has more Career Passing Yards?", choices: ["Philip Rivers", "John Elway", "Matthew Stafford", "Joe Flacco"], answer: 2 },
+    { question: "Who led the NFL in Passing TDs in 2011?", choices: ["Drew Brees", "Trent Green", "Drew Bledsoe", "Jake Plummer"], answer: 0 },
+    { question: "Who led the NFL in Passing TDs in 2014?", choices: ["Andrew Luck", "Drew Bledsoe", "Trent Green", "Jake Plummer"], answer: 0 },
+    
+    { question: "Who led the NFL in Passing TDs in 2020?", choices: ["Patrick Mahomes", "Dak Prescott", "Russell Wilson", "Aaron Rodgers"], answer: 3 },
+
+// ==================== true_false ====================
+    { question: "True or False: The New York Giants play in the AFC North.", choices: ["True", "False"], answer: 1 },
+    { question: "True or False: The Buccaneers were originally placed in the AFC West.", choices: ["True", "False"], answer: 0 },
+    { question: "True or False: The Texans have appeared in a Super Bowl.", choices: ["True", "False"], answer: 1 },
+    { question: "True or False: 1949 was the Browns' first season.", choices: ["True", "False"], answer: 1 },
+    { question: "True or False: The New York Jets play their home games at Allegiant Stadium.", choices: ["True", "False"], answer: 1 },
+    { question: "True or False: 1929 was the Commanders' first season.", choices: ["True", "False"], answer: 1 },
+    { question: "True or False: The Dolphins have won 3 Super Bowls.", choices: ["True", "False"], answer: 1 },
+    { question: "True or False: The Bears have won 2 Super Bowls.", choices: ["True", "False"], answer: 1 },
+    { question: "True or False: The Patriots have won 7 Super Bowls.", choices: ["True", "False"], answer: 1 },
+    { question: "True or False: The Arizona Cardinals were originally called the Chicago Cardinals.", choices: ["True", "False"], answer: 0 },
+    { question: "True or False: The Saints existed for more than 30 seasons before winning their first playoff game.", choices: ["True", "False"], answer: 0 },
+    { question: "True or False: Johnny Manziel started more than 10 career NFL games.", choices: ["True", "False"], answer: 1 },
+    { question: "True or False: The Eagles have won 3 Super Bowls.", choices: ["True", "False"], answer: 1 },
+    { question: "True or False: The Chicago Bears were originally called the Decatur Staleys.", choices: ["True", "False"], answer: 0 },
+    { question: "True or False: The Packers won the first three Super Bowls.", choices: ["True", "False"], answer: 1 },
+
+// ==================== over_under ====================
+    { question: "OVER or UNDER: The Raiders have been located in O/U 3.5 cities.", choices: ["OVER", "UNDER"], answer: 1 },
+    { question: "OVER or UNDER: Alex Smith has O/U 34,500 Career Passing Yards.", choices: ["OVER", "UNDER"], answer: 0 },
+    { question: "OVER or UNDER: The Jets have O/U 0.5 Super Bowl victories all-time.", choices: ["OVER", "UNDER"], answer: 0 },
+    { question: "OVER or UNDER: The Panthers have O/U 0.5 Super Bowl victories all-time.", choices: ["OVER", "UNDER"], answer: 1 },
+    { question: "OVER or UNDER: The Bengals have O/U 0.5 Super Bowl victories all-time.", choices: ["OVER", "UNDER"], answer: 1 },
+    { question: "OVER or UNDER: Will Fuller has O/U 3,000 Career Receiving Yards.", choices: ["OVER", "UNDER"], answer: 0 },
+    { question: "OVER or UNDER: The Bears have O/U 9.5 NFL championships (all-time).", choices: ["OVER", "UNDER"], answer: 1 },
+    { question: "OVER or UNDER: The Browns have O/U 4.5 NFL championships (all-time).", choices: ["OVER", "UNDER"], answer: 1 },
+    { question: "OVER or UNDER: Rod Smith has O/U 9,100 Career Receiving Yards.", choices: ["OVER", "UNDER"], answer: 1 },
+    { question: "OVER or UNDER: The Browns have O/U 0.5 Super Bowl victories all-time.", choices: ["OVER", "UNDER"], answer: 1 },
+    { question: "OVER or UNDER: The Cardinals have been located in O/U 2.5 cities.", choices: ["OVER", "UNDER"], answer: 0 },
+    { question: "OVER or UNDER: Antonio Gibson has O/U 20 Career Rushing TDs.", choices: ["OVER", "UNDER"], answer: 0 },
+    { question: "OVER or UNDER: The Bills have O/U 2.5 Super Bowl losses all-time.", choices: ["OVER", "UNDER"], answer: 0 },
+    { question: "OVER or UNDER: The Seahawks have O/U 0.5 Super Bowl victories all-time.", choices: ["OVER", "UNDER"], answer: 0 },
+    { question: "OVER or UNDER: The 49ers have O/U 3.5 Super Bowl victories all-time.", choices: ["OVER", "UNDER"], answer: 0 },
+
+// ==================== guess_player ====================
+    { question: "Guess the Career RB:\n- 17,395 Yards from Scrimmage\n- 4.6 Yards per Carry\n- 14,921 Rush Yards\n- 120 Rush TDs", choices: ["Jamaal Charles", "Adrian Peterson", "T.J. Yeldon", "Giovani Bernard"], answer: 1 },
+    { question: "Guess the Career RB:\n- 4.1 Yards per Carry\n- 33 Total TDs\n- 25 Rush TDs\n- 9,045 Yards from Scrimmage", choices: ["Michael Pittman", "Duce Staley", "James Allen", "Dorsey Levens"], answer: 0 },
+    { question: "Guess the Career RB:\n- 2,814 Rush Yards\n- 44 Rush TDs\n- 3.9 Yards per Carry\n- 44 Total TDs", choices: ["Garrison Hearst", "Domanick Williams", "T.J. Duckett", "Chris Wells"], answer: 2 },
+    { question: "Guess the Career QB:\n- 57,023 Pass Yards\n- 366 Pass TDs\n- 244 INTs\n- 84.1 Passer Rating", choices: ["Brett Favre", "Aaron Rodgers", "Russell Wilson", "Eli Manning"], answer: 3 },
+    { question: "Guess the Career RB:\n- 2,650 Rush Yards\n- 14 Rush TDs\n- 4.0 Yards per Carry\n- 34 Total TDs", choices: ["James Conner", "Tevin Coleman", "Matt Breida", "Jerick McKinnon"], answer: 3 },
+    { question: "Guess the Career QB:\n- 17,649 Pass Yards\n- 103 Pass TDs\n- 75 INTs\n- 80.6 Passer Rating", choices: ["Blake Bortles", "Mark Brunell", "Tyrod Taylor", "Josh Freeman"], answer: 0 },
+    
+    { question: "Guess the Career QB:\n- 27,989 Pass Yards\n- 212 Pass TDs\n- 210 INTs\n- 70.9 Passer Rating", choices: ["Kyler Murray", "Patrick Mahomes", "Steve Young", "Terry Bradshaw"], answer: 3 },
+    { question: "Guess the Career QB:\n- 35,939 Pass Yards\n- 267 Pass TDs\n- 85 INTs\n- 100.8 Passer Rating", choices: ["Jared Goff", "Josh Allen", "Terry Bradshaw", "Patrick Mahomes"], answer: 3 },
+    { question: "Guess the Career QB:\n- 33,124 Pass Yards\n- 232 Pass TDs\n- 107 INTs\n- 96.8 Passer Rating", choices: ["Jay Cutler", "Justin Herbert", "Steve Young", "Jake Plummer"], answer: 2 },
+    { question: "Guess the Career RB:\n- 3,675 Rush Yards\n- 15 Rush TDs\n- 4.3 Yards per Carry\n- 5,275 Yards from Scrimmage", choices: ["AJ Dillon", "Bilal Powell", "Matt Forte", "Antonio Gibson"], answer: 1 },
+    { question: "Guess the Career RB:\n- 5,839 Yards from Scrimmage\n- 5,096 Rush Yards\n- 64 Total TDs\n- 60 Rush TDs", choices: ["Cedric Benson", "Larry Johnson", "Brian Westbrook", "Brandon Jacobs"], answer: 3 },
+    { question: "Guess the Career TE:\n- 3,579 Rec. Yards\n- 15 Rec. TDs\n- 284 Receptions", choices: ["Bubba Franks", "Eric Ebron", "Jay Riemersma", "Kyle Pitts"], answer: 3 },
+    { question: "Guess the Career RB:\n- 2,241 Rush Yards\n- 22 Rush TDs\n- 4.0 Yards per Carry\n- 23 Total TDs", choices: ["Jerick McKinnon", "Alfred Blue", "Joique Bell", "Matt Forte"], answer: 2 },
+    { question: "Guess the Career WR:\n- 11,274 Rec. Yards\n- 58 Rec. TDs\n- 642 Receptions", choices: ["Jerry Jeudy", "A.J. Brown", "DeSean Jackson", "Gabe Davis"], answer: 2 },
+
+// ==================== franchise ====================
+    { question: "How many Super Bowls have the Denver Broncos won?", choices: ["3", "1", "5", "0"], answer: 0 },
+    { question: "What year was the Bears' first season?", choices: ["1917", "1922", "1919", "1926"], answer: 2 },
+    { question: "What year did the Colts relocate to Indianapolis?", choices: ["1980", "1984", "1988", "1986"], answer: 1 },
+    { question: "What division do the Pittsburgh Steelers play in?", choices: ["NFC East", "AFC West", "AFC East", "AFC North"], answer: 3 },
+    { question: "Which NFL team plays their home games at NRG Stadium?", choices: ["Philadelphia Eagles", "Dallas Cowboys", "Green Bay Packers", "Houston Texans"], answer: 3 },
+    { question: "Which NFL team plays their home games at Acrisure Stadium?", choices: ["Green Bay Packers", "Houston Texans", "Dallas Cowboys", "Pittsburgh Steelers"], answer: 3 },
+    { question: "What year did the Oilers relocate to Tennessee?", choices: ["1997", "2003", "2001", "1992"], answer: 0 },
+    { question: "What year was the Panthers' first season?", choices: ["1989", "1991", "1995", "2002"], answer: 2 },
+    { question: "What year did the Colts relocate to Indianapolis?", choices: ["1986", "1979", "1984", "1978"], answer: 2 },
+    
+    { question: "What year did the Rams relocate to St. Louis?", choices: ["1990", "1998", "1993", "1995"], answer: 3 },
+    { question: "What division do the Kansas City Chiefs play in?", choices: ["AFC South", "AFC West", "NFC East", "AFC East"], answer: 1 },
+    { question: "How many Super Bowls have the Chicago Bears won?", choices: ["6", "1", "2", "3"], answer: 1 },
+    { question: "Which NFL team plays their home games at MetLife Stadium?", choices: ["Buffalo Bills", "New York Jets", "Atlanta Falcons", "Houston Texans"], answer: 1 },
+    { question: "What year was the Seahawks' first season?", choices: ["1970", "1983", "1976", "1981"], answer: 2 },
+
+// ==================== history ====================
+    { question: "Who won Offensive Rookie of the Year in 2009?", choices: ["DeShaun Foster", "Chad Johnson", "Scott Chandler", "Percy Harvin"], answer: 3 },
+    { question: "Who holds the NFL single-season record for rushing touchdowns?", choices: ["LaDainian Tomlinson", "Matt Breida", "Cadillac Williams", "DeMarco Murray"], answer: 0 },
+    { question: "Who won Defensive Player of the Year in 2007?", choices: ["Earl Thomas", "Terrell Suggs", "Bob Sanders", "Jairus Byrd"], answer: 2 },
+    { question: "Which coach led the Steelers to a Super Bowl victory?", choices: ["Andy Reid", "Mike Tomlin", "John Madden", "Jim Mora"], answer: 1 },
+    { question: "How many career receiving yards does Jerry Rice have (NFL all-time record)?", choices: ["22,895", "20,900", "25,017", "24,567"], answer: 0 },
+    { question: "Who is the NFL's all-time career leader in total touchdowns?", choices: ["Ahman Green", "Marvin Jones", "Jerick McKinnon", "Jerry Rice"], answer: 3 },
+    { question: "Who won MVP in 2019?", choices: ["Colin Kaepernick", "Jameis Winston", "Lamar Jackson", "Tyrod Taylor"], answer: 2 },
+    { question: "Who holds the NFL single-season record for rushing yards?", choices: ["Eric Dickerson", "Arian Foster", "Troy Hambrick", "Dalvin Cook"], answer: 0 },
+    { question: "Who is the NFL's all-time career leader in passing touchdowns?", choices: ["Andrew Luck", "Philip Rivers", "Tom Brady", "Joe Montana"], answer: 2 },
+    { question: "Who holds the NFL single-season record for rushing yards?", choices: ["Jamaal Charles", "D'Onta Foreman", "Walter Payton", "Eric Dickerson"], answer: 3 },
+    { question: "Who won Comeback Player of the Year in 2018?", choices: ["Andrew Luck", "Cooper Kupp", "Jaylen Waddle", "Michael Crabtree"], answer: 0 },
+    { question: "Who is the NFL's all-time career leader in total touchdowns?", choices: ["James Thrash", "Jerry Rice", "Tim Brown", "Priest Holmes"], answer: 1 },
+    { question: "What overall pick number was Eli Manning drafted at?", choices: ["5", "16", "1", "11"], answer: 2 },
+    
+    { question: "Which coach said the famous quote \"They are who we thought they were!\"?", choices: ["Dennis Green", "Vince Lombardi", "Herm Edwards", "Mike Ditka"], answer: 0 },
+
+// ==================== real_player ====================
+    { question: "Which of these was an ACTUAL NFL player?", choices: ["Ezekiel Allen-Finn", "Booger McFarland", "Breshawn Hartfordshire", "Jakorious St. Germaine"], answer: 1 },
+    { question: "Which of these was an ACTUAL NFL player?", choices: ["Jermaine Nickelstein", "La'Dain Crankshaw", "Tavarius Weinstein", "Storm Duck"], answer: 3 },
+    { question: "Which of these was an ACTUAL NFL player?", choices: ["DJ Glaze", "Ozmatazz Buckshank", "Kendarious Johnson", "Quantrell Butterfield"], answer: 0 },
+    { question: "Which of these was an ACTUAL NFL player?", choices: ["Ennis Rakestraw Jr.", "Mergatroyd Skullbuster", "Benedictus Thundergoose", "Ezekiel Tomlin"], answer: 0 },
+    { question: "Which of these was an ACTUAL NFL player?", choices: ["Dequavious Gaultin", "Ifeanyi Ohalete", "La'Dain Crankshaw", "Zecharion Bonecastle"], answer: 1 },
+    { question: "Which of these was an ACTUAL NFL player?", choices: ["Kayvontez Winterbottom", "Jaqwellius Brightwater", "Quez Watkins", "Tresharius Bumbleton"], answer: 2 },
+    
+    { question: "Which of these was an ACTUAL NFL player?", choices: ["Brayquan Fairweather", "Tresharius Fettergun II", "Pisa Tinoisamoa", "Treshon Stonehammer"], answer: 2 },
+    { question: "Which of these was an ACTUAL NFL player?", choices: ["Zecharion Butterfield", "Ozmatazz Buckshank", "D'Brickashaw Ferguson", "Ezekiel Weinstein"], answer: 2 },
+    { question: "Which of these was an ACTUAL NFL player?", choices: ["Jackmerius Tacktheritrix", "Devontavious McThunderclap", "Rashaan Salaam", "Throckmorton Sketchington"], answer: 2 },
+    { question: "Which of these was an ACTUAL NFL player?", choices: ["Ezekiel Whistleblower", "La'Dain Johnsonville", "Markson Bumbleton", "BenJarvus Green-Ellis"], answer: 3 },
+    { question: "Which of these was an ACTUAL NFL player?", choices: ["Breshawn Dunder", "Ja'Quan Johnson", "Jakorious Tomlin", "Divine Deablo"], answer: 3 },
+    { question: "Which of these was an ACTUAL NFL player?", choices: ["Smoke Monday", "Zebrion Crankshaw", "Velociraptor Malone", "Rashontez Gaultin"], answer: 0 },
+    { question: "Which of these was an ACTUAL NFL player?", choices: ["La'Zekiel Winterbottom", "Dick Butkus", "Rashontez Fender", "Ventravian Martin III"], answer: 1 },
+    
+
+// ==================== evergreen ====================
+    { question: "Which player became the first in Panthers history to record 1,000 rushing and 1,000 receiving yards in the same season?", choices: ["Stephen Davis", "Christian McCaffrey", "Steve Smith Sr.", "DeAngelo Williams"], answer: 1 },
+    
+    { question: "Which Hall of Famer was nicknamed \"The Minister of Defense\"?", choices: ["Reggie White", "Michael Strahan", "Mean Joe Greene", "Lawrence Taylor"], answer: 0 },
+    { question: "Which Wide Receiver earned the nickname “Megatron”?", choices: ["Randy Moss", "Julio Jones", "Calvin Johnson", "DK Metcalf"], answer: 2 },
+    { question: "What kicker missed the potential game-winning field goal in Super Bowl XXV?", choices: ["Blair Walsh", "Scott Norwood", "Adam Vinatieri", "Lin Elliott"], answer: 1 },
+    { question: "Who is the heaviest player to throw a TD pass in NFL history at 346 lbs?", choices: ["JaMarcus Russell", "Bubba Franks", "Trey Burton", "Dontario Poe"], answer: 3 },
+    { question: "True or False: The Packers have never won a game in Buffalo.", choices: ["True", "False"], answer: 0 },
+    { question: "Which player ate a W?", choices: ["Blake Bortles", "Richard Sherman", "Jameis Winston", "Jamaal Williams"], answer: 2 },
+    { question: "Who caught the game-winning touchdown known as “The Hail Mary” from Roger Staubach?", choices: ["Michael Irvin", "Billy Joe DuPree", "Golden Richards", "Drew Pearson"], answer: 3 },
+    { question: "What year did the Chiefs draft Patrick Mahomes?", choices: ["2014", "2018", "2017", "2019"], answer: 2 },
+    
+    { question: "Which quarterback led the Buccaneers to their first Super Bowl win in 2003?", choices: ["Brad Johnson", "Shaun King", "Brian Griese", "Rich Gannon"], answer: 0 },
+    { question: "The Jets and Eagles have played each other since 1973. What year did the Jets first beat the Eagles?", choices: ["1996", "2023", "2015", "1987"], answer: 1 },
+    { question: "Which Vikings kicker infamously missed a potential game-winning field goal in the 1998 NFC Championship?", choices: ["Billy Cundiff", "Scott Norwood", "Gary Anderson", "Pete Stoyanovich"], answer: 2 },
+    { question: "What year did the Houston Oilers officially become the Tennessee Titans?", choices: ["1997", "1999", "1996", "1995"], answer: 1 },
+]
