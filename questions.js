@@ -283,17 +283,8 @@ export const CALENDAR = {
     { question: "Guess the Career QB:\n- 27,989 Pass Yards\n- 212 Pass TDs\n- 210 INTs\n- 70.9 Passer Rating", choices: ["Terry Bradshaw", "Alex Smith", "Carson Wentz", "Baker Mayfield"], answer: 0 },
     ],
   },
-    "2026-10-21": { //Wednesday
-    event: "",
-    questions: [
-    { question: "", choices: ["Bill Walsh", "Joe Gibbs", "Don Shula", "Chuck Noll"], "answer": 3},
-    { question: "", choices: ["Ja'Quan Quartermaine", "Frank Crum", "Bresharius Johnson", "Jaqwellius Goldsworth"], answer: 1 },
-    { question: "", choices: ["True", "False"], answer: 1 },
-    { question: "", choices: ["Over", "Under"], "answer": 0},
-    { question: "", choices: ["Evan Williams", "Nakobe Dean", "Jordyn Brooks", "Akeem Davis-Gaither"], answer: 0 },
-    ],
-  },
-   "2026-04-15": { //Wednesday
+
+   "2026-10-21": { //Wednesday
     event: "",
     questions: [
     { question: "Who holds the NFL record for most rushing yards in a single season?", choices: ["Jonathan Taylor", "Felix Jones", "OJ Simpson", "Eric Dickerson"], answer: 3 },
