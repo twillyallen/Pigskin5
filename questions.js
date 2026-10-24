@@ -298,7 +298,7 @@ export const CALENDAR = {
     questions: [
     { question: "True or False: Drake Maye and Caleb Williams were the 1st and 2nd Overall picks in the 2024 Draft.", choices: ["True", "False"], answer: 1 },
     { question: "Which Patriots player scored their only TD in the Patriots vs Bears Super Bowl?", choices: ["Stanley Morgan", "Lin Dawson", "Irving Fryar", "Cedcric Jones"], answer: 2 },
-    { question: "Which player has more Receiving Yards in 2026?", choices: ["AJ Brown", "Rome Odunze", "Romeo Doubs", "Luther Burden"], answer: 2 },
+    { question: "Which player has more Receiving Yards in 2026?", choices: ["AJ Brown", "Rome Odunze", "Romeo Doubs", "Luther Burden"], answer: 3 },
     { question: "Who was the Super Bowl MVP of Super Bowl XX?", choices: ["William \"The Refrigerator\" Perry", "Richard Dent", "Jim McMahon", "Walter Payton"], answer: 1 },
     { question: "Who was the Legendary Bears head coach during their 1985 Super Bowl Championship?", choices: ["Bill Walsh", "Tom Landry", "Mike Ditka", "Don Shula"], answer: 2 },
     ],
