@@ -326,7 +326,7 @@ export const CALENDAR = {
      "2026-10-25": { //Sunday
     event: "",
     questions: [
-    { live: true, question: "Who leads the NFL in scrimmage yards?", choices: [] },
+    { live: true, question: "Who leads the NFL in scrimmage yards?", choices: ["Bijan Robinson", "Jonathan Taylor", "Jahmyr Gibbs", "Jaylen Warren"], answer: 0 },
     { live: true, question: "OVER or UNDER: PLAYER NAME has O/U LINE sacks.", choices: [] },
     { question: "True or False: Brett Favre was originally drafted by the Green Bay Packers.", choices: ["True", "False"], answer: 1 },
     { question: "Which NFL team plays their home games at Caesars Superdome?", choices: ["New Orleans Saints", "Las Vegas Raiders", "Dallas Cowboys", "Detroit Lions"], answer: 0 },
