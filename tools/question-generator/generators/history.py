@@ -259,10 +259,18 @@ class HistoryGenerator(BaseGenerator):
                     if c["name"] != correct and c.get("era", "modern") in valid_eras]
 
         elif award in ["Defensive Player of the Year", "Defensive Rookie of the Year"]:
-            pool = [
-                p[0] for p in DEFENSIVE_PLAYERS
+            # DEFENSIVE_PLAYERS is auto-built and deep (200+), so sample from the
+            # most notable defenders of the era rather than the whole list
+            def _notability(p):
+                s = p[2]
+                return (s.get("dpoy", 0) * 50 + s.get("droy", 0) * 20 + s.get("sacks", 0)
+                        + 2 * s.get("interceptions", 0) + s.get("tackles", 0) / 20)
+            relevant = [
+                p for p in DEFENSIVE_PLAYERS
                 if p[0] != correct and _is_relevant(p, year_int)
             ]
+            relevant.sort(key=_notability, reverse=True)
+            pool = [p[0] for p in relevant[:15]]
 
         elif award == "Offensive Rookie of the Year":
             # Rookies are always "of their era" — filter offensive skill players by year

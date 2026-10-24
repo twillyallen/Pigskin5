@@ -13,7 +13,7 @@ export const REMINDERS = {
   2: {title: "Achievements!", message: "Click on your profile to view your achievements!"}, // Tuesday
   3: {title: "Share your score!", message: "Press share. Show off your ball knowledge!"}, // Wednesday
   4: null, // Thursday
-  5: null, // Friday
+  5: {title: "Challenge your Rivals!", message: "Click a Player Card, or send a link!\nProve you know more ball!"}, // Friday
   6: null, // Saturday
 };
 

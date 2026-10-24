@@ -59,6 +59,7 @@ function _buildPool(base, ...sources) {
       const qs = isObj ? entry.questions ?? [] : entry;
       for (const q of qs) {
         if (!q?.question || !Array.isArray(q.choices) || q.choices.length !== 4) continue;
+        if (q.live) continue; // current-season stat questions date quickly
         if (seen.has(q.question)) continue;
         if (!_isEvergreen(q)) continue;
         seen.add(q.question);

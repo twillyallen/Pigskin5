@@ -1,8 +1,113 @@
+// ╔═══════════════════════════════════════════════════════════════════════╗
+// ║ LIVE QUESTION TEMPLATES ── START                                      ║
+// ║ The generator keeps everything between START and END exactly as it   ║
+// ║ is (including your edits) every time it rewrites this file.          ║
+// ╚═══════════════════════════════════════════════════════════════════════╝
+//
+// HOW TO USE
+//   Copy a line into questions.js under a date. Replace PLAYER NAME and
+//   TEAM; leave LINE as-is. Leave `answer` OUT. That's what makes it live.
+//   choices: []     → filled with 4 choices automatically
+//   choices: [...]  → your choices kept, only the answer is filled
+//   Stats count every game finished by fill day (the day before the quiz).
+//   Check before pushing:  py fill_live_questions.py --check
+//
+// ── 1. NFL LEADER (anyone in the league) ─────────────────────────────────
+{ live: true, question: "Who leads the NFL in passing yards?", choices: [] },
+{ live: true, question: "Who leads the NFL in passing TDs?", choices: [] },
+{ live: true, question: "Who leads the NFL in interceptions thrown?", choices: [] },
+{ live: true, question: "Who leads the NFL in rushing yards?", choices: [] },
+{ live: true, question: "Who leads the NFL in rushing TDs?", choices: [] },
+{ live: true, question: "Who leads the NFL in receptions?", choices: [] },
+{ live: true, question: "Who leads the NFL in receiving yards?", choices: [] },
+{ live: true, question: "Who leads the NFL in receiving TDs?", choices: [] },
+{ live: true, question: "Who leads the NFL in scrimmage yards?", choices: [] },
+{ live: true, question: "Who leads the NFL in sacks?", choices: [] },
+{ live: true, question: "Who leads the NFL in interceptions?", choices: [] },
+{ live: true, question: "Who leads the NFL in tackles?", choices: [] },
+{ live: true, question: "Who leads the NFL in field goals made?", choices: [] },
+//
+// ── 2. POSITION LEADER (only that position) ──────────────────────────────
+{ live: true, question: "Which QB has the most rushing yards?", choices: [] },
+{ live: true, question: "Which QB has the most rushing TDs?", choices: [] },
+{ live: true, question: "Which running back has the most receptions?", choices: [] },
+{ live: true, question: "Which running back has the most receiving yards?", choices: [] },
+{ live: true, question: "Which wide receiver has the most rushing yards?", choices: [] },
+{ live: true, question: "Which tight end has the most receptions?", choices: [] },
+{ live: true, question: "Which tight end has the most receiving yards?", choices: [] },
+{ live: true, question: "Which tight end has the most receiving TDs?", choices: [] },
+//
+// ── 3. ROOKIE LEADER (this season's rookies only) ────────────────────────
+{ live: true, question: "Which rookie QB has the most passing yards?", choices: [] },
+{ live: true, question: "Which rookie QB has the most passing TDs?", choices: [] },
+{ live: true, question: "Which rookie running back has the most rushing yards?", choices: [] },
+{ live: true, question: "Which rookie running back has the most scrimmage yards?", choices: [] },
+{ live: true, question: "Which rookie wide receiver has the most receptions?", choices: [] },
+{ live: true, question: "Which rookie wide receiver has the most receiving yards?", choices: [] },
+{ live: true, question: "Which rookie tight end has the most receiving yards?", choices: [] },
+{ live: true, question: "Which rookie defender has the most sacks?", choices: [] },
+{ live: true, question: "Which rookie defender has the most tackles?", choices: [] },
+{ live: true, question: "Which rookie has the most scrimmage yards?", choices: [] },
+//
+// ── 4. LEADER, YOUR CHOICES (if the real leader isn't listed on fill day,
+//       it replaces your lowest choice) ────────────────────────────────────
+{ live: true, question: "Who leads the NFL in sacks?", choices: ["PLAYER NAME", "PLAYER NAME", "PLAYER NAME", "PLAYER NAME"] },
+//
+// ── 5. HEAD-TO-HEAD (choices REQUIRED: 2 to 4 players) ───────────────────
+{ live: true, question: "Which player has more passing yards?", choices: ["PLAYER NAME", "PLAYER NAME", "PLAYER NAME", "PLAYER NAME"] },
+{ live: true, question: "Which player has more rushing yards?", choices: ["PLAYER NAME", "PLAYER NAME", "PLAYER NAME", "PLAYER NAME"] },
+{ live: true, question: "Which player has more receiving yards?", choices: ["PLAYER NAME", "PLAYER NAME", "PLAYER NAME", "PLAYER NAME"] },
+{ live: true, question: "Which player has more sacks?", choices: ["PLAYER NAME", "PLAYER NAME"] },
+//
+// ── 6. EXACT NUMBER (one player) ─────────────────────────────────────────
+{ live: true, question: "How many passing yards does PLAYER NAME have?", choices: [] },
+{ live: true, question: "How many passing TDs does PLAYER NAME have?", choices: [] },
+{ live: true, question: "How many rushing yards does PLAYER NAME have?", choices: [] },
+{ live: true, question: "How many receiving yards does PLAYER NAME have?", choices: [] },
+{ live: true, question: "How many receptions does PLAYER NAME have?", choices: [] },
+{ live: true, question: "How many sacks does PLAYER NAME have?", choices: [] },
+//
+// ── 7. OVER / UNDER (LINE is set from real stats on fill day, 10-25% above
+//       or below the real total. Or type your own number, ending in .5)
+{ live: true, question: "OVER or UNDER: PLAYER NAME has O/U LINE passing yards.", choices: [] },
+{ live: true, question: "OVER or UNDER: PLAYER NAME has O/U LINE passing TDs.", choices: [] },
+{ live: true, question: "OVER or UNDER: PLAYER NAME has O/U LINE rushing yards.", choices: [] },
+{ live: true, question: "OVER or UNDER: PLAYER NAME has O/U LINE receiving yards.", choices: [] },
+{ live: true, question: "OVER or UNDER: PLAYER NAME has O/U LINE sacks.", choices: [] },
+//
+// ── 8. TEAMS (TEAM = nickname: Cowboys, 49ers, Chiefs...) ────────────────
+{ live: true, question: "What is the TEAM' record?", choices: [] },
+{ live: true, question: "Which team has scored the most points?", choices: [] },
+{ live: true, question: "Which team has allowed the fewest points?", choices: [] },
+{ live: true, question: "Which team has the best point differential?", choices: [] },
+// "best record" / "worst record" work too, but ties for first are common
+// and a tie can't be filled. Use them late in the season, if at all:
+{ live: true, question: "Which team has the best record?", choices: [] },
+//
+// ╔═══════════════════════════════════════════════════════════════════════╗
+// ║ LIVE QUESTION TEMPLATES ── END                                        ║
+// ╚═══════════════════════════════════════════════════════════════════════╝
 
 // ═══════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════════
+// ══════════════════════GENERATED QUESTIONS══════════════════
+// ═══════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════════
 // AUTO-GENERATED by Pigskin5 Question Generator
-// Generated: 2026-10-21 16:19
-// Days: 7
+// Generated: 2026-10-24 09:43
+// Days: 1
 // ═══════════════════════════════════════════════════════════
 // REVIEW CHECKLIST:
 //   [ ] Spot-check 5 random answers for accuracy
@@ -11,73 +116,10 @@
 //   [ ] Merge into your main questions.js CALENDAR object
 // ═══════════════════════════════════════════════════════════
 
-    "2026-10-27": { //Tuesday
+    "2026-10-24": { //TestBatch
     event: "",
     questions: [
-    { question: "True or False: The Arizona Cardinals play in the NFC West.", choices: ["True", "False"], answer: 0 },
-    { question: "How many Super Bowls have the Green Bay Packers won?", choices: ["2", "1", "4", "7"], answer: 2 },
-    { question: "OVER or UNDER: The Patriots have O/U 6.5 Super Bowl victories all-time.", choices: ["OVER", "UNDER"], answer: 1 },
-    { question: "Which of these was an ACTUAL NFL player?", choices: ["Jamari Thrash", "Bresharius Ashcastle", "Markson Willowbrook", "Danny Picklesworth"], answer: 0 },
-    { question: "Guess the Career WR:\n- 13,703 Rec. Yards\n- 66 Rec. TDs\n- 914 Receptions", choices: ["Julio Jones", "Golden Tate", "Courtland Sutton", "Alshon Jeffery"], answer: 0 },
-    ],
-  },
-    "2026-10-28": { //Wednesday
-    event: "",
-    questions: [
-    { question: "What year did the Rams relocate to Los Angeles?", choices: ["2016", "2020", "2014", "2018"], answer: 0 },
-    { question: "How many passing yards did Peyton Manning record in their record-setting 2013 season?", choices: ["5,799", "5,853", "5,022", "5,477"], answer: 3 },
-    { question: "What is the oldest continuously running franchise in NFL history, dating back to 1898?", choices: ["Packers", "Bears", "Giants", "Cardinals"], answer: 3 },
-    { question: "True or False: The Cowboys have won 6 Super Bowls.", choices: ["True", "False"], answer: 1 },
-    { question: "OVER or UNDER: John Elway has O/U 2.5 Super Bowl Victories.", choices: ["OVER", "UNDER"], answer: 1 },
-    ],
-  },
-    "2026-10-29": { //Thursday
-    event: "",
-    questions: [
-    { question: "Who is the Arizona Cardinals' all-time leader in passing yards?", choices: ["Jim Hart", "Neil Lomax", "Jake Plummer", "Kyler Murray"], answer: 0 },
-    { question: "Which of these was an ACTUAL NFL player?", choices: ["Deontarius Pennywhistle", "Ladel Nickelstein", "De'Anthony Thomas", "Trevontay Johnson"], answer: 2 },
-    { question: "Guess the Career RB:\n- 54 Total TDs\n- 4.1 Yards per Carry\n- 50 Rush TDs\n- 9,015 Rush Yards", choices: ["Eric Dickerson", "Curtis Martin", "Amos Zereoue", "Charlie Garner"], answer: 1 },
-    { question: "OVER or UNDER: Joique Bell has O/U 2,000 Career Rushing Yards.", choices: ["OVER", "UNDER"], answer: 0 },
-    { question: "True or False: The Chicago Bears were originally called the Decatur Staleys.", choices: ["True", "False"], answer: 0 },
-    ],
-  },
-    "2026-10-30": { //Friday
-    event: "",
-    questions: [
-    { question: "Who led the NFL in Passing Yards in 2021?", choices: ["Patrick Mahomes", "Tom Brady", "Joe Burrow", "Drew Brees"], answer: 1 },
-    { question: "True or False: Joe Montana has won 4 Super Bowls.", choices: ["True", "False"], answer: 0 },
-    { question: "Which player caught the game-winning play in the \"Minneapolis Miracle\"?", choices: ["Evan Engram", "Antonio Brown", "Stefon Diggs", "Benjamin Watson"], answer: 2 },
-    { question: "Guess the Career WR:\n- 4,370 Rec. Yards\n- 21 Rec. TDs\n- 300 Receptions", choices: ["Ike Hilliard", "Marvin Harrison", "David Patten", "Keyshawn Johnson"], answer: 2 },
-    { question: "Which of these was an ACTUAL NFL player?", choices: ["Fredrick Thundergood", "L'Carpetron Dookmarriot", "Storm Duck", "Ja'Quan Willowbrook"], answer: 2 },
-    ],
-  },
-    "2026-10-31": { //Saturday
-    event: "",
-    questions: [
-    { question: "OVER or UNDER: The Rams have been located in O/U 2.5 cities.", choices: ["OVER", "UNDER"], answer: 0 },
-    { question: "Who had more passing yards: Tom Brady (2007) or Drew Brees (2016)?", choices: ["Tom Brady (2007)", "Drew Brees (2016)"], answer: 1 },
-    { question: "True or False: The Colts have won 3 Super Bowls.", choices: ["True", "False"], answer: 1 },
-    { question: "Which of these was an ACTUAL NFL player?", choices: ["Johnson Weinstein", "Tresharius Quartermaine", "Jackrabbit Jenkins", "Desharious Van Der Berg"], answer: 2 },
-    { question: "Guess the Career RB:\n- 4.5 Yards per Carry\n- 10,254 Yards from Scrimmage\n- 8,129 Rush Yards\n- 66 Rush TDs", choices: ["Melvin Gordon", "Joe Mixon", "Mark Ingram", "Gus Edwards"], answer: 2 },
-    ],
-  },
-    "2026-11-01": { //Sunday
-    event: "",
-    questions: [
-    { question: "How many career rushing yards does Emmitt Smith have (NFL all-time record)?", choices: ["17,238", "19,315", "18,355", "16,789"], answer: 2 },
-    { question: "True or False: 1927 was the Lions' first season.", choices: ["True", "False"], answer: 1 },
-    { question: "Which of these was an ACTUAL NFL player?", choices: ["Mossis Madu", "Jermaine Blackenstein", "Rashontez Gaultin", "Quandavious Bumbershoot"], answer: 0 },
-    { question: "Which NFL team plays their home games at Bank of America Stadium?", choices: ["Las Vegas Raiders", "Buffalo Bills", "Tampa Bay Buccaneers", "Carolina Panthers"], answer: 3 },
-    { question: "Guess the Career WR:\n- 13,295 Rec. Yards\n- 85 Rec. TDs\n- 1,006 Receptions", choices: ["DeAndre Hopkins", "Percy Harvin", "Courtland Sutton", "Odell Beckham Jr."], answer: 0 },
-    ],
-  },
-    "2026-11-02": { //Monday
-    event: "",
-    questions: [
-    { question: "Which of these was an ACTUAL NFL player?", choices: ["Shakiraquan T.G.I.F. Carter", "Zackson Butterfield", "Sofia Picklesworth", "Lousaka Polite"], answer: 3 },
-    { question: "How many Super Bowls have the New York Giants won?", choices: ["4", "3", "5", "2"], answer: 0 },
-    { question: "In what season did the \"Helmet Catch\" occur?", choices: ["2010", "2007", "2004", "2008"], answer: 1 },
-    { question: "OVER or UNDER: The Steelers have O/U 3.5 Super Bowl victories all-time.", choices: ["OVER", "UNDER"], answer: 0 },
-    { question: "Guess the Career QB:\n- 46,252 Pass Yards\n- 294 Pass TDs\n- 187 INTs\n- 87.9 Passer Rating", choices: ["Jared Goff", "Kirk Cousins", "Ryan Fitzpatrick", "Carson Palmer"], answer: 3 },
+    { question: "True or False: Tom Brady has more division titles than the entire Jets franchise has in the Super Bowl era.", choices: ["True", "False"], answer: 0 },
+    { question: "True or False: Brett Favre was originally drafted by the Green Bay Packers.", choices: ["True", "False"], answer: 1 },
     ],
   },

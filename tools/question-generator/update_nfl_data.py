@@ -26,6 +26,7 @@ Data source: nflverse (CC-BY-SA 4.0)
 import argparse
 import sys
 import json
+import re
 from datetime import datetime
 from pathlib import Path
 from collections import defaultdict
@@ -423,6 +424,137 @@ def build_season_leaders(stats_df: pd.DataFrame) -> dict:
     return leaders
 
 
+def _defensive_position(pos: str, sacks: float) -> str:
+    """Collapse nflverse defensive positions into Pigskin5's EDGE/DT/LB/CB/S."""
+    if pos in ("DE",):
+        return "EDGE"
+    if pos in ("OLB",):
+        return "EDGE" if sacks >= 30 else "LB"
+    if pos in ("DT", "NT", "DL"):
+        return "DT"
+    if pos in ("LB", "ILB", "MLB"):
+        return "LB"
+    if pos in ("S", "FS", "SS", "SAF"):
+        return "S"
+    return "CB"
+
+
+def build_career_defense(stats_df: pd.DataFrame, award_counts: dict) -> list[tuple]:
+    """
+    Build DEFENSIVE_PLAYERS list from nflverse data.
+
+    Includes notable defenders (sacks / INTs / tackle volume over MIN_DEFENSE)
+    plus every DPOY/DROY winner. Tackles are only used for inclusion, never
+    stored: nflverse counts them from play-by-play and they don't match the
+    official totals. Legends and hand-kept extras are merged on afterwards.
+    """
+    print("🛡️  Building defensive career stats...")
+
+    def_df = stats_df[stats_df['position_group'].isin(['DL', 'LB', 'DB'])].copy()
+    def_df['tackles'] = def_df['def_tackles_solo'] + def_df['def_tackle_assists']
+    def_df = def_df.sort_values('season')
+
+    career = def_df.groupby(['player_id', 'player_display_name']).agg(
+        sacks=('def_sacks', 'sum'),
+        interceptions=('def_interceptions', 'sum'),
+        tackles=('tackles', 'sum'),
+        position=('position', 'last'),
+        seasons=('season', lambda x: sorted(x.unique().tolist())),
+        teams=('recent_team', lambda x: list(dict.fromkeys(t for t in x if pd.notna(t)))),
+    ).reset_index()
+    career['name'] = career['player_display_name'].map(lambda n: DEFENSIVE_NAME_ALIASES.get(n, n))
+
+    notable = (
+        (career['sacks'] >= MIN_DEFENSE['sacks'])
+        | (career['interceptions'] >= MIN_DEFENSE['interceptions'])
+        | (career['tackles'] >= MIN_DEFENSE['tackles'])
+        | career['name'].isin(award_counts.keys())
+        | career['name'].isin(DEFENSIVE_OVERLAY.keys())
+    )
+    career = career[notable]
+
+    abbrev_to_name = _team_abbrev_map()
+    by_name = {}
+    for _, row in career.iterrows():
+        name = row['name']
+        sacks = float(row['sacks'])
+        ints = int(row['interceptions'])
+        stat_dict = {}
+        if sacks >= 10:
+            stat_dict["sacks"] = int(sacks) if sacks == int(sacks) else sacks
+        if ints >= 10 or not stat_dict:
+            stat_dict["interceptions"] = ints
+        stat_dict.update(award_counts.get(name, {}))
+
+        player = (
+            name,
+            _defensive_position(row['position'], sacks),
+            stat_dict,
+            classify_era(row['seasons']),
+            [abbrev_to_name.get(t, t) for t in row['teams']],
+        )
+        # Common names collide (two Chris Joneses, two Justin Smiths...):
+        # keep whichever of them had the bigger career.
+        if name not in by_name or _defense_score(player) > _defense_score(by_name[name]):
+            by_name[name] = player
+
+    result = list(by_name.values())
+    print(f"   ✅ {len(result)} defenders built")
+    return result
+
+
+def _defense_score(player: tuple) -> float:
+    """Rough notability score used for de-duping and sorting defenders."""
+    s = player[2]
+    return (s.get('dpoy', 0) * 50 + s.get('droy', 0) * 20
+            + s.get('sacks', 0) + 2 * s.get('interceptions', 0) + s.get('tackles', 0) / 20)
+
+
+def merge_defense(players: list[tuple]) -> list[tuple]:
+    """Apply DEFENSIVE_OVERLAY fixes and add DEFENSIVE_LEGENDS (legends win outright)."""
+    merged = {p[0]: p for p in players}
+    for name, fixes in DEFENSIVE_OVERLAY.items():
+        if name not in merged:
+            continue
+        pname, pos, stats, era, teams = merged[name]
+        stats = dict(stats)
+        for k, v in fixes.items():
+            if k == "era":
+                era = v
+            elif k == "teams":
+                teams = v
+            elif k == "position":
+                pos = v
+            else:
+                stats[k] = v
+        merged[name] = (pname, pos, stats, era, teams)
+    for legend in DEFENSIVE_LEGENDS:
+        merged[legend[0]] = legend
+    return sorted(merged.values(), key=_defense_score, reverse=True)
+
+
+def load_defensive_awards(existing_file: Path | None) -> dict:
+    """
+    Count DPOY/DROY wins per player from the curated SEASON_LEADERS in the
+    existing nfl_data.py, so the defensive list picks up new award winners
+    as soon as they're added there.
+    """
+    if not existing_file or not existing_file.exists():
+        return {}
+    import importlib.util
+    spec = importlib.util.spec_from_file_location("existing_nfl_data", existing_file)
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+
+    counts = defaultdict(dict)
+    for data in module.SEASON_LEADERS.values():  # last definition = curated block
+        for award in ("dpoy", "droy"):
+            if award in data:
+                winner = data[award]
+                counts[winner][award] = counts[winner].get(award, 0) + 1
+    return dict(counts)
+
+
 # ─── HELPER FUNCTIONS ────────────────────────────────────────────────────────
 
 def _get_team_history(stats_df: pd.DataFrame, rosters_df: pd.DataFrame) -> dict:
@@ -540,6 +672,64 @@ PRE_NFLVERSE_TES = [
 ]
 
 
+# ─── DEFENSE (hand-kept pieces) ─────────────────────────────────────────────
+# Defenders are auto-built from nflverse sacks/INTs; these fill the gaps.
+
+# Pre-1999 legends. These REPLACE any nflverse entry with the same name,
+# since nflverse only has the tail end of careers like Bruce Smith's.
+DEFENSIVE_LEGENDS = [
+    ("Lawrence Taylor", "LB", {"sacks": 132.5, "dpoy": 3}, "classic", ["Giants"]),
+    ("Reggie White", "DE", {"sacks": 198}, "classic", ["Eagles", "Packers", "Panthers"]),
+    ("Bruce Smith", "DE", {"sacks": 200, "dpoy": 2}, "classic", ["Bills", "Commanders"]),
+    ("Derrick Thomas", "LB", {"sacks": 126.5}, "classic", ["Chiefs"]),
+    ("Deion Sanders", "CB", {"interceptions": 53, "dpoy": 1}, "classic", ["Falcons", "49ers", "Cowboys", "Commanders", "Ravens"]),
+    ("Rod Woodson", "CB", {"interceptions": 71, "dpoy": 1}, "classic", ["Steelers", "49ers", "Ravens", "Raiders"]),
+    ("Mike Singletary", "LB", {"tackles": 1488, "dpoy": 2}, "classic", ["Bears"]),
+    ("Ronnie Lott", "S", {"interceptions": 63}, "classic", ["49ers", "Raiders", "Jets"]),
+    ("Junior Seau", "LB", {"tackles": 1524}, "classic", ["Chargers", "Dolphins", "Patriots"]),
+    ("Cortez Kennedy", "DT", {"sacks": 58, "dpoy": 1}, "classic", ["Seahawks"]),
+    ("Charles Haley", "EDGE", {"sacks": 100.5}, "classic", ["49ers", "Cowboys"]),
+    ("Kevin Greene", "EDGE", {"sacks": 160}, "classic", ["Rams", "Steelers", "Panthers", "49ers"]),
+    ("Dexter Manley", "DE", {"sacks": 97.5}, "classic", ["Commanders", "Cardinals", "Buccaneers"]),
+    ("Howie Long", "DE", {"sacks": 84}, "classic", ["Raiders"]),
+    ("Randy White", "DT", {"sacks": 111}, "classic", ["Cowboys"]),
+]
+
+# Overrides merged onto nflverse-built defenders (any stat, plus "era",
+# "teams", "position"). Anyone listed here is ALWAYS included, even below
+# MIN_DEFENSE — use {} to force in a star the thresholds miss (shutdown
+# corners rarely rack up INTs). Also use for pre-1999 truncation, official
+# tackle totals for RETIRED players, and honors nflverse doesn't track.
+# DPOY/DROY counts come from the curated SEASON_LEADERS automatically —
+# don't add them here.
+DEFENSIVE_OVERLAY = {
+    "Ray Lewis":       {"sacks": 41.5, "interceptions": 31, "tackles": 2059, "era": "modern"},  # debuted 1996
+    "Charles Woodson": {"interceptions": 65, "era": "modern"},             # debuted 1998
+    "Champ Bailey":    {"era": "modern"},
+    "Patrick Willis":  {"tackles": 950, "all_pro": 5},
+    "Brian Urlacher":  {"tackles": 1361},
+    "Luke Kuechly":    {"tackles": 1092},
+    "NaVorro Bowman":  {"tackles": 766},
+    "Brian Cushing":   {"tackles": 664},
+    "Aaron Donald":    {"position": "DT"},
+    "Chris Jones":     {"position": "DT"},
+    # Stars below the thresholds
+    "Darrelle Revis":   {},
+    "Jalen Ramsey":     {},
+    "Jairus Byrd":      {},
+    "Aidan Hutchinson": {},
+}
+
+# nflverse display name -> name used in Pigskin5 (must match SEASON_LEADERS awards)
+DEFENSIVE_NAME_ALIASES = {
+    "Shaquille Leonard": "Darius Leonard",
+}
+
+# Inclusion bar for auto-built defenders. Set high on purpose: these names
+# become DPOY/DROY distractors, so they should be recognizable.
+MIN_DEFENSE = {"sacks": 60, "interceptions": 30, "tackles": 800}
+
+
 # ─── MANUAL STAT CORRECTIONS ────────────────────────────────────────────────
 # Players whose nflverse stats are incomplete due to pre-1999 seasons.
 # These override nflverse-derived career totals after the pipeline runs.
@@ -554,6 +744,9 @@ MANUAL_STAT_CORRECTIONS = {
     "Vinny Testaverde": {"pass_yards": 46233, "pass_tds": 275, "ints": 267, "passer_rating": 75.6, "era": "classic"},
     "Brad Johnson":     {"pass_yards": 29054, "pass_tds": 166, "ints": 114, "passer_rating": 84.5, "era": "classic"},
     "Kurt Warner":      {"pass_yards": 32344, "pass_tds": 208, "ints": 128, "passer_rating": 93.7},
+
+    # ── Official totals where nflverse play-by-play sums drift slightly ──────
+    "Ben Roethlisberger": {"pass_yards": 64088},
 
     # ── RBs with pre-1999 seasons ──────────────────────────────────────────
     "Priest Holmes":    {"rush_yards": 8172,  "rush_tds": 91,  "ypc": 4.6,  "era": "modern", "teams": ["Ravens", "Chiefs"]},
@@ -575,7 +768,16 @@ MANUAL_STAT_CORRECTIONS = {
 }
 
 
-def apply_stat_corrections(players: list[tuple]) -> list[tuple]:
+def _correction_position(corrections: dict) -> str:
+    """Guess which position list a correction belongs to from its stat keys."""
+    if "pass_yards" in corrections:
+        return "QB"
+    if "rush_yards" in corrections:
+        return "RB"
+    return "WR"
+
+
+def apply_stat_corrections(players: list[tuple], position: str) -> list[tuple]:
     """Override nflverse-derived stats with manually verified career totals."""
     result = []
     for p in players:
@@ -592,17 +794,16 @@ def apply_stat_corrections(players: list[tuple]) -> list[tuple]:
                     stats[k] = v
         result.append((name, pos, stats, era, teams))
 
-    # Add any entries in corrections that weren't in nflverse at all
+    # Add entries that weren't in nflverse at all — but only to the list for
+    # their own position (otherwise Randy Moss ends up in QUARTERBACKS).
     existing_names = {p[0] for p in result}
     for name, corrections in MANUAL_STAT_CORRECTIONS.items():
-        if name not in existing_names:
-            pos_guess = "WR" if "rec_yards" in corrections and "rush_yards" not in corrections else \
-                        "RB" if "rush_yards" in corrections else "QB"
-            era = corrections.pop("era", "modern") if "era" in corrections else "modern"
-            teams = corrections.pop("teams", []) if "teams" in corrections else []
-            # re-read since we may have popped
-            corrections = {k: v for k, v in MANUAL_STAT_CORRECTIONS[name].items() if k not in ("era", "teams")}
-            result.append((name, pos_guess, corrections, era, teams))
+        if name in existing_names or _correction_position(corrections) != position:
+            continue
+        era = corrections.get("era", "modern")
+        teams = corrections.get("teams", [])
+        stats = {k: v for k, v in corrections.items() if k not in ("era", "teams")}
+        result.append((name, position, stats, era, teams))
 
     return result
 
@@ -699,12 +900,37 @@ def merge_with_legends(nflverse_players: list[tuple], legends: list[tuple]) -> l
     return merged
 
 
-def generate_output(qbs, rbs, wrs, tes, season_leaders, 
+def generate_output(qbs, rbs, wrs, tes, defense, season_leaders,
                      existing_file: Path = None) -> str:
     """Generate the full nfl_data.py output file."""
-    
+
     now = datetime.now().strftime('%Y-%m-%d %H:%M')
-    
+
+    # Preferred path: update the auto-generated blocks in place and keep
+    # everything else (DEFENSIVE_PLAYERS, curated SEASON_LEADERS, FRANCHISES,
+    # etc.) byte-for-byte, so hand-added sections survive regeneration.
+    if existing_file and existing_file.exists():
+        content = existing_file.read_text(encoding='utf-8').replace('\r\n', '\n')
+        content = re.sub(r'^Generated: .*$', f'Generated: {now}', content,
+                         count=1, flags=re.MULTILINE)
+        auto_blocks = [
+            ("QUARTERBACKS", "[", "]", format_player_list(qbs, "QUARTERBACKS")),
+            ("RUNNING_BACKS", "[", "]", format_player_list(rbs, "RUNNING_BACKS")),
+            ("WIDE_RECEIVERS", "[", "]", format_player_list(wrs, "WIDE_RECEIVERS")),
+            ("TIGHT_ENDS", "[", "]", format_player_list(tes, "TIGHT_ENDS")),
+            ("DEFENSIVE_PLAYERS", "[", "]", format_player_list(defense, "DEFENSIVE_PLAYERS")),
+            # The FIRST SEASON_LEADERS is the auto-generated one; the curated
+            # one with awards comes later in the file and must not be touched.
+            ("SEASON_LEADERS", "{", "}", format_season_leaders(season_leaders)),
+        ]
+        for name, open_ch, close_ch, block in auto_blocks:
+            pattern = rf'^{name} = \{open_ch}\n.*?^\{close_ch}$'
+            content, n = re.subn(pattern, lambda _m, b=block: b, content,
+                                 count=1, flags=re.MULTILINE | re.DOTALL)
+            if n != 1:
+                raise RuntimeError(f"Could not find '{name} = {open_ch}' block in {existing_file}")
+        return content
+
     output = f'''"""
 NFL Data Module — The Knowledge Backbone
 ==========================================
@@ -715,8 +941,8 @@ Generated: {now}
 Data source: nflverse (CC-BY-SA 4.0, attribution to nflverse/FTN Data)
 
 Sections updated automatically:
-  - QUARTERBACKS, RUNNING_BACKS, WIDE_RECEIVERS, TIGHT_ENDS
-  - SEASON_LEADERS
+  - QUARTERBACKS, RUNNING_BACKS, WIDE_RECEIVERS, TIGHT_ENDS, DEFENSIVE_PLAYERS
+  - SEASON_LEADERS (first block only)
 
 Sections preserved from existing nfl_data.py (curated/manual):
   - FRANCHISES, SUPER_BOWLS, ICONIC_MOMENTS, COACHES
@@ -739,6 +965,8 @@ Sections preserved from existing nfl_data.py (curated/manual):
 
 {format_player_list(tes, "TIGHT_ENDS")}
 
+{format_player_list(defense, "DEFENSIVE_PLAYERS")}
+
 
 # ═══════════════════════════════════════════════════════════════
 # SEASON-SPECIFIC DATA (auto-generated from nflverse)
@@ -750,36 +978,10 @@ Sections preserved from existing nfl_data.py (curated/manual):
 
 '''
     
-    # Now append the static/curated sections from existing nfl_data.py
-    if existing_file and existing_file.exists():
-        existing_content = existing_file.read_text()
-        
-        # Extract everything from FRANCHISES onward
-        static_markers = [
-            "# ═══════════════════════════════════════════════════════════════\n# FRANCHISE DATA",
-            "FRANCHISES = {",
-        ]
-        
-        for marker in static_markers:
-            idx = existing_content.find(marker)
-            if idx != -1:
-                # Go back to find the section comment
-                comment_start = existing_content.rfind("\n# ═══", 0, idx)
-                if comment_start == -1:
-                    comment_start = idx
-                output += "\n" + existing_content[comment_start:]
-                break
-        else:
-            output += "\n# ⚠️  Could not find FRANCHISES section in existing nfl_data.py\n"
-            output += "# You need to manually paste the following sections:\n"
-            output += "#   FRANCHISES, SUPER_BOWLS, NFL_FACTS, REAL_UNUSUAL_PLAYERS,\n"
-            output += "#   FAKE_NAME_PARTS, ICONIC_MOMENTS, COACHES, DRAFT_NOTABLES,\n"
-            output += "#   RECORDS, MVP_WINNERS, KICKER_MVP\n"
-    else:
-        output += "\n# ⚠️  No existing nfl_data.py provided.\n"
-        output += "# Copy the FRANCHISES, SUPER_BOWLS, etc. sections from your\n"
-        output += "# current nfl_data.py and paste them below.\n"
-    
+    output += "\n# ⚠️  No existing nfl_data.py provided.\n"
+    output += "# Copy the FRANCHISES, SUPER_BOWLS, etc. sections from your\n"
+    output += "# current nfl_data.py and paste them below.\n"
+
     return output
 
 
@@ -833,7 +1035,7 @@ QB_AWARDS = {
 
 def main():
     parser = argparse.ArgumentParser(description="Pigskin5 nflverse Data Pipeline")
-    parser.add_argument("--seasons", type=str, default="1999-2025",
+    parser.add_argument("--seasons", type=str, default=f"1999-{nfl.get_current_season()}",
                        help="Season range, e.g. '1999-2025' or '2020-2025'")
     parser.add_argument("--existing", type=str, default=None,
                        help="Path to existing nfl_data.py (to preserve curated sections)")
@@ -885,15 +1087,19 @@ def main():
     tes = merge_with_legends(tes, PRE_NFLVERSE_TES)
 
     # 4. Apply manual corrections (pre-1999 truncation fixes + known bad data)
-    qbs = apply_stat_corrections(qbs)
-    rbs = apply_stat_corrections(rbs)
-    wrs = apply_stat_corrections(wrs)
-    tes = apply_stat_corrections(tes)
+    qbs = apply_stat_corrections(qbs, "QB")
+    rbs = apply_stat_corrections(rbs, "RB")
+    wrs = apply_stat_corrections(wrs, "WR")
+    tes = apply_stat_corrections(tes, "TE")
 
     # 5. Apply award overlay
     qbs = apply_award_overlay(qbs, QB_AWARDS)
     
-    # 6. Build season leaders
+    # 6. Build defenders (DPOY/DROY counts come from the curated SEASON_LEADERS)
+    existing = Path(args.existing) if args.existing else None
+    defense = merge_defense(build_career_defense(stats_df, load_defensive_awards(existing)))
+
+    # 7. Build season leaders
     season_leaders = build_season_leaders(stats_df)
     
     print()
@@ -904,6 +1110,7 @@ def main():
     print(f"   RBs: {len(rbs)}")
     print(f"   WRs: {len(wrs)}")
     print(f"   TEs: {len(tes)}")
+    print(f"   Defenders: {len(defense)}")
     print(f"   Seasons w/ leaders: {len(season_leaders)}")
     
     if args.dry_run:
@@ -919,9 +1126,8 @@ def main():
                     print(f"   {k}: {v[0]} ({v[1]:,})")
         return
     
-    # 7. Generate output
-    existing = Path(args.existing) if args.existing else None
-    output = generate_output(qbs, rbs, wrs, tes, season_leaders, existing)
+    # 8. Generate output
+    output = generate_output(qbs, rbs, wrs, tes, defense, season_leaders, existing)
     
     Path(args.output).write_text(output, encoding='utf-8')
     

@@ -14,6 +14,7 @@ Author: Thomas Allen (@TwillysTakes)
 - Question System
   - Adding Questions Manually
   - Generating Questions Automatically
+  - Keeping the Data Accurate
   - NFL Data Layer
   - Testing Specific Dates
 - Quiz Archive
@@ -72,18 +73,26 @@ pigskin5.com/
     └── question-generator/     # Python question generation pipeline
         ├── generate_questions.py         # CLI entry point — run this
         ├── generated_questions.js        # ** OUTPUT: new questions land here **
-        ├── awards_overlay.json           # Manual awards data (MVPs, SB wins, etc.)
-        ├── update_nfl_data.py            # Script to refresh the data layer
-        └── generators/
-            ├── __init__.py               # BaseGenerator ABC + shared utilities
-            ├── nfl_data.py               # Core NFL data — ** UPDATE THIS EACH SEASON **
-            ├── stat_leader.py            # "Who led the NFL in X in Y?"
-            ├── true_false.py             # True/False NFL fact questions
-            ├── over_under.py             # "O/U: Player has X.5 career stat"
-            ├── guess_player.py           # "Guess the QB/RB/WR from this stat line"
-            ├── franchise.py              # Franchise history, all-time leaders
-            ├── history.py                # Super Bowls, iconic moments, drafts, awards
-            └── real_player.py            # "Which was an ACTUAL NFL player?"
+        ├── generated_by_type.js          # Scratch output from one-off per-type batches (not used by the site)
+        ├── generate_names.py             # Standalone fake-name generator for Real Player questions
+        ├── awards_overlay.json           # Unused — awards live in QB_AWARDS in update_nfl_data.py
+        ├── update_nfl_data.py            # Refreshes player stats from nflverse (runs weekly via GitHub Action)
+        ├── requirements.txt              # Packages for update_nfl_data.py
+        ├── generators/
+        │   ├── __init__.py               # BaseGenerator ABC + shared utilities
+        │   ├── nfl_data.py               # Core NFL data — player stats auto-refreshed; see "Keeping the Data Accurate"
+        │   ├── stat_leader.py            # "Who led the NFL in X in Y?"
+        │   ├── true_false.py             # True/False NFL fact questions
+        │   ├── over_under.py             # "O/U: Player has X.5 career stat"
+        │   ├── guess_player.py           # "Guess the QB/RB/WR from this stat line"
+        │   ├── franchise.py              # Franchise history, all-time leaders
+        │   ├── history.py                # Super Bowls, iconic moments, drafts, awards
+        │   ├── real_player.py            # "Which was an ACTUAL NFL player?"
+        │   ├── evergreen.py              # Mixes in hand-picked questions from evergreen_bank.py
+        │   └── evergreen_bank.py         # ** Hand-written evergreen questions — add new ones here **
+        └── scrapers/
+            ├── scrape_franchise_leaders.py   # Scrapes footballdb.com for franchise all-time leaders
+            └── merge_franchise_leaders.py    # Patches scraped leaders into FRANCHISES in nfl_data.py
 ```
 
 ---
@@ -97,9 +106,39 @@ pigskin5.com/
 3. Make sure the date doesn't already exist in `archive-legacy.js` (legacy takes lower priority, but avoid duplicates).
 4. Deploy.
 
+### LIVE Questions (current-season stats, filled automatically)
+
+To schedule a current-season stat question without knowing the answer yet, add `live: true` and leave out `answer`. A copy/paste list of every supported phrasing is at the top of `tools/question-generator/generated_questions.js`, between the `LIVE QUESTION TEMPLATES ── START` and `END` markers. The generator keeps that block unchanged every time it rewrites the file.
+
+```js
+{ live: true, question: "Who leads the NFL in passing yards?", choices: [] },
+{ live: true, question: "Which rookie wide receiver has the most receptions?", choices: [] },
+{ live: true, question: "Which player has more receiving yards?", choices: ["A.J. Brown", "Rome Odunze", "Romeo Doubs", "Luther Burden"] },
+```
+
+The **Fill LIVE questions** GitHub Action fills them the day before (6am and 6pm ET) with real nflverse stats, counting every game finished by then (Thursday nights included), and pushes. The question text is left as you wrote it. For over/unders, write `O/U LINE` and the line is set from the player's real total on fill day. With `choices: []` it picks the choices itself. With choices listed, it keeps them and only fills `answer`. For "leads the NFL" questions, if the actual leader isn't one of your choices, the leader replaces the lowest one.
+
+Supported shapes: "Who leads the NFL in X", "Which [rookie] [position] has the most X", "Which player has more X" (needs choices), "How many X does Player have", "OVER or UNDER: Player has O/U N X", "What is the Team' record", and "Which team has scored the most points / allowed the fewest points / has the best point differential / has the best or worst record". Stats: passing yards/TDs, interceptions thrown, rushing yards/TDs, receptions, receiving yards/TDs, scrimmage yards, sacks, interceptions, tackles, field goals.
+
+- **Pushing `questions.js` checks every unfilled LIVE question.** A typo or unknown player fails the Action right away (GitHub emails you), days before the quiz.
+- **The Action commits to `main`, so `git pull` before editing `questions.js`.**
+- Run it locally: `cd tools/question-generator; py fill_live_questions.py --check` (validate only) or `py fill_live_questions.py --through 2026-11-02`.
+
 ### Generating Questions Automatically
 
 The Python pipeline in `tools/question-generator/` automates bulk question creation.
+
+#### Step 0 — Make sure you have the latest stats
+
+Player stats in `generators/nfl_data.py` are refreshed automatically every Tuesday by a GitHub Action (see [Keeping the Data Accurate](#keeping-the-data-accurate)). That commit lands on GitHub, not your machine, so **always pull first**:
+
+```powershell
+cd "C:\Users\twill\Desktop\Coding Projects\NFL Trivia\pigskin5"; git pull
+```
+
+Check the `Generated:` line at the top of `generators/nfl_data.py`. During the season it should be from the most recent Tuesday. If it's older, check the **Actions** tab on GitHub for a failed run, or click **Run workflow** on "Refresh NFL stats from nflverse" to refresh on demand.
+
+**In-season tip:** generate in smaller batches (about 7 days) right after the Tuesday refresh. Career totals for active players change every week. A question generated today but published 3 weeks from now will be 3 games out of date. That's enough to flip an over/under line or make a "Guess the Player" stat line wrong. In the offseason, numbers are frozen and big batches are fine.
 
 #### Step 1 — Run the generator
 
@@ -115,7 +154,7 @@ Generate a full batch of days (this is the standard workflow):
 py generate_questions.py --days 21 --start-date 2026-06-16
 ```
 
-Replace `--start-date` with the first date you need covered. `--days` controls how many consecutive days are generated. Output is written to `generated_questions.js` in the same folder.
+Replace `--start-date` with the first date you need covered. `--days` controls how many consecutive days are generated. Without either flag it generates 7 days starting tomorrow. Output is written to `generated_questions.js` in the same folder, **overwriting what's there**.
 
 Optional flags:
 - `--enhance` — uses the Anthropic API to rewrite robotic-sounding questions (requires `ANTHROPIC_API_KEY`)
@@ -170,15 +209,80 @@ Then deploy both `questions.js` and `archive-static.html` together.
 | Franchise | `franchise.py` | "Who is the [Team]'s all-time leader in X?" |
 | History | `history.py` | Super Bowls, iconic moments, draft picks, awards, coaches |
 | Real Player | `real_player.py` | "Which of these was an ACTUAL NFL player?" (real vs. fakes) |
+| Evergreen | `evergreen.py` | Hand-written trivia from `evergreen_bank.py`. Not a regular category: on ~15% of days (`EVERGREEN_CHANCE`) one slot is swapped for one of these |
 
-Each day gets 5 questions with a rotation system that ensures category variety (2 "anchor" types per day + 3 random). Difficulty distribution defaults to 1 easy, 3 medium, 1 hard per day.
+Each day gets 5 questions with a rotation system that ensures category variety (2 "anchor" types per day + 3 random). Difficulty distribution defaults to 1 easy, 3 medium, 1 hard per day:
+
+- **Easy**: big names, well-known records, recent stars
+- **Medium**: solid trivia requiring real knowledge
+- **Hard**: deep cuts, obscure stats, trick questions
+
+### Generator Dependencies
+
+- Python 3.10+
+- Question generation itself needs no external packages
+- Stats refresh (`update_nfl_data.py`): `py -m pip install -r requirements.txt`
+- `--enhance` mode: `py -m pip install anthropic`
+- Franchise scraper: `py -m pip install requests beautifulsoup4`
+
+### Keeping the Data Accurate
+
+Every generated question is only as good as `generators/nfl_data.py`. Part of it updates itself; the rest is curated by hand.
+
+#### Automatic: weekly nflverse refresh
+
+`.github/workflows/update-nfl-data.yml` runs every **Tuesday at 12:00 UTC** (after Monday Night Football). It:
+
+1. Runs `update_nfl_data.py`, which pulls regular-season stats from [nflverse](https://github.com/nflverse/nflverse-data/releases/tag/stats_player) for 1999 through the current season (nflverse rebuilds these nightly during the season).
+2. Imports the result to confirm it isn't broken.
+3. Commits to `main` **only if the numbers changed**, so offseason runs do nothing.
+
+Commits that only touch `tools/` don't bump `version.json`, so this never force-reloads players' pages mid-game.
+
+What the refresh **overwrites** in `nfl_data.py`:
+- `QUARTERBACKS`, `RUNNING_BACKS`, `WIDE_RECEIVERS`, `TIGHT_ENDS` (career stats, eras, teams)
+- `DEFENSIVE_PLAYERS`: sacks and INTs from nflverse for notable defenders (60+ sacks, 30+ INTs or heavy tackle volume), plus every DPOY/DROY winner. DPOY/DROY counts are read from the curated `SEASON_LEADERS` awards, so new winners appear the Tuesday after you add them. Pre-1999 legends, retired players' official tackle totals, and stars below the thresholds are hand-kept in `DEFENSIVE_LEGENDS` / `DEFENSIVE_OVERLAY` in `update_nfl_data.py`. Tackles are never auto-filled, because nflverse's play-by-play tackle counts don't match official totals.
+- The **first** `SEASON_LEADERS` block (auto-generated, raw stat leaders)
+
+Everything else in the file is preserved exactly as-is.
+
+To run the refresh locally instead (e.g. to test a change to the pipeline):
+
+```powershell
+cd "C:\Users\twill\Desktop\Coding Projects\NFL Trivia\pigskin5\tools\question-generator"
+py -m pip install -r requirements.txt
+py update_nfl_data.py --existing generators/nfl_data.py --output generators/nfl_data.py
+git diff generators/nfl_data.py
+```
+
+#### Manual: things nflverse can't provide
+
+Update these by hand. The refresh never touches them, except where noted.
+
+| What | Where | When |
+|---|---|---|
+| Season leaders + AP awards (MVP, OPOY, DPOY, ROY, Coach, Comeback) | The **second** `SEASON_LEADERS` block in `nfl_data.py`, the one generators actually use since it overrides the first | After NFL Honors (early Feb) |
+| Super Bowl result | `SUPER_BOWLS` in `nfl_data.py` | After the Super Bowl |
+| MVP list | `MVP_WINNERS` in `nfl_data.py` | After NFL Honors |
+| QB Super Bowl wins / MVP counts | `QB_AWARDS` in `update_nfl_data.py` (**not** `nfl_data.py`, which the refresh overwrites) | After the Super Bowl / NFL Honors |
+| A defensive star missing from `DEFENSIVE_PLAYERS`, a wrong position, or a pre-1999 player | `DEFENSIVE_OVERLAY` (add `"Name": {}` to force someone in) or `DEFENSIVE_LEGENDS` in `update_nfl_data.py` | When you notice it |
+| Franchise all-time leaders, records | `FRANCHISES` / `RECORDS` in `nfl_data.py` | When a record is broken |
+| Fixes to bad/truncated nflverse stats (e.g. players with pre-1999 seasons) | `MANUAL_STAT_CORRECTIONS` in `update_nfl_data.py`. **Never** hand-edit the 5 player lists (QB/RB/WR/TE/defense) in `nfl_data.py`, because the next refresh erases the edit | Whenever you spot a wrong career number |
+
+#### Accuracy checklist before merging generated questions
+
+- [ ] `git pull` done, and `Generated:` date in `nfl_data.py` is recent
+- [ ] Questions about **active** players' career stats will publish within ~1 week (in-season)
+- [ ] "Who led the NFL in X in [year]?" questions only reference **completed** seasons
+- [ ] Spot-check defensive tackle numbers against Pro Football Reference (tackles are hand-maintained; sacks/INTs are automatic)
+- [ ] Spot-check 5 random answers overall
 
 ### NFL Data Layer
 
 All generators pull from `tools/question-generator/generators/nfl_data.py`, which exports:
 
 - `QUARTERBACKS`, `RUNNING_BACKS`, `WIDE_RECEIVERS`, `TIGHT_ENDS` — player tuples: `(name, position, stats_dict, era, teams_list)`
-- `DEFENSIVE_PLAYERS` — same shape, used for DPOY/DROY distractors
+- `DEFENSIVE_PLAYERS` — same shape, auto-built from nflverse; used for DPOY/DROY distractors, which are drawn from the 15 most notable era-relevant defenders
 - `FRANCHISES` — team history (founded, Super Bowls, all-time leaders, previous names, etc.)
 - `SUPER_BOWLS` — winner/loser by numeral
 - `SEASON_LEADERS` — yearly stat leaders and award winners
@@ -186,13 +290,14 @@ All generators pull from `tools/question-generator/generators/nfl_data.py`, whic
 - `MVP_WINNERS`, `KICKER_MVP`
 - `REAL_UNUSUAL_PLAYERS`, `FAKE_NAME_PARTS` — for the Real Player question type
 
-`awards_overlay.json` supplements `nfl_data.py` with manually tracked awards (MVPs, Super Bowl wins per QB, season awards by year) since nflverse doesn't track these. Update this file each offseason.
+`update_nfl_data.py` refreshes the five player lists (QB/RB/WR/TE/defense) and the first `SEASON_LEADERS` block from nflverse. It runs weekly via GitHub Action. See [Keeping the Data Accurate](#keeping-the-data-accurate) for what's automatic vs. manual.
 
-`update_nfl_data.py` is a script for refreshing the data layer (e.g., pulling updated career stats).
+`SEASON_LEADERS` is defined **twice** on purpose. The first block is auto-generated raw stat leaders. The second block, further down, is the curated one with AP awards, and since Python uses the last definition, it's the one generators read. Put award updates in the second block.
+
+`awards_overlay.json` is not read by any code. QB award counts live in `QB_AWARDS` inside `update_nfl_data.py`.
 
 **Known data issues to fix when touching this file:**
-- Duplicate `SEASON_LEADERS` definition (lines 701 and 1262 — second one wins, verify nothing important is in the first)
-- Peyton Manning is mistagged as `"classic"` era — should be `"modern"`
+- Peyton Manning is mistagged as `"classic"` era — should be `"modern"`. Fix it with `"Peyton Manning": {"era": "modern"}` in `MANUAL_STAT_CORRECTIONS` (`update_nfl_data.py`), not in `nfl_data.py`, or the weekly refresh will undo it. `MANUAL_STAT_CORRECTIONS` also accepts `"teams"` and any stat key.
 
 ### Testing Specific Dates
 
@@ -457,12 +562,13 @@ To enforce the countdown (when your playerbase grows), find this line in the inl
 | Task | Steps |
 |---|---|
 | Add questions for next week | Edit `questions.js` → add date entries → deploy |
-| Generate questions in bulk | `cd tools/question-generator` → `py generate_questions.py --days 14 --start-date YYYY-MM-DD` → review `generated_questions.js` → merge into `questions.js` |
+| Generate questions in bulk | `git pull` (gets the Tuesday stats refresh) → `cd tools/question-generator` → `py generate_questions.py --days 7 --start-date YYYY-MM-DD` (bigger batches OK in offseason) → review `generated_questions.js` → merge into `questions.js` |
+| Refresh NFL stats now | GitHub → Actions → "Refresh NFL stats from nflverse" → **Run workflow** → `git pull` |
 | Test a specific date locally | Open `http://127.0.0.1:5500/index.html?date=2025-12-25` in browser |
 | Reset today's attempt (signed-in or anon) | Open browser console → `__devResetToday()` |
 | Update the quiz archive | `node generate-archive.mjs` (run from `pigskin5/`) → deploy `archive-static.html` |
 | Add a new blog post | Create `blog/your-slug.html` → add entry to `ARTICLES` array in `blog/blog-index.html` → optionally add to `sitemap.xml` |
-| Update awards data | Edit `tools/question-generator/awards_overlay.json` with new season's MVP, OROY, DPOY, etc. |
+| Update awards data (after NFL Honors) | Add the season's awards to the **second** `SEASON_LEADERS` block + `MVP_WINNERS` in `nfl_data.py`; update QB SB/MVP counts in `QB_AWARDS` in `update_nfl_data.py` |
 | Shrink questions.js | Cut old date entries from `questions.js` → paste into `archive-legacy.js` → `node generate-archive.mjs` → deploy all three files |
 | Add an event theme | Set `event: "YourEvent"` on the date in `questions.js` → add `"YourEvent": "logos/yourlogo.png"` to `EVENT_LOGOS` in `modules/config.js` → add the logo image to `logos/` |
 | Set a daily reminder popup | Edit `REMINDERS` in `modules/reminders.js` → set day key to `{ title, message }` (or `null` to clear) → deploy |

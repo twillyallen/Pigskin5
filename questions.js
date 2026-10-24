@@ -403,6 +403,16 @@ export const CALENDAR = {
     { question: "", choices: ["", "", "", ""], answer: 0 },
     ],
   },
+     "2099-01-02": { //TEST - LIVE O/U demo, remove before pushing
+    event: "",
+    questions: [
+    { live: true, question: "OVER or UNDER: Josh Allen has O/U 1,290.5 passing yards.", choices: ["OVER", "UNDER"], answer: 0 },
+    { live: true, question: "OVER or UNDER: Matthew Stafford has O/U 13.5 passing TDs.", choices: ["OVER", "UNDER"], answer: 1 },
+    { live: true, question: "OVER or UNDER: Derrick Henry has O/U 662.5 rushing yards.", choices: ["OVER", "UNDER"], answer: 1 },
+    { live: true, question: "OVER or UNDER: Ja'Marr Chase has O/U 258.5 receiving yards.", choices: ["OVER", "UNDER"], answer: 0 },
+    { live: true, question: "OVER or UNDER: Will Anderson Jr. has O/U 8.5 sacks.", choices: ["OVER", "UNDER"], answer: 1 },
+    ],
+  },
 };
 
 

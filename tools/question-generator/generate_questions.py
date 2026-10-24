@@ -32,6 +32,7 @@ from generators.franchise import FranchiseGenerator
 from generators.history import HistoryGenerator
 from generators.real_player import RealPlayerGenerator
 from generators.evergreen import EvergreenGenerator
+from generators.current_season import CurrentSeasonGenerator
 
 # ─── CONFIG ──────────────────────────────────────────────────────────────────
 
@@ -58,6 +59,10 @@ CATEGORY_POOL = [
     "history",
     "real_player",
 ]
+
+# Added to CATEGORY_POOL at runtime when the current season has at least one
+# completed week (see main); offseason runs fall back to the pool above.
+CURRENT_SEASON_CATEGORY = "current_season"
 
 DAY_NAMES = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
 
@@ -125,7 +130,7 @@ def recently_used(fp: str, target_date: str, history: dict[str, list[str]], wind
     return any(_days_between(target_date, d) <= window_days for d in history.get(fp, []))
 
 
-def get_daily_categories(day_index: int) -> list[str]:
+def get_daily_categories(day_index: int, pool: list[str]) -> list[str]:
     """
     Pick 5 question categories for a given day, ensuring variety.
     Uses the day_index to rotate which categories appear.
@@ -147,7 +152,7 @@ def get_daily_categories(day_index: int) -> list[str]:
     day_anchors = anchors[day_index % len(anchors)]
     
     # Fill remaining slots from the pool, avoiding duplicates
-    remaining = [c for c in CATEGORY_POOL if c not in day_anchors]
+    remaining = [c for c in pool if c not in day_anchors]
     random.shuffle(remaining)
     
     categories = list(day_anchors) + remaining[:QUESTIONS_PER_DAY - len(day_anchors)]
@@ -170,9 +175,10 @@ def assign_difficulties(n: int) -> list[str]:
     return difficulties[:n]
 
 
-def generate_day(date: datetime, day_index: int, generators: dict, history: dict, window_days: int) -> dict:
+def generate_day(date: datetime, day_index: int, generators: dict, history: dict,
+                 window_days: int, pool: list[str]) -> dict:
     """Generate one day's worth of questions."""
-    categories = get_daily_categories(day_index)
+    categories = get_daily_categories(day_index, pool)
     difficulties = assign_difficulties(QUESTIONS_PER_DAY)
 
     # Every now and then, swap one slot for a hand-picked evergreen question.
@@ -253,6 +259,27 @@ def format_as_js(days: list[dict]) -> str:
     return "\n".join(lines)
 
 
+_TEMPLATE_START = "LIVE QUESTION TEMPLATES ── START"
+_TEMPLATE_END = "LIVE QUESTION TEMPLATES ── END"
+
+
+def write_output(path: Path, js_output: str) -> None:
+    """
+    Write generated questions, carrying over the hand-kept LIVE question
+    template block (START..END marker boxes) from the existing file so it
+    survives every regeneration unchanged.
+    """
+    kept = ""
+    if path.exists():
+        lines = path.read_text(encoding="utf-8").split("\n")
+        start = next((i for i, l in enumerate(lines) if _TEMPLATE_START in l), None)
+        end = next((i for i, l in enumerate(lines) if _TEMPLATE_END in l), None)
+        if start is not None and end is not None and end > start:
+            # Include the box-drawing lines just above START and below END
+            kept = "\n".join(lines[max(0, start - 1): end + 2]) + "\n"
+    path.write_text(kept + js_output, encoding="utf-8")
+
+
 def enhance_with_ai(days: list[dict]) -> list[dict]:
     """
     Optional: Use Anthropic API to polish question wording.
@@ -309,12 +336,19 @@ def main():
     parser.add_argument("--only", type=str, default=None,
                    choices=["stat_leader", "true_false", "over_under",
                             "guess_player", "franchise", "history", "real_player",
-                            "evergreen"],
+                            "evergreen", "current_season"],
                    help="Generate only this question type (ignores day structure)")
     parser.add_argument("--count", type=int, default=10,
                    help="When using --only, how many questions to generate")
     parser.add_argument("--save", action="store_true",
                    help="When using --only, also write questions to the output file")
+    parser.add_argument("--position", type=str.upper, action="append", default=None,
+                   choices=["QB", "RB", "WR", "TE", "DEF", "K"],
+                   help="current_season: limit player questions to this position group (repeatable)")
+    parser.add_argument("--rookies", action="store_true",
+                   help="current_season: limit player questions to this season's rookies")
+    parser.add_argument("--no-current-season", action="store_true",
+                   help="Leave current-season questions out of the daily mix")
     parser.add_argument("--window-days", type=int, default=DEFAULT_WINDOW_DAYS,
                    help=f"Reject a generated question if the same fact appeared within "
                         f"this many days, checked against history + this run (default: {DEFAULT_WINDOW_DAYS})")
@@ -338,6 +372,8 @@ def main():
         "history": HistoryGenerator(),
         "real_player": RealPlayerGenerator(),
         "evergreen": EvergreenGenerator(),
+        "current_season": CurrentSeasonGenerator(positions=args.position,
+                                                 rookies_only=args.rookies),
     }
     if args.only:
             gen = generators[args.only]
@@ -365,8 +401,7 @@ def main():
                     "questions": collected,
                 }
                 js_output = format_as_js([fake_day])
-                output_path = Path(args.output)
-                output_path.write_text(js_output, encoding="utf-8")
+                write_output(Path(args.output), js_output)
                 print(f"   📝 Wrote {len(collected)} questions to {args.output}")
             
             return
@@ -388,11 +423,23 @@ def main():
           f"— enforcing a {args.window_days}-day no-repeat window")
     print()
 
+    # Current-season questions join the daily rotation only while there's
+    # live data to build them from (pulled from nflverse right now).
+    pool = list(CATEGORY_POOL)
+    if not args.no_current_season:
+        cs = generators[CURRENT_SEASON_CATEGORY]
+        if cs.available:
+            pool.append(CURRENT_SEASON_CATEGORY)
+            print(f"   📡 Current season: {cs.data.season}, stats through {cs.data.through_label}")
+        else:
+            print(f"   ⚠️  Current-season questions skipped: {cs.data.error or 'no completed games yet'}")
+        print()
+
     days = []
 
     for i in range(args.days):
         date = start + timedelta(days=i)
-        day = generate_day(date, i, generators, history, args.window_days)
+        day = generate_day(date, i, generators, history, args.window_days, pool)
         days.append(day)
         
         # Progress indicator
@@ -406,8 +453,7 @@ def main():
     # Format and write output
     js_output = format_as_js(days)
     
-    output_path = Path(args.output)
-    output_path.write_text(js_output, encoding="utf-8")
+    write_output(Path(args.output), js_output)
     
     total = sum(len(d["questions"]) for d in days)
     print()

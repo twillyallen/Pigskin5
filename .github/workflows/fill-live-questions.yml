@@ -1,0 +1,84 @@
+name: Fill LIVE questions
+
+# Questions in questions.js marked `live: true` with no `answer` get their
+# choices and answer filled from current nflverse stats the day before they
+# run (see tools/question-generator/fill_live_questions.py).
+#
+# - schedule: fills anything dated tomorrow (US Eastern) or earlier. Runs twice
+#   a day so a failed morning run gets a second chance before midnight.
+# - push: when questions.js changes, checks every unfilled LIVE question can
+#   be filled, so a typo fails days ahead instead of on quiz day.
+on:
+  schedule:
+    - cron: "0 10 * * *" # 6am ET
+    - cron: "0 22 * * *" # 6pm ET (retry)
+  push:
+    branches: [main]
+    paths: [questions.js]
+  workflow_dispatch:
+
+concurrency:
+  group: fill-live-questions
+  cancel-in-progress: false
+
+jobs:
+  fill:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    defaults:
+      run:
+        working-directory: tools/question-generator
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Skip if there are no unfilled LIVE questions
+        id: any
+        run: |
+          if grep -E 'live:\s*true' ../../questions.js | grep -vq 'answer:'; then
+            echo "pending=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "No unfilled LIVE questions."
+          fi
+
+      - uses: actions/setup-python@v5
+        if: steps.any.outputs.pending == 'true'
+        with:
+          python-version: "3.13"
+          cache: pip
+          cache-dependency-path: tools/question-generator/requirements.txt
+
+      - name: Install dependencies
+        if: steps.any.outputs.pending == 'true'
+        run: pip install -r requirements.txt
+
+      - name: Check LIVE questions
+        if: steps.any.outputs.pending == 'true' && github.event_name == 'push'
+        env:
+          PYTHONIOENCODING: utf-8
+        run: python fill_live_questions.py --check
+
+      - name: Fill LIVE questions due by tomorrow
+        if: steps.any.outputs.pending == 'true' && github.event_name != 'push'
+        env:
+          PYTHONIOENCODING: utf-8
+        run: python fill_live_questions.py
+
+      - name: Commit and push
+        # Commit whatever did fill, even if another question failed.
+        if: always() && steps.any.outputs.pending == 'true' && github.event_name != 'push'
+        working-directory: .
+        run: |
+          if git diff --quiet -- questions.js; then
+            echo "Nothing filled."
+            exit 0
+          fi
+          # Bot pushes don't trigger update-version.yml, so bump version.json
+          # here or open tabs keep the unfilled questions.
+          echo "{\"version\": \"$(date -u +%Y-%m-%dT%H:%M:%SZ)\", \"sha\": \"live-$(date -u +%s)\"}" > version.json
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add questions.js version.json
+          git commit -m "chore: fill LIVE questions [skip ci]"
+          git pull --rebase
+          git push

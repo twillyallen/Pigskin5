@@ -1959,7 +1959,7 @@ function showGuestPlayerCard(score, avgTime) {
   // Identity — CTA instead of name
   const nameEl = document.createElement("div");
   nameEl.className = "player-card__display-name";
-  nameEl.textContent = "You earned this. Keep it.";
+  nameEl.textContent = "Achievement Unlocked!\nSign in to keep it.";
   body.appendChild(nameEl);
 
   // Stats from this session
