@@ -326,11 +326,11 @@ export const CALENDAR = {
      "2026-10-25": { //Sunday
     event: "",
     questions: [
-    { question: "How many teams did Ryan Fitzpatrick play for?", choices: ["11", "10", "9", "7"], answer: 2 },
-    { question: "Which Vikings kicker infamously missed a potential game-winning field goal in the 1998 NFC Championship?", choices: ["Billy Cundiff", "Scott Norwood", "Gary Anderson", "Pete Stoyanovich"], answer: 2 },
-    { question: "Which QB has dealt with the most drops in 2026?", choices: ["Justin Herbert", "Drake Maye", "Matthew Stafford", "Jordan Love"], answer: 3 },
-    { question: "Which of these was an ACTUAL NFL player?", choices: ["Jermissy Drake", "Ki-Jana Carter", "Breshawn Fraul-Kipp", "Turnt Jackson"], answer: 1 },
-    { question: "Guess the 2026 RB:\n460 Rush Yards\n258 Receiving Yards\n2 Total TDs", choices: ["Bijan Robinson", "Jaylen Warren", "Bucky Irving", "Bhayshul Tuten"], answer: 1 },
+    { live: true, question: "Who leads the NFL in scrimmage yards?", choices: [] },
+    { live: true, question: "OVER or UNDER: PLAYER NAME has O/U LINE sacks.", choices: [] },
+    { question: "True or False: Brett Favre was originally drafted by the Green Bay Packers.", choices: ["True", "False"], answer: 1 },
+    { question: "Which NFL team plays their home games at Caesars Superdome?", choices: ["New Orleans Saints", "Las Vegas Raiders", "Dallas Cowboys", "Detroit Lions"], answer: 0 },
+    { question: "Which of these was an ACTUAL NFL player?", choices: ["Quantrell Finnenbaum", "Zohnathan Fettergun II", "Tavontay Crumbleton", "Tutan Reyes"], answer: 3 },
     ],
   },
      "2026-10-26": { //Monday
@@ -356,11 +356,11 @@ export const CALENDAR = {
      "2026-10-28": { //Wednesday
     event: "",
     questions: [
-    { question: "", choices: ["", "", "", ""], answer: 3 },
-    { question: "", choices: ["", "", "", ""], answer: 1 },
-    { question: "", choices: ["", "", "", ""], answer: 2 },
-    { question: "", choices: ["", ""], answer: 0 },
-    { question: "", choices: ["", "", "", ""], answer: 0 },
+    { question: "How many teams did Ryan Fitzpatrick play for?", choices: ["11", "10", "9", "7"], answer: 2 },
+    { question: "Which Vikings kicker infamously missed a potential game-winning field goal in the 1998 NFC Championship?", choices: ["Billy Cundiff", "Scott Norwood", "Gary Anderson", "Pete Stoyanovich"], answer: 2 },
+    { question: "Which QB has dealt with the most drops in 2026?", choices: ["Justin Herbert", "Drake Maye", "Matthew Stafford", "Jordan Love"], answer: 3 },
+    { question: "Which of these was an ACTUAL NFL player?", choices: ["Jermissy Drake", "Ki-Jana Carter", "Breshawn Fraul-Kipp", "Turnt Jackson"], answer: 1 },
+    { question: "Guess the 2026 RB:\n460 Rush Yards\n258 Receiving Yards\n2 Total TDs", choices: ["Bijan Robinson", "Jaylen Warren", "Bucky Irving", "Bhayshul Tuten"], answer: 1 },
     ],
   },
      "2026-10-29": { //Thursday

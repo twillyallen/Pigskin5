@@ -91,7 +91,7 @@ class FranchiseGenerator(BaseGenerator):
             if "previous_names" in data and len(data["previous_names"]) > 0:
                 old_name = data["previous_names"][0]
                 short_old = old_name.split()[-1]
-                q_text = f"What was the {name}'s original team name?"
+                q_text = f"What was the {name}' original team name?"
 
                 fake_names = [
                     "Mustangs", "Wildcats", "Thunderbolts", "Stallions",
