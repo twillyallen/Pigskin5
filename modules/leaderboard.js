@@ -674,6 +674,25 @@ export async function upsertGuestResult(dateStr, localResult) {
 }
 
 // Check if signed-in user has already played today; returns the attempt data or null
+// Returns the id of the latest admin-granted reset for this user/date, or null.
+// See supabase/migrations/attempt_resets.sql.
+export async function getAttemptReset(dateStr) {
+  const user = await getCurrentUser();
+  if (!user) return null;
+
+  const { data, error } = await supabase
+    .from("attempt_resets")
+    .select("id")
+    .eq("user_id", user.id)
+    .eq("quiz_date", dateStr)
+    .order("id", { ascending: false })
+    .limit(1)
+    .maybeSingle();
+
+  if (error || !data) return null;
+  return data.id;
+}
+
 export async function getTodaysAttempt(dateStr) {
   const user = await getCurrentUser();
   if (!user) return null;

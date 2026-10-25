@@ -3,7 +3,7 @@
 // ============================================================================
 
 import { CALENDAR } from "./questions.js?v=20260412";
-import { submitEntry, fetchLeaderboard, fetchWeeklyLeaderboard, fetchLastWeekPodium, refreshStreakCache, getCachedDailyStreak, getCachedTDStreak, getTodaysAttempt, hasPlayedToday, getCachedFavoriteTeam, overrideCachedStreaks, checkAchievementsForScore, upsertGuestResult } from "./modules/leaderboard.js";
+import { submitEntry, fetchLeaderboard, fetchWeeklyLeaderboard, fetchLastWeekPodium, refreshStreakCache, getCachedDailyStreak, getCachedTDStreak, getTodaysAttempt, getAttemptReset, hasPlayedToday, getCachedFavoriteTeam, overrideCachedStreaks, checkAchievementsForScore, upsertGuestResult } from "./modules/leaderboard.js";
 import { getCurrentUser, supabase } from "./modules/supabase-client.js";
 import { NFL_TEAMS } from "./modules/nfl-teams.js";
 import { showTierTooltip, showAchievementToast } from "./modules/ui-helpers.js";
@@ -22,6 +22,7 @@ const KEY_ATTEMPT_PREFIX = "ft5_attempt_";
 const KEY_RESULT_PREFIX  = "ft5_result_";
 const KEY_LEADERBOARD    = "ps5_leaderboard_v1";
 const KEY_LB_SUBMIT_PREFIX = "ps5_leaderboard_submit_";
+const KEY_RESET_ACK_PREFIX = "ft5_reset_ack_";
 
 // SessionStorage keys for mid-quiz state (cleared on tab/browser close)
 const KEY_SESSION_DATE        = "ps5_session_date";
@@ -1550,6 +1551,19 @@ async function showStartScreen() {
   // Load DB streak before any rendering so all paths get the correct cross-device value
   const user = await getCurrentUser();
   if (user) await refreshStreakCache();
+
+  // Admin-granted reset: wipe this device's "already played" flags once per reset
+  if (user) {
+    const resetId = await getAttemptReset(runDate);
+    const ackKey = KEY_RESET_ACK_PREFIX + runDate;
+    if (resetId && localStorage.getItem(ackKey) !== String(resetId)) {
+      localStorage.removeItem(KEY_ATTEMPT_PREFIX + runDate);
+      localStorage.removeItem(KEY_RESULT_PREFIX + runDate);
+      localStorage.removeItem(KEY_LB_SUBMIT_PREFIX + runDate);
+      clearSessionState();
+      localStorage.setItem(ackKey, String(resetId));
+    }
+  }
 
   // Check server for signed-in users first
   const serverAttempt = await getTodaysAttempt(runDate);
