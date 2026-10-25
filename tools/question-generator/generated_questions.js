@@ -6,12 +6,15 @@
 //
 // HOW TO USE
 //   Copy a line into questions.js under a date. Replace PLAYER NAME and
-//   TEAM; leave LINE as-is. Leave `answer` OUT. That's what makes it live.
+//   TEAM; leave LINE as-is. Exception: in OVER/UNDER lines PLAYER NAME can
+//   stay, and a random top-10 player in that stat is picked for you.
+//   Leave `answer` OUT. That's what makes it live.
 //   choices: []     → filled with 4 choices automatically
 //   choices: [...]  → your choices kept, only the answer is filled
 //   Stats count every game finished by fill day (the day before the quiz).
 //   Check before pushing:  py fill_live_questions.py --check
 //
+const LIVE_TEMPLATES = [
 // ── 1. NFL LEADER (anyone in the league) ─────────────────────────────────
 { live: true, question: "Who leads the NFL in passing yards?", choices: [] },
 { live: true, question: "Who leads the NFL in passing TDs?", choices: [] },
@@ -83,6 +86,7 @@
 // "best record" / "worst record" work too, but ties for first are common
 // and a tie can't be filled. Use them late in the season, if at all:
 { live: true, question: "Which team has the best record?", choices: [] },
+];
 //
 // ╔═══════════════════════════════════════════════════════════════════════╗
 // ║ LIVE QUESTION TEMPLATES ── END                                        ║
@@ -100,6 +104,7 @@
 //   [ ] Merge into your main questions.js CALENDAR object
 // ═══════════════════════════════════════════════════════════
 
+const GENERATED = {
     "2026-11-02": { //Monday
     event: "",
     questions: [
@@ -130,3 +135,4 @@
     { question: "OVER or UNDER: The Rams have been located in O/U 3.5 cities.", choices: ["OVER", "UNDER"], answer: 1 },
     ],
   },
+};

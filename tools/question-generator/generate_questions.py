@@ -33,6 +33,7 @@ from generators.history import HistoryGenerator
 from generators.real_player import RealPlayerGenerator
 from generators.evergreen import EvergreenGenerator
 from generators.current_season import CurrentSeasonGenerator
+from generators.live import LiveTemplateGenerator
 
 # ─── CONFIG ──────────────────────────────────────────────────────────────────
 
@@ -63,6 +64,11 @@ CATEGORY_POOL = [
 # Added to CATEGORY_POOL at runtime when the current season has at least one
 # completed week (see main); offseason runs fall back to the pool above.
 CURRENT_SEASON_CATEGORY = "current_season"
+
+# LIVE templates (filled with real stats the day before by the
+# fill-live-questions Action) take current_season's place in the daily mix,
+# since their answers are fresh on quiz day instead of frozen at generation.
+LIVE_CATEGORY = "live"
 
 DAY_NAMES = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
 
@@ -118,6 +124,9 @@ def load_question_history(paths: list[Path]) -> dict[str, list[str]]:
                 except json.JSONDecodeError:
                     choices = None
                 history.setdefault(fingerprint(text, choices), []).append(current_date)
+                if "live: true" in line:
+                    # Generated LIVE templates have no choices yet
+                    history.setdefault(fingerprint(text), []).append(current_date)
     return history
 
 
@@ -231,7 +240,10 @@ def format_as_js(days: list[dict]) -> str:
     lines.append("//   [ ] Merge into your main questions.js CALENDAR object")
     lines.append("// ═══════════════════════════════════════════════════════════")
     lines.append("")
-    
+    # Wrapped so this file is valid JS (no editor errors). Copy the date
+    # entries inside, not the wrapper, into questions.js.
+    lines.append("const GENERATED = {")
+
     for day in days:
         date_str = day["date"]
         day_name = day["day_name"]
@@ -248,14 +260,18 @@ def format_as_js(days: list[dict]) -> str:
             question_text = q["question"].replace('"', '\\"').replace('\n', '\\n')
             
             # Handle answer (can be int or list for multi-answer)
-            answer_val = q["answer"]
+            answer_val = q.get("answer")
             
-            line = f'    {{ question: "{question_text}", choices: {choices_str}, answer: {answer_val} }},'
+            if q.get("live"):
+                line = f'    {{ live: true, question: "{question_text}", choices: [] }},'
+            else:
+                line = f'    {{ question: "{question_text}", choices: {choices_str}, answer: {answer_val} }},'
             lines.append(line)
         
         lines.append('    ],')
         lines.append('  },')
-    
+
+    lines.append("};")
     return "\n".join(lines)
 
 
@@ -296,6 +312,8 @@ def enhance_with_ai(days: list[dict]) -> list[dict]:
     
     for day in days:
         for q in day["questions"]:
+            if q.get("live"):
+                continue  # the filler parses this exact wording
             # Only enhance questions that sound robotic
             if any(marker in q["question"].lower() for marker in [
                 "which player", "who holds", "what is the", "how many"
@@ -336,7 +354,7 @@ def main():
     parser.add_argument("--only", type=str, default=None,
                    choices=["stat_leader", "true_false", "over_under",
                             "guess_player", "franchise", "history", "real_player",
-                            "evergreen", "current_season"],
+                            "evergreen", "current_season", "live"],
                    help="Generate only this question type (ignores day structure)")
     parser.add_argument("--count", type=int, default=10,
                    help="When using --only, how many questions to generate")
@@ -349,6 +367,8 @@ def main():
                    help="current_season: limit player questions to this season's rookies")
     parser.add_argument("--no-current-season", action="store_true",
                    help="Leave current-season questions out of the daily mix")
+    parser.add_argument("--no-live", action="store_true",
+                   help="Use frozen current_season questions instead of LIVE templates in the daily mix")
     parser.add_argument("--window-days", type=int, default=DEFAULT_WINDOW_DAYS,
                    help=f"Reject a generated question if the same fact appeared within "
                         f"this many days, checked against history + this run (default: {DEFAULT_WINDOW_DAYS})")
@@ -374,6 +394,7 @@ def main():
         "evergreen": EvergreenGenerator(),
         "current_season": CurrentSeasonGenerator(positions=args.position,
                                                  rookies_only=args.rookies),
+        "live": LiveTemplateGenerator(),
     }
     if args.only:
             gen = generators[args.only]
@@ -388,6 +409,8 @@ def main():
                 
                 print(f"[{i+1}] ({diff})")
                 print(f"    Q: {q['question']}")
+                if q.get("live"):
+                    print("    (LIVE: choices + answer filled the day before)")
                 for j, c in enumerate(q['choices']):
                     marker = "✅" if j == q['answer'] else "  "
                     print(f"    {marker} {c}")
@@ -429,8 +452,9 @@ def main():
     if not args.no_current_season:
         cs = generators[CURRENT_SEASON_CATEGORY]
         if cs.available:
-            pool.append(CURRENT_SEASON_CATEGORY)
-            print(f"   📡 Current season: {cs.data.season}, stats through {cs.data.through_label}")
+            pool.append(CURRENT_SEASON_CATEGORY if args.no_live else LIVE_CATEGORY)
+            print(f"   📡 Current season: {cs.data.season}, stats through {cs.data.through_label}"
+                  + ("" if args.no_live else " (as LIVE templates)"))
         else:
             print(f"   ⚠️  Current-season questions skipped: {cs.data.error or 'no completed games yet'}")
         print()
