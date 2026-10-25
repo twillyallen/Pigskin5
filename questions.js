@@ -327,7 +327,7 @@ export const CALENDAR = {
     event: "",
     questions: [
     { live: true, question: "Who leads the NFL in scrimmage yards?", choices: ["Bijan Robinson", "Jonathan Taylor", "Jahmyr Gibbs", "Jaylen Warren"], answer: 0 },
-    { live: true, question: "OVER or UNDER: PLAYER NAME has O/U LINE sacks.", choices: [] },
+    { live: true, question: "OVER or UNDER: Will Anderson Jr. has O/U 6.5 sacks.", choices: ["OVER", "UNDER"], answer: 0 },
     { question: "True or False: Brett Favre was originally drafted by the Green Bay Packers.", choices: ["True", "False"], answer: 1 },
     { question: "Which NFL team plays their home games at Caesars Superdome?", choices: ["New Orleans Saints", "Las Vegas Raiders", "Dallas Cowboys", "Detroit Lions"], answer: 0 },
     { question: "Which of these was an ACTUAL NFL player?", choices: ["Quantrell Finnenbaum", "Zohnathan Fettergun II", "Tavontay Crumbleton", "Tutan Reyes"], answer: 3 },

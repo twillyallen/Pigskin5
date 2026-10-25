@@ -24,6 +24,7 @@ Question shapes it understands (case-insensitive; a trailing "this season",
   Which <rookie / position / player> has more <stat>?         (needs choices)
   How many <stat> does <player> have?
   OVER or UNDER: <player> has O/U LINE <stat>.       (LINE is set from real stats)
+  OVER or UNDER: PLAYER NAME has O/U LINE <stat>.    (also picks a top-10 player)
   OVER or UNDER: <player> has O/U <number> <stat>.   (or pick your own number)
   What is the <team>' record?
   Which team has scored the most points? / allowed the fewest points? /
@@ -174,7 +175,16 @@ class LiveFiller:
         m = re.match(r"^over or under:\s*(?P<p>.+?) (?:has|have) o/u (?P<line>[\d,]+(?:\.\d+)?|line) (?P<stat>.+)$", t)
         if m:
             stat = _stat(m["stat"])
-            p = self.player(m["p"], stat)
+            if m["p"] == "player name":
+                # Pick someone near the top of the stat so the name is
+                # recognizable and the total is big enough for a real line.
+                top = self.d.totals[self.d.totals[stat] > 0].sort_values(stat, ascending=False).head(10)
+                if top.empty:
+                    raise LiveQuestionError("no players with this stat yet")
+                p = top.iloc[random.randrange(len(top))]
+                question = re.sub(r"player name", p["name"], question, count=1, flags=re.I)
+            else:
+                p = self.player(m["p"], stat)
             v = float(p[stat])
             if m["line"] == "line":
                 # Set the line 10-25% (at least 1) above or below the real
