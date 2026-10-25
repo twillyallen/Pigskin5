@@ -364,7 +364,7 @@ export const CALENDAR = {
     ],
   },
      "2026-10-29": { //Thursday
-    event: "",
+    event: "PackersPanthersTNF",
     questions: [
     { question: "", choices: ["", "", "", ""], answer: 3 },
     { question: "", choices: ["", "", "", ""], answer: 1 },
