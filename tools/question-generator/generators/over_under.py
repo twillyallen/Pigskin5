@@ -64,7 +64,8 @@ class OverUnderGenerator(BaseGenerator):
             self._franchise_misc,
         ]
         
-        gen_func = random.choice(generators)
+        # Franchise misc (cities, championships) has a tiny fact pool and repeats a lot
+        gen_func = random.choices(generators, weights=[6, 3, 1])[0]
         q = gen_func(difficulty)
         q["_type"] = "over_under"
         q["_difficulty"] = difficulty

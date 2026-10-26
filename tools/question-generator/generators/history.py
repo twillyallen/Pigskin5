@@ -25,6 +25,18 @@ _RECORD_QB_POOL = [
     "Matt Ryan", "Tony Romo", "Eli Manning",
 ]
 
+# Real all-time runners-up for career-leader questions. Player-list career stats
+# are truncated before 1999, so these can't be derived by sorting. Active players
+# are left out since they can climb past these names mid-season.
+_CAREER_RUNNERS_UP = {
+    "career_pass_yards": ["Drew Brees", "Peyton Manning", "Brett Favre"],
+    "career_pass_tds": ["Drew Brees", "Peyton Manning", "Brett Favre"],
+    "career_rush_yards": ["Walter Payton", "Frank Gore", "Barry Sanders"],
+    "career_rush_tds": ["LaDainian Tomlinson", "Marcus Allen", "Walter Payton"],
+    "career_rec_yards": ["Larry Fitzgerald", "Terrell Owens", "Tony Gonzalez"],
+    "career_total_tds": ["Emmitt Smith", "LaDainian Tomlinson", "Randy Moss"],
+}
+
 
 class HistoryGenerator(BaseGenerator):
     
@@ -464,7 +476,10 @@ class HistoryGenerator(BaseGenerator):
             return self._super_bowl_question(difficulty)
         key, label, pos_pool = random.choice(eligible)
         correct = RECORDS[key]["player"]
-        if "pass" in key:
+        runners_up = [p for p in _CAREER_RUNNERS_UP.get(key, []) if p != correct]
+        if len(runners_up) >= 3:
+            pool = runners_up
+        elif "pass" in key:
             pool = [p for p in _RECORD_QB_POOL if p != correct]
         else:
             pool = [p[0] for p in pos_pool if p[0] != correct]

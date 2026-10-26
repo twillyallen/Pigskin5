@@ -134,12 +134,17 @@ class StatLeaderGenerator(BaseGenerator):
             else:
                 return era in ["classic", "modern"]
 
-        # Players who have led the league in this stat in any season — best distractor candidates
+        # Players who led this stat group (passing/rushing/receiving) within a few
+        # seasons of the question year — contemporaries, not past-their-prime legends.
+        # Only one season ahead, so we don't name someone who hadn't been drafted yet.
+        stat_group = stat_key.split("_")[0]
         same_stat_leaders = {
-            data[stat_key][0]
-            for _, data in SEASON_LEADERS.items()
-            if stat_key in data and isinstance(data[stat_key], tuple)
-        }
+            data[k][0]
+            for y, data in SEASON_LEADERS.items()
+            if -3 <= int(y) - year_int <= 1
+            for k in data
+            if k.split("_")[0] == stat_group and isinstance(data[k], tuple)
+        } - {leader_name}
 
         # Generate distractors from same position group, filtered by era and min career stats
         if "pass" in stat_key:
@@ -204,14 +209,14 @@ class StatLeaderGenerator(BaseGenerator):
         }
         career_key = career_stat_map.get(stat_key, stat_key)
 
-        # Prefer players who have actually led this stat — put them first, fill from career-stat leaders
-        leader_pool = [p for p in pool if p[0] in same_stat_leaders]
+        # Prefer contemporaries who led this stat group — put them first, fill from career-stat leaders
+        leader_pool = list(same_stat_leaders)
         non_leader_pool = sorted(
             [p for p in pool if p[0] not in same_stat_leaders],
             key=lambda p: p[2].get(career_key, 0), reverse=True
         )
         random.shuffle(leader_pool)
-        distractors = [p[0] for p in (leader_pool + non_leader_pool)[:3]]
+        distractors = (leader_pool + [p[0] for p in non_leader_pool])[:3]
 
         choices = [leader_name] + distractors
         random.shuffle(choices)
