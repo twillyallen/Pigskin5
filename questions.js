@@ -378,7 +378,7 @@ export const CALENDAR = {
     questions: [
     { question: "True or False: The Chicago Bears were originally called the Decatur Staleys.", choices: ["True", "False"], answer: 0 },
     { question: "Who led the NFL in Rushing TDs in 2021?", choices: ["Derrick Henry", "Jonathan Taylor", "Austin Ekeler", "Josh Jacobs"], answer: 1 },
-    { live: true, question: "Who leads the NFL in receiving yards?", choices: ["Zay Flowers", "Malik Nabers", "Jaxon Smith-Njigba", "Christian Watson"], answer: 2 },
+    { question: "Who leads the NFL in receiving yards?", choices: ["Zay Flowers", "Chris Olave", "Jaxon Smith-Njigba", "Christian Watson"], answer: 2 },
     { question: "What division do the Denver Broncos play in?", choices: ["NFC West", "AFC West", "AFC South", "NFC South"], answer: 1 },
     { question: "Guess the Career RB:\n- 3,914 Rush Yards\n- 42 Rush TDs\n- 3.9 Yards per Carry\n- 42 Total TDs", choices: ["Anthony Thomas", "Chester Taylor", "BenJarvus Green-Ellis", "Willie Parker"], answer: 2 },
     ],
