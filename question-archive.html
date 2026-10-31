@@ -593,8 +593,15 @@
   </footer>
 
 <script type="module">
-import { CALENDAR } from './questions.js';
 import { LEGACY } from './archive-legacy.js';
+
+// Key questions.js to the deployed version so a cached copy can't hide
+// recent days (same as main.js).
+const QUESTIONS_VERSION = await fetch('/version.json?t=' + Date.now(), { cache: 'no-store' })
+  .then((res) => (res.ok ? res.json() : null))
+  .then((data) => data?.sha ?? data?.version ?? Date.now())
+  .catch(() => Date.now());
+const { CALENDAR } = await import(`./questions.js?v=${encodeURIComponent(QUESTIONS_VERSION)}`);
 
 // ─────────────────────────────────────────────
 //  BUILD DB — merges LEGACY + CALENDAR

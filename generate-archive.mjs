@@ -55,11 +55,12 @@ for (const [date, val] of Object.entries(CALENDAR)) {
   if (norm && norm.questions.length > 0) ALL[date] = norm;
 }
 
-// Drop future dates so upcoming quizzes aren't spoiled (local date, YYYY-MM-DD)
+// Drop today's and future dates so live quizzes aren't spoiled (local date,
+// YYYY-MM-DD). Matches question-archive.html: today appears tomorrow.
 const now = new Date();
 const TODAY = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
 for (const date of Object.keys(ALL)) {
-  if (date > TODAY) delete ALL[date];
+  if (date >= TODAY) delete ALL[date];
 }
 
 // Sort dates descending (newest first)
