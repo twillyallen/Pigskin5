@@ -2,7 +2,6 @@
 // PIGSKIN5 - MAIN.JS (REORGANIZED WITH CLEAR SECTIONS)
 // ============================================================================
 
-import { CALENDAR } from "./questions.js?v=20260412";
 import { submitEntry, fetchLeaderboard, fetchWeeklyLeaderboard, fetchLastWeekPodium, refreshStreakCache, getCachedDailyStreak, getCachedTDStreak, getTodaysAttempt, getAttemptReset, hasPlayedToday, getCachedFavoriteTeam, overrideCachedStreaks, checkAchievementsForScore, upsertGuestResult } from "./modules/leaderboard.js";
 import { getCurrentUser, supabase } from "./modules/supabase-client.js";
 import { NFL_TEAMS } from "./modules/nfl-teams.js";
@@ -11,6 +10,15 @@ import { ACHIEVEMENTS, ACHIEVEMENT_CATEGORIES } from "./modules/achievements.js"
 import { STREAK_TIERS, EVENT_LOGOS } from "./modules/config.js";
 import { renderRivalryCard, injectStartRivalryButton, openRivalryModal } from "./modules/rivalry-ui.js?v=20260614";
 import { trackEvent } from "./modules/analytics.js";
+
+// questions.js changes almost daily (LIVE fills, manual fixes). A fixed ?v=
+// lets browsers serve a days-old copy on tab restore / back navigation, so
+// key the URL to the deployed version.json instead.
+const QUESTIONS_VERSION = await fetch("/version.json?t=" + Date.now(), { cache: "no-store" })
+  .then((res) => (res.ok ? res.json() : null))
+  .then((data) => data?.sha ?? data?.version ?? Date.now())
+  .catch(() => Date.now());
+const { CALENDAR } = await import(`./questions.js?v=${encodeURIComponent(QUESTIONS_VERSION)}`);
 
 
 
