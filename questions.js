@@ -2,337 +2,6 @@
 // Exactly 5 questions per date. Each: { question, choices[4], answer(0..3), explanation? }
 export const CALENDAR = {  
 
-
-    "2026-09-23": { //Wednesday
-    event: "",
-    questions: [
-    { question: "Which QB has the most Rushing Yards this season?", choices: ["Jaxson Dart", "Jayden Daniels", "Caleb Williams", "Josh Allen"], answer: 2 },
-    { question: "Guess the Career WR:\n- 4,898 Rec. Yards\n- 31 Rec. TDs\n- 440 Receptions", choices: ["Jamison Crowder", "Terry McLaurin", "CeeDee Lamb", "Amari Cooper"], answer: 0 },
-    { question: "Who holds the NFL record for most passing TDs in a single season?", choices: ["Aaron Rodgers", "Peyton Manning", "Drew Brees", "Josh Allen"], answer: 1 },
-    { question: "How many Super Bowls have the San Francisco 49ers won?", choices: ["8", "4", "7", "5"], answer: 3 },
-    { question: "Who leads the league in sacks?", choices: ["TJ Watt", "Aidan Hutchinson", "Greg Rousseau", "Dallas Turner"], answer: 2 },
-    ],
-  },
-    "2026-09-24": { //Thursday
-    event: "PackersFalconsTNF",
-    questions: [
-    { question: "How many times have the Falcons made it to the Red Zone in 2026?", choices: ["0", "3", "5", "8"], answer: 0 },
-    { question: "Guess the 2026 Wide Receiver:\n- 188 Rec. Yards\n- 3 Rec. TDs\n- 10 Receptions", choices: ["Christian Watson", "Jahan Dotson", "Drake London", "Bo Melton"], answer: 0 },
-    { question: "When was the last time the Falcons won at Lambeau Field?", choices: ["1966", "1995", "2008", "2020"], answer: 2 },
-    { question: "Where was Brett Favre drafted?", choices: ["NY Jets", "Green Bay Packers", "Cincinnati Bengals", "Atlanta Falcons"], answer: 3 },
-    { question: "Which former Falcon caught a TD for Green Bay in Super Bowl XXXI?", choices: ["Julio Jones", "Andre Rison", "Kurt Benkert", "Eric Metcalf"], answer: 1 },
-    ],
-  },
-    "2026-09-25": { //Friday
-    event: "",
-    questions: [
-    { question: "Guess the Career QB:\n- 64,578 Pass Yards\n- 423 Pass TDs\n- 196 INTs\n- 92.4 Passer Rating", choices: ["Drew Brees", "Ben Roethlisberger", "Dan Marino", "Matthew Stafford"], answer: 3 },
-    { question: "Which QB has more Career Passing TDs?", choices: ["Drew Brees", "Matthew Stafford", "Matt Ryan", "Ben Roethlisberger"], answer: 0 },
-    { question: "What year did the Colts relocate to Indianapolis?", choices: ["1984", "1980", "1979", "1978"], answer: 0 },
-    { question: "OVER or UNDER: Brian Hartline has O/U 13.5 Career Receiving TDs.", choices: ["OVER", "UNDER"], answer: 0 },
-    { question: "Which of these was an ACTUAL NFL player?", choices: ["Montravius Hartfordshire", "Ladel Whistleblower", "Taco Charlton", "Torque Lewith"], answer: 2 },
-    ],
-  },
-    "2026-09-26": { //Saturday
-    event: "",
-    questions: [
-    { question: "Guess the Career TE:\n- 13,046 Rec. Yards\n- 74 Rec. TDs\n- 1,228 Receptions", choices: ["Jason Witten", "Bo Scaife", "Hunter Henry", "Dennis Pitta"], answer: 0 },
-    { question: "Which of these was an ACTUAL NFL player?", choices: ["Malcontavious Whistleblower", "Takkarist McKinley", "Traequan Weinstein", "Shaqavian Hartfordshire"], answer: 1 },
-    { question: "OVER or UNDER: The Browns have O/U 4.5 NFL championships (all-time).", choices: ["OVER", "UNDER"], answer: 1 },
-    { question: "True or False: 1976 was the Buccaneers' first season.", choices: ["True", "False"], answer: 0 },
-    { question: "What division do the New England Patriots play in?", choices: ["NFC North", "AFC East", "AFC South", "NFC West"], answer: 1 },
-    ],
-  },
-      "2026-09-27": { //Sunday
-    event: "",
-    questions: [
-    { question: "Which team has gained the LEAST amount of offensive yards this season?", choices: ["Minnesota Vikings", "Tennessee Titans", "Arizona Cardinals", "Denver Broncos"], answer: 0 },
-    { question: "How many Field Goals have the Los Angeles Chargers made this season?", choices: ["0", "4", "7", "11"], answer: 0 },
-    { question: "Who was the first QB to throw for 5,000 yards in a season?", choices: ["Peyton Manning", "John Elway", "Dan Marino", "Bart Starr"], answer: 2 },
-    { question: "OVER or UNDER: The Panthers have O/U 1.5 Super Bowl appearances all-time.", choices: ["OVER", "UNDER"], answer: 0 },
-    { question: "Which RB has lost the most fumbles in 2026?", choices: ["Kyren Williams", "Ameer Abdullah", "Omarion Hampton", "D'Andre Swift"], answer: 2 },
-    ],
-  },
-    "2026-09-28": { //Monday
-    event: "BearsEaglesMNF",
-    questions: [
-    { question: "Which Bears kicker was responsible for the Double Doink against the Eagles?", choices: ["Robbie Gould", "Cairos Santos", "Blair Walsh", "Cody Parkey"], answer: 3 },
-    { question: "Which Eagles RB rushed for 1,000 yards before joining the Bears?", choices: ["LeSean McCoy", "D'Andre Swift", "Miles Sanders", "Jordan Howard"], answer: 1 },
-    { question: "Which Bears Super Bowl-winning quarterback later played for the Eagles?", choices: ["Jim Harbaugh", "Jay Cutler", "Rex Grossman", "Jim McMahon"], answer: 3 },
-    { question: "What was the result of the first-ever Bears vs. Eagles game?", choices: ["Eagles Win", "Bears Win", "Tie", "Cancelled Mid-Game"], answer: 2 },
-    { question: "Who has more rush TDs this season?", choices: ["Jalen Hurts", "D'Andre Swift", "Caleb Williams", "Tank Bigsby"], answer: 1 },
-    ],
-  },
-    "2026-09-29": { //Tuesday
-    event: "",
-    questions: [
-    { question: "Who has thrown the most Interceptions this season?", choices: ["Drake Maye", "Justin Herbert", "Bo Nix", "Matthew Stafford"], answer: 0 },
-    { question: "Which coach said the famous quote \"Playoffs?! Don't talk about playoffs!\"?", choices: ["Jim Mora", "Andy Reid", "Marv Levy", "Dennis Green"], answer: 0 },
-    { question: "Which player leads the league in Sacks?", choices: ["Will Anderson Jr", "Greg Rousseau", "Mason Graham", "TJ Watt"], answer: 1 },
-    { question: "Which of these was an ACTUAL NFL player?", choices: ["La'Zekiel Thundergood", "Bender Fettergun II", "Ki-Jana Carter", "Treqwan Bonecastle"], answer: 2 },
-    { question: "Which NFL team plays their home games at Highmark Stadium?", choices: ["Dallas Cowboys", "Buffalo Bills", "New York Jets", "Los Angeles Rams"], answer: 1 },
-    ],
-  },
-    "2026-09-30": { //Wednesday
-    event: "",
-    questions: [
-    { question: "Who leads the league in dropped passes?", choices: ["Justin Jefferson", "Tucker Kraft", "Jameson Williams", "Ashton Jeanty"], answer: 1 },
-    { question: "Which kicker has the longest FG this season (60 yards)?", choices: ["Trey Smack", "Brandon Aubrey", "Matt Gay", "Chase McLaughlin"], answer: 1 },
-    { question: "Which of these was an ACTUAL NFL player?", choices: ["Deontarius Drakesworth", "Danny Allen-Finn", "I'Tavius Mathers", "Trevontay Hammersmith"], answer: 2 },
-    { question: "True or False: The Texans have reached a conference championship game.", "choices": ["True", "False"], "answer": 1},
-    { question: "True or False: The Cards franchise is older than the state of Arizona.", choices: ["True", "False"], answer: 0 },
-    ],
-  },
-    "2026-10-01": { //Thursday
-    event: "SteelersBrownsTNF",
-    questions: [
-    { question: "True or False: Aaron Rodgers is UNDEFEATED against the Browns?", choices: ["True", "False"], answer: 1 },
-    { question: "Who has more Passing Touchdowns this season?", choices: ["Aaron Rodgers", "Deshaun Watson"], answer: 1 },
-    { question: "Which team has won a playoff game more recently?", choices: ["Steelers", "Browns"], answer: 1 },
-    { question: "Which Steelers running back was nicknamed “The Bus”?", choices: ["Mike Alstott", "Jerome Bettis", "Earl Campbell", "Franco Harris"], answer: 1 },
-    { question: "What quarterback led the Browns to multiple championship appearances in the 1950s?", "choices": ["Norm Van Brocklin", "Jonny Unitas", "Otto Graham", "Sonny Jurgensen"], "answer": 2},
-    ],
-  },
-    "2026-10-02": { //Friday
-    event: "SteelersBrownsTNF",
-    questions: [
-    { question: "True or False: Aaron Rodgers is UNDEFEATED against the Browns?", choices: ["True", "False"], answer: 1 },
-    { question: "Who has more Passing Touchdowns this season?", choices: ["Aaron Rodgers", "Deshaun Watson"], answer: 1 },
-    { question: "Which team has won a playoff game more recently?", choices: ["Steelers", "Browns"], answer: 1 },
-    { question: "Which Steelers running back was nicknamed “The Bus”?", choices: ["Mike Alstott", "Jerome Bettis", "Earl Campbell", "Franco Harris"], answer: 1 },
-    { question: "What quarterback led the Browns to multiple championship appearances in the 1950s?", "choices": ["Norm Van Brocklin", "Jonny Unitas", "Otto Graham", "Sonny Jurgensen"], "answer": 2},
-    ],
-  },
-    "2026-10-03": { //Saturday
-    event: "",
-    questions: [
-    { question: "Guess the Career QB:\n- 10,877 Pass Yards\n- 60 Pass TDs\n- 64 INTs\n- 70.4 Passer Rating", choices: ["Derek Anderson", "C.J. Stroud", "Brian Hoyer", "Gus Frerotte"], answer: 0 },
-    { question: "OVER or UNDER: The Bears have O/U 0.5 Super Bowl victories all-time.", choices: ["OVER", "UNDER"], answer: 0 },
-    { question: "Which of these was an ACTUAL NFL player?", choices: ["La'Zekiel Thundergood", "Bender Fettergun II", "Ki-Jana Carter", "Treqwan Bonecastle"], answer: 2 },
-    { question: "Who led the NFL in Passing Yards in 2025?", choices: ["Justin Herbert", "Matthew Stafford", "Bryce Young", "Jameis Winston"], answer: 1 },
-    { question: "Which NFL team plays their home games at Bank of America Stadium?", choices: ["Carolina Panthers", "Green Bay Packers", "Cincinnati Bengals", "Indianapolis Colts"], answer: 0 },
-    ],
-  },
-    "2026-10-04": { //Sunday
-    event: "",
-    questions: [
-    { question: "Who leads the NFL in Passing Yards per Game?", choices: ["Tyler Shough", "Deshaun Watson", "Bryce Young", "Jordan Love"], answer: 2 },
-    { question: "What was the nickname of the Rams’ early 2000s offense?", "choices": ["“Warner Bros.”", "“Rammers”", "“Legion of Zoom”", "“Greatest Show on Turf”"], "answer": 3},
-    { question: "True or False:\nJaxson Smith-Njigba has more 2026 Touchdowns than the entirety of the Los Angeles Chargers team", choices: ["True", "False"], answer: 0 },
-    { question: "Who was the first Broncos player to win NFL MVP?", "choices": ["Craig Morton", "Terrell Davis", "John Elway", "Peyton Manning"], "answer": 2},
-    { question: "Which player leads the league in Tackles for a Loss?", choices: ["Greg Rousseau", "Edgerrin Cooper", "Leonard Williams", "Kyle Van Noy"], answer: 0 },
-    ],
-  },
-    "2026-10-05": { //Monday
-    event: "FalconsSaintsMNF",
-    questions: [
-    { question: "What year did the Falcons and Saints first play each other?", choices: ["'66", "'67", "'68", "'71"], answer: 1 },
-    { question: "Who won the lone Playoff Matchup between the Falcons and Saints in the 1991 Wild Card Round?", "choices": ["Saints", "Falcons"], "answer": 1},
-    { question: "Who blocked the punt in the Saints' famous 2006 return to the Superdome?", choices: ["Reggie Bush", "Jonathan Vilma", "Steve Gleason", "Scott Fujita"], answer: 2 },
-    { question: "How many times did Drew Brees' Saints beat Atlanta during his tenure?", "choices": ["13", "14", "17", "19"], "answer": 3},
-    { question: "Which quarterback played for BOTH Atlanta and New Orleans?", choices: ["Bobby Hebert", "Steve Bartkowski", "Archie Manning", "Teddy Bridgewater"], answer: 0 },
-    ],
-  },
-    "2026-10-06": { //Tuesday
-    event: "",
-    questions: [
-    { question: "Which player invented the famous \"Lambeau Leap\"?", choices: ["Leroy Butler", "Brett Favre", "Antonio Freeman", "Reggie White"], "answer": 0},
-    { question: "Which of these was an ACTUAL NFL player?", choices: ["Grunthaven Wollstonecraft", "Leotrimarvydaquantalius Washington", "Divine Deablo", "Zackson Hammersmith"], answer: 2 },
-    { question: "Which WR has more Career Receiving Yards?", choices: ["Larry Fitzgerald", "Julio Jones", "Steve Smith", "Davante Adams"], answer: 0 },
-    { question: "Which player threw the “Philly Special” touchdown in Super Bowl LII?", choices: ["Alshon Jeffrey", "Zach Ertz", "Nelson Agholor", "Trey Burton"], "answer": 3},
-    { question: "True or False: Brett Favre threw more interceptions than touchdowns in his career.", choices: ["True", "False"], "answer": 1},
-    ],
-  },
-    "2026-10-07": { //Wednesday
-    event: "",
-    questions: [
-    { question: "Which team has the highest scoring offense?", choices: ["Carolina Panthers", "Buffalo Bills", "Detroit Lions", "Dallas Cowboys"], "answer": 1},
-    { question: "Who was the Chiefs\’ legendary coach that led them to their first Super Bowl title in 1970?", choices: ["Chuck Noll", "Lamar Hunt", "Hank Stram", "Vince Lombardi"], "answer": 2},
-    { question: "Which kicker has the longest Field Goal this season?", choices: ["Brandon Aubrey", "Trey Smack", "Chad Ryland", "Tyler Loop"], answer: 3 },
-    { question: "How many career rushing yards does Emmitt Smith have (NFL all-time record)?", choices: ["18,355", "19,787", "17,074", "19,276"], answer: 0 },
-    { question: "Which of these was an ACTUAL NFL player?", choices: ["Rock Ya-Sin", "Trey'vor Fantloose", "Deontarius Stonehammer", "Treshon Finnenbaum"], answer: 0 },
-    ],
-  },
-    "2026-10-08": { //Thursday
-    event: "BuccaneersCowboysTNF",
-    questions: [
-    { question: "Who was the QB for Tampa Bay when the Cowboys last beat them in the Playoffs?", choices: ["Ryan Fitzpatrick", "Vinny Testaverde", "Baker Mayfield", "Tom Brady"], "answer": 3},
-    { question: "Which team leads the All-Time series?", choices: ["Dallas Cowboys", "Tampa Bay Buccaneers"], "answer": 0},
-    { question: "True or False: The Buccaneers have won 2 Super Bowls since Dallas has made it back to an NFC Championship Game", choices: ["True", "False"], answer: 0 },
-    { question: "Which kicker has made more Field Goals in the 2026 Season?", choices: ["Chase McLaughlin", "Brandon Aubrey"], answer: 0 },
-    { question: "How many consecutive extra points did Cowboys K Brett Maher miss against Tampa Bay in the 2022 playoffs?", choices: ["3", "4", "5", "6"], answer: 1 },
-    ],
-  },
-    "2026-10-09": { //Friday
-    event: "",
-    questions: [
-    { question: "How many games have the Vikings won in 2026 without scoring a TD on Offense?", choices: ["0", "1", "2", "3"], "answer": 2},
-    { question: "True or False:\nThe Jets recorded more Interceptions in Week 4 than they did in the entire 2025 Season?", choices: ["True", "False"], "answer": 0},
-    { question: "Which NFL team plays their home games at Allegiant Stadium?", choices: ["Denver Broncos", "Las Vegas Raiders", "Arizona Cardinals", "Kansas City Chiefs"], answer: 1 },
-    { question: "Who caught the game-winning touchdown known as “The Hail Mary” from Roger Staubach?", choices: ["Michael Irvin", "Billy Joe DuPree", "Golden Richards", "Drew Pearson"], "answer": 3},
-    { question: "Who leads the league in Passer Rating (min. 50 Attempts)", choices: ["Brock Purdy", "Trevor Lawrence", "Lamar Jackson", "Geno Smith"], answer: 0 },
-    ],
-  },
-    "2026-10-10": { //Saturday
-    event: "",
-    questions: [
-    { question: "Which of these was an ACTUAL NFL player?", choices: ["Ifeanyi Ohalete", "Devontarius Junior", "Javaris Jamar Javarison-Lamar", "Benedictus Thundergoose"], answer: 0 },
-    { question: "Who was the head coach during the Bills’ four consecutive Super Bowl appearances in the 1990s?", choices: ["George Seifert", "Mike Holmgren", "Marv Levy", "Bill Parcells"], "answer": 2},
-    { question: "How long was Deonte Banks' game-ending pick-six in Week 4 against Arizona?", choices: ["90", "93", "96", "98"], answer: 3 },
-    { question: "Who leads the league in Tackles in 2026?", choices: ["Fred Warner", "Alex Singleton", "Earnest Jones IV", "Nick Bolton"], "answer": 1},
-    { question: "Which TE has more Career Receiving Yards?", choices: ["Tony Gonzalez", "Jason Witten", "Antonio Gates", "Travis Kelce"], answer: 0 },
-    ],
-  },
-    "2026-10-11": { //Sunday
-    event: "",
-    questions: [
-    { question: "The Bears are Road-Favorites in Green Bay for the first time since:", choices: ["1937", "2006", "2010", "2018"], answer: 1 },
-    { question: "OVER or UNDER: The Texans and Titans have O/U 0.5 Wins COMBINED.", choices: ["OVER", "UNDER"], "answer": 1},
-    { question: "Which of these was an ACTUAL NFL player?", choices: ["Montravius Hartfordshire", "Ladel Whistleblower", "Taco Charlton", "Torque Lewith"], answer: 2 },
-    { question: "True or False: Tom Brady has more playoff wins than any franchise.", choices: ["True", "False"], "answer": 1},
-    { question: "Which Punter leads the league in Average Yards per Punt?", choices: ["Corey Bojorquez", "Daniel Whelan", "Matt Araiza", "Jordan Stout"], answer: 2 },
-    ],
-  },
-    "2026-10-12": { //Monday
-    event: "BillsRamsMNF",
-    questions: [
-    { question: "How many total touchdowns did Josh Allen account for in the Bills' loss to the Rams in 2024?", choices: ["6", "7", "8", "9"], answer: 0 },
-    { question: "Which QB has more Passing Yards in 2026?", choices: ["Josh Allen", "Matthew Stafford"], "answer": 1},
-    { question: "Who has the All-Time Record for most Rushing Yards in a season?", choices: ["Marshall Faulk", "OJ Simpson", "Eric Dickerson", "James Cook"], answer: 2 },
-    { question: "What was the score when Buffalo spoiled the Rams’ 2022 banner night?", choices: ["Bills 17 - Rams 16", "Bills 54 - Rams 51", "Bills 31 - Rams 10", "Bills 35 - Rams 27"], "answer": 2},
-    { question: "Which team has more Super Bowl Losses?", choices: ["Rams", "Bills"], answer: 1 },
-    ],
-  },
-    "2026-10-13": { //Tuesday
-    event: "",
-    questions: [
-    { question: "Which QB was drafted #1 overall in 2007?", choices: ["Matthew Stafford", "Matt Ryan", "JaMarcus Russell", "Alex Smith"], "answer": 2},
-    { question: "Which RB has more Career Rushing Yards?", choices: ["Steven Jackson", "Barry Sanders", "Frank Gore", "Derrick Henry"], answer: 2 },
-    { question: "How many Interceptions has Jared Goff thrown in 2026?", choices: ["0", "3", "5", "7"], answer: 0 },
-    { question: "Which player has the most Special Team Return TDs in 2026?", choices: ["Myles Price", "Ameer Abdullah", "Sky Moore", "KaVontae Turpin"], "answer": 0},
-    { question: "How many rushing yards did Eric Dickerson record in their record-setting 1984 season?", choices: ["2,299", "2,269", "1,943", "2,105"], answer: 3 },
-    ],
-  },
-    "2026-10-14": { //Wednesday
-    event: "",
-    questions: [
-    { question: "True or False: Deshaun Watson has taken the most sacks this season", choices: ["True", "False"], answer: 0 },
-    { question: "Which of these was an ACTUAL NFL player?", choices: ["Kyu Blu Kelly", "Ja'Vontavious St. Germaine", "Kool Johnsonville", "Shaqavian Fant'le'"], answer: 0 },
-    { question: "Which player caught the “Immaculate Reception”?", choices: ["Rocky Bleier", "John Stallworth", "Lynn Swann", "Franco Harris"], "answer": 3},
-    { question: "Which RB has more Career Rushing Yards?", choices: ["Edgerrin James", "Adrian Peterson", "LaDainian Tomlinson", "Walter Payton"], answer: 3 },
-    { question: "Which kicker has made the most Extra Points this season?", choices: ["Tyler Bass", "Tyler Loop", "Brandon Aubrey", "Jake Bates"], answer: 3 },
-    ],
-  },
-    "2026-10-15": { //Thursday
-    event: "BroncosSeahawksTNF",
-    questions: [
-    { question: "Who Snapped the ball past Peyton Manning's face on the first play in Super Bowl XLVIII", choices: ["Ryan Harris", "Matt Paradis", "Manny Ramirez", "Chris Kuper"], answer: 2 },
-    { question: "Which QB has more Pass Touchdowns this season?", choices: ["Drew Lock", "Bo Nix", "Jarrett Stidham", "Sam Darnold"], "answer": 3 },
-    { question: "Which Seahawks defender was named Super Bowl XLVIII MVP?", choices: ["Richard Sherman", "Malcolm Smith", "Bobby Wagner", "Earl Thomas"], answer: 1 },
-    { question: "Over/Under:\nThe Seahawks have O/U 1.5 Postseason wins over the Broncos", choices: ["Over", "Under"], "answer": 0},
-    { question: "Which team did Bo Nix face in his first NFL regular-season start?", choices: ["San Diego Chargers", "Los Angeles Rams", "Seattle Seahawks", "Pittsburgh Steelers"], answer: 2 },
-    ],
-  },
-    "2026-10-16": { //Friday
-    event: "",
-    questions: [
-    { question: "Who was the head coach during Pittsburgh’s dynasty years of the 1970s?", choices: ["Bill Walsh", "Joe Gibbs", "Don Shula", "Chuck Noll"], "answer": 3},
-    { question: "Which of these was an ACTUAL NFL player?", choices: ["Ja'Quan Quartermaine", "Frank Crum", "Bresharius Johnson", "Jaqwellius Goldsworth"], answer: 1 },
-    { question: "True or False: The Chiefs have won 5 Super Bowls.", choices: ["True", "False"], answer: 1 },
-    { question: "Over/Under:\nDrake Maye has O/U 6.5 Interceptions this season", choices: ["Over", "Under"], "answer": 0},
-    { question: "Who has more tackles this season?", choices: ["Evan Williams", "Nakobe Dean", "Jordyn Brooks", "Akeem Davis-Gaither"], answer: 0 },
-    ],
-  },
-    "2026-10-17": { //Saturday
-    event: "",
-    questions: [
-    { question: "Who was the Chargers’ Quarterback during the “Air Coryell” era?", choices: ["Doug Flutie", "Stan Humphries", "Dan Fouts", "Philip Rivers"], answer: 2 },
-    { question: "Guess the Career QB:\n- 67,508 Pass Yards\n- 537 Pass TDs\n- 127 INTs\n- 101.9 Passer Rating", choices: ["Peyton Manning", "Drew Brees", "Dan Marino", "Aaron Rodgers"], answer: 3 },
-    { question: "Which of these was an ACTUAL NFL player?", choices: ["Javorius Blackenstein", "Aeneas Williams", "Rashontez Quartermaine", "Hingle McCringleberry"], answer: 1 },
-    { question: "Which QB leads the league in rushing yards?", choices: ["Jalen Hurts", "Malik Willis", "Josh Allen", "Deshaun Watson"], "answer": 2 },
-    { question: "What year did the Houston Oilers officially become the Tennessee Titans?", choices: ["1997", "1999", "1996", "1995"], "answer": 1},
-    ],
-  },
-    "2026-10-18": { //Sunday
-    event: "",
-    questions: [
-    { question: "Which RB has the most Yards After Catch this season?", choices: ["Jaylen Warren", "Jahmyr Gibbs", "Ashton Jeanty", "Bijan Robinson"], "answer": 0 },
-    { question: "What was the name of the Lineman who got an ass full of Mark Sanchez in “The Butt Fumble”?", choices: ["Brandon Moore", "D’Brickshaw Ferguson", "Nick Mangold", "Austin Howard"], "answer": 0},
-    { question: "True or False: A TE has led the league in receiving yards.", choices: ["True", "False"], answer: 1 },
-    { question: "Guess the WR this season:\n- 330 Receiving Yards\n- 20.6 Yards per Catch (Leads NFL)\n- 3 Receiving TDs", choices: ["Jaxon Smith-Njigba", "Denzel Boston", "Jaylin Noel", "Matthew Golden"], answer: 1 },
-    { question: "Which player ate a W?", choices: ["Blake Bortles", "Richard Sherman", "Jameis Winston", "Jamaal Williams"], "answer": 2},
-    ],
-  },
-    "2026-10-19": { //Monday
-    event: "49ersCommandersMNF",
-    questions: [
-    { question: "Which team won the 1983 NFC Championship Game", choices: ["Washington Redskins", "San Francisco"], "answer": 0 },
-    { question: "Which Washington quarterback was MVP of Super Bowl XXII after throwing four TDs in one quarter?", choices: ["Jay Schroeder", "Doug Williams", "Joe Theismann", "Mark Rypien"], answer: 1 },
-    { question: "Over/Under 1,150.5: Brock Purdy's passing yards through Week 5?", choices: ["Over", "Under"], answer: 0 },
-    { question: "Who has more receiving yards this season?", choices: ["Terry McLaurin", "George Kittle", "Mike Evans", "Stefon Diggs"], "answer": 2 },
-    { question: "How many Interceptions has Jayden Daniels thrown this season?", choices: ["0", "4", "5", "7"], answer: 0 },
-    ],
-  },
-    "2026-10-20": { //Tuesday
-    event: "",
-    questions: [
-    { question: "OVER or UNDER: The Broncos have O/U 4.5 Super Bowl losses all-time.", choices: ["OVER", "UNDER"], answer: 0 },
-    { question: "Which of these was an ACTUAL NFL player?", choices: ["Dick Butkus", "Kayvontez Picklesworth", "Jaqwellius Gaultin", "Tennison Dunder"], answer: 0 },
-    { question: "Which player became the first in Panthers history to record 1,000 rushing and 1,000 receiving yards in the same season?", choices: ["Stephen Davis", "Christian McCaffrey", "Steve Smith Sr.", "DeAngelo Williams"], "answer": 1},
-    { question: "Which Running Back won NFL MVP in 2006?", choices: ["LaDainian Tomlinson", "Edgerrin James", "Jamal Lewis", "Shaun Alexander"], answer: 0 },
-    { question: "Guess the Career QB:\n- 27,989 Pass Yards\n- 212 Pass TDs\n- 210 INTs\n- 70.9 Passer Rating", choices: ["Terry Bradshaw", "Alex Smith", "Carson Wentz", "Baker Mayfield"], answer: 0 },
-    ],
-  },
-   "2026-10-21": { //Wednesday
-    event: "",
-    questions: [
-    { question: "Who holds the NFL record for most rushing yards in a single season?", choices: ["Jonathan Taylor", "Felix Jones", "OJ Simpson", "Eric Dickerson"], answer: 3 },
-    { question: "Guess the Career TE:\n- 11,841 Rec. Yards\n- 116 Rec. TDs\n- 955 Receptions", choices: ["Jason Witten", "Antonio Gates", "Rob Gronkowski", "Frank Wycheck"], answer: 1 },
-    { question: "Who won Defensive Player of the Year in 2009?", choices: ["Darrelle Revis", "Jared Allen", "Charles Woodson", "James Harrison"], answer: 2 },
-    { question: "OVER or UNDER: The Ravens have O/U 1.5 Super Bowl victories all-time.", choices: ["OVER", "UNDER"], answer: 0 },
-    { question: "Which team was originally called the Boston Braves.", choices: ["Washington Commanders", "NY Giants", "New England Patriots", "Buffalo Bills"], answer: 0 },
-    ],
-  },
-   "2026-10-22": { //Thursday
-    event: "PatriotsBearsTNF",
-    questions: [
-    { question: "True or False: Drake Maye and Caleb Williams were the 1st and 2nd Overall picks in the 2024 Draft.", choices: ["True", "False"], answer: 1 },
-    { question: "Which Patriots player scored their only TD in the Patriots vs Bears Super Bowl?", choices: ["Stanley Morgan", "Lin Dawson", "Irving Fryar", "Cedcric Jones"], answer: 2 },
-    { question: "Which player has more Receiving Yards in 2026?", choices: ["AJ Brown", "Rome Odunze", "Romeo Doubs", "Luther Burden"], answer: 3 },
-    { question: "Who was the Super Bowl MVP of Super Bowl XX?", choices: ["William \"The Refrigerator\" Perry", "Richard Dent", "Jim McMahon", "Walter Payton"], answer: 1 },
-    { question: "Who was the Legendary Bears head coach during their 1985 Super Bowl Championship?", choices: ["Bill Walsh", "Tom Landry", "Mike Ditka", "Don Shula"], answer: 2 },
-    ],
-  },
-   "2026-10-23": { //Friday
-    event: "",
-    questions: [
-    { question: "True or False: The Saints existed for more than 30 seasons before winning their first playoff game.", choices: ["True", "False"], answer: 0 },
-    { question: "Who leads the NFL in sacks?", choices: ["Chase Young", "Greg Rousseau", "Will Anderson Jr.", "T.J. Watt"], answer: 2 },
-    { question: "OVER or UNDER: Mike Evans has O/U 13,500 Career Scrimmage Yds.", choices: ["OVER", "UNDER"], answer: 1 },
-    { question: "Who won Offensive Rookie of the Year in 2009?", choices: ["DeShaun Foster", "Chad Johnson", "Scott Chandler", "Percy Harvin"], answer: 3 },
-    { question: "Which of these was an ACTUAL NFL player?", choices: ["Smoke Monday", "Zebrion Crankshaw", "Velociraptor Malone", "Rashontez Gaultin"], answer: 0 },
-    ],
-  },
-     "2026-10-24": { //Saturday
-    event: "",
-    questions: [
-    { question: "Which player was famous for the quote, “Ice up, son”?", choices: ["Brandon Marshall", "Jalen Ramsey", "Steve Smith Sr.", "Chad “Ochocinco” Johnson"], answer: 2 },
-    { question: "Which of these was an ACTUAL NFL player?", choices: ["Benedictus Fluttergoose", "Treqwan Tomlin", "Bub Means", "Sonja Scrowl"], answer: 2 },
-    { question: "Who won Super Bowl XXXVI?", choices: ["Patriots", "Buccaneers", "Giants", "Colts"], answer: 0 },
-    { question: "What year was the Bills' first season?", choices: ["1960", "1963", "1954", "1956"], answer: 0 },
-    { question: "Who leads the NFL in Punts this season?", choices: ["Braden Mann (Eagles)", "Jeremy Crawshaw (Broncos)", "Corey Bojorquez (Browns)", "Tress Way (Commanders)"], answer: 0 },
-    ],
-  },
-     "2026-10-25": { //Sunday
-    event: "",
-    questions: [
-    { live: true, question: "Who leads the NFL in scrimmage yards?", choices: ["Bijan Robinson", "Jonathan Taylor", "Jahmyr Gibbs", "Jaylen Warren"], answer: 0 },
-    { live: true, question: "OVER or UNDER: Will Anderson Jr. has O/U 6.5 sacks.", choices: ["OVER", "UNDER"], answer: 0 },
-    { question: "True or False: Brett Favre was originally drafted by the Green Bay Packers.", choices: ["True", "False"], answer: 1 },
-    { question: "Which NFL team plays their home games at Caesars Superdome?", choices: ["New Orleans Saints", "Las Vegas Raiders", "Dallas Cowboys", "Detroit Lions"], answer: 0 },
-    { question: "Which of these was an ACTUAL NFL player?", choices: ["Quantrell Finnenbaum", "Zohnathan Fettergun II", "Tavontay Crumbleton", "Tutan Reyes"], answer: 3 },
-    ],
-  },
      "2026-10-26": { //Monday
     event: "CowboysEaglesMNF",
     questions: [
@@ -403,14 +72,74 @@ export const CALENDAR = {
     { question: "OVER or UNDER: Thurman Thomas has O/U 50 Career Rushing TDs.", choices: ["OVER", "UNDER"], answer: 0 },
     ],
   },
-     "2099-01-02": { //TEST - LIVE O/U demo, remove before pushing
+     "2026-11-02": { //Monday
+    event: "BearsSeahawksMNF",
+    questions: [
+    { question: "Who kicked the OT game-winner in the Bears' 2006 playoff victory over Seattle?", choices: ["Adam Vinatieri", "Cody Parkey", "Robbie Gould", "Kevin Butler"], answer: 2 },
+    { question: "What was the final score of Seattle's 2024 Thursday night victory over Chicago?", choices: ["6-3", "24-23", "31-27", "20-17"], answer: 0 },
+    { question: "How many field goals did Jason Myers make in Seattle's Super Bowl LX victory?", choices: ["2", "3", "4", "5"], answer: 3 },
+    { question: "Which Bears legend played his final NFL game with the Seahawks?", choices: ["Matt Forte", "Walter Payton", "Brian Urlacher", "Devin Hester"], answer: 3 },
+    { question: "True or False: The Seahawks have played in the NFC for their entire franchise history.", choices: ["True", "False"], answer: 1 },
+    ],
+  },
+     "2026-11-03": { //Tuesday
     event: "",
     questions: [
-    { live: true, question: "OVER or UNDER: Josh Allen has O/U 1,290.5 passing yards.", choices: ["OVER", "UNDER"], answer: 0 },
-    { live: true, question: "OVER or UNDER: Matthew Stafford has O/U 13.5 passing TDs.", choices: ["OVER", "UNDER"], answer: 1 },
-    { live: true, question: "OVER or UNDER: Derrick Henry has O/U 662.5 rushing yards.", choices: ["OVER", "UNDER"], answer: 1 },
-    { live: true, question: "OVER or UNDER: Ja'Marr Chase has O/U 258.5 receiving yards.", choices: ["OVER", "UNDER"], answer: 0 },
-    { live: true, question: "OVER or UNDER: Will Anderson Jr. has O/U 8.5 sacks.", choices: ["OVER", "UNDER"], answer: 1 },
+    { live: true, question: "Which tight end has the most receiving yards?", choices: [] },
+    { question: "Which of these was an ACTUAL NFL player?", choices: ["Tretavious Humperdink", "Marquaveon Thunderclap", "Isaiahh Loudermilk", "D'Markus Winterbottom"], answer: 2 },
+    { question: "True or False: The Carolina Panthers play their home games at Highmark Stadium.", choices: ["True", "False"], answer: 1 },
+    { question: "Guess the Career TE:\n- 3,837 Rec. Yards\n- 33 Rec. TDs\n- 351 Receptions", choices: ["Gerald Everett", "Jerramy Stevens", "L.J. Smith", "Eric Ebron"], answer: 3 },
+    { question: "OVER or UNDER: Alex Smith has O/U 210 Career Passing TDs.", choices: ["OVER", "UNDER"], answer: 1 },
+    ],
+  },
+     "2026-11-04": { //Wednesday
+    event: "",
+    questions: [
+    { question: "True or False: Terry Bradshaw has won 5 Super Bowls.", choices: ["True", "False"], answer: 1 },
+    { question: "Which of these was an ACTUAL NFL player?", choices: ["Jaqwellius Henrich", "Rashaan Salaam", "Devontarius Bonecastle", "Johnson Martin III"], answer: 1 },
+    { question: "What overall pick number was Ryan Leaf drafted at?", choices: ["14", "7", "15", "2"], answer: 3 },
+    { question: "Guess the Career WR:\n- 15,934 Rec. Yards\n- 153 Rec. TDs\n- 1,078 Receptions", choices: ["Nate Burleson", "Muhsin Muhammad", "Terrell Owens", "Bernard Berrian"], answer: 2 },
+    { question: "OVER or UNDER: Cameron Brate has O/U 45 Career Receiving TDs.", choices: ["OVER", "UNDER"], answer: 1 },
+    ],
+  },
+     "2026-11-05": { //Thursday
+    event: "JaguarsRavensTNF",
+    questions: [
+    { question: "How many consecutive games did the Jaguars win against the Ravens to begin their rivalry?", choices: ["5", "8", "9", "12"], answer: 1 },
+    { question: "Before the 2002 NFL realignment, the Jaguars and Ravens shared which division?", choices: ["AFC Central", "AFC East", "NFC Central", "NFC South"], answer: 0 },
+    { question: "Who quarterbacked Baltimore to its first-ever victory over Jacksonville in 2000?", choices: ["Steve McNair", "Trent Dilfer", "Tony Banks", "Elvis Grbac"], answer: 2 },
+    { question: "Who was the Jacksonville Jaguars' first-ever NFL Draft selection?", choices: ["Fred Taylor", "Mark Brunell", "Tony Boselli", "Jimmy Smith"], answer: 2 },
+    { question: "The Baltimore Ravens' team name was inspired by the work of which famous author?", choices: ["Robert Frost", "Walt Whitman", "Edgar Allan Poe", "John Ronald Reuel Tolkien"], answer: 2 },
+    ],
+  },
+     "2026-11-06": { //Friday
+    event: "",
+    questions: [
+    { question: "Which of these was an ACTUAL NFL player?", choices: ["Markson McNeail", "Peter Van Der Berg", "Jaqwellius Whistleblower", "Beau Brade"], answer: 3 },
+    { live: true, question: "Which team has allowed the fewest points?", choices: [] },
+    { question: "Guess the Career TE:\n- 2,501 Rec. Yards\n- 26 Rec. TDs\n- 221 Receptions", choices: ["Daniel Graham", "Fred Davis", "Billy Miller", "Tyler Eifert"], answer: 3 },
+    { question: "What division do the Baltimore Ravens play in?", choices: ["AFC North", "NFC West", "AFC East", "NFC North"], answer: 0 },
+    { question: "Which RB has more Career Rushing Yards?", choices: ["Derrick Henry", "Thurman Thomas", "Steven Jackson", "Corey Dillon"], answer: 0 },
+    ],
+  },
+     "2026-11-07": { //Saturday
+    event: "",
+    questions: [
+    { question: "Which coach led the Bears to a Super Bowl victory?", choices: ["Matt LaFleur", "Mike Ditka", "Andy Reid", "Dennis Green"], answer: 1 },
+    { question: "Which of these was an ACTUAL NFL player?", choices: ["Jermissy Wainwright III", "Zackson Fairweather", "Zecharion Stonehammer", "Toi Cook"], answer: 3 },
+    { question: "True or False: The Indianapolis Colts play in the NFC East.", choices: ["True", "False"], answer: 1 },
+    { question: "OVER or UNDER: T.J. Houshmandzadeh has O/U 7,300 Career Receiving Yards.", choices: ["OVER", "UNDER"], answer: 1 },
+    { question: "Which RB has more Career Rushing Yards?", choices: ["Jim Brown", "LaDainian Tomlinson", "Thurman Thomas", "Adrian Peterson"], answer: 3 },
+    ],
+  },
+     "2026-11-08": { //Sunday
+    event: "",
+    questions: [
+    { question: "Guess the Career WR:\n- 6,698 Rec. Yards\n- 36 Rec. TDs\n- 417 Receptions", choices: ["Cris Collinsworth", "Jimmy Smith", "James Thrash", "Herman Moore"], answer: 0 },
+    { question: "Which of these was an ACTUAL NFL player?", choices: ["Javorius Drakesworth", "Hingle McCringleberry", "Jermissy Finnenbaum", "De'Anthony Thomas"], answer: 3 },
+    { question: "In what season did the \"28-3 Comeback\" occur?", choices: ["2016", "2015", "2014", "2019"], answer: 0 },
+    { question: "Who holds the NFL record for most rushing yards in a single season?", choices: ["Barry Sanders", "LaDainian Tomlinson", "Christian McCaffrey", "Eric Dickerson"], answer: 3 },
+    { question: "What division do the Atlanta Falcons play in?", choices: ["AFC East", "AFC North", "NFC South", "NFC West"], answer: 2 },
     ],
   },
 };

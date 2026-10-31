@@ -307,6 +307,35 @@ In `date-utils.js`, you can override the active date with a query string (non-pr
 http://127.0.0.1:5500/index.html?date=2026-05-07
 ```
 
+**Copy/paste — upcoming dates in `questions.js`** (update this list when you add a new batch):
+
+```
+http://127.0.0.1:5500/index.html?date=2026-10-31
+http://127.0.0.1:5500/index.html?date=2026-11-01
+http://127.0.0.1:5500/index.html?date=2026-11-02
+http://127.0.0.1:5500/index.html?date=2026-11-03
+http://127.0.0.1:5500/index.html?date=2026-11-04
+http://127.0.0.1:5500/index.html?date=2026-11-05
+http://127.0.0.1:5500/index.html?date=2026-11-06
+http://127.0.0.1:5500/index.html?date=2026-11-07
+http://127.0.0.1:5500/index.html?date=2026-11-08
+```
+
+**Copy/paste — browser console helpers** (paste into DevTools on the local site):
+
+```js
+// Jump to a specific date
+location.search = "?date=2026-11-01";
+
+// Step forward one day from the current ?date= (or today)
+(() => { const p = new URLSearchParams(location.search); const d = p.get("date") ? new Date(p.get("date") + "T00:00") : new Date(); d.setDate(d.getDate() + 1); location.search = "?date=" + d.toLocaleDateString("en-CA"); })();
+
+// Step back one day
+(() => { const p = new URLSearchParams(location.search); const d = p.get("date") ? new Date(p.get("date") + "T00:00") : new Date(); d.setDate(d.getDate() - 1); location.search = "?date=" + d.toLocaleDateString("en-CA"); })();
+```
+
+Replaying the same date? Your attempt is saved — see **Resetting a Quiz Attempt** below.
+
 ### Resetting a Quiz Attempt
 
 After playing, both localStorage and Supabase remember your attempt — clearing just localStorage won't work if you're signed in, because `showStartScreen()` re-fetches the server attempt and syncs it back.
