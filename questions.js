@@ -85,7 +85,7 @@ export const CALENDAR = {
      "2026-11-03": { //Tuesday
     event: "",
     questions: [
-    { live: true, question: "Which tight end has the most receiving yards?", choices: [] },
+    { live: true, question: "Which tight end has the most receiving yards?", choices: ["Harold Fannin Jr.", "Trey McBride", "Brock Bowers", "Isaiah Likely"], answer: 2 },
     { question: "Which of these was an ACTUAL NFL player?", choices: ["Tretavious Humperdink", "Marquaveon Thunderclap", "Isaiahh Loudermilk", "D'Markus Winterbottom"], answer: 2 },
     { question: "True or False: The Carolina Panthers play their home games at Highmark Stadium.", choices: ["True", "False"], answer: 1 },
     { question: "Guess the Career TE:\n- 3,837 Rec. Yards\n- 33 Rec. TDs\n- 351 Receptions", choices: ["Gerald Everett", "Jerramy Stevens", "L.J. Smith", "Eric Ebron"], answer: 3 },
