@@ -116,7 +116,7 @@ export const CALENDAR = {
     event: "",
     questions: [
     { question: "Which of these was an ACTUAL NFL player?", choices: ["Markson McNeail", "Peter Van Der Berg", "Jaqwellius Whistleblower", "Beau Brade"], answer: 3 },
-    { live: true, question: "Which team has allowed the fewest points?", choices: [] },
+    { live: true, question: "Which team has allowed the fewest points?", choices: ["Vikings", "Chiefs", "Bengals", "49ers"], answer: 0 },
     { question: "Guess the Career TE:\n- 2,501 Rec. Yards\n- 26 Rec. TDs\n- 221 Receptions", choices: ["Daniel Graham", "Fred Davis", "Billy Miller", "Tyler Eifert"], answer: 3 },
     { question: "What division do the Baltimore Ravens play in?", choices: ["AFC North", "NFC West", "AFC East", "NFC North"], answer: 0 },
     { question: "Which RB has more Career Rushing Yards?", choices: ["Derrick Henry", "Thurman Thomas", "Steven Jackson", "Corey Dillon"], answer: 0 },
