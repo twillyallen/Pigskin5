@@ -493,6 +493,7 @@ export async function fetchLeaderboard(dateStr) {
 // Streak + profile cache
 let _cachedDailyStreak = null;
 let _cachedTDStreak = null;
+let _tdOverride = null;
 let _cachedFavoriteTeam = null;
 
 export async function refreshStreakCache() {
@@ -509,7 +510,12 @@ export async function refreshStreakCache() {
     .eq("id", user.id)
     .maybeSingle();
   _cachedDailyStreak = data?.current_streak ?? 0;
-  _cachedTDStreak = data?.current_td_streak ?? 0;
+  const dbTd = data?.current_td_streak ?? 0;
+  // A TD streak computed from today's result wins over a DB value that may
+  // not reflect it yet (or at all, if the streak RPC misbehaved).
+  _cachedTDStreak = _tdOverride === null ? dbTd
+    : _tdOverride === 0 ? 0
+    : Math.max(dbTd, _tdOverride);
   _cachedFavoriteTeam = data?.favorite_team ?? null;
 }
 
@@ -532,7 +538,7 @@ export function getCachedTDStreak() {
 // a stale DB value (e.g. after a streak break) before the RPC finishes.
 export function overrideCachedStreaks({ daily, td } = {}) {
   if (daily !== undefined) _cachedDailyStreak = daily;
-  if (td !== undefined) _cachedTDStreak = td;
+  if (td !== undefined) _cachedTDStreak = _tdOverride = td;
 }
 
 export async function hasPlayedToday(dateStr) {

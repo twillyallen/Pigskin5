@@ -142,6 +142,96 @@ export const CALENDAR = {
     { question: "What division do the Atlanta Falcons play in?", choices: ["AFC East", "AFC North", "NFC South", "NFC West"], answer: 2 },
     ],
   },
+     "2026-11-09": { //Monday
+    event: "BillsVikingsMNF",
+    questions: [
+    { question: "True or False:\nThe Bills and Vikings both have 4 Super Bowl Losses.", choices: ["True", "False"], answer: 0 },
+    { question: "Which Vikings WR was traded to the Bills in 2020?", choices: ["Adam Thielen", "Stefon Diggs", "Justin Jefferson", "Cordarrelle Patterson"], answer: 1 },
+    { question: "Which team holds the lead in the All-Time Vikings vs Bills series?", choices: ["Bills", "Vikings", "Tie"], answer: 1 },
+    { question: "Which Vikings defender did Josh Allen famously hurdle in 2018?", choices: ["Eric Kendricks", "Harrison Smith", "Anthony Barr", "Danielle Hunter"], answer: 2 },
+    { question: "Who was the QB for the Vikings the last time they appeared in the Super Bowl?", choices: ["Fran Tarkenton", "Joe Kapp", "Ron Jaworski", "Billy Kilmer"], answer: 0 },
+    ],
+  },
+     "2026-11-10": { //Tuesday
+    event: "",
+    questions: [
+    { question: "Which of these was an ACTUAL NFL player?", choices: ["Jermaine Nickelstein", "Trey'vor Goldsworth", "Peter Hartfordshire", "Qwan'tez Stiggers"], answer: 3 },
+    { question: "Which coach said the famous quote \"You play to win the game!\"?", choices: ["Herm Edwards", "Vince Lombardi", "Jim Mora", "Marv Levy"], answer: 0 },
+    { question: "OVER or UNDER: Damien Harris has O/U 35 Career Total TDs.", choices: ["OVER", "UNDER"], answer: 1 },
+    { question: "Guess the Career WR:\n- 5,742 Rec. Yards\n- 33 Rec. TDs\n- 412 Receptions", choices: ["Jerry Jeudy", "Kenny Stills", "Alshon Jeffery", "Ted Ginn"], answer: 3 },
+    { live: true, question: "Who leads the NFL in interceptions?", choices: [] },
+    ],
+  },
+     "2026-11-11": { //Wednesday
+    event: "",
+    questions: [
+    { question: "Guess the Career QB:\n- 16,485 Pass Yards\n- 86 Pass TDs\n- 39 INTs\n- 85.6 Passer Rating", choices: ["Jacoby Brissett", "Mark Sanchez", "Joey Harrington", "Brian Griese"], answer: 0 },
+    { question: "Which of these was an ACTUAL NFL player?", choices: ["Ravioli Buccatini Sr.", "Shaqavian Fender", "Jackmerius Tacktheritrix", "D'Onta Foreman"], answer: 3 },
+    { question: "How many career rushing yards does Emmitt Smith have (NFL all-time record)?", choices: ["16,640", "17,257", "18,355", "19,371"], answer: 2 },
+    { question: "Which TE has more Career Receiving Yards?", choices: ["Tony Gonzalez", "Greg Olsen", "Travis Kelce", "Vernon Davis"], answer: 0 },
+    { question: "True or False: The Dallas Cowboys play in the AFC West.", choices: ["True", "False"], answer: 1 },
+    ],
+  },
+     "2026-11-12": { //Thursday
+    event: "GiantsCommandersTNF",
+    questions: [
+    { question: "Which team leads the all-time Giants–Commanders rivalry?", choices: ["New York Giants", "Washington Commanders", "Tied"], answer: 0 },
+    { question: "Which Washington quarterback won Super Bowl XXII MVP?", choices: ["Joe Theismann", "Mark Rypien", "Doug Williams", "Robert Griffin III"], answer: 2 },
+    { question: "What was the final score of the 1986 NFC Championship Game between the Giants and Redskins?", choices: ["Giants 17 - Redskins 0", "Giants 21 - Redskins 17", "Redskins 24 - Giants 23", "Redskins 42 - Giants 27"], answer: 0 },
+    { question: "Which Giants quarterback led New York to its first Super Bowl victory?", choices: ["Eli Manning", "Kerry Collins", "Phil Simms", "Jeff Hostetler"], answer: 2 },
+    { question: "Before moving to Washington, D.C., in 1937, the Commanders franchise played in which city?", choices: ["Baltimore", "Boston", "Philadelphia", "New York"], answer: 1 },
+    ],
+  },
+     "2026-11-13": { //Friday
+    event: "",
+    questions: [
+    { question: "Which of these was an ACTUAL NFL player?", choices: ["L'Carpetron Dookmarriot", "Zohnathan Whistleblower", "J.J. Jansen", "Xmus Jaxon Flaxon-Waxon"], answer: 2 },
+    { live: true, question: "Which wide receiver has the most scrimmage yards?", choices: [] },
+    { question: "Which coach led the Raiders to a Super Bowl victory?", choices: ["Dennis Green", "John Madden", "Herm Edwards", "Mike Ditka"], answer: 1 },
+    { question: "The Tampa Bay Buccaneers were originally placed in which surprising division?", choices: ["NFC Central", "AFC East", "NFC North", "AFC West"], answer: 3 },
+    { question: "What year did the Chargers relocate to Los Angeles?", choices: ["2017", "2020", "2014", "2022"], answer: 0 },
+    ],
+  },
+     "2026-11-14": { //Saturday
+    event: "",
+    questions: [
+    { question: "Guess the Career QB:\n- 19,225 Pass Yards\n- 94 Pass TDs\n- 64 INTs\n- 85.0 Passer Rating", choices: ["Andrew Luck", "Kyle Orton", "Jake Delhomme", "Daniel Jones"], answer: 3 },
+    { live: true, question: "What is the Buccaneers' record?", choices: [] },
+    { question: "OVER or UNDER: The Browns have O/U 0.5 Super Bowl victories all-time.", choices: ["OVER", "UNDER"], answer: 1 },
+    { question: "Who led the NFL in Rushing TDs in 2009?", choices: ["Chris Johnson", "Arian Foster", "DeAngelo Williams", "Adrian Peterson"], answer: 3 },
+    { question: "True or False: 1933 was the Steelers' first season.", choices: ["True", "False"], answer: 0 },
+    ],
+  },
+     "2026-11-15": { //Sunday
+    event: "",
+    questions: [
+    { live: true, question: "OVER or UNDER: PLAYER NAME has O/U LINE scrimmage yards.", choices: [] },
+    { question: "In what season did the \"Butt Fumble\" occur?", choices: ["2012", "2011", "2015", "2010"], answer: 0 },
+    { question: "Guess the Career QB:\n- 24,154 Pass Yards\n- 149 Pass TDs\n- 106 INTs\n- 87.8 Passer Rating", choices: ["Trent Green", "Joe Burrow", "Marcus Mariota", "Daunte Culpepper"], answer: 3 },
+    { question: "OVER or UNDER: Andre Roberts has O/U 20 Career Receiving TDs.", choices: ["OVER", "UNDER"], answer: 1 },
+    { question: "True or False: Johnny Manziel started more than 10 career NFL games.", choices: ["True", "False"], answer: 1 },
+    ],
+  },
+     "2026-11-16": { //Monday
+    event: "",
+    questions: [
+    { question: "", choices: ["", "", "", ""], answer: 0 },
+    { question: "", choices: ["", "", "", ""], answer: 0 },
+    { question: "", choices: ["", "", "", ""], answer: 0 },
+    { question: "", choices: ["", "", "", ""], answer: 0 },
+    { question: "", choices: ["", "", "", ""], answer: 0 },
+    ],
+  },
+     "2026-11-17": { //Tuesday
+    event: "",
+    questions: [
+    { question: "Which of these was an ACTUAL NFL player?", choices: ["La'Dain Brightwater", "Deontarius Crankshaw", "Russ Yeast", "Kayvontez Fender"], answer: 2 },
+    { question: "OVER or UNDER: The Cardinals have been located in O/U 3.5 cities.", choices: ["OVER", "UNDER"], answer: 1 },
+    { question: "True or False: The Cowboys have won 6 Super Bowls.", choices: ["True", "False"], answer: 1 },
+    { question: "Guess the Career WR:\n- 8,815 Rec. Yards\n- 46 Rec. TDs\n- 607 Receptions", choices: ["Rishard Matthews", "Justin Jefferson", "Michael Thomas", "Drake London"], answer: 1 },
+    { live: true, question: "Which team has the best point differential?", choices: [] },
+    ],
+  },
 };
 
 

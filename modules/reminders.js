@@ -8,7 +8,7 @@ import { getCurrentUser } from './supabase-client.js';
 // Example entry:
 //   3: { title: "MNF Tonight!", message: "Chiefs vs Eagles kicks off at 8:20 ET on ESPN. Come back and brag after your pick!" }
 export const REMINDERS = {
-  0: null, // Sunday
+  0: {title: "Happy Football Sunday!", message: "Enjoy the games!\nLet's go!"}, // Sunday
   1: {title: "Challenge your Rivals!", message: "Click a Player Card, or send a link!\nProve you know more ball!"}, // Monday
   2: {title: "Achievements!", message: "Click on your profile to view your achievements!"}, // Tuesday
   3: {title: "Share your score!", message: "Press share. Show off your ball knowledge!"}, // Wednesday
