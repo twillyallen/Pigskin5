@@ -159,7 +159,7 @@ export const CALENDAR = {
     { question: "Which coach said the famous quote \"You play to win the game!\"?", choices: ["Herm Edwards", "Vince Lombardi", "Jim Mora", "Marv Levy"], answer: 0 },
     { question: "OVER or UNDER: Damien Harris has O/U 35 Career Total TDs.", choices: ["OVER", "UNDER"], answer: 1 },
     { question: "Guess the Career WR:\n- 5,742 Rec. Yards\n- 33 Rec. TDs\n- 412 Receptions", choices: ["Jerry Jeudy", "Kenny Stills", "Alshon Jeffery", "Ted Ginn"], answer: 3 },
-    { live: true, question: "Who leads the NFL in interceptions?", choices: [] },
+    { live: true, question: "Who leads the NFL in interceptions?", choices: ["Byron Murphy", "Zyon McCollum", "Xavier McKinney", "Quentin Lake"], answer: 2 },
     ],
   },
      "2026-11-11": { //Wednesday
