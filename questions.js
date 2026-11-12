@@ -186,7 +186,7 @@ export const CALENDAR = {
     event: "",
     questions: [
     { question: "Which of these was an ACTUAL NFL player?", choices: ["L'Carpetron Dookmarriot", "Zohnathan Whistleblower", "J.J. Jansen", "Xmus Jaxon Flaxon-Waxon"], answer: 2 },
-    { live: true, question: "Which wide receiver has the most scrimmage yards?", choices: [] },
+    { live: true, question: "Which wide receiver has the most scrimmage yards?", choices: ["Christian Watson", "Jaxon Smith-Njigba", "CeeDee Lamb", "Tee Higgins"], answer: 1 },
     { question: "Which coach led the Raiders to a Super Bowl victory?", choices: ["Dennis Green", "John Madden", "Herm Edwards", "Mike Ditka"], answer: 1 },
     { question: "The Tampa Bay Buccaneers were originally placed in which surprising division?", choices: ["NFC Central", "AFC East", "NFC North", "AFC West"], answer: 3 },
     { question: "What year did the Chargers relocate to Los Angeles?", choices: ["2017", "2020", "2014", "2022"], answer: 0 },
