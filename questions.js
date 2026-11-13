@@ -196,7 +196,7 @@ export const CALENDAR = {
     event: "",
     questions: [
     { question: "Guess the Career QB:\n- 19,225 Pass Yards\n- 94 Pass TDs\n- 64 INTs\n- 85.0 Passer Rating", choices: ["Andrew Luck", "Kyle Orton", "Jake Delhomme", "Daniel Jones"], answer: 3 },
-    { live: true, question: "What is the Buccaneers' record?", choices: [] },
+    { live: true, question: "What is the Buccaneers' record?", choices: ["3-6", "2-7", "1-8", "4-5"], answer: 0 },
     { question: "OVER or UNDER: The Browns have O/U 0.5 Super Bowl victories all-time.", choices: ["OVER", "UNDER"], answer: 1 },
     { question: "Who led the NFL in Rushing TDs in 2009?", choices: ["Chris Johnson", "Arian Foster", "DeAngelo Williams", "Adrian Peterson"], answer: 3 },
     { question: "True or False: 1933 was the Steelers' first season.", choices: ["True", "False"], answer: 0 },
