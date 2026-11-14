@@ -205,7 +205,7 @@ export const CALENDAR = {
      "2026-11-15": { //Sunday
     event: "",
     questions: [
-    { live: true, question: "OVER or UNDER: PLAYER NAME has O/U LINE scrimmage yards.", choices: [] },
+    { live: true, question: "OVER or UNDER: Jahmyr Gibbs has O/U 923.5 scrimmage yards.", choices: ["OVER", "UNDER"], answer: 0 },
     { question: "In what season did the \"Butt Fumble\" occur?", choices: ["2012", "2011", "2015", "2010"], answer: 0 },
     { question: "Guess the Career QB:\n- 24,154 Pass Yards\n- 149 Pass TDs\n- 106 INTs\n- 87.8 Passer Rating", choices: ["Trent Green", "Joe Burrow", "Marcus Mariota", "Daunte Culpepper"], answer: 3 },
     { question: "OVER or UNDER: Andre Roberts has O/U 20 Career Receiving TDs.", choices: ["OVER", "UNDER"], answer: 1 },
