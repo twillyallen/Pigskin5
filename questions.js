@@ -229,7 +229,7 @@ export const CALENDAR = {
     { question: "OVER or UNDER: The Cardinals have been located in O/U 3.5 cities.", choices: ["OVER", "UNDER"], answer: 1 },
     { question: "True or False: The Cowboys have won 6 Super Bowls.", choices: ["True", "False"], answer: 1 },
     { question: "Guess the Career WR:\n- 8,815 Rec. Yards\n- 46 Rec. TDs\n- 607 Receptions", choices: ["Rishard Matthews", "Justin Jefferson", "Michael Thomas", "Drake London"], answer: 1 },
-    { live: true, question: "Which team has the best point differential?", choices: [] },
+    { live: true, question: "Which team has the best point differential?", choices: ["Lions", "49ers", "Jaguars", "Rams"], answer: 2 },
     ],
   },
 };
