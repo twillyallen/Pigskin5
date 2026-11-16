@@ -232,6 +232,57 @@ export const CALENDAR = {
     { live: true, question: "Which team has the best point differential?", choices: ["Lions", "49ers", "Jaguars", "Rams"], answer: 2 },
     ],
   },
+     "2026-11-18": { //Wednesday
+    event: "",
+    questions: [
+    { question: "Guess the Career WR:\n- 6,703 Rec. Yards\n- 37 Rec. TDs\n- 539 Receptions", choices: ["Marty Booker", "Kevin Johnson", "Hines Ward", "David Patten"], answer: 0 },
+    { question: "How many points did LaDainian Tomlinson score in his record-setting 2006 season?", choices: ["171", "173", "200", "186"], answer: 3 },
+    { question: "Which of these was an ACTUAL NFL player?", choices: ["Ventravian Winterbottom", "Jermissy Henrich", "Jermaine Goldsworth", "Amen Ogbongbemiga"], answer: 3 },
+    { question: "What year did the Lions last win an NFL Championship before the Super Bowl era?", choices: ["1957", "1965", "1932", "1953"], answer: 0 },
+    { question: "How many Super Bowls have the Washington Commanders won?", choices: ["2", "1", "6", "3"], answer: 3 },
+    ],
+  },
+     "2026-11-20": { //Friday
+    event: "",
+    questions: [
+    { question: "Who was the first Broncos player to win NFL MVP?", choices: ["Craig Morton", "Terrell Davis", "John Elway", "Peyton Manning"], answer: 2 },
+    { question: "Who had more receptions: Jimmy Smith (1999) or Steve Smith (2005)?", choices: ["Jimmy Smith (1999)", "Steve Smith (2005)"], answer: 0 },
+    { question: "True or False: 1960 was the Chargers' first season.", choices: ["True", "False"], answer: 0 },
+    { question: "Guess the Career TE:\n- 2,033 Rec. Yards\n- 22 Rec. TDs\n- 150 Receptions", choices: ["Cole Kmet", "Kevin Boss", "Desmond Clark", "Jimmy Graham"], answer: 1 },
+    { question: "Which of these was an ACTUAL NFL player?", choices: ["Israel Idonije", "Sofia Crankshaw", "Montravius Tomlin", "Ruke Boonclap"], answer: 0 },
+    ],
+  },
+     "2026-11-21": { //Saturday
+    event: "",
+    questions: [
+    { live: true, question: "OVER or UNDER: PLAYER NAME has O/U LINE scrimmage yards.", choices: [] },
+    { question: "Who holds the NFL single-season record for receptions?", choices: ["Marvin Harrison", "Cooper Kupp", "Michael Thomas", "Julio Jones"], answer: 2 },
+    { question: "Guess the Career QB:\n- 27,989 Pass Yards\n- 212 Pass TDs\n- 210 INTs\n- 70.9 Passer Rating", choices: ["Ken Stabler", "Trent Green", "Troy Aikman", "Terry Bradshaw"], answer: 3 },
+    { question: "Which of these was an ACTUAL NFL player?", choices: ["Devon Bumbleton", "Peerless Price", "Lil'Jordan Hammersmith", "Trevontay Whistleblower"], answer: 1 },
+    { question: "Who holds the NFL record for most career passing yards?", choices: ["Drew Brees", "Matthew Stafford", "Tom Brady", "Peyton Manning"], answer: 2 },
+    ],
+  },
+     "2026-11-22": { //Sunday
+    event: "",
+    questions: [
+    { question: "Guess the Career RB:\n- 2,067 Rush Yards\n- 9 Rush TDs\n- 3.8 Yards per Carry", choices: ["Isaiah Crowell", "Rachaad White", "Nick Chubb", "Jacquizz Rodgers"], answer: 3 },
+    { question: "OVER or UNDER: Antonio Gibson has O/U 10 Career Rushing TDs.", choices: ["OVER", "UNDER"], answer: 0 },
+    { question: "Which of these was an ACTUAL NFL player?", choices: ["J'Dinkalage Morgoone", "Fair Hooker", "Sofia Dunder", "Ja'Vontavious Bonecastle"], answer: 1 },
+    { question: "True or False: Brett Favre was originally drafted by the Atlanta Falcons.", choices: ["True", "False"], answer: 0 },
+    { live: true, question: "Who leads the NFL in passing yards?", choices: [] },
+    ],
+  },
+     "2026-11-24": { //Tuesday
+    event: "",
+    questions: [
+    { question: "Guess the Career WR:\n- 5,644 Rec. Yards\n- 39 Rec. TDs\n- 458 Receptions", choices: ["Marvin Harrison", "Mike Williams", "Nate Burleson", "Bernard Berrian"], answer: 2 },
+    { question: "Who is the NFL's all-time career leader in receiving yards?", choices: ["Jerry Rice", "Tony Gonzalez", "Terrell Owens", "Larry Fitzgerald"], answer: 0 },
+    { question: "Which of these was an ACTUAL NFL player?", choices: ["Bender Bonecastle", "Sequester Grundelplith M.D.", "Quantrell Thundergood", "Pig Prather"], answer: 3 },
+    { question: "True or False: Barry Sanders retired as the NFL's all-time leading rusher.", choices: ["True", "False"], answer: 1 },
+    { question: "What year did the Raiders relocate to Las Vegas?", choices: ["2024", "2023", "2020", "2022"], answer: 2 },
+    ],
+  },
+
 };
 
 
