@@ -159,7 +159,7 @@ export const CALENDAR = {
     { question: "Which coach said the famous quote \"You play to win the game!\"?", choices: ["Herm Edwards", "Vince Lombardi", "Jim Mora", "Marv Levy"], answer: 0 },
     { question: "OVER or UNDER: Damien Harris has O/U 35 Career Total TDs.", choices: ["OVER", "UNDER"], answer: 1 },
     { question: "Guess the Career WR:\n- 5,742 Rec. Yards\n- 33 Rec. TDs\n- 412 Receptions", choices: ["Jerry Jeudy", "Kenny Stills", "Alshon Jeffery", "Ted Ginn"], answer: 3 },
-    { live: true, question: "Who leads the NFL in interceptions?", choices: [] },
+    { live: true, question: "Who leads the NFL in interceptions?", choices: ["Byron Murphy", "Zyon McCollum", "Xavier McKinney", "Quentin Lake"], answer: 2 },
     ],
   },
      "2026-11-11": { //Wednesday
@@ -186,7 +186,7 @@ export const CALENDAR = {
     event: "",
     questions: [
     { question: "Which of these was an ACTUAL NFL player?", choices: ["L'Carpetron Dookmarriot", "Zohnathan Whistleblower", "J.J. Jansen", "Xmus Jaxon Flaxon-Waxon"], answer: 2 },
-    { live: true, question: "Which wide receiver has the most scrimmage yards?", choices: [] },
+    { live: true, question: "Which wide receiver has the most scrimmage yards?", choices: ["Christian Watson", "Jaxon Smith-Njigba", "CeeDee Lamb", "Tee Higgins"], answer: 1 },
     { question: "Which coach led the Raiders to a Super Bowl victory?", choices: ["Dennis Green", "John Madden", "Herm Edwards", "Mike Ditka"], answer: 1 },
     { question: "The Tampa Bay Buccaneers were originally placed in which surprising division?", choices: ["NFC Central", "AFC East", "NFC North", "AFC West"], answer: 3 },
     { question: "What year did the Chargers relocate to Los Angeles?", choices: ["2017", "2020", "2014", "2022"], answer: 0 },
@@ -196,7 +196,7 @@ export const CALENDAR = {
     event: "",
     questions: [
     { question: "Guess the Career QB:\n- 19,225 Pass Yards\n- 94 Pass TDs\n- 64 INTs\n- 85.0 Passer Rating", choices: ["Andrew Luck", "Kyle Orton", "Jake Delhomme", "Daniel Jones"], answer: 3 },
-    { live: true, question: "What is the Buccaneers' record?", choices: [] },
+    { live: true, question: "What is the Buccaneers' record?", choices: ["3-6", "2-7", "1-8", "4-5"], answer: 0 },
     { question: "OVER or UNDER: The Browns have O/U 0.5 Super Bowl victories all-time.", choices: ["OVER", "UNDER"], answer: 1 },
     { question: "Who led the NFL in Rushing TDs in 2009?", choices: ["Chris Johnson", "Arian Foster", "DeAngelo Williams", "Adrian Peterson"], answer: 3 },
     { question: "True or False: 1933 was the Steelers' first season.", choices: ["True", "False"], answer: 0 },
@@ -205,7 +205,7 @@ export const CALENDAR = {
      "2026-11-15": { //Sunday
     event: "",
     questions: [
-    { live: true, question: "OVER or UNDER: PLAYER NAME has O/U LINE scrimmage yards.", choices: [] },
+    { live: true, question: "OVER or UNDER: Jahmyr Gibbs has O/U 923.5 scrimmage yards.", choices: ["OVER", "UNDER"], answer: 0 },
     { question: "In what season did the \"Butt Fumble\" occur?", choices: ["2012", "2011", "2015", "2010"], answer: 0 },
     { question: "Guess the Career QB:\n- 24,154 Pass Yards\n- 149 Pass TDs\n- 106 INTs\n- 87.8 Passer Rating", choices: ["Trent Green", "Joe Burrow", "Marcus Mariota", "Daunte Culpepper"], answer: 3 },
     { question: "OVER or UNDER: Andre Roberts has O/U 20 Career Receiving TDs.", choices: ["OVER", "UNDER"], answer: 1 },
