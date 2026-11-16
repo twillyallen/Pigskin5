@@ -213,13 +213,13 @@ export const CALENDAR = {
     ],
   },
      "2026-11-16": { //Monday
-    event: "",
+    event: "ChargersRavensMNF",
     questions: [
-    { question: "", choices: ["", "", "", ""], answer: 0 },
-    { question: "", choices: ["", "", "", ""], answer: 0 },
-    { question: "", choices: ["", "", "", ""], answer: 0 },
-    { question: "", choices: ["", "", "", ""], answer: 0 },
-    { question: "", choices: ["", "", "", ""], answer: 0 },
+    { question: "Who kicked FIVE field goals in the Chargers' January 2019 playoff victory over Baltimore?", choices: ["Cameron Dicker", "Nick Novak", "Michael Badgley", "Younghoe Koo"], answer: 2 },
+    { question: "In 1998, Chargers HC Jim Harbaugh played QB for which NFL team?", choices: ["Chicago Bears", "Baltimore Ravens", "San Diego Chargers", "New York Giants"], answer: 1 },
+    { question: "Which of these QBs has started a game his team WON in the 2026 season?", choices: ["Joe Fagnano", "Tyler Huntley", "Justin Herbert", "DJ Uiagalelei"], answer: 1 },
+    { question: "Before becoming the Ravens' head coach, Jesse Minter served as the Chargers' _____ from 2024-2025.", choices: ["Linebackers Coach", "Defensive Coordinator", "Assistant Head Coach", "Special Teams Coach"], answer: 1 },
+    { question: "Which former Chargers All-Pro safety signed with the Ravens in 2016?", choices: ["Adrian Phillips", "Jahleel Addae", "Eric Weddle", "Derwin James"], answer: 2 },
     ],
   },
      "2026-11-17": { //Tuesday
