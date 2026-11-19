@@ -242,6 +242,16 @@ export const CALENDAR = {
     { question: "How many Super Bowls have the Washington Commanders won?", choices: ["2", "1", "6", "3"], answer: 3 },
     ],
   },
+     "2026-11-19": { //Thursday
+    event: "",
+    questions: [
+    { question: "Guess the Career WR:\n- 5,644 Rec. Yards\n- 39 Rec. TDs\n- 458 Receptions", choices: ["Marvin Harrison", "Mike Williams", "Nate Burleson", "Bernard Berrian"], answer: 2 },
+    { question: "Who is the NFL's all-time career leader in receiving yards?", choices: ["Jerry Rice", "Tony Gonzalez", "Terrell Owens", "Larry Fitzgerald"], answer: 0 },
+    { question: "Which of these was an ACTUAL NFL player?", choices: ["Bender Bonecastle", "Sequester Grundelplith M.D.", "Quantrell Thundergood", "Pig Prather"], answer: 3 },
+    { question: "True or False: Barry Sanders retired as the NFL's all-time leading rusher.", choices: ["True", "False"], answer: 1 },
+    { question: "What year did the Raiders relocate to Las Vegas?", choices: ["2024", "2023", "2020", "2022"], answer: 2 },
+    ],
+  },
      "2026-11-20": { //Friday
     event: "",
     questions: [
@@ -272,16 +282,7 @@ export const CALENDAR = {
     { live: true, question: "Who leads the NFL in passing yards?", choices: [] },
     ],
   },
-     "2026-11-24": { //Tuesday
-    event: "",
-    questions: [
-    { question: "Guess the Career WR:\n- 5,644 Rec. Yards\n- 39 Rec. TDs\n- 458 Receptions", choices: ["Marvin Harrison", "Mike Williams", "Nate Burleson", "Bernard Berrian"], answer: 2 },
-    { question: "Who is the NFL's all-time career leader in receiving yards?", choices: ["Jerry Rice", "Tony Gonzalez", "Terrell Owens", "Larry Fitzgerald"], answer: 0 },
-    { question: "Which of these was an ACTUAL NFL player?", choices: ["Bender Bonecastle", "Sequester Grundelplith M.D.", "Quantrell Thundergood", "Pig Prather"], answer: 3 },
-    { question: "True or False: Barry Sanders retired as the NFL's all-time leading rusher.", choices: ["True", "False"], answer: 1 },
-    { question: "What year did the Raiders relocate to Las Vegas?", choices: ["2024", "2023", "2020", "2022"], answer: 2 },
-    ],
-  },
+
 
 };
 
