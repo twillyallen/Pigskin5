@@ -265,7 +265,7 @@ export const CALENDAR = {
      "2026-11-21": { //Saturday
     event: "",
     questions: [
-    { live: true, question: "OVER or UNDER: PLAYER NAME has O/U LINE scrimmage yards.", choices: [] },
+    { live: true, question: "OVER or UNDER: Kenneth Walker III has O/U 1,169.5 scrimmage yards.", choices: ["OVER", "UNDER"], answer: 1 },
     { question: "Who holds the NFL single-season record for receptions?", choices: ["Marvin Harrison", "Cooper Kupp", "Michael Thomas", "Julio Jones"], answer: 2 },
     { question: "Guess the Career QB:\n- 27,989 Pass Yards\n- 212 Pass TDs\n- 210 INTs\n- 70.9 Passer Rating", choices: ["Ken Stabler", "Trent Green", "Troy Aikman", "Terry Bradshaw"], answer: 3 },
     { question: "Which of these was an ACTUAL NFL player?", choices: ["Devon Bumbleton", "Peerless Price", "Lil'Jordan Hammersmith", "Trevontay Whistleblower"], answer: 1 },
