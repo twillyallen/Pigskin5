@@ -279,7 +279,7 @@ export const CALENDAR = {
     { question: "OVER or UNDER: Antonio Gibson has O/U 10 Career Rushing TDs.", choices: ["OVER", "UNDER"], answer: 0 },
     { question: "Which of these was an ACTUAL NFL player?", choices: ["J'Dinkalage Morgoone", "Fair Hooker", "Sofia Dunder", "Ja'Vontavious Bonecastle"], answer: 1 },
     { question: "True or False: Brett Favre was originally drafted by the Atlanta Falcons.", choices: ["True", "False"], answer: 0 },
-    { live: true, question: "Who leads the NFL in passing yards?", choices: [] },
+    { live: true, question: "Who leads the NFL in passing yards?", choices: ["Jordan Love", "Dak Prescott", "Joe Burrow", "Jared Goff"], answer: 0 },
     ],
   },
 
