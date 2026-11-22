@@ -282,6 +282,206 @@ export const CALENDAR = {
     { live: true, question: "Who leads the NFL in passing yards?", choices: ["Jordan Love", "Dak Prescott", "Joe Burrow", "Jared Goff"], answer: 0 },
     ],
   },
+    "2026-11-23": { //Monday
+    event: "BengalsCommandersMNF",
+    questions: [
+    { question: "Who founded the Cincinnati Bengals in 1968?", choices: ["Tiger Woods", "Paul Brown", "John Bengal", "Forrest Gregg"], answer: 1 },
+    { question: "In 2016, the Bengals and Washington played to a 27–27 tie in which country?", choices: ["Germany", "England", "Brazil", "Mexico"], answer: 1 },
+    { question: "Which QB has won a playoff game more recently?", choices: ["Joe Burrow", "Joe Flacco", "Jayden Daniels", "Marcus Mariota"], answer: 2 },
+    { question: "Joe Burrow and Jayden Daniels both won the Heisman Trophy at LSU. How many years apart did they win?", choices: ["2", "3", "4", "5"], answer: 2 },
+    { question: "Which quarterback led Washington to its Super Bowl XVII victory?", choices: ["Doug Williams", "Mark Rypien", "Joe Theismann", "Mark Brunell"], answer: 2 },
+    ],
+  },
+    "2026-11-24": { //Tuesday
+    event: "",
+    questions: [
+    { question: "Who had more rushing yards: Curtis Martin (2004) or LeSean McCoy (2013)?", choices: ["Curtis Martin (2004)", "LeSean McCoy (2013)"], answer: 0 },
+    { live: true, question: "OVER or UNDER: PLAYER NAME has O/U LINE sacks.", choices: [] },
+    { question: "OVER or UNDER: Derek Carr has O/U 120 Career Interceptions Thrown.", choices: ["OVER", "UNDER"], answer: 1 },
+    { question: "True or False: The New York Giants play in the AFC South.", choices: ["True", "False"], answer: 1 },
+    { question: "Who holds the NFL record for most passing TDs in a single season?", choices: ["Tom Brady", "Patrick Mahomes", "Peyton Manning", "Dan Marino"], answer: 2 },
+    ],
+  },
+    "2026-11-25": { //Wednesday
+    event: "PackersRamsThanksgiving",
+    questions: [
+    { question: "How many times have the Packers and Rams met in the Playoffs?", choices: ["7", "5", "3", "N/A"], answer: 2 },
+    { question: "Which Rams defender returned TWO Brett Favre interceptions for touchdowns in the 2001 Divisional Round?", choices: ["Kim Herring", "London Fletcher", "Mark Fields", "Aeneas Williams"], answer: 3 },
+    { question: "Matt LaFleur served as Rams' offensive coordinator in which season?", choices: ["2007", "2014", "2016", "2017"], answer: 3 },
+    { question: "Which Packers defender returned a Matthew Stafford interception for a touchdown in the 2021 matchup?", choices: ["Darnell Savage", "Rasul Douglas", "Jaire Alexander", "Kevin King"], answer: 1 },
+    { question: "Which Rams Defender has the most sacks in 2026?", choices: ["Myles Garrett", "Aaron Donald", "Braden Fiske", "Byron Young"], answer: 3 },
+    ],
+  },
+    "2026-11-26": { //Thursday
+    event: "Thanksgiving",
+    questions: [
+    { question: "True or False: The “Butt Fumble” happened on Thanksgiving Day.", choices: ["True", "False"], answer: 0 },
+    { question: "Which team has NEVER played on Thanksgiving?", choices: ["Chargers", "Jaguars", "Bills", "Cardinals"], answer: 1 },
+    { question: "Which two teams have played each other THE MOST on Thanksgiving?", choices: ["Cowboys & Eagles", "Lions & Bears", "Lions & Packers", "Cowboys & Commanders"], answer: 2 },
+    { question: "Who was the first player to ever receive John Madden's Turkey Leg Award?", choices: ["Emmitt Smith", "Reggie White", "Troy Aikman", "Brett Favre"], answer: 1 },
+    { question: "What was the first Thanksgiving Matchup back in 1934?", choices: ["Lions & Triangles", "Lions & Cowboys", "Lions & Giants", "Lions & Bears"], answer: 3 }
+    ],
+  },
+    "2026-11-27": { //Friday
+    event: "",
+    questions: [
+    { question: "OVER or UNDER: Bijan Robinson has O/U 40 Career Rushing TDs.", choices: ["OVER", "UNDER"], answer: 1 },
+    { live: true, question: "OVER or UNDER: PLAYER NAME has O/U LINE interceptions thrown.", choices: [] },
+    { question: "Guess the Career QB:\n- 31,304 Pass Yards\n- 174 Pass TDs\n- 119 INTs\n- 82.8 Passer Rating", choices: ["Steve McNair", "Jason Campbell", "Drew Bledsoe", "Trent Green"], answer: 0 },
+    { question: "Which QB was drafted #1 overall in 2007?", choices: ["Brady Quinn", "Matthew Stafford", "JaMarcus Russell", "Kevin Kolb"], answer: 2 },
+    { question: "True or False: The Browns have appeared in a Super Bowl.", choices: ["True", "False"], answer: 1 },
+    ],
+  },
+    "2026-11-28": { //Saturday
+    event: "",
+    questions: [
+    { question: "What year was the Titans' first season?", choices: ["1956", "1963", "1960", "1958"], answer: 2 },
+    { question: "How many career total touchdowns does Ezekiel Elliott have?", choices: ["88", "114", "64", "79"], answer: 0 },
+    { question: "Which of these was an ACTUAL NFL player?", choices: ["Fredrick Drakesworth", "Tavarius Bonecastle", "Treshon Boonclap", "Barkevious Mingo"], answer: 3 },
+    { question: "True or False: The Tennessee Titans were originally called the Houston Oilers.", choices: ["True", "False"], answer: 0 },
+    { question: "Which coach led the Steelers to a Super Bowl victory?", choices: ["Andy Reid", "Matt LaFleur", "Herm Edwards", "Mike Tomlin"], answer: 3 },
+    ],
+  },
+    "2026-11-29": { //Sunday
+    event: "",
+    questions: [
+    { live: true, question: "OVER or UNDER: PLAYER NAME has O/U LINE passing TDs.", choices: [] },
+    { question: "Who led the NFL in Receiving Yards in 2020?", choices: ["Cooper Kupp", "Stefon Diggs", "Antonio Brown", "Julio Jones"], answer: 1 },
+    { question: "Which coach led the Raiders to a Super Bowl victory?", choices: ["John Madden", "Vince Lombardi", "Marv Levy", "Mike Ditka"], answer: 0 },
+    { question: "What division do the Atlanta Falcons play in?", choices: ["NFC West", "NFC South", "AFC West", "AFC North"], answer: 1 },
+    { question: "Guess the Career QB:\n- 71,940 Pass Yards\n- 539 Pass TDs\n- 251 INTs\n- 96.5 Passer Rating", choices: ["Eli Manning", "Joe Flacco", "Peyton Manning", "Matt Ryan"], answer: 2 },
+    ],
+  },
+    "2026-11-30": { //Monday
+    event: "PanthersBuccaneersMNF",
+    questions: [
+    { question: "Which 2022 Buccaneer caught THREE Touchdowns against the Panthers to Clinch the NFC South", choices: ["Antonio Brown", "Chris Godwin", "Scotty Miller", "Mike Evans"], answer: 3 },
+    { question: "How many interceptions did Jameis Winston throw against the Panthers in the 2019 London matchup?", choices: ["3", "5", "6", "7"], answer: 1 },
+    { question: "The Panthers and Buccaneers first met in 1995. Which college hosted that game?", choices: ["Clemson", "NC State", "Florida State", "Los Angeles Memorial Stadium"], answer: 0 },
+    { question: "Which Panthers QB led Carolina to a 21–3 victory over Tom Brady's Buccaneers in 2022?", choices: ["Baker Mayfield", "Cam Newton", "Sam Darnold", "PJ Walker"], answer: 3 },
+    { question: "The Buccaneers beat the Panthers Week 18 2025 and created a 3-way 8-9 Division Tie. Which team won the NFC South?", choices: ["Panthers 8-9", "Buccaneers 8-9", "Falcons 8-9"], answer: 0 },
+    ],
+  },
+    "2026-12-01": { //Tuesday
+    event: "",
+    questions: [
+    { question: "True or False: Dan Marino retired without ever winning a Super Bowl.", choices: ["True", "False"], answer: 0 },
+    { question: "Who is the NFL's all-time career leader in rushing touchdowns?", choices: ["LaDainian Tomlinson", "Marcus Allen", "Emmitt Smith", "Walter Payton"], answer: 2 },
+    { question: "OVER or UNDER: The Falcons have O/U 0.5 Super Bowl victories all-time.", choices: ["OVER", "UNDER"], answer: 1 },
+    { question: "Guess the Career QB:\n- 20,022 Pass Yards\n- 130 Pass TDs\n- 52 INTs\n- 97.7 Passer Rating", choices: ["Deshaun Watson", "Trevor Lawrence", "Lamar Jackson", "Drew Bledsoe"], answer: 0 },
+    { question: "Which of these was an ACTUAL NFL player?", choices: ["Ventravian Butterfield", "Luiji Vilain", "George Goldsworth", "Piggy Junior"], answer: 1 },
+    ],
+  },
+    "2026-12-02": { //Wednesday
+    event: "",
+    questions: [
+    { live: true, question: "Who leads the NFL in interceptions thrown?", choices: [] },
+    { question: "What year did the Rams relocate to Los Angeles?", choices: ["2011", "2020", "2016", "2012"], answer: 2 },
+    { question: "Which of these was an ACTUAL NFL player?", choices: ["Traequan Bonecastle", "Zak Zinter", "Malcontavious Pennywhistle", "Markson Hartfordshire"], answer: 1 },
+    { question: "Which player caught the game-winning play in the \"Helmet Catch\"?", choices: ["Tony Romo", "Peyton Manning", "Jerome Bettis", "David Tyree"], answer: 3 },
+    { question: "True or False: Patrick Mahomes has won 3 Super Bowls.", choices: ["True", "False"], answer: 0 },
+    ],
+  },
+    "2026-12-03": { //Thursday
+    event: "TNF",
+    questions: [
+    { question: "", choices: ["", "", "", ""], answer: 0 },
+    { question: "", choices: ["", "", "", ""], answer: 0 },
+    { question: "", choices: ["", "", "", ""], answer: 0 },
+    { question: "", choices: ["", "", "", ""], answer: 0 },
+    { question: "", choices: ["", "", "", ""], answer: 0 },
+    ],
+  },
+    "2026-12-04": { //Friday
+    event: "",
+    questions: [
+    { question: "Which of these was an ACTUAL NFL player?", choices: ["DJ Glaze", "Zackson Thundergood", "Zecharion Fairweather", "Dequavious St. Germaine"], answer: 0 },
+    { live: true, question: "Which running back has the most receiving TDs?", choices: [] },
+    { question: "True or False: The Miami Dolphins play their home games at Raymond James Stadium.", choices: ["True", "False"], answer: 1 },
+    { question: "OVER or UNDER: The Panthers have O/U 1.5 Super Bowl appearances all-time.", choices: ["OVER", "UNDER"], answer: 0 },
+    { question: "Which team did the Ravens defeat in Super Bowl XLVII?", choices: ["Patriots", "Chiefs", "Buccaneers", "49ers"], answer: 3 },
+    ],
+  },
+    "2026-12-05": { //Saturday
+    event: "",
+    questions: [
+    { question: "True or False: Joe Montana has won 5 Super Bowls.", choices: ["True", "False"], answer: 1 },
+    { question: "OVER or UNDER: Aaron Rodgers has O/U 150 Career Interceptions Thrown.", choices: ["OVER", "UNDER"], answer: 1 },
+    { question: "Guess the Career QB:\n- 34,982 Pass Yards\n- 223 Pass TDs\n- 169 INTs\n- 82.3 Passer Rating", choices: ["Cam Newton", "Ryan Fitzpatrick", "Baker Mayfield", "Trent Green"], answer: 1 },
+    { question: "Which of these was an ACTUAL NFL player?", choices: ["Isaiahh Loudermilk", "Piggy Fender", "Sofia Allen-Finn", "Bender Willowbrook"], answer: 0 },
+    { question: "Who is the NFL's all-time career sacks leader?", choices: ["Reggie White", "Bruce Smith", "Kevin Greene", "Julius Peppers"], answer: 1 },
+    ],
+  },
+    "2026-12-06": { //Sunday
+    event: "",
+    questions: [
+    { question: "Which player caught the “Immaculate Reception”?", choices: ["Rocky Bleier", "John Stallworth", "Lynn Swann", "Franco Harris"], answer: 3 },
+    { question: "OVER or UNDER: Marcus Mariota has O/U 18,500 Career Passing Yards.", choices: ["OVER", "UNDER"], answer: 1 },
+    { question: "Guess the Career RB:\n- 6,554 Rush Yards\n- 51 Total TDs\n- 42 Rush TDs\n- 4.1 Yards per Carry", choices: ["James Conner", "Arian Foster", "Zack Moss", "Le'Veon Bell"], answer: 3 },
+    { question: "Which of these was an ACTUAL NFL player?", choices: ["D'Brickashaw Ferguson", "La'Dain Dandridge", "Benedictus Thundergoose", "Tennison Thundergood"], answer: 0 },
+    { question: "Which NFL team plays their home games at Caesars Superdome?", choices: ["New Orleans Saints", "Buffalo Bills", "Washington Commanders", "Detroit Lions"], answer: 0 },
+    ],
+  },
+    "2026-12-07": { //Monday
+    event: "MNF",
+    questions: [
+    { question: "", choices: ["", "", "", ""], answer: 0 },
+    { question: "", choices: ["", "", "", ""], answer: 0 },
+    { question: "", choices: ["", "", "", ""], answer: 0 },
+    { question: "", choices: ["", "", "", ""], answer: 0 },
+    { question: "", choices: ["", "", "", ""], answer: 0 },
+    ],
+  },
+    "2026-12-08": { //Tuesday
+    event: "",
+    questions: [
+    { question: "OVER or UNDER: Chuba Hubbard has O/U 4,100 Career Rushing Yards.", choices: ["OVER", "UNDER"], answer: 0 },
+    { question: "Which QB has more Career Passing TDs?", choices: ["Aaron Rodgers", "Drew Brees", "Matthew Stafford", "Philip Rivers"], answer: 1 },
+    { question: "Which franchise originally drafted Russell Wilson?", choices: ["Seahawks", "Giants", "Steelers", "Raiders"], answer: 0 },
+    { live: true, question: "OVER or UNDER: PLAYER NAME has O/U LINE total tackles.", choices: [] },
+    { question: "Guess the Career RB:\n- 2,370 Rush Yards\n- 18 Rush TDs\n- 4.5 Yards per Carry\n- 23 Total TDs", choices: ["Chris Carson", "Jeff Wilson", "Tyler Allgeier", "Kareem Hunt"], answer: 1 },
+    ],
+  },
+    "2026-12-09": { //Wednesday
+    event: "",
+    questions: [
+    { question: "Which of these was an ACTUAL NFL player?", choices: ["Ruke Goldsworth", "Malcontavious Pennywhistle", "George Johnson", "Divine Deablo"], answer: 3 },
+    { question: "Who is the Pittsburgh Steelers' all-time leader in passing yards?", choices: ["Terry Bradshaw", "Kordell Stewart", "Neil O'Donnell", "Ben Roethlisberger"], answer: 3 },
+    { question: "Who holds the NFL record for most rushing yards in a single season?", choices: ["Eric Dickerson", "Marcus Allen", "Adrian Peterson", "Jamal Lewis"], answer: 0 },
+    { question: "Who won Offensive Rookie of the Year in 2003?", choices: ["Justin Fargas", "Jerry Porter", "Anquan Boldin", "Jerramy Stevens"], answer: 2 },
+    { question: "OVER or UNDER: Cam Newton has O/U 34,500 Career Passing Yards.", choices: ["OVER", "UNDER"], answer: 1 },
+    ],
+  },
+    "2026-12-10": { //Thursday
+    event: "TNF",
+    questions: [
+    { question: "", choices: ["", "", "", ""], answer: 0 },
+    { question: "", choices: ["", "", "", ""], answer: 0 },
+    { question: "", choices: ["", "", "", ""], answer: 0 },
+    { question: "", choices: ["", "", "", ""], answer: 0 },
+    { question: "", choices: ["", "", "", ""], answer: 0 },
+    ],
+  },
+    "2026-12-11": { //Friday
+    event: "",
+    questions: [
+    { question: "Which NFL team plays their home games at Raymond James Stadium?", choices: ["San Francisco 49ers", "Houston Texans", "Green Bay Packers", "Tampa Bay Buccaneers"], answer: 3 },
+    { question: "True or False: The Tampa Bay Buccaneers play in the NFC West.", choices: ["True", "False"], answer: 1 },
+    { question: "Which of these was an ACTUAL NFL player?", choices: ["Tyroil Smoochie-Wallace", "Lil'Jordan Marcus", "Ifeanyi Ohalete", "Donkey Teeth"], answer: 2 },
+    { question: "Which player is associated with the \"Philly Special\"?", choices: ["Jay Cutler", "Joe Flacco", "Blake Bortles", "Nick Foles"], answer: 3 },
+    { question: "OVER or UNDER: John Brown has O/U 40 Career Receiving TDs.", choices: ["OVER", "UNDER"], answer: 1 },
+    ],
+  },
+    "2026-12-12": { //Saturday
+    event: "",
+    questions: [
+    { question: "What division do the Cincinnati Bengals play in?", choices: ["AFC North", "AFC West", "NFC West", "NFC East"], answer: 0 },
+    { question: "OVER or UNDER: The Packers have O/U 13.5 NFL championships (all-time).", choices: ["OVER", "UNDER"], answer: 1 },
+    { question: "What overall pick number was Tony Mandarich drafted at?", choices: ["14", "2", "12", "13"], answer: 1 },
+    { question: "Guess the Career WR:\n- 3,944 Rec. Yards\n- 16 Rec. TDs\n- 314 Receptions", choices: ["Reggie Wayne", "Steve Johnson", "Santana Moss", "Bryant Johnson"], answer: 3 },
+    { question: "Which of these was an ACTUAL NFL player?", choices: ["Tutan Reyes", "Hingle McCringleberry", "Ja'Vontavious Hartfordshire", "Johnson Fettergun II"], answer: 0 },
+    ],
+  },
 
 
 };
