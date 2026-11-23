@@ -296,7 +296,7 @@ export const CALENDAR = {
     event: "",
     questions: [
     { question: "Who had more rushing yards: Curtis Martin (2004) or LeSean McCoy (2013)?", choices: ["Curtis Martin (2004)", "LeSean McCoy (2013)"], answer: 0 },
-    { live: true, question: "OVER or UNDER: PLAYER NAME has O/U LINE sacks.", choices: [] },
+    { live: true, question: "OVER or UNDER: Jeffery Simmons has O/U 10.5 sacks.", choices: ["OVER", "UNDER"], answer: 1 },
     { question: "OVER or UNDER: Derek Carr has O/U 120 Career Interceptions Thrown.", choices: ["OVER", "UNDER"], answer: 1 },
     { question: "True or False: The New York Giants play in the AFC South.", choices: ["True", "False"], answer: 1 },
     { question: "Who holds the NFL record for most passing TDs in a single season?", choices: ["Tom Brady", "Patrick Mahomes", "Peyton Manning", "Dan Marino"], answer: 2 },
