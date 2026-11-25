@@ -67,6 +67,7 @@ export const EVENT_LOGOS = {
     "BengalsCommandersMNF": "logos/BengalsCommandersMNF.png",
     "PanthersBuccaneersMNF": "logos/PanthersBuccaneersMNF.png",
     "PackersRamsThanksgiving": "logos/PackersRamsThanksgiving.png",
+    "RodgersMcCarthy": "logos/RodgersMcCarthy.png",
 
 };
 

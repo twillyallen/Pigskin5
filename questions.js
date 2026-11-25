@@ -323,13 +323,13 @@ export const CALENDAR = {
     ],
   },
     "2026-11-27": { //Friday
-    event: "",
+    event: "RodgersMcCarthy",
     questions: [
-    { question: "OVER or UNDER: Bijan Robinson has O/U 40 Career Rushing TDs.", choices: ["OVER", "UNDER"], answer: 1 },
-    { live: true, question: "OVER or UNDER: PLAYER NAME has O/U LINE interceptions thrown.", choices: [] },
-    { question: "Guess the Career QB:\n- 31,304 Pass Yards\n- 174 Pass TDs\n- 119 INTs\n- 82.8 Passer Rating", choices: ["Steve McNair", "Jason Campbell", "Drew Bledsoe", "Trent Green"], answer: 0 },
-    { question: "Which QB was drafted #1 overall in 2007?", choices: ["Brady Quinn", "Matthew Stafford", "JaMarcus Russell", "Kevin Kolb"], answer: 2 },
-    { question: "True or False: The Browns have appeared in a Super Bowl.", choices: ["True", "False"], answer: 1 },
+    { question: "After which 2018 game did the Packers fire Mike McCarthy?", choices: ["Patriots", "Lions", "Cardinals", "Dolphins"], answer: 2 },
+    { question: "What chant did Aaron Rodgers reveal Mike McCarthy said as the Steelers Head Coach?", choices: ["Steeeeel City!", "1-2-3 Packers!", "Green Bay Sucks!", "Pittsburgh YOU KNOOOOW!"], answer: 1 },
+    { question: "How many MVPs did Aaron Rodgers win while under Mike McCarthy?", choices: ["2", "3", "4", "N/A"], answer: 0 },
+    { question: "What special coach does Mike McCarthy have?", choices: ["Aaron Rodgers Wrangler", "Skinny Vanilla Latte Barista", "Offensive Defender", "Ice Cream Sandwich Assistant"], answer: 3 },
+    { question: "What does Mike McCarthy (allegedly) do during meetings?", choices: ["Coach", "Snore"], answer: 1 },
     ],
   },
     "2026-11-28": { //Saturday
@@ -482,6 +482,15 @@ export const CALENDAR = {
     { question: "Which of these was an ACTUAL NFL player?", choices: ["Tutan Reyes", "Hingle McCringleberry", "Ja'Vontavious Hartfordshire", "Johnson Fettergun II"], answer: 0 },
     ],
   },
+      "2026-12-13": { //Sunday
+    event: "",
+    questions: [
+    { question: "OVER or UNDER: Bijan Robinson has O/U 40 Career Rushing TDs.", choices: ["OVER", "UNDER"], answer: 1 },
+    { live: true, question: "OVER or UNDER: PLAYER NAME has O/U LINE interceptions thrown.", choices: [] },
+    { question: "Guess the Career QB:\n- 31,304 Pass Yards\n- 174 Pass TDs\n- 119 INTs\n- 82.8 Passer Rating", choices: ["Steve McNair", "Jason Campbell", "Drew Bledsoe", "Trent Green"], answer: 0 },
+    { question: "Which QB was drafted #1 overall in 2007?", choices: ["Brady Quinn", "Matthew Stafford", "JaMarcus Russell", "Kevin Kolb"], answer: 2 },
+    { question: "True or False: The Browns have appeared in a Super Bowl.", choices: ["True", "False"], answer: 1 },
+    ],
 
 
 };
