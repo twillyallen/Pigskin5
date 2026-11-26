@@ -491,6 +491,7 @@ export const CALENDAR = {
     { question: "Which QB was drafted #1 overall in 2007?", choices: ["Brady Quinn", "Matthew Stafford", "JaMarcus Russell", "Kevin Kolb"], answer: 2 },
     { question: "True or False: The Browns have appeared in a Super Bowl.", choices: ["True", "False"], answer: 1 },
     ],
+  },
 
 
 };
