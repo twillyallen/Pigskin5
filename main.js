@@ -8,7 +8,7 @@ import { NFL_TEAMS } from "./modules/nfl-teams.js";
 import { showTierTooltip, showAchievementToast } from "./modules/ui-helpers.js";
 import { ACHIEVEMENTS, ACHIEVEMENT_CATEGORIES } from "./modules/achievements.js";
 import { STREAK_TIERS, EVENT_LOGOS } from "./modules/config.js";
-import { renderRivalryCard, injectStartRivalryButton, openRivalryModal } from "./modules/rivalry-ui.js?v=20260614";
+import { renderRivalryCard, injectStartRivalryButton, openRivalryModal } from "./modules/rivalry-ui.js?v=20261128";
 import { trackEvent } from "./modules/analytics.js";
 
 // questions.js changes almost daily (LIVE fills, manual fixes). A fixed ?v=

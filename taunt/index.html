@@ -10,7 +10,6 @@
   <meta name="description" content="Your rival just played today's Pigskin5. Your move.">
   <meta name="robots" content="noindex">
   <link rel="icon" href="/favicon.ico" />
-  <link rel="canonical" href="https://pigskin5.com/?modal=rivalries" />
 
   <meta property="og:title" content="Pigskin5 – Your Rival Made Their Move">
   <meta property="og:description" content="Your rival just played today's Pigskin5. Your move.">
@@ -22,8 +21,12 @@
   <meta name="twitter:description" content="Your rival just played today's Pigskin5. Your move.">
   <meta name="twitter:image" content="https://pigskin5.com/logos/pigskin5-rivalry-share.png">
 
-  <meta http-equiv="refresh" content="0; url=/?modal=rivalries">
-  <script>location.replace("/?modal=rivalries");</script>
+  <script>
+    // Don't redirect link-preview crawlers (they'd pick up the homepage's share image).
+    if (!/bot|crawl|spider|facebookexternalhit|facebot|twitterbot|slack|discord|whatsapp|telegram|embedly|preview/i.test(navigator.userAgent)) {
+      location.replace("/?modal=rivalries");
+    }
+  </script>
 </head>
 <body style="background:#0b1220;color:#fff;font-family:sans-serif;text-align:center;padding:60px 20px;">
   <a href="/?modal=rivalries" style="color:#60a5fa;font-weight:700;">Go to your rivalries →</a>
