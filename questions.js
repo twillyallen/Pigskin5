@@ -345,7 +345,7 @@ export const CALENDAR = {
     "2026-11-29": { //Sunday
     event: "",
     questions: [
-    { live: true, question: "OVER or UNDER: PLAYER NAME has O/U LINE passing TDs.", choices: [] },
+    { live: true, question: "OVER or UNDER: Dak Prescott has O/U 32.5 passing TDs.", choices: ["OVER", "UNDER"], answer: 1 },
     { question: "Who led the NFL in Receiving Yards in 2020?", choices: ["Cooper Kupp", "Stefon Diggs", "Antonio Brown", "Julio Jones"], answer: 1 },
     { question: "Which coach led the Raiders to a Super Bowl victory?", choices: ["John Madden", "Vince Lombardi", "Marv Levy", "Mike Ditka"], answer: 0 },
     { question: "What division do the Atlanta Falcons play in?", choices: ["NFC West", "NFC South", "AFC West", "AFC North"], answer: 1 },
