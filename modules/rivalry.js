@@ -394,7 +394,6 @@ export async function getTodayRivalryQuestions(rivalryId) {
     }
   }
 
-  // Only draw from the hand-curated base — never the auto-filtered pool appended at build time.
   const allIndices = Array.from({ length: RIVALRY_BASE_COUNT }, (_, i) => i);
 
   // Primary pool: exclude all questions this rivalry has used + today's cross-rivalry overlap
@@ -411,7 +410,7 @@ export async function getTodayRivalryQuestions(rivalryId) {
   }
 
   shuffle(pool);
-  const chosen = pool.slice(0, 5);
+  const chosen = pickFive(pool);
 
   const { error } = await supabase
     .from("rivalry_daily_questions")
@@ -431,6 +430,26 @@ export async function getTodayRivalryQuestions(rivalryId) {
   }
 
   return chosen.map(i => RIVALRY_QUESTIONS[i]);
+}
+
+// "Which of these was an ACTUAL NFL player?" — fun once, repetitive twice in one quiz.
+const NAME_QUESTION = /actual nfl player/i;
+
+// Take the first 5 from an already-shuffled pool, allowing at most one name question.
+// Falls back to filling with extra name questions only if the pool runs dry.
+function pickFive(pool) {
+  const chosen = [];
+  const skipped = [];
+  let hasName = false;
+  for (const i of pool) {
+    if (chosen.length === 5) break;
+    const isName = NAME_QUESTION.test(RIVALRY_QUESTIONS[i]?.question ?? "");
+    if (isName && hasName) { skipped.push(i); continue; }
+    if (isName) hasName = true;
+    chosen.push(i);
+  }
+  while (chosen.length < 5 && skipped.length) chosen.push(skipped.shift());
+  return chosen;
 }
 
 function shuffle(arr) {
