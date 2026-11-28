@@ -56,7 +56,7 @@ const TAUNT_PRESETS = [
 
 function _buildTauntText(scoreStr) {
   const preset = TAUNT_PRESETS[Math.floor(Math.random() * TAUNT_PRESETS.length)];
-  return `${preset} I scored ${scoreStr} today. Your move: https://pigskin5.com/?modal=rivalries`;
+  return `${preset} I scored ${scoreStr} today. Your move: https://pigskin5.com/taunt/`;
 }
 
 async function _copyTaunt(scoreStr) {
