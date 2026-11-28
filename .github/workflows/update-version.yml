@@ -22,10 +22,22 @@ jobs:
         run: |
           echo "{\"version\": \"$(date -u +%Y-%m-%dT%H:%M:%SZ)\", \"sha\": \"${{ github.sha }}\"}" > version.json
 
+      # Stamp every hard-coded cache-buster (e.g. main.js?v=20261128") with the commit SHA
+      # so browsers fetch fresh copies right after each deploy. Only matches literal
+      # alphanumeric values, so dynamic ones like questions.js?v=${...} are left alone.
+      - name: Stamp ?v= cache-busters
+        run: |
+          SHORT_SHA="${GITHUB_SHA::7}"
+          git ls-files '*.html' '*.js' ':!tools/**' \
+            | xargs grep -lE '\.js\?v=[0-9A-Za-z]+["'"'"']' \
+            | xargs -r sed -i -E "s/(\.js\?v=)[0-9A-Za-z]+([\"'])/\1${SHORT_SHA}\2/g"
+          git diff --stat
+
       - name: Commit and push
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -u
           git add version.json
           git diff --staged --quiet || git commit -m "chore: update version.json [skip ci]"
           git push
